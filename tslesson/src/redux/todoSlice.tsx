@@ -21,12 +21,12 @@ export const createTodoAsync = createAsyncThunk(
 export const deleteTodoAsync = createAsyncThunk(
   'todos/deleteTodo',
   async (id: number) => {
-    const response = await axios.delete(`http://localhost:5000/todos/${id}`);
-    return id; 
+    await axios.delete(`http://localhost:5000/todos/${id}`);
+    return id;  // sadece id'yi döndürüyoruz
   }
 );
 
-
+// PUT (update) isteği
 export const updateTodoAsync = createAsyncThunk(
   'todos/updateTodo',
   async (updatedTodo: TodoType) => {
@@ -48,11 +48,9 @@ const todoSlice = createSlice({
   name: 'todo',
   initialState,
   reducers: {
-
     removeTodoById: (state, action: PayloadAction<number>) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
     },
-  
     updateTodo: (state, action: PayloadAction<TodoType>) => {
       state.todos = state.todos.map((todo) =>
         todo.id !== action.payload.id ? todo : action.payload
@@ -101,7 +99,6 @@ const todoSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(updateTodoAsync.fulfilled, (state, action) => {
-
       state.todos = state.todos.map((todo) =>
         todo.id !== action.payload.id ? todo : action.payload
       );
@@ -117,7 +114,3 @@ const todoSlice = createSlice({
 export const { removeTodoById, updateTodo } = todoSlice.actions;
 
 export default todoSlice.reducer;
-
-
-
-// /onlick oldugunda elementin id-sini goturmek ve onu istediyimiz kimi deyisiklik etmek ve silmek 
