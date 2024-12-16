@@ -7,6 +7,9 @@ position: relative;
         padding: 10px;
         border-radius: 10px;
         border: 1px solid #D8DADC;
+        &:focus{
+            outline: none;
+        }
     }
 }
 
