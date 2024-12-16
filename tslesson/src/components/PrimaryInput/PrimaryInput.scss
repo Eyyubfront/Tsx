@@ -1,0 +1,31 @@
+.input_div {
+position: relative;
+    .input_primary {
+        width: 541px;
+        height: 56px;
+        gap: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #D8DADC;
+    }
+}
+
+@media (max-width:600px) {
+    .input_primary {
+        width: 100% !important;
+        height: 56px;
+
+
+    }
+}
+
+
+
+@media (min-width:601px)and (max-width:1200px) {
+    .input_primary {
+        width: 100% !important;
+        height: 56px;
+
+
+    }
+}
