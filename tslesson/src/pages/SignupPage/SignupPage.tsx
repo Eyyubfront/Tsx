@@ -89,7 +89,7 @@ const SignupPage = () => {
         </div>
         <div className="signup_navbuttom">
           <div>
-            <p className='sign_alredytext'>Already have an account? </p>
+            <p className='signup_alredytext '>Already have an account? </p>
           </div>
           <Link className='signup_nav' to="/signin">
             <p className=''>Sign in</p>
