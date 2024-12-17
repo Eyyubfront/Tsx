@@ -14,7 +14,7 @@ const AuthLeftPanel = () => {
               <img src={hand} alt="" />
             </div>
             <div className="leftpanel_bottom">
-              <p>Create your vocabulary, get reminders, and test your memory with quick quizzes!</p>
+              <p >Create your vocabulary, get reminders, and test your memory with quick quizzes!</p>
             </div>
           </div>
       </div>

@@ -51,7 +51,6 @@ const SignupPage = () => {
                 </div>)
                 }
               </div>
-
             </div>
             <div className="signup_password">
               <div className="paswordtop">

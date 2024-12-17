@@ -195,11 +195,15 @@
     .sign_up {
         flex-direction: column !important;
         align-items: baseline;
+        margin-top: 0px !important;
         justify-content: center !important;
 
         .signup_right {
             width: 100% !important;
             .signup_btm {
+                width: 100%;
+            }
+            .signup_check{
                 width: 100%;
             }
 
@@ -259,7 +263,7 @@
 
             .signup_controlinfo {
                 font-size: 16px;
-                width: 330px;
+                width: 100% !important;
                 height: 52px;
             }
         }
@@ -277,6 +281,7 @@
     .sign_up {
         flex-direction: column !important;
         align-items: baseline;
+        margin-top: 0px !important;
 
         .signup_right {
             width: 100% !important;
