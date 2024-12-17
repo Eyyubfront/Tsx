@@ -85,7 +85,7 @@ const SigninPage = () => {
                 </div>
                 <div className="signin_check">
                     <div onClick={handleToggle} className="sign_toggle">
-                        {isOn ? <MdToggleOn className='togle_icon' /> : <MdToggleOff className='togle_icon' />}
+                        {isOn ? <MdToggleOn className='togle_icon' /> : <MdToggleOff className='togle_iconof' />}
                     </div>
                     <div className="signin_checkaccsestext">
                         <p className='confirmation_textone'>Weekly summary</p>

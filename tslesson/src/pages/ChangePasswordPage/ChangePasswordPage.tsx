@@ -3,7 +3,7 @@ import  './ChangePasswordPage.scss'
 const ChangePasswordPage = () => {
   return (
     <div>
-      
+      a
     </div>
   )
 }
