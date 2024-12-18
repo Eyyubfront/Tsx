@@ -1,0 +1,9 @@
+.signin_name {
+  font-size: 48px;
+}
+
+@media (max-width: 600px) {
+  .signin_name {
+    font-size: 32px !important;
+  }
+}

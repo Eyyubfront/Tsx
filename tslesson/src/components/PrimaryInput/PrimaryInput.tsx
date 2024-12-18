@@ -1,14 +1,15 @@
-import { FC, useState } from "react";
-import "./PrimaryInput.scss"
+import { FC } from "react";
+import "./PrimaryInput.scss";
 import Paragrafy from "../Paragrafy/Paragrafy";
 import { FaCircleCheck } from "react-icons/fa6";
 import { RxEyeOpen } from "react-icons/rx";
 import { FaRegEyeSlash } from "react-icons/fa";
-interface CustomInputPros {
-  type?: "text" | "email" | "password"
+
+interface CustomInputProps {
+  type?: "text" | "email" | "password";
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string,
+  placeholder?: string;
   label?: string;
   isValid?: boolean;
   isValidEmail?: boolean;
@@ -16,31 +17,49 @@ interface CustomInputPros {
   handleEye?: () => void;
   iseye?: boolean;
 }
-
-const PrimaryInput: FC<CustomInputPros> = ({ type, value, onChange, placeholder, label, isValid, isValidEmail, isEyeicon, iseye, handleEye }) => {
-
-  console.log("++++", iseye)
+const PrimaryInput: FC<CustomInputProps> = ({
+  type,
+  value,
+  onChange,
+  placeholder,
+  label,
+  isValid,
+  isValidEmail,
+  isEyeicon,
+  iseye,
+  handleEye,
+}) => {
+  const inputType = type === "password" && iseye ? "text" : type; 
 
   return (
     <div className="input_div">
       <Paragrafy text={label} />
-      <input type={iseye ? "text" : "password"} name="" id=""
-        value={value}
-        className="input_primary"
-        onChange={onChange}
-
-        placeholder={placeholder}
-      />
-      {isValid && isValidEmail && (<div style={{ position: "relative" }}>
-        <FaCircleCheck className='circle_icon' />
-      </div>)
-      }
-      {isEyeicon && <div className='eyesonof' onClick={handleEye}>
-        {iseye ? <RxEyeOpen className='eye_icon' /> : <FaRegEyeSlash className='eye_icon' />}
-      </div>}
+      <div className="input_wrapper"> 
+        <input
+          type={inputType}
+          value={value}
+          className="input_primary"
+          onChange={onChange}
+          placeholder={placeholder}
+        />
+        {isValid && isValidEmail && (
+          <div style={{ position: "relative" }}>
+            <FaCircleCheck className="circle_icon" />
+          </div>
+        )}
+        {isEyeicon && (
+          <div className="eyesonof" onClick={handleEye}>
+            {iseye ? (
+              <RxEyeOpen className="eye_icon" />
+            ) : (
+              <FaRegEyeSlash className="eye_icon" />
+            )}
+          </div>
+        )}
+      </div>
     </div>
+  );
+};
 
-  )
-}
 
-export default PrimaryInput
+export default PrimaryInput;

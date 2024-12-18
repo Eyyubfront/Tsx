@@ -1,0 +1,64 @@
+.input_div {
+  position: relative;
+}
+.input_div .input_wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+.input_div .input_primary {
+  width: 100%;
+  height: 56px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #D8DADC;
+}
+.input_div .input_primary:focus {
+  outline: none;
+}
+.input_div .eyesonof,
+.input_div .circle_icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.input_div .eyesonof {
+  right: 15px;
+}
+.input_div .circle_icon {
+  right: 16px;
+  width: 17px;
+}
+
+@media (max-width: 600px) {
+  .input_div {
+    width: 100%;
+  }
+  .input_primary {
+    width: 100% !important;
+    height: 56px;
+  }
+  .eyesonof {
+    right: 10px;
+  }
+  .circle_icon {
+    right: 10px;
+  }
+}
+@media (min-width: 601px) and (max-width: 1200px) {
+  .input_div {
+    width: 100%;
+  }
+  .input_primary {
+    width: 100% !important;
+    height: 56px;
+  }
+  .eyesonof {
+    right: 10px;
+  }
+  .circle_icon {
+    right: 10px;
+  }
+}

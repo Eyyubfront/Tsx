@@ -1,22 +1,32 @@
-
-import { Link } from 'react-router-dom';
-import Paragrafy from '../Paragrafy/Paragrafy';
 import { FC } from 'react';
-interface LinkProps{
-    element:boolean,
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-const CustomLink:FC<LinkProps> = ({ element }) => {
-    console.log("element:", element);
+import Paragrafy from '../Paragrafy/Paragrafy';
 
-    return (
-        <div>
-            <Link className='signup_nav' to="/signin">
-                <Paragrafy text={element ? "Sign in" : "Sign up"} />
-            </Link>
-        </div>
-
-    )
+interface LinkProps {
+  element: boolean;
+  fontfamily?: string;
+  onChange?: () => void;
 }
 
-export default CustomLink
+const CustomLink: FC<LinkProps> = ({ element, fontfamily, onChange }) => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    e.preventDefault();  
+    if (onChange) {
+      onChange();  
+    }
+  };
+
+  return (
+    <div>
+      <a
+        href="#" 
+        style={{ color: "black", fontFamily: fontfamily }}
+        className="signlink"
+        onClick={handleClick} 
+      >
+        <Paragrafy text={element ? "Sign in" : "Sign up"} fontWeight="bold" />
+      </a>
+    </div>
+  );
+};
+
+export default CustomLink;
