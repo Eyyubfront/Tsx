@@ -3,7 +3,7 @@ import "./PrimaryButton.scss"
 
 interface CustomButtonProps{
   label:string;
-  onClick:(e:any)=>void;
+  onClick?:(e:any)=>void;
 type?:"button"|"submit"|"reset"
 }
 

@@ -1,19 +1,15 @@
 .sign_in {
     margin-top: 42px;
     gap: 32px;
-
     .signin_left {
         width: 100% !important;
     }
-
     .signin_right {
         display: flex;
         flex-direction: column;
         gap: 32px;
         position: relative;
         width: 50%;
-
-
         .singin_topname {
             display: flex;
             flex-direction: column;
@@ -43,7 +39,6 @@
             }
 
         }
-
         .signin_form {
             display: flex;
             flex-direction: column;
@@ -53,12 +48,14 @@
                 display: flex;
                 flex-direction: column;
                 gap: 6px !important;
+
                 .circle_box {
                     display: flex;
                     flex-direction: row;
                     align-items: center;
                     position: relative;
-                    .circle_icon{
+
+                    .circle_icon {
                         transform: translate(-50%, -50%);
                         right: 16px;
                         top: 3px;
@@ -68,7 +65,6 @@
                     }
                 }
             }
-
             form {
                 display: flex;
                 flex-direction: column;
@@ -86,7 +82,6 @@
                 text-decoration-skip-ink: none;
 
             }
-
             .singin_password {
                 display: flex;
                 flex-direction: column;
@@ -108,7 +103,6 @@
                         color: #1D1730;
                     }
                 }
-
                 .singin_passwordinp {
                     display: flex;
                     position: relative;
@@ -118,7 +112,6 @@
                     .eyesonof {
                         position: relative !important;
                     }
-
                     .eye_icon {
                         cursor: pointer;
                         position: absolute;
@@ -133,7 +126,6 @@
                 }
             }
         }
-
         .signin_check {
             display: flex;
             flex-direction: row;
@@ -142,7 +134,6 @@
             height: 20px;
             gap: 12px;
             opacity: 0px;
-
             .signin_checkaccsestext {
                 display: flex;
                 flex-direction: column;
@@ -156,9 +147,7 @@
                     text-align: left;
                     text-underline-position: from-font;
                     text-decoration-skip-ink: none;
-
                 }
-
                 .confirmation_texttwo {
                     width: 267px;
                     font-family: Inter;
@@ -171,17 +160,17 @@
 
                 }
             }
-
             .sign_toggle {
                 .togle_icon {
                     cursor: pointer;
                     width: 54px;
                     height: 72px;
                     color: #8B6DE8;
-                   
+
                     transition: color 0.3s ease;
                 }
-                .togle_iconof{
+
+                .togle_iconof {
                     cursor: pointer;
                     width: 54px;
                     height: 72px;
@@ -191,7 +180,6 @@
 
             }
         }
-
         .signin_navbuttom {
             display: flex;
             flex-direction: row;
@@ -206,13 +194,10 @@
             text-decoration-skip-ink: none;
             margin: auto;
             margin-top: 26%;
-
-
             .sign_alredytext {
                 font-weight: 300;
 
             }
-
             .signin_nav {
                 font-weight: bold;
                 color: black;
@@ -220,8 +205,6 @@
 
             }
         }
-
-
     }
 }
 
@@ -237,43 +220,56 @@
         .signin_left {
             width: 100%;
         }
+
         .signin_right {
             width: 100% !important;
-            .signin_btm{
+
+            .signin_btm {
                 width: 100%;
             }
-            .signin_check{
+
+            .signin_check {
                 width: 100% !important;
-                .confirmation_textone{
+
+                .confirmation_textone {
                     width: 100% !important;
                 }
-                .confirmation_texttwo{
+
+                .confirmation_texttwo {
                     width: 100% !important;
                 }
             }
-            .signin_form{
+
+            .signin_form {
                 width: 100% !important;
-                form{
+
+                form {
                     width: 100%;
                     align-items: baseline;
                 }
-                .singin_email{
+
+                .singin_email {
                     width: 100% !important;
-                    .input_div{
+
+                    .input_div {
                         width: 100% !important;
                     }
                 }
-                .singin_password{
+
+                .singin_password {
                     width: 100% !important;
-                    .paswordtop{
-                        width: 100% !important;             
-                        .input_div{
+
+                    .paswordtop {
+                        width: 100% !important;
+
+                        .input_div {
                             width: 100% !important;
                         }
                     }
                 }
-         
+
             }
+
             .signin_navbuttom {
                 margin-top: 3% !important;
                 width: 87%;
@@ -307,10 +303,7 @@
 
 }
 
-
-
 @media (min-width:601px)and (max-width:1200px) {
-
     .sign_in {
         margin-top: 5px !important;
         flex-direction: column !important;
@@ -323,36 +316,45 @@
         }
 
         .signin_right {
-            width: 100%  !important;        
+            width: 100% !important;
             display: flex;
             flex-direction: column;
             align-items: baseline;
-            .signin_btm{
+
+            .signin_btm {
                 width: 100%;
             }
-            .signin_form{
+
+            .signin_form {
                 width: 100% !important;
-                form{
+
+                form {
                     width: 100%;
                     align-items: baseline;
                 }
-                .singin_email{
+
+                .singin_email {
                     width: 100% !important;
-                    .input_div{
+
+                    .input_div {
                         width: 100% !important;
                     }
                 }
-                .singin_password{
+
+                .singin_password {
                     width: 100% !important;
-                    .paswordtop{
-                        width: 100% !important;             
-                        .input_div{
+
+                    .paswordtop {
+                        width: 100% !important;
+
+                        .input_div {
                             width: 100% !important;
                         }
                     }
                 }
-         
+
             }
+
             .eye_icon {
                 right: 21px !important;
             }

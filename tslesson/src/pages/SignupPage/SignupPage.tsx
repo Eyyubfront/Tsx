@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import AuthLeftPanel from '../../components/layout/AuthLeftPanel/AuthLeftPanel'
+import AuthLeftPanel from '../../layout/AuthLeftPanel/AuthLeftPanel'
 import './SignupPage.scss'
 import PrimaryInput from '../../components/PrimaryInput/PrimaryInput'
 import { RxEyeOpen } from "react-icons/rx";
@@ -66,9 +66,7 @@ const SignupPage = () => {
                   </div>
                 </div>
               </div>
-
             </div>
-
           </form>
         </div>
         <div className="signup_check">
@@ -98,5 +96,4 @@ const SignupPage = () => {
     </Container>
   )
 }
-
 export default SignupPage

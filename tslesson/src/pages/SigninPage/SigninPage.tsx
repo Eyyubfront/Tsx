@@ -3,13 +3,14 @@ import { useState } from 'react';
 import PrimaryButton from '../../components/PrimaryButton/PrimaryButton'
 import PrimaryInput from '../../components/PrimaryInput/PrimaryInput'
 import './SigninPage.scss'
-import AuthLeftPanel from '../../components/layout/AuthLeftPanel/AuthLeftPanel';
+import AuthLeftPanel from '../../layout/AuthLeftPanel/AuthLeftPanel';
 import { RxEyeOpen } from "react-icons/rx";
 import { Link } from 'react-router-dom';
 import { MdToggleOn, MdToggleOff } from "react-icons/md";
 import { FaRegEyeSlash } from "react-icons/fa";
 import Container from '@mui/material/Container';
 import { FaCircleCheck } from "react-icons/fa6";
+
 const SigninPage = () => {
     const [email, setEmail] = useState<string>("");
     const [isOn, setIsOn] = useState<boolean>(false);
@@ -30,7 +31,6 @@ const SigninPage = () => {
     }
 
     return (
-
         <Container className='sign_in' sx={{ display: "flex" }}>
             <div className="signin_left">
                 <AuthLeftPanel />
@@ -48,6 +48,7 @@ const SigninPage = () => {
                                 <PrimaryInput
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    
                                 />
                                 {isValidEmail && (<div style={{ position: "relative" }}>
                                     <FaCircleCheck className='circle_icon' />
@@ -101,9 +102,7 @@ const SigninPage = () => {
                     </Link>
                 </div>
             </div>
-
         </Container>
-
     )
 }
 
