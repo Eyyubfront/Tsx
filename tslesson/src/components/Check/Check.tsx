@@ -15,7 +15,7 @@ const Check = () => {
       <div onClick={handleCheck} className="checkbox">
         {check && <IoCheckmark size={18} className='checkmark' />}
       </div>
-      <Paragrafy fontsize="14px" text="I accept the terms and privacy policy" />
+      <Paragrafy fontsize="16px" text="I accept the terms and privacy policy" />
     </div>
   );
 };
