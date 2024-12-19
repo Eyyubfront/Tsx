@@ -7,12 +7,12 @@ import PrimaryInput from '../../components/PrimaryInput/PrimaryInput';
 import Check from '../../components/Check/Check';
 import PrimaryButton from '../../components/PrimaryButton/PrimaryButton';
 import CustomLink from '../../components/CustomLink/CustomLink';
-import Toogle from '../../components/Toogle/Toogle'; 
-import { Link } from 'react-router-dom'; 
+import Toogle from '../../components/Toogle/Toogle';
+import { Link } from 'react-router-dom';
 import "./Login.scss";
 
 const Login = () => {
-  const [signUp, setSignUp] = useState<boolean>(true); 
+  const [signUp, setSignUp] = useState<boolean>(true);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [iseye, setIseye] = useState<boolean>(false);
@@ -21,7 +21,7 @@ const Login = () => {
   const isValidEmail = email.includes('@') && email.includes(".");
 
   const handleLink = () => {
-    setSignUp((prevState) => !prevState); 
+    setSignUp((prevState) => !prevState);
   };
 
   const handleEye = () => {
@@ -44,7 +44,7 @@ const Login = () => {
       <div className='sign_right'>
         <Heading fontsize="48px" text={signUp ? "Create account" : "Sign in"} />
         <Paragrafy fontsize="16px" fontfamily="DM Sans, sans-serif" text={"Now your finances are in one place and always under control"} />
-        
+
         <PrimaryInput
           label='Email'
           type='email'
@@ -52,7 +52,7 @@ const Login = () => {
           isValid
           isValidEmail={isValidEmail}
         />
-        
+
         <div className="password-container">
           <PrimaryInput
             label='Password'
@@ -62,8 +62,8 @@ const Login = () => {
             iseye={iseye}
             handleEye={handleEye}
           />
-          
-        
+
+
           {!signUp && (
             <div className="forgot-password-container">
               <Link to="/forgot-password" className="forgot-password-link">
@@ -72,7 +72,7 @@ const Login = () => {
             </div>
           )}
         </div>
-        
+
         {signUp && (
           <>
             <Check />
@@ -85,7 +85,6 @@ const Login = () => {
             <Toogle isOn={isOn} handleToggle={handleToggle} />
           </>
         )}
-
         <div className="link_container">
           <Paragrafy fontfamily="Inter,sans-serif" fontsize="14px" fontWeight="300" text={signUp ? "Already have an account? " : "Don't have an account? "} />
           <CustomLink fontfamily="Inter,sans-serif" onChange={handleLink} element={signUp} />
@@ -94,5 +93,4 @@ const Login = () => {
     </Container>
   );
 };
-
 export default Login;
