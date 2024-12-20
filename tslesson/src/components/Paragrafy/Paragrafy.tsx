@@ -6,6 +6,7 @@ interface ParagrafyProps {
   fontsize?: string;
   fontfamily?: string;
   fontWeight?: string; 
+ 
 }
 
 const Paragrafy: FC<ParagrafyProps> = ({ text, fontsize, fontfamily, fontWeight }) => {
@@ -16,6 +17,7 @@ const Paragrafy: FC<ParagrafyProps> = ({ text, fontsize, fontfamily, fontWeight 
         fontSize: fontsize,  
         fontFamily: fontfamily,
         fontWeight: fontWeight,  
+  
       }}
     >
       {text}

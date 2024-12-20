@@ -17,7 +17,8 @@
       width: 50%;
       position: relative;
       flex-grow: 1; 
-      .password-container {
+      .password-container,
+      .email-container {
         display: flex;
         flex-direction: column;
         align-items: flex-end;  

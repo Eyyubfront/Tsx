@@ -11,11 +11,11 @@ interface CustomInputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   label?: string;
-  isValid?: boolean;
   isValidEmail?: boolean;
   isEyeicon?: boolean;
   handleEye?: () => void;
   iseye?: boolean;
+
 }
 const PrimaryInput: FC<CustomInputProps> = ({
   type,
@@ -23,18 +23,18 @@ const PrimaryInput: FC<CustomInputProps> = ({
   onChange,
   placeholder,
   label,
-  isValid,
   isValidEmail,
   isEyeicon,
   iseye,
   handleEye,
+  
 }) => {
-  const inputType = type === "password" && iseye ? "text" : type; 
+  const inputType = type === "password" && iseye ? "text" : type;
 
   return (
     <div className="input_div">
       <Paragrafy text={label} />
-      <div className="input_wrapper"> 
+      <div className="input_wrapper">
         <input
           type={inputType}
           value={value}
@@ -42,7 +42,7 @@ const PrimaryInput: FC<CustomInputProps> = ({
           onChange={onChange}
           placeholder={placeholder}
         />
-        {isValid && isValidEmail && (
+        {isValidEmail && value && (
           <div style={{ position: "relative" }}>
             <FaCircleCheck className="circle_icon" />
           </div>

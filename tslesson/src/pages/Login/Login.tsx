@@ -17,8 +17,13 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
   const [iseye, setIseye] = useState<boolean>(false);
   const [isOn, setIsOn] = useState<boolean>(false);
+  const [emailError, setEmailError] = useState<string>("");
+  const [passwordError, setPasswordError] = useState<string>("");
+  const [passwordLengthError, setPasswordLengthError] = useState<string>("");
+  const [passwordFirstCharError, setPasswordFirstCharError] = useState<string>("");
 
-  const isValidEmail = email.includes('@') && email.includes(".");
+  const isValidEmail = email.includes('@') && email.includes('.') && !/\s/.test(email);
+  const isValidPassword = password.length > 0 && !/\s/.test(password);
 
   const handleLink = () => {
     setSignUp((prevState) => !prevState);
@@ -34,7 +39,34 @@ const Login = () => {
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!isValidEmail) {
+      setEmailError("Invalid email format or contains whitespace.");
+    } else {
+      setEmailError("");
+    }
+
+    if (!isValidPassword) {
+      setPasswordError("Password cannot contain spaces.");
+    } else {
+      setPasswordError("");
+    }
+
+    if (password.length < 8) {
+      setPasswordLengthError("Password must be at least 8 characters long.");
+    } else {
+      setPasswordLengthError("");
+    }
+
+    if (password[0] !== password[0].toUpperCase()) {
+      setPasswordFirstCharError("The first character must be uppercase.");
+    } else {
+      setPasswordFirstCharError("");
+    }
+
+
   };
+  
 
   return (
     <Container sx={{ display: "flex" }} className='all_login'>
@@ -44,30 +76,43 @@ const Login = () => {
       <div className='sign_right'>
         <Heading fontsize="48px" text={signUp ? "Create account" : "Sign in"} />
         <Paragrafy fontsize="16px" fontfamily="DM Sans, sans-serif" text={"Now your finances are in one place and always under control"} />
+        <div className="email-container">
 
-        <PrimaryInput
-          label='Email'
-          type='email'
-          onChange={(e) => setEmail(e.target.value)}
-          isValid
-          isValidEmail={isValidEmail}
-        />
-
+          <PrimaryInput
+            label='Email'
+            type='email'
+            onChange={(e) => {
+              setEmail(e.target.value.trim());
+              setEmailError("");
+            }}
+            value={email}
+            isValidEmail={isValidEmail}
+          />
+          {emailError && <Paragrafy fontsize="14px" fontfamily="DM Sans, sans-serif" text={emailError} />}
+        </div>
         <div className="password-container">
           <PrimaryInput
             label='Password'
             type='password'
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setPasswordError("");
+              setPasswordLengthError("");
+              setPasswordFirstCharError("");
+            }}
+            value={password}
             isEyeicon
             iseye={iseye}
             handleEye={handleEye}
           />
-
+          {passwordError && <Paragrafy  fontsize="14px" fontfamily="DM Sans, sans-serif" text={passwordError} />}
+          {passwordLengthError && <Paragrafy  fontsize="14px" fontfamily="DM Sans, sans-serif" text={passwordLengthError} />}
+          {passwordFirstCharError && <Paragrafy  fontsize="14px" fontfamily="DM Sans, sans-serif" text={passwordFirstCharError} />}
 
           {!signUp && (
             <div className="forgot-password-container">
               <Link to="/forgot-password" className="forgot-password-link">
-                <Paragrafy fontfamily='Inter,sans-serif' text="Forgot Password?" fontWeight="400" fontsize="14px" />
+                <Paragrafy fontfamily="Inter,sans-serif" text="Forgot Password?" fontWeight="400" fontsize="14px" />
               </Link>
             </div>
           )}
@@ -93,4 +138,7 @@ const Login = () => {
     </Container>
   );
 };
+
 export default Login;
+
+
