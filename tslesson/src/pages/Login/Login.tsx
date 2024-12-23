@@ -111,7 +111,7 @@ const Login = () => {
 
           {!signUp && (
             <div className="forgot-password-container">
-              <Link to="/forgot-password" className="forgot-password-link">
+              <Link to="/forgotpasswordpage" className="forgot-password-link">
                 <Paragrafy fontfamily="Inter,sans-serif" text="Forgot Password?" fontWeight="400" fontsize="14px" />
               </Link>
             </div>

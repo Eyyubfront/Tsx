@@ -6,25 +6,26 @@ import CustomHeading from "../../components/CustomHeading";
 import CustomText from "../../components/CustomText";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
+import { Link } from "react-router-dom";
 const ForgotPasswordPage = () => {
   return (
     <div className="container">
       <div className="main-div">
-     
+
         <div className="left-side">
           <LeftVerifyEmail />
         </div>
         <div className="forgot-pass">
-        <Button
-          className="leftBt"
-          sx={{
-            border: "2px solid #D8DADC ",
-            color: "black",
-            borderRadius: "10px",
-          }}
-        >
-          <KeyboardArrowLeftIcon />
-        </Button>
+          <Button
+            className="leftBt"
+            sx={{
+              border: "2px solid #D8DADC ",
+              color: "black",
+              borderRadius: "10px",
+            }}
+          >
+            <KeyboardArrowLeftIcon />
+          </Button>
           <CustomHeading
             color="#1D1730"
             lineHeight="62.4px"
@@ -51,15 +52,16 @@ const ForgotPasswordPage = () => {
               borderRadius="7px"
               outline="none"
             />
-             <CustomButton
-            text="Verify Code"
-            backgroundColor="#8B6DE8"
-            color="#ffff"
-            className="custombtn"
-          />
+            <Link to="/verifyemailpage">
+              <CustomButton
+                text="Verify Code"
+                backgroundColor="#8B6DE8"
+                color="#ffff"
+                className="custombtn"
+              /></Link>
           </form>
 
-         
+
         </div>
       </div>
     </div>
