@@ -31,7 +31,7 @@ const VerifyEmailPage = () => {
     console.log("Code resent!");
   };
 
-  const handleInputChange = (value, index) => {
+  const handleInputChange = (value:any, index:any) => {
     if (!/^\d*$/.test(value)) return;
 
     const newInputCode = [...inputCode];

@@ -5,9 +5,7 @@ import ResetPasswordPage from "../pages/ResetPasswordPage/ResetPasswordPage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage/ForgotPasswordPage";
 import VerifyEmailPage from "../pages/VerifyEmailPage/VerifyEmailPage";
 
-
-import Login from '../pages/Login/Login'
-
+import Login from "../pages/Login/Login";
 
 const Routing = () => {
   return (
@@ -15,13 +13,11 @@ const Routing = () => {
       <Route path="/changedpasswordpage" element={<ChangedPasswordPage />} />
       <Route path="/checkemailpage" element={<CheckEmailPage />} />
       <Route path="/forgotpasswordpage" element={<ForgotPasswordPage />} />
-      <Route path="/resetpasswordpage" element={<ResetPasswordPage success={false} />}/>
+      <Route path="/resetpasswordpage" element={<ResetPasswordPage />} />
       <Route path="/verifyemailpage" element={<VerifyEmailPage />} />
-      <Route path="/" element={< Login />} />
-
+      <Route path="/" element={<Login />} />
     </Routes>
   );
-    
-}
+};
 
 export default Routing;

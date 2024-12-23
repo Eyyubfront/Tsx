@@ -9,8 +9,8 @@ interface CustomButtonProps {
   padding?: string;
   margin?: string;
   borderRadius?: string;
-  outline?:string;
-  type?:string
+  outline?: string;
+  type?: "submit" | "reset" | "button" | undefined;
 }
 
 function CustomButton({
@@ -25,7 +25,7 @@ function CustomButton({
   className,
   backgroundColor,
   outline,
-  type
+  type = "submit",
 }: CustomButtonProps) {
   return (
     <button
@@ -39,9 +39,9 @@ function CustomButton({
         padding: padding,
         margin: margin,
         borderRadius: borderRadius,
-        outline:outline,
-        type:type,
+        outline: outline,
       }}
+      type={type}
     >
       {text}
     </button>
