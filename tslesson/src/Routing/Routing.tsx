@@ -7,7 +7,6 @@ import Login from '../pages/Login/Login'
 const Routing = () => {
   return (
     <Routes>
-
       <Route path="/" element={< Login />} />
     </Routes>
   )
