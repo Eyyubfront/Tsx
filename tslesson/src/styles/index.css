@@ -1,0 +1,901 @@
+.button_primary {
+  width: 541px;
+  height: 56px;
+  top: 567px;
+  left: 16px;
+  padding: 17px;
+  gap: 10px;
+  border-radius: 10px;
+  font-family: DM sans-serif;
+  color: white;
+  border-color: #8B6DE8;
+  background-color: #8B6DE8;
+  font-family: DM Sans;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: center;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  cursor: pointer;
+  border: 1px solid #8B6DE8;
+}
+
+@media (max-width: 600px) {
+  .button_primary {
+    width: 100% !important;
+    height: 56px;
+  }
+}
+@media (min-width: 601px) and (max-width: 1200px) {
+  .button_primary {
+    width: 100% !important;
+    height: 56px;
+  }
+}
+.input_div {
+  position: relative;
+}
+.input_div .input_wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+.input_div .input_primary {
+  width: 100%;
+  height: 56px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #D8DADC;
+}
+.input_div .input_primary:focus {
+  outline: none;
+}
+.input_div .eyesonof,
+.input_div .circle_icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.input_div .eyesonof {
+  right: 15px;
+}
+.input_div .circle_icon {
+  right: 16px;
+  width: 17px;
+}
+
+@media (max-width: 600px) {
+  .input_div {
+    width: 100%;
+  }
+  .input_primary {
+    width: 100% !important;
+    height: 56px;
+  }
+  .eyesonof {
+    right: 10px;
+  }
+  .circle_icon {
+    right: 10px;
+  }
+}
+@media (min-width: 601px) and (max-width: 1200px) {
+  .input_div {
+    width: 100%;
+  }
+  .input_primary {
+    width: 100% !important;
+    height: 56px;
+  }
+  .eyesonof {
+    right: 10px;
+  }
+  .circle_icon {
+    right: 10px;
+  }
+}
+.leftpanel_container {
+  background-image: url("../../assets/images/AuthImages/bacgroundimage/ezzedesign.png");
+  width: 100%;
+  background-size: cover;
+  height: 664px;
+  padding: 48px;
+  gap: 0px;
+  border-radius: 32px;
+  position: relative;
+}
+.leftpanel_container .leftpanel_staricon .starimg {
+  width: 250px;
+}
+.leftpanel_container .leftpanel_bottomtext {
+  position: absolute;
+  top: 527px;
+  left: 48px;
+  gap: 24px;
+  display: flex;
+  flex-direction: column;
+}
+.leftpanel_container .leftpanel_bottomtext .leftpanel_botomname {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+}
+.leftpanel_container .leftpanel_bottomtext .leftpanel_bottom {
+  font-family: DM Sans;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 22.5px;
+  color: #4A4559;
+  width: 451px;
+  height: 46px;
+  gap: 0px;
+  opacity: 0px;
+}
+
+@media (max-width: 600px) {
+  .leftpanel_container {
+    width: 100%;
+    height: 250px;
+    top: 16px;
+    left: 0px;
+    gap: 0px;
+  }
+  .leftpanel_container .leftpanel_staricon {
+    position: absolute;
+    top: 15px !important;
+    left: 18px !important;
+  }
+  .leftpanel_container .leftpanel_staricon .starimg {
+    width: 56.04px;
+    height: 55px;
+  }
+  .leftpanel_container .leftpanel_bottomtext {
+    top: 125px;
+    left: 24px;
+  }
+  .leftpanel_container .leftpanel_bottomtext .leftpanelWelcome_text {
+    font-size: 20px;
+  }
+  .leftpanel_container .leftpanel_bottomtext .leftpanel_bottom {
+    font-size: 14px;
+    width: 100% !important;
+    height: 56px !important;
+  }
+}
+@media (min-width: 601px) and (max-width: 1200px) {
+  .leftpanel_container {
+    height: 450px;
+    width: 100% !important;
+    top: 16px;
+    left: 0px;
+    gap: 0px;
+  }
+  .leftpanel_container .leftpanel_staricon {
+    position: absolute;
+    width: 157px;
+    height: 154px;
+    top: 42px;
+    right: 0;
+  }
+  .leftpanel_container .leftpanel_staricon .starimg {
+    width: 157px;
+    height: 154px;
+  }
+  .leftpanel_container .leftpanel_bottomtext {
+    width: 451px;
+    height: 125px;
+    top: 292px;
+    left: 32px;
+  }
+  .leftpanel_container .leftpanel_bottomtext .leftpanelWelcome_text {
+    font-size: 42px;
+  }
+  .leftpanel_container .leftpanel_bottomtext .leftpanel_bottom {
+    font-size: 18px;
+    width: 451px;
+    height: 46px;
+  }
+}
+@media (min-width: 1201px) and (max-width: 1305px) {
+  .leftpanel_container {
+    width: 580px !important;
+  }
+}
+.checkbox_container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.checkbox_container .checkbox {
+  border: 1px solid;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  gap: 0px;
+  opacity: 0px;
+  background-color: #F3F0FD;
+  border-color: #F3F0FD;
+}
+.checkbox_container .checkbox .checkmark {
+  color: #8B6DE8;
+}
+
+.signin_name {
+  font-size: 48px;
+}
+
+@media (max-width: 600px) {
+  .signin_name {
+    font-size: 32px !important;
+  }
+}
+.signin_controlinfo {
+  font-weight: 400;
+}
+@media (max-width: 600px) {
+  .signin_controlinfo {
+    font-size: 14px !important;
+  }
+}
+@media (min-width: 601px) and (max-width: 1200px) {
+  .signin_controlinfo {
+    font-size: 18px !important;
+  }
+}
+
+.sign_up {
+  margin-top: 42px;
+  gap: 32px;
+}
+.sign_up .signup_left {
+  width: 100% !important;
+}
+.sign_up .signup_right {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  position: relative;
+}
+.sign_up .signup_right .signup_topname {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sign_up .signup_right .signup_topname .signup_name {
+  font-family: DM Serif Display;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 62.4px;
+  letter-spacing: -0.01em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+.sign_up .signup_right .signup_topname .signup_controlinfo {
+  font-family: DM Sans;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25.6px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: rgba(0, 0, 0, 0.6980392157);
+}
+.sign_up .signup_right .signup_form form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.sign_up .signup_right .signup_form form .signup_email {
+  display: flex;
+  flex-direction: column;
+  gap: 8px !important;
+}
+.sign_up .signup_right .signup_form form .signup_email .circle_box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+.sign_up .signup_right .signup_form form .signup_email .circle_box .circle_icon {
+  transform: translate(-50%, -50%);
+  right: 16px;
+  top: 3px;
+  width: 17px;
+  position: absolute;
+}
+.sign_up .signup_right .signup_form form .signup_email .label_name {
+  font-family: DM Sans;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17.5px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+.sign_up .signup_right .signup_form form .signup_password {
+  display: flex;
+  flex-direction: column;
+  gap: 6px !important;
+}
+.sign_up .signup_right .signup_form form .signup_password .singin_passwordinp {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  position: relative;
+}
+.sign_up .signup_right .signup_form form .signup_password .singin_passwordinp .eyesonof {
+  position: relative !important;
+}
+.sign_up .signup_right .signup_form form .signup_password .singin_passwordinp .paswordtop {
+  display: flex;
+  flex-direction: column;
+}
+.sign_up .signup_right .signup_form form .signup_password .singin_passwordinp .eye_icon {
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+  transform: translate(-50%, -50%);
+  width: 17px;
+  font-size: 18px;
+  gap: 0px;
+  opacity: 0px;
+}
+.sign_up .signup_right .signup_check {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 277px;
+  height: 20px;
+  gap: 12px;
+  opacity: 0px;
+}
+.sign_up .signup_right .signup_check .signup_checkbox {
+  border: 1px solid;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  gap: 0px;
+  opacity: 0px;
+  background-color: #F3F0FD;
+  border-color: #F3F0FD;
+}
+.sign_up .signup_right .signup_check .signup_checkbox .checkmark {
+  color: #8B6DE8;
+}
+.sign_up .signup_right .signup_navbuttom {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17.5px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  margin: auto;
+  margin-top: 30%;
+}
+.sign_up .signup_right .signup_navbuttom .signup_alredytext {
+  font-weight: 300;
+}
+.sign_up .signup_right .signup_navbuttom .signup_nav {
+  font-weight: bold;
+  color: black;
+  border-bottom-color: 2px solid;
+}
+
+@media (max-width: 600px) {
+  .signup_left {
+    width: 100%;
+  }
+  .sign_up {
+    flex-direction: column !important;
+    align-items: baseline;
+    margin-top: 0px !important;
+    justify-content: center !important;
+  }
+  .sign_up .signup_right {
+    width: 100% !important;
+  }
+  .sign_up .signup_right .signup_btm {
+    width: 100%;
+  }
+  .sign_up .signup_right .signup_check {
+    width: 100%;
+  }
+  .sign_up .signup_right .signup_form {
+    width: 100% !important;
+  }
+  .sign_up .signup_right .signup_form form {
+    width: 100%;
+    align-items: baseline;
+  }
+  .sign_up .signup_right .signup_form .signup_email {
+    width: 100% !important;
+  }
+  .sign_up .signup_right .signup_form .signup_email .input_div {
+    width: 100% !important;
+  }
+  .sign_up .signup_right .signup_form .signup_password {
+    width: 100% !important;
+  }
+  .sign_up .signup_right .signup_form .signup_password .paswordtop {
+    width: 100% !important;
+  }
+  .sign_up .signup_right .signup_form .signup_password .paswordtop .input_div {
+    width: 100% !important;
+  }
+  .sign_up .signup_right .signup_navbuttom {
+    margin-top: 3% !important;
+    width: 100%;
+    justify-content: center;
+  }
+  .sign_up .signup_right .signup_navbuttom .sign_alredytext {
+    width: 171px;
+  }
+  .sign_up .signup_right .signup_navbuttom .signup_nav p {
+    width: 85px;
+  }
+  .sign_up .signup_right .signup_name {
+    font-size: 32px !important;
+  }
+  .sign_up .signup_right .eye_icon {
+    right: 22px !important;
+  }
+  .sign_up .signup_right .signup_controlinfo {
+    font-size: 16px;
+    width: 100% !important;
+    height: 52px;
+  }
+}
+@media (min-width: 601px) and (max-width: 1200px) {
+  .signup_left {
+    width: 100%;
+  }
+  .sign_up {
+    flex-direction: column !important;
+    align-items: baseline;
+    margin-top: 0px !important;
+  }
+  .sign_up .signup_right {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+  }
+  .sign_up .signup_right .signup_btm {
+    width: 100%;
+  }
+  .sign_up .signup_right .signup_form {
+    width: 100% !important;
+  }
+  .sign_up .signup_right .signup_form form {
+    width: 100%;
+    align-items: baseline;
+  }
+  .sign_up .signup_right .signup_form .signup_email {
+    width: 100% !important;
+  }
+  .sign_up .signup_right .signup_form .signup_email .input_div {
+    width: 100% !important;
+  }
+  .sign_up .signup_right .signup_form .signup_password {
+    width: 100% !important;
+  }
+  .sign_up .signup_right .signup_form .signup_password .paswordtop {
+    width: 100% !important;
+  }
+  .sign_up .signup_right .signup_form .signup_password .paswordtop .input_div {
+    width: 100% !important;
+  }
+  .sign_up .signup_right .eye_icon {
+    right: 21px !important;
+    cursor: pointer;
+  }
+  .sign_up .signup_right .signup_navbuttom {
+    margin-top: 2%;
+    width: 100%;
+    justify-content: center;
+  }
+  .sign_up .signup_right .signup_name {
+    font-size: 48px !important;
+  }
+  .sign_up .signup_right .signup_controlinfo {
+    font-size: 18px;
+    width: 509px;
+    height: 29px;
+    gap: 0px;
+    opacity: 0px;
+  }
+}
+.sign_in {
+  margin-top: 42px;
+  gap: 32px;
+}
+.sign_in .signin_left {
+  width: 100% !important;
+}
+.sign_in .signin_right {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  position: relative;
+  width: 50%;
+}
+.sign_in .signin_right .singin_topname {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sign_in .signin_right .singin_topname .signin_name {
+  font-family: DM Serif Display;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 62.4px;
+  letter-spacing: -0.01em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+.sign_in .signin_right .singin_topname .signin_controlinfo {
+  font-family: DM Sans;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25.6px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: rgba(0, 0, 0, 0.6980392157);
+}
+.sign_in .signin_right .signin_form {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+}
+.sign_in .signin_right .signin_form .singin_email {
+  display: flex;
+  flex-direction: column;
+  gap: 6px !important;
+}
+.sign_in .signin_right .signin_form .singin_email .circle_box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+.sign_in .signin_right .signin_form .singin_email .circle_box .circle_icon {
+  transform: translate(-50%, -50%);
+  right: 16px;
+  top: 3px;
+  width: 17px;
+  position: absolute;
+}
+.sign_in .signin_right .signin_form form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.sign_in .signin_right .signin_form .label_name {
+  font-family: DM Sans;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17.5px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+.sign_in .signin_right .signin_form .singin_password {
+  display: flex;
+  flex-direction: column;
+  gap: 6px !important;
+  align-items: flex-end;
+}
+.sign_in .signin_right .signin_form .singin_password .forgot_link {
+  text-decoration: none;
+}
+.sign_in .signin_right .signin_form .singin_password .forgot_link .forgot_pasword {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17.5px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #1D1730;
+}
+.sign_in .signin_right .signin_form .singin_password .singin_passwordinp {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+}
+.sign_in .signin_right .signin_form .singin_password .singin_passwordinp .eyesonof {
+  position: relative !important;
+}
+.sign_in .signin_right .signin_form .singin_password .singin_passwordinp .eye_icon {
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+  width: 17px;
+  font-size: 18px;
+  transform: translate(-50%, -50%);
+  gap: 0px;
+  opacity: 0px;
+}
+.sign_in .signin_right .signin_check {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 277px;
+  height: 20px;
+  gap: 12px;
+  opacity: 0px;
+}
+.sign_in .signin_right .signin_check .signin_checkaccsestext {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.sign_in .signin_right .signin_check .signin_checkaccsestext .confirmation_textone {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+.sign_in .signin_right .signin_check .signin_checkaccsestext .confirmation_texttwo {
+  width: 267px;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17.5px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+.sign_in .signin_right .signin_check .sign_toggle .togle_icon {
+  cursor: pointer;
+  width: 54px;
+  height: 72px;
+  color: #8B6DE8;
+  transition: color 0.3s ease;
+}
+.sign_in .signin_right .signin_check .sign_toggle .togle_iconof {
+  cursor: pointer;
+  width: 54px;
+  height: 72px;
+  color: #C0AEE4;
+  transition: color 0.3s ease;
+}
+.sign_in .signin_right .signin_navbuttom {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17.5px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  margin: auto;
+  margin-top: 26%;
+}
+.sign_in .signin_right .signin_navbuttom .sign_alredytext {
+  font-weight: 300;
+}
+.sign_in .signin_right .signin_navbuttom .signin_nav {
+  font-weight: bold;
+  color: black;
+  border-bottom-color: 2px solid;
+}
+
+@media (max-width: 600px) {
+  .sign_in {
+    flex-direction: column !important;
+    align-items: baseline;
+    display: flex;
+    margin-top: 5px !important;
+    justify-content: center !important;
+    padding: 24px !important;
+  }
+  .sign_in .signin_left {
+    width: 100%;
+  }
+  .sign_in .signin_right {
+    width: 100% !important;
+  }
+  .sign_in .signin_right .signin_btm {
+    width: 100%;
+  }
+  .sign_in .signin_right .signin_check {
+    width: 100% !important;
+  }
+  .sign_in .signin_right .signin_check .confirmation_textone {
+    width: 100% !important;
+  }
+  .sign_in .signin_right .signin_check .confirmation_texttwo {
+    width: 100% !important;
+  }
+  .sign_in .signin_right .signin_form {
+    width: 100% !important;
+  }
+  .sign_in .signin_right .signin_form form {
+    width: 100%;
+    align-items: baseline;
+  }
+  .sign_in .signin_right .signin_form .singin_email {
+    width: 100% !important;
+  }
+  .sign_in .signin_right .signin_form .singin_email .input_div {
+    width: 100% !important;
+  }
+  .sign_in .signin_right .signin_form .singin_password {
+    width: 100% !important;
+  }
+  .sign_in .signin_right .signin_form .singin_password .paswordtop {
+    width: 100% !important;
+  }
+  .sign_in .signin_right .signin_form .singin_password .paswordtop .input_div {
+    width: 100% !important;
+  }
+  .sign_in .signin_right .signin_navbuttom {
+    margin-top: 3% !important;
+    width: 87%;
+    justify-content: center;
+  }
+  .sign_in .signin_right .signin_navbuttom .sign_alredytext {
+    width: 169px;
+  }
+  .sign_in .signin_right .signin_navbuttom .signin_nav p {
+    width: 85px;
+  }
+  .sign_in .signin_right .signin_name {
+    font-size: 32px !important;
+  }
+  .sign_in .signin_right .eye_icon {
+    right: 20px !important;
+  }
+  .sign_in .signin_right .signin_controlinfo {
+    font-size: 16px;
+    width: 100% !important;
+    height: 52px;
+  }
+}
+@media (min-width: 601px) and (max-width: 1200px) {
+  .sign_in {
+    margin-top: 5px !important;
+    flex-direction: column !important;
+    align-items: baseline;
+    display: flex;
+    padding: 46px !important;
+  }
+  .sign_in .signin_left {
+    width: 100%;
+  }
+  .sign_in .signin_right {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+  }
+  .sign_in .signin_right .signin_btm {
+    width: 100%;
+  }
+  .sign_in .signin_right .signin_form {
+    width: 100% !important;
+  }
+  .sign_in .signin_right .signin_form form {
+    width: 100%;
+    align-items: baseline;
+  }
+  .sign_in .signin_right .signin_form .singin_email {
+    width: 100% !important;
+  }
+  .sign_in .signin_right .signin_form .singin_email .input_div {
+    width: 100% !important;
+  }
+  .sign_in .signin_right .signin_form .singin_password {
+    width: 100% !important;
+  }
+  .sign_in .signin_right .signin_form .singin_password .paswordtop {
+    width: 100% !important;
+  }
+  .sign_in .signin_right .signin_form .singin_password .paswordtop .input_div {
+    width: 100% !important;
+  }
+  .sign_in .signin_right .eye_icon {
+    right: 21px !important;
+  }
+  .sign_in .signin_right .signin_navbuttom {
+    margin-top: 2%;
+    justify-content: center;
+    width: 87%;
+  }
+  .sign_in .signin_right .signin_name {
+    font-size: 48px !important;
+  }
+  .sign_in .signin_right .signin_controlinfo {
+    font-size: 18px;
+    width: 509px;
+    height: 29px;
+    gap: 0px;
+    opacity: 0px;
+  }
+}
+.all_login {
+  gap: 32px;
+  padding: 32px;
+  margin-top: 42px;
+  display: flex;
+  justify-content: space-between;
+}
+.all_login .sign_left {
+  width: 100% !important;
+}
+.all_login .sign_right {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  position: relative;
+}
+.all_login .link_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 26%;
+}
+
+@media (max-width: 600px) {
+  .all_login {
+    flex-direction: column !important;
+    align-items: baseline;
+    margin-top: 0px !important;
+    justify-content: center !important;
+  }
+  .all_login .sign_left {
+    width: 100% !important;
+  }
+  .all_login .sign_right {
+    width: 100% !important;
+  }
+  .all_login .link_container {
+    flex-direction: row;
+    margin-top: 0%;
+    align-items: baseline;
+  }
+}
+@media (min-width: 601px) and (max-width: 1200px) {
+  .all_login {
+    flex-direction: column !important;
+    align-items: baseline;
+    margin-top: 0px !important;
+    justify-content: center !important;
+  }
+  .all_login .sign_left {
+    width: 100% !important;
+  }
+  .all_login .sign_right {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+  }
+  .all_login .link_container {
+    flex-direction: row;
+    margin-top: 0%;
+    align-items: baseline;
+    margin: auto;
+  }
+}

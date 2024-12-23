@@ -1,0 +1,40 @@
+.button_primary {
+    width: 541px;
+    height: 56px;
+    top: 567px;
+    left: 16px;
+    padding: 17px;
+    gap: 10px;
+    border-radius: 10px;
+    font-family: DM sans-serif;
+    color: white;
+    border-color: #8B6DE8;
+    background-color: #8B6DE8;
+    font-family: DM Sans;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+cursor: pointer;
+    border: 1px solid #8B6DE8;
+}
+
+
+@media (max-width:600px) {
+    .button_primary {
+        width: 100% !important;
+        height: 56px;
+
+
+    }
+}
+@media (min-width:601px)and (max-width:1200px) {
+    .button_primary {
+        width: 100% !important;
+        height: 56px;
+
+
+    }
+}
