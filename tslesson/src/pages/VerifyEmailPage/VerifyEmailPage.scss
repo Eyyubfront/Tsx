@@ -1,0 +1,159 @@
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.main-div{
+  position: relative;
+  .btn {
+    position: absolute;
+    top: 10%;
+    right: 35%;
+  }
+
+}
+
+.verify-email {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  padding: 0 32px;
+  width: 100%;
+  max-width: 541px;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+ 
+  .inputs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    input {
+      width: 40px;
+      height: 40px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      text-align: center;
+      font-size: 18px;
+
+      &:focus {
+        border-color: #6a5acd;
+        outline: none;
+      }
+    }
+  }
+
+  .verify-content{
+    .customhead{
+      font-family: serif;
+    }
+    .customtext{
+      font-family: sans-serif;
+    }
+  }
+
+  .resend-code {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #4a4559;
+  }
+
+  .resend-button {
+    background-color: #6a5acd;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #5740ba;
+    }
+  }
+}
+
+.main-div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: 1290px) {
+  .verify-content{
+    text-align: center;
+  }
+  .verify-email {
+    width: 90%;
+    padding: 0 20px;
+    text-align: left;
+
+    .btn {
+      top: -90%;
+      left: -12%;
+      color: #fff;
+    }
+
+    .customhead {
+      font-size: 36px;
+    }
+
+    .inputs {
+      input {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+      }
+    }
+
+    .resend-code {
+      font-size: 12px;
+    }
+
+    .resend-button {
+      padding: 8px 12px;
+    }
+  }
+
+  .main-div {
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 576px) {
+  .main-div {
+    justify-content: center;
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .verify-email {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+  }
+
+  .verify-content {
+    text-align: center;
+    
+    .inputs {
+      display: flex;
+      justify-content: center; 
+      align-items: center;   
+
+      input {
+        text-align: center;
+        margin: 0;
+        box-sizing: border-box; 
+      }
+    }
+  }
+}
+
+
+ 
