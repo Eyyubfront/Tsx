@@ -4,29 +4,35 @@
   margin: 0 auto;
 }
 
-.main-div{
-  position: relative;
-  .btn {
-    position: absolute;
-    top: 10%;
-    right: 35%;
-  }
-
-}
-
-.verify-email {
-  text-align: center;
+.check-email {
+  text-align: left;
   font-family: Arial, sans-serif;
   padding: 0 32px;
   width: 100%;
   max-width: 541px;
   height: 100%;
   margin: 0 auto;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
 
- 
+  .btn {
+    left: 0;
+    top: 25px;
+    position: absolute;
+  }
+
+  .verify-content {
+    .csttext {
+      text-align: left;
+      font-family: sans-serif;
+    }
+    .customhead {
+      font-family: serif;
+    }
+  }
+
   .inputs {
     display: flex;
     justify-content: center;
@@ -47,19 +53,11 @@
     }
   }
 
-  .verify-content{
-    .customhead{
-      font-family: serif;
-    }
-    .customtext{
-      font-family: sans-serif;
-    }
-  }
-
   .resend-code {
     margin-top: 20px;
     font-size: 14px;
     color: #4a4559;
+    text-align: center;
   }
 
   .resend-button {
@@ -82,11 +80,8 @@
   justify-content: space-between;
 }
 
-@media (max-width: 1290px) {
-  .verify-content{
-    text-align: center;
-  }
-  .verify-email {
+@media (max-width: 992px) {
+  .check-email {
     width: 90%;
     padding: 0 20px;
     text-align: left;
@@ -129,31 +124,38 @@
     justify-content: center;
     flex-direction: column;
     padding: 0;
-  }
+    position: relative;
 
-  .verify-email {
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-  }
+    .verify-email {
+      padding: 0;
+      .btn {
+        top: -72%;
+        left: 3%;
+        position: absolute;
+        color: #fff;
+      }
 
-  .verify-content {
-    text-align: center;
-    
-    .inputs {
-      display: flex;
-      justify-content: center; 
-      align-items: center;   
+      .customhead {
+        font-size: 32px;
+        line-height: 1.3;
+        font-weight: 400;
+        color: #1d1730;
+      }
 
-      input {
-        text-align: center;
-        margin: 0;
-        box-sizing: border-box; 
+      .inputs {
+        justify-content: left;
+
+        input {
+          width: 30px;
+          height: 30px;
+          font-size: 14px;
+        }
+      }
+
+      .resend-button {
+        font-size: 12px;
+        padding: 6px 10px;
       }
     }
   }
 }
-
-
- 
