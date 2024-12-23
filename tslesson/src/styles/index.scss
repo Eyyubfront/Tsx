@@ -1,8 +1,11 @@
 // Components
 @import "../components/PrimaryButton/PrimaryButton.scss";
 @import "../components/PrimaryInput/PrimaryInput.scss";
-@import "../components/BackIcon/BackIcon.scss";
-@import "../components/layout/AuthLeftPanel/AuthLeftPanel.scss";
+@import "../layout/AuthLeftPanel/AuthLeftPanel.scss";
+@import "../components/Check/Check.scss";
+@import "../components/Heading/Heading.scss";
+@import "../components/Paragrafy/Paragrafy.scss";
+@import "../components/Toogle/Toogle.scss";
 
 
 
@@ -12,3 +15,5 @@
 @import "../pages/SigninPage/SigninPage.scss";
 @import "../pages/VerifyEmailPage/VerifyEmailPage.scss";
 @import "../pages/ForgotPasswordPage/ForgotPasswordPage.scss";
+
+@import "../pages/Login/Login.scss";
