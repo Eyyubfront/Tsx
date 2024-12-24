@@ -53,10 +53,10 @@ const Input: FC<CustomInputProps> = ({
             )}
           </div>
         )}
+      </div>
         {errors[name] && (
           <span className="error_message">{String(errors[name]?.message)}</span>
         )}
-      </div>
     </div>
   );
 };

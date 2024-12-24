@@ -15,10 +15,10 @@ import "./Login.scss";
 import UseFormInput from '../../components/PrimaryInput/UseFormInput';
 
 const schema = Yup.object().shape({
-  email: Yup.string().email("Email is not").required("Email is required."),
+  email: Yup.string().email("Email is not valid.").required("Email is required."),
   password: Yup.string()
-    .min(8, "password egith length.")
-    .matches(/^(?=.*[A-Z])/, "Password one toupparcase")
+    .min(8, "Password must be at least 8 characters long.")
+    .matches(/^(?=.*[A-Z])/, "Password must contain at least one uppercase letter.")
     .required("Password is required."),
 });
 
