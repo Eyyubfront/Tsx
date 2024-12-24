@@ -1,48 +1,45 @@
 import { FC } from "react";
-import "./PrimaryInput.scss";
+
 import Paragrafy from "../Paragrafy/Paragrafy";
 import { FaCircleCheck } from "react-icons/fa6";
 import { RxEyeOpen } from "react-icons/rx";
 import { FaRegEyeSlash } from "react-icons/fa";
+import { useFormContext } from "react-hook-form";
 
 interface CustomInputProps {
   type?: "text" | "email" | "password";
-  value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
   label?: string;
   isValidEmail?: boolean;
   isEyeicon?: boolean;
   handleEye?: () => void;
   iseye?: boolean;
-
+  name: string;
+  errorMessage?: string; 
 }
-const PrimaryInput: FC<CustomInputProps> = ({
-  type,
-  value,
-  onChange,
-  placeholder,
+
+const Input: FC<CustomInputProps> = ({
+  type = "text",
   label,
   isValidEmail,
   isEyeicon,
   iseye,
   handleEye,
-  
+  name,
 }) => {
   const inputType = type === "password" && iseye ? "text" : type;
+  const { register, formState: { errors } } = useFormContext(); 
 
   return (
     <div className="input_div">
       <Paragrafy text={label} />
       <div className="input_wrapper">
         <input
-          type={inputType}
-          value={value}
-          className="input_primary"
-          onChange={onChange}
-          placeholder={placeholder}
+          {...register(name)} 
+          type={inputType} 
+          placeholder={label} 
+          className={`input_primary ${errors[name] ? 'error' : ''}`} 
         />
-        {isValidEmail && value && (
+        {isValidEmail && (
           <div style={{ position: "relative" }}>
             <FaCircleCheck className="circle_icon" />
           </div>
@@ -56,10 +53,12 @@ const PrimaryInput: FC<CustomInputProps> = ({
             )}
           </div>
         )}
+        {errors[name] && (
+          <span className="error_message">{String(errors[name]?.message)}</span>
+        )}
       </div>
     </div>
   );
 };
 
-
-export default PrimaryInput;
+export default Input;

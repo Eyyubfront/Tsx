@@ -1,6 +1,8 @@
 .input_div {
   position: relative;
-
+display: flex;
+flex-direction: column;
+gap: 5px;
   .input_wrapper {
     display: flex; 
     align-items: center;  

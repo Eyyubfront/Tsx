@@ -1,29 +1,37 @@
+import { useState } from 'react';
 import { Container } from '@mui/material';
 import AuthLeftPanel from '../../layout/AuthLeftPanel/AuthLeftPanel';
 import Heading from '../../components/Heading';
-import { useState } from 'react';
 import Paragrafy from '../../components/Paragrafy/Paragrafy';
-import PrimaryInput from '../../components/PrimaryInput/PrimaryInput';
 import Check from '../../components/Check/Check';
 import PrimaryButton from '../../components/PrimaryButton/PrimaryButton';
 import CustomLink from '../../components/CustomLink/CustomLink';
 import Toogle from '../../components/Toogle/Toogle';
 import { Link } from 'react-router-dom';
+import { useForm, FormProvider } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 import "./Login.scss";
+import UseFormInput from '../../components/PrimaryInput/UseFormInput';
+
+const schema = Yup.object().shape({
+  email: Yup.string().email("Email is not").required("Email is required."),
+  password: Yup.string()
+    .min(8, "password egith length.")
+    .matches(/^(?=.*[A-Z])/, "Password one toupparcase")
+    .required("Password is required."),
+});
 
 const Login = () => {
-  const [signUp, setSignUp] = useState<boolean>(true);
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [iseye, setIseye] = useState<boolean>(false);
-  const [isOn, setIsOn] = useState<boolean>(false);
-  const [emailError, setEmailError] = useState<string>("");
-  const [passwordError, setPasswordError] = useState<string>("");
-  const [passwordLengthError, setPasswordLengthError] = useState<string>("");
-  const [passwordFirstCharError, setPasswordFirstCharError] = useState<string>("");
+  const [signUp, setSignUp] = useState(true);
+  const [iseye, setIseye] = useState(false);
+  const [isOn, setIsOn] = useState(false);
 
-  const isValidEmail = email.includes('@') && email.includes('.') && !/\s/.test(email);
-  const isValidPassword = password.length > 0 && !/\s/.test(password);
+  const methods = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const { handleSubmit } = methods
 
   const handleLink = () => {
     setSignUp((prevState) => !prevState);
@@ -37,36 +45,9 @@ const Login = () => {
     setIsOn((prevState) => !prevState);
   };
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!isValidEmail) {
-      setEmailError("Invalid email format or contains whitespace.");
-    } else {
-      setEmailError("");
-    }
-
-    if (!isValidPassword) {
-      setPasswordError("Password cannot contain spaces.");
-    } else {
-      setPasswordError("");
-    }
-
-    if (password.length < 8) {
-      setPasswordLengthError("Password must be at least 8 characters long.");
-    } else {
-      setPasswordLengthError("");
-    }
-
-    if (password[0] !== password[0].toUpperCase()) {
-      setPasswordFirstCharError("The first character must be uppercase.");
-    } else {
-      setPasswordFirstCharError("");
-    }
-
-
+  const onSubmit = (data: any) => {
+    console.log(data);
   };
-  
 
   return (
     <Container sx={{ display: "flex" }} className='all_login'>
@@ -74,71 +55,53 @@ const Login = () => {
         <AuthLeftPanel />
       </div>
       <div className='sign_right'>
-        <Heading fontsize="48px" text={signUp ? "Create account" : "Sign in"} />
-        <Paragrafy fontsize="16px" fontfamily="DM Sans, sans-serif" text={"Now your finances are in one place and always under control"} />
-        <div className="email-container">
-
-          <PrimaryInput
-            label='Email'
-            type='email'
-            onChange={(e) => {
-              setEmail(e.target.value.trim());
-              setEmailError("");
-            }}
-            value={email}
-            isValidEmail={isValidEmail}
-          />
-          {emailError && <Paragrafy fontsize="14px" fontfamily="DM Sans, sans-serif" text={emailError} />}
-        </div>
-        <div className="password-container">
-          <PrimaryInput
-            label='Password'
-            type='password'
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setPasswordError("");
-              setPasswordLengthError("");
-              setPasswordFirstCharError("");
-            }}
-            value={password}
-            isEyeicon
-            iseye={iseye}
-            handleEye={handleEye}
-          />
-          {passwordError && <Paragrafy  fontsize="14px" fontfamily="DM Sans, sans-serif" text={passwordError} />}
-          {passwordLengthError && <Paragrafy  fontsize="14px" fontfamily="DM Sans, sans-serif" text={passwordLengthError} />}
-          {passwordFirstCharError && <Paragrafy  fontsize="14px" fontfamily="DM Sans, sans-serif" text={passwordFirstCharError} />}
-
-          {!signUp && (
-            <div className="forgot-password-container">
-              <Link to="/forgotpasswordpage" className="forgot-password-link">
-                <Paragrafy fontfamily="Inter,sans-serif" text="Forgot Password?" fontWeight="400" fontsize="14px" />
-              </Link>
+        <FormProvider {...methods}>
+          <Heading fontsize="48px" text={signUp ? "Create account" : "Sign in"} />
+          <Paragrafy fontsize="16px" fontfamily="DM Sans, sans-serif" text={"Now your finances are in one place and always under control"} />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="email-container">
+              <UseFormInput
+                name='email'
+                label='E-posta'
+                type='email'
+              />
+            <div className="password-container">
+              <UseFormInput
+                name='password'
+                label='Password'
+                type={iseye ? 'text' : 'password'}
+                isEyeicon
+                iseye={iseye}
+                handleEye={handleEye}
+              />
+              {!signUp && (
+                <div className="forgot-password-container">
+                  <Link to="/forgotpasswordpage" className="forgot-password-link">
+                    <Paragrafy fontfamily="Inter,sans-serif" text="Forgot Password?" fontWeight="400" fontsize="14px" />
+                  </Link>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-
-        {signUp && (
-          <>
-            <Check />
-            <PrimaryButton label={"Create Account"} onClick={handleLogin} />
-          </>
-        )}
-        {!signUp && (
-          <>
-            <PrimaryButton label={"Sign In"} onClick={handleLogin} />
-            <Toogle isOn={isOn} handleToggle={handleToggle} />
-          </>
-        )}
-        <div className="link_container">
-          <Paragrafy fontfamily="Inter,sans-serif" fontsize="14px" fontWeight="300" text={signUp ? "Already have an account? " : "Don't have an account? "} />
-          <CustomLink fontfamily="Inter,sans-serif" onChange={handleLink} element={signUp} />
-        </div>
+            {signUp ? (
+              <>
+                <Check />
+                <PrimaryButton label={"Create account"} type="submit" />
+              </>
+            ) : (
+              <>
+                <PrimaryButton label={"Sign in"} type="submit" />
+                <Toogle isOn={isOn} handleToggle={handleToggle} />
+              </>
+            )}
+            <div className="link_container">
+              <Paragrafy fontfamily="Inter,sans-serif" fontsize="14px" fontWeight="300" text={signUp ? "Already have an account? " : "Already have an account? "} />
+              <CustomLink fontfamily="Inter,sans-serif" onChange={handleLink} element={signUp} />
+            </div>
+          </form>
+        </FormProvider>
       </div>
     </Container>
   );
 };
 
 export default Login;
-
-
