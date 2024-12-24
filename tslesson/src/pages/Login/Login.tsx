@@ -65,7 +65,6 @@ const Login = () => {
                 label='E-posta'
                 type='email'
               />
-            </div>
             <div className="password-container">
               <UseFormInput
                 name='password'
