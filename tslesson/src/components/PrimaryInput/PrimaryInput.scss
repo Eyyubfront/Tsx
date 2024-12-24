@@ -1,11 +1,21 @@
 .input_div {
   position: relative;
-
+display: flex;
+flex-direction: column;
+gap: 5px;
+.error_message{
+  color: red;
+  text-align: end;
+  font-size: 15px;
+  font-weight: 400;
+  font-family: DM,sans-serif;
+}
   .input_wrapper {
     display: flex; 
     align-items: center;  
     width: 100%;
     position: relative;
+   
   }
 
   .input_primary {
