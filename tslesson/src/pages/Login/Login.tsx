@@ -62,7 +62,7 @@ const Login = () => {
             <div className="email-container">
               <UseFormInput
                 name='email'
-                label='E-posta'
+                label='Email address'
                 type='email'
               />
               </div>
