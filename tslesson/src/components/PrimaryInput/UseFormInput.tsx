@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Controller, Control, useFormContext } from 'react-hook-form';
+import { Controller,  useFormContext } from 'react-hook-form';
 import PrimaryInput from './PrimaryInput';
 
 interface UseFormInputProps {
