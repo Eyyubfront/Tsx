@@ -4,20 +4,25 @@
   margin: 0 auto;
 }
 
-.main-div{
+.main-div {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content:center;
   .btn {
     position: absolute;
     top: 10%;
-    right: 35%;
+    right: 38%;
+    border:2px solid #D8DADC;
+    color: black;
+    border-radius: 10px;
   }
-
 }
 
 .verify-email {
-  text-align: center;
+  text-align: left;
   font-family: Arial, sans-serif;
-  padding: 0 32px;
+  padding: 0 47px;
   width: 100%;
   max-width: 541px;
   height: 100%;
@@ -26,11 +31,16 @@
   flex-direction: column;
   justify-content: center;
 
- 
+ .resend-code{
+  text-align: center;
+  padding: 7px 0;
+ }
+
   .inputs {
     display: flex;
     justify-content: center;
     gap: 10px;
+    margin: 10px 0;
 
     input {
       width: 40px;
@@ -39,7 +49,7 @@
       border-radius: 5px;
       text-align: center;
       font-size: 18px;
-
+      
       &:focus {
         border-color: #6a5acd;
         outline: none;
@@ -47,12 +57,20 @@
     }
   }
 
-  .verify-content{
-    .customhead{
-      font-family: serif;
+  .verify-content {
+    .vrfhead {
+      font-family: DM Serif Display;
+      color: rgb(29, 23, 48);
+      line-height: 62.4px;
+      font-size: 46px;
+      font-weight: 400;
     }
-    .customtext{
-      font-family: sans-serif;
+    .vrftext {
+      font-family:DM Sans;
+      color: #000000b2;
+      line-height: 25px;
+      font-size: 16px;
+      font-weight: 400;
     }
   }
 
@@ -76,31 +94,33 @@
   }
 }
 
-.main-div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 @media (max-width: 1290px) {
-  .verify-content{
+
+  .main-div{
+    justify-content: center;
+    flex-direction: column;
+    .btn {
+      position: absolute;
+      top: 10%;
+      right: 80%;
+      border: 2px solid #D8DADC;
+      color: #fff;
+      border-radius: 10px;
+    }
+   
+  }
+   
+  .verify-content {
     text-align: center;
   }
+
   .verify-email {
+    position: relative;
     width: 90%;
     padding: 0 20px;
-    text-align: left;
-
-    .btn {
-      top: -90%;
-      left: -12%;
-      color: #fff;
-    }
-
     .customhead {
       font-size: 36px;
     }
-
     .inputs {
       input {
         width: 35px;
@@ -118,10 +138,6 @@
     }
   }
 
-  .main-div {
-    justify-content: center;
-    flex-direction: column;
-  }
 }
 
 @media (max-width: 576px) {
@@ -129,31 +145,46 @@
     justify-content: center;
     flex-direction: column;
     padding: 0;
+    position: relative;
+    .btn {
+      top: 12%;
+      left: 8%;
+      color: #fff;
+      position: absolute;
+    }
   }
 
   .verify-email {
     padding: 0;
     display: flex;
     flex-direction: column;
-    align-items: center; 
-  }
+    align-items: center;
 
-  .verify-content {
-    text-align: center;
-    
-    .inputs {
-      display: flex;
-      justify-content: center; 
-      align-items: center;   
+    // .btn {
+    //   position: absolute;
+    //   top: 10%;
+    //   right: 38%;
+    // }
 
-      input {
-        text-align: center;
-        margin: 0;
-        box-sizing: border-box; 
+    .verify-content {
+      text-align: center;
+      .vrfhead {
+        font-family: serif;
+        color: rgb(29, 23, 48);
+        font-size: 32px;
+        font-weight: 400;
+      }
+      .inputs {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        input {
+          text-align: center;
+          margin: 0;
+          box-sizing: border-box;
+        }
       }
     }
   }
 }
-
-
- 

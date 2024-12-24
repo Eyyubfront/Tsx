@@ -7,16 +7,14 @@ import CustomText from "../../components/CustomText";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import { Link } from "react-router-dom";
+import { Container } from "@mui/material";
 const ForgotPasswordPage = () => {
   return (
-    <div className="container">
-      <div className="main-div">
 
-        <div className="left-side">
-          <LeftVerifyEmail />
-        </div>
-        <div className="forgot-pass">
-          <Button
+    <Container>
+      <div className="main-div">
+        <LeftVerifyEmail />
+        <Button
             className="leftBt"
             sx={{
               border: "2px solid #D8DADC ",
@@ -26,18 +24,13 @@ const ForgotPasswordPage = () => {
           >
             <KeyboardArrowLeftIcon />
           </Button>
+        <div className="forgot-pass">
+      
           <CustomHeading
-            color="#1D1730"
-            lineHeight="62.4px"
-            fontSize="48px"
             text="Forgot password ?"
-            fontWeight="400"
             className="fgHead"
           />
           <CustomText
-            color="#000000B2"
-            lineHeight="25.6px"
-            fontSize="16px"
             text="Don’t worry! It happens. Please enter the email associated with your account."
             className="fgtext"
           />
@@ -58,13 +51,12 @@ const ForgotPasswordPage = () => {
                 backgroundColor="#8B6DE8"
                 color="#ffff"
                 className="custombtn"
-              /></Link>
+              />
+            </Link>
           </form>
-
-
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

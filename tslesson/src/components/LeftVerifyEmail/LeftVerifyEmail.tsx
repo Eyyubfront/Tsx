@@ -6,9 +6,12 @@ import './LeftVerifyEmail.scss'
 const LeftVerifyEmail = () => {
   return (
     <div  className="card" style={{backgroundImage: `url(${cardImage})` }} >
-        <div className='stars'><img src={star}/></div>
+        <div className='stars'><img className='starimage' src={star}/></div>
       <div className="content">
-        <h2>Hi, Welcome! <span><img src={hand} /></span> </h2> 
+        <div className="contentHead">
+        <h2>Hi, Welcome! </h2> 
+        <span><img src={hand} /></span>
+        </div>
         <p>Create your vocabulary, get reminders, and test your <br /> memory with quick quizzes!</p>
       </div>
     </div>

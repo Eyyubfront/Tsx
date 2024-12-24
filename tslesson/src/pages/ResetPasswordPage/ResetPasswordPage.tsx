@@ -5,7 +5,7 @@ import CustomHeading from "../../components/CustomHeading";
 import CustomText from "../../components/CustomText";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
-
+import { Container } from "@mui/material";
 interface FormInput {
   email: string;
   password: string;
@@ -23,25 +23,16 @@ const ResetPasswordPage= () => {
   };
 
   return (
-    <div className="container">
+    <Container>
       <div className="main-div">
-        <div className="left-side">
           <LeftVerifyEmail />
-        </div>
         <div className="reset-pass">
           <div className="resetLeft-side">
             <CustomHeading
-              color="#1D1730"
-              lineHeight="62.4px"
-              fontSize="48px"
               text="Reset password"
-              fontWeight="400"
               className="fgHead"
             />
             <CustomText
-              color="#000000B2"
-              lineHeight="25.6px"
-              fontSize="16px"
               text="Don’t worry! It happens. Please enter the email associated with your account."
               className="fgtext"
             />
@@ -49,8 +40,8 @@ const ResetPasswordPage= () => {
               {/* Email Input */}
               <div className="form-group">
                 <CustomInput
-                  label="Email Address"
-                  placeholder="Enter your email"
+                  label="Password"
+                  placeholder="Password"
                   type="email"
                   fontSize="14px"
                   border="1px solid #D8DADC"
@@ -105,12 +96,13 @@ const ResetPasswordPage= () => {
           </div>
           <div className="resetRight-side">
             <p>
-              Already have an account? <a href="/signin">Sign up</a>
+              Already have an account? <a href="/">Sign up</a>
             </p>
           </div>
         </div>
       </div>
-    </div>
+  
+    </Container>
   );
 };
 

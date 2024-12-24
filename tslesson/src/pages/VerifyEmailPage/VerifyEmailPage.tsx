@@ -6,6 +6,9 @@ import Button from "@mui/material/Button";
 import CustomHeading from "../../components/CustomHeading";
 import CustomText from "../../components/CustomText";
 import CustomButton from "../../components/CustomButton";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Container } from "@mui/material";
 
 const VerifyEmailPage = () => {
   const [counter, setCounter] = useState(30);
@@ -31,7 +34,7 @@ const VerifyEmailPage = () => {
     console.log("Code resent!");
   };
 
-  const handleInputChange = (value:any, index:any) => {
+  const handleInputChange = (value: any, index: any) => {
     if (!/^\d*$/.test(value)) return;
 
     const newInputCode = [...inputCode];
@@ -39,12 +42,13 @@ const VerifyEmailPage = () => {
     setInputCode(newInputCode);
     setErrorMessage("");
 
-
     if (value && index < inputCode.length - 1) {
       const nextInput = document.getElementById(`input-${index + 1}`);
       if (nextInput) nextInput.focus();
     }
   };
+
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
     const enteredCode = inputCode.join("");
@@ -57,37 +61,18 @@ const VerifyEmailPage = () => {
   };
 
   return (
-    <div className="container">
+    <Container>
       <div className="main-div">
         <LeftVerifyEmail />
-      
-
+        <Button className="btn" onClick={() => navigate("/forgotpasswordpage")}>
+          <KeyboardArrowLeftIcon />
+        </Button>
         <div className="verify-email">
-        <Button
-            className="btn"
-            sx={{
-              border: "2px solid #D8DADC ",
-              color: "black",
-              borderRadius: "10px",
-            }}
-          >
-            <KeyboardArrowLeftIcon />
-          </Button>
           <div className="verify-content">
-            <CustomHeading
-              color="#1D1730"
-              lineHeight="62.4px"
-              fontSize="48px"
-              fontWeight="400"
-              text="Verify E-mail address"
-              className="customhead"
-            />
+            <CustomHeading text="Verify E-mail address" className="vrfhead" />
             <CustomText
-              color="#000000B2"
-              lineHeight="25.6px"
-              fontSize="16px"
               text="We’ve sent an activation code to your email"
-              className="customtext"
+              className="vrftext"
             />
             <div className="inputs">
               {inputCode.map((digit, index) => (
@@ -104,17 +89,6 @@ const VerifyEmailPage = () => {
             {errorMessage && (
               <p style={{ color: "red", marginTop: "10px" }}>{errorMessage}</p>
             )}
-            <CustomButton
-              onClick={handleSubmit}
-              className="verify-button"
-              text="Verify Code"
-              backgroundColor="#F83030"
-              color="#fff"
-              padding="10px"
-              borderRadius="7px"
-              outline="none"
-              margin="10px"
-            />
 
             <div className="resend-code">
               {canResend ? (
@@ -127,10 +101,24 @@ const VerifyEmailPage = () => {
                 <p>Send code again in {counter} seconds</p>
               )}
             </div>
+            <Link to={"/resetpasswordpage"}>
+              <CustomButton
+                onClick={handleSubmit}
+                className="verify-button"
+                text="Verify Code"
+                backgroundColor="#8B6DE8"
+                color="#fff"
+                width="100%"
+                padding="15px"
+                borderRadius="7px"
+                outline="none"
+                margin="10px"
+              />
+            </Link>
           </div>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 
