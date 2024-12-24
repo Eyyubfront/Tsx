@@ -1,5 +1,4 @@
-import { FC } from "react";
-
+import { FC, useEffect, useState } from "react";
 import Paragrafy from "../Paragrafy/Paragrafy";
 import { FaCircleCheck } from "react-icons/fa6";
 import { RxEyeOpen } from "react-icons/rx";
@@ -9,7 +8,6 @@ import { useFormContext } from "react-hook-form";
 interface CustomInputProps {
   type?: "text" | "email" | "password";
   label?: string;
-  isValidEmail?: boolean;
   isEyeicon?: boolean;
   handleEye?: () => void;
   iseye?: boolean;
@@ -20,14 +18,22 @@ interface CustomInputProps {
 const Input: FC<CustomInputProps> = ({
   type = "text",
   label,
-  isValidEmail,
   isEyeicon,
   iseye,
   handleEye,
   name,
 }) => {
-  const inputType = type === "password" && iseye ? "text" : type;
-  const { register, formState: { errors } } = useFormContext(); 
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
+  const { register, watch, formState: { errors } } = useFormContext();
+  const email = watch(name); 
+
+  useEffect(() => {
+    const validateEmail = (email: string | undefined) => {
+      if (!email) return false;
+      return email.includes("@") && email.includes(".") && email.indexOf("@") < email.lastIndexOf(".");
+    };
+    setIsEmailValid(validateEmail(email));
+  }, [email]);
 
   return (
     <div className="input_div">
@@ -35,11 +41,11 @@ const Input: FC<CustomInputProps> = ({
       <div className="input_wrapper">
         <input
           {...register(name)} 
-          type={inputType} 
+          type={type} 
           placeholder={label} 
           className={`input_primary ${errors[name] ? 'error' : ''}`} 
         />
-        {isValidEmail && (
+        {isEmailValid && (
           <div style={{ position: "relative" }}>
             <FaCircleCheck className="circle_icon" />
           </div>
@@ -54,9 +60,9 @@ const Input: FC<CustomInputProps> = ({
           </div>
         )}
       </div>
-        {errors[name] && (
-          <span className="error_message">{String(errors[name]?.message)}</span>
-        )}
+      {errors[name] && (
+        <span className="error_message">{String(errors[name]?.message)}</span>
+      )}
     </div>
   );
 };
