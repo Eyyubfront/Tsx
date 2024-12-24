@@ -1,10 +1,13 @@
 .signin_name {
-    font-size: 48px;
-  }
+  font-family: "DM Serif Display";
+  font-size: 48px;
+  font-weight: 400;
+ 
   
-  @media (max-width: 600px) {
-    .signin_name {
-      font-size: 32px !important; 
-    }
+}
+
+@media (max-width: 600px) {
+  .signin_name {
+    font-size: 32px !important;
   }
-  
+}
