@@ -1,11 +1,22 @@
 .signin_controlinfo {
-    font-weight: 400; 
-    @media (max-width: 600px) {
+  font-family:"DM Sans";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17.5px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+
+  @media (max-width: 600px) {
+ 
+    .signin_controlinfo{
       font-size: 14px !important;
     }
+  }
 
-    @media (min-width: 601px) and (max-width: 1200px) {
-      font-size: 18px !important;
+  @media (min-width: 601px) and (max-width: 1200px) {
+    .signin_controlinfo{
+      font-size: 14px !important;
     }
   }
-  
+}
