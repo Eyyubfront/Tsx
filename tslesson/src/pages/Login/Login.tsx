@@ -95,7 +95,7 @@ const Login = () => {
               </>
             )}
             <div className="link_container">
-              <Paragrafy fontfamily="Inter,sans-serif" fontsize="14px" fontWeight="300" text={signUp ? "Already have an account? " : "Already have an account? "} />
+              <Paragrafy  fontfamily="Inter,sans-serif" fontsize="14px" fontWeight="300" text={signUp ? "Already have an account? " : "Already have an account? "} />
               <CustomLink fontfamily="Inter,sans-serif" onChange={handleLink} element={signUp} />
             </div>
           </form>
