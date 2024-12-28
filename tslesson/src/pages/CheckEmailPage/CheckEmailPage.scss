@@ -28,7 +28,7 @@
   flex-direction: column;
   justify-content: center;
 
-  .custombtn{
+  .button_primary{
     margin: 0;
     background-color:#8B6DE8;
     color:#fff;
@@ -40,18 +40,18 @@
  
 
   .verify-content {
-    .csttext {
+    .signin_name {
       font-family: DM Serif Display;
+      color: rgb(29, 23, 48);
+      line-height: 62.4px;
+      font-size: 45px;
+      font-weight: 400;
+    }
+    .signin_controlinfo {
+      font-family:DM Sans;
       color: #000000b2;
       line-height: 25px;
       font-size: 16px;
-      font-weight: 400;
-    }
-    .customhead {
-      font-family: DM Sans;
-      color: rgb(29, 23, 48);
-      line-height: 62.4px;
-      font-size: 48px;
       font-weight: 400;
     }
   }

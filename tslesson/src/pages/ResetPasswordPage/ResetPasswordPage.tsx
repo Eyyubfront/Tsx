@@ -1,17 +1,19 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import LeftVerifyEmail from "../../components/LeftVerifyEmail/LeftVerifyEmail";
 import "./ResetPasswordPage.scss";
-import CustomHeading from "../../components/CustomHeading";
-import CustomText from "../../components/CustomText";
-import CustomButton from "../../components/CustomButton";
+ // Burada PrimaryButton istifadə olunur
 import CustomInput from "../../components/CustomInput";
 import { Container } from "@mui/material";
+import Heading from "../../components/Heading";
+import Paragrafy from "../../components/Paragrafy/Paragrafy";
+import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
+
 interface FormInput {
   email: string;
   password: string;
 }
 
-const ResetPasswordPage= () => {
+const ResetPasswordPage = () => {
   const {
     register,
     handleSubmit,
@@ -25,24 +27,18 @@ const ResetPasswordPage= () => {
   return (
     <Container>
       <div className="main-div">
-          <LeftVerifyEmail />
+        <LeftVerifyEmail />
         <div className="reset-pass">
           <div className="resetLeft-side">
-            <CustomHeading
-              text="Reset password"
-              className="fgHead"
-            />
-            <CustomText
-              text="Don’t worry! It happens. Please enter the email associated with your account."
-              className="fgtext"
-            />
+            <Heading text="Reset password" />
+            <Paragrafy text="Don’t worry! It happens. Please enter the email associated with your account." />
             <form onSubmit={handleSubmit(onSubmit)}>
               {/* Email Input */}
               <div className="form-group">
                 <CustomInput
+                  className="inp"
                   label="Password"
-                  placeholder="Password"
-                  type="email"
+                  type="password"
                   fontSize="14px"
                   border="1px solid #D8DADC"
                   borderRadius="7px"
@@ -56,7 +52,9 @@ const ResetPasswordPage= () => {
                   })}
                 />
                 {errors.email && (
-                  <p className="error-message" style={{color:"red"}}>{errors.email.message}</p>
+                  <p className="error-message" style={{ color: "red" }}>
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
 
@@ -64,7 +62,6 @@ const ResetPasswordPage= () => {
               <div className="form-group">
                 <CustomInput
                   label="Password"
-                  placeholder="Enter your password"
                   type="password"
                   fontSize="14px"
                   border="1px solid #D8DADC"
@@ -79,18 +76,17 @@ const ResetPasswordPage= () => {
                   })}
                 />
                 {errors.password && (
-                  <p className="error-message" style={{color:"red"}} >{errors.password.message}</p>
+                  <p className="error-message" style={{ color: "red" }}>
+                    {errors.password.message}
+                  </p>
                 )}
               </div>
 
               {/* Submit Button */}
-              <CustomButton
-                text="Reset Password"
-                backgroundColor="#8B6DE8"
-                color="#fff"
-                className="custombtn"
-                padding="15px"
-                type="submit" 
+              <PrimaryButton
+                label="Reset Password"
+                onClick={handleSubmit(onSubmit)}
+                type="submit"
               />
             </form>
           </div>
@@ -101,7 +97,6 @@ const ResetPasswordPage= () => {
           </div>
         </div>
       </div>
-  
     </Container>
   );
 };

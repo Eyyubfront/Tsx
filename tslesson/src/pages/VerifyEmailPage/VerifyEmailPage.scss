@@ -34,6 +34,13 @@
  .resend-code{
   text-align: center;
   padding: 7px 0;
+
+  .btn2{
+    border:1px solid #fff;
+    color: #fff;
+    background-color:#6a5acd;
+    border-radius: 8px;
+  }
  }
 
   .inputs {
@@ -58,14 +65,14 @@
   }
 
   .verify-content {
-    .vrfhead {
+    .signin_name {
       font-family: DM Serif Display;
       color: rgb(29, 23, 48);
       line-height: 62.4px;
       font-size: 46px;
       font-weight: 400;
     }
-    .vrftext {
+    .signin_controlinfo {
       font-family:DM Sans;
       color: #000000b2;
       line-height: 25px;

@@ -3,12 +3,12 @@ import LeftVerifyEmail from "../../components/LeftVerifyEmail/LeftVerifyEmail";
 import "./VerifyEmailPage.scss";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import Button from "@mui/material/Button";
-import CustomHeading from "../../components/CustomHeading";
-import CustomText from "../../components/CustomText";
-import CustomButton from "../../components/CustomButton";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Container } from "@mui/material";
+import Heading from "../../components/Heading";
+import Paragrafy from "../../components/Paragrafy/Paragrafy";
+import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 
 const VerifyEmailPage = () => {
   const [counter, setCounter] = useState(30);
@@ -69,11 +69,8 @@ const VerifyEmailPage = () => {
         </Button>
         <div className="verify-email">
           <div className="verify-content">
-            <CustomHeading text="Verify E-mail address" className="vrfhead" />
-            <CustomText
-              text="We’ve sent an activation code to your email"
-              className="vrftext"
-            />
+            <Heading text="Verify E-mail address" />
+            <Paragrafy text="We’ve sent an activation code to your email" />
             <div className="inputs">
               {inputCode.map((digit, index) => (
                 <input
@@ -90,29 +87,20 @@ const VerifyEmailPage = () => {
               <p style={{ color: "red", marginTop: "10px" }}>{errorMessage}</p>
             )}
 
-            <div className="resend-code">
+             <div className="resend-code">
               {canResend ? (
-                <CustomButton
+                <Button
                   onClick={handleResend}
-                  className="resend-button"
-                  text="Send code again"
-                />
+                  className="btn2"
+                >Send code again</Button>
               ) : (
                 <p>Send code again in {counter} seconds</p>
               )}
             </div>
             <Link to={"/resetpasswordpage"}>
-              <CustomButton
+              <PrimaryButton
                 onClick={handleSubmit}
-                className="verify-button"
-                text="Verify Code"
-                backgroundColor="#8B6DE8"
-                color="#fff"
-                width="100%"
-                padding="15px"
-                borderRadius="7px"
-                outline="none"
-                margin="10px"
+                label="Verify Code"
               />
             </Link>
           </div>

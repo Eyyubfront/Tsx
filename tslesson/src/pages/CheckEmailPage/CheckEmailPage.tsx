@@ -3,10 +3,10 @@ import LeftVerifyEmail from "../../components/LeftVerifyEmail/LeftVerifyEmail";
 import "./CheckEmailPage.scss";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import Button from "@mui/material/Button";
-import CustomHeading from "../../components/CustomHeading";
-import CustomText from "../../components/CustomText";
-import CustomButton from "../../components/CustomButton";
 import { Container } from "@mui/material";
+import Heading from "../../components/Heading";
+import Paragrafy from "../../components/Paragrafy/Paragrafy";
+import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 
 const CheckEmailPage = () => {
   const [counter, setCounter] = useState(30);
@@ -47,12 +47,10 @@ const CheckEmailPage = () => {
           </Button>
 
           <div className="verify-content">
-            <CustomHeading
+            <Heading
               text="Please check your email"
-              className="customhead"
             />
-            <CustomText
-              className="csttext"
+            <Paragrafy
               text="We’ve sent a code to helloworld@gmail.com"
             />
             <div className="inputs">
@@ -73,10 +71,10 @@ const CheckEmailPage = () => {
                 <p>Send code again in {counter} seconds</p>
               )}
             </div>
-            <CustomButton
-              text="Verify Code"
-              className="custombtn"
-            />
+            <PrimaryButton
+                label="Verify Code"
+                type="button"
+              />
           </div>
         </div>
       </div>

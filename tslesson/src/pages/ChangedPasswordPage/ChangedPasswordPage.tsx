@@ -1,10 +1,10 @@
 import LeftVerifyEmail from "../../components/LeftVerifyEmail/LeftVerifyEmail";
 import "./ChangedPasswordPage.scss";
-import CustomHeading from "../../components/CustomHeading";
-import CustomText from "../../components/CustomText";
-import CustomButton from "../../components/CustomButton";
 import Icon from "../../assets/images/verify/Icon.png";
 import { Container } from "@mui/material";
+import Heading from "../../components/Heading";
+import Paragrafy from "../../components/Paragrafy/Paragrafy";
+import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 const ChangedPasswordPage = () => {
   return (
     <Container>
@@ -14,12 +14,14 @@ const ChangedPasswordPage = () => {
           <div className="image">
             <img src={Icon} />
           </div>
-          <CustomHeading text="Password changed" className="fgHead" />
-          <CustomText
+          <Heading text="Password changed" />
+          <Paragrafy
             text="Your password has been changed succesfully"
-            className="fgtext"
           />
-          <CustomButton text="Create account" className="custombtn" />
+         <PrimaryButton
+                label="Create Account"
+                type="button"
+              />
         </div>
       </div>
     </Container>

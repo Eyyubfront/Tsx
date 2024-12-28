@@ -2,38 +2,30 @@ import LeftVerifyEmail from "../../components/LeftVerifyEmail/LeftVerifyEmail";
 import "./ForgotPasswordPage.scss";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import Button from "@mui/material/Button";
-import CustomHeading from "../../components/CustomHeading";
-import CustomText from "../../components/CustomText";
-import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import { Link } from "react-router-dom";
 import { Container } from "@mui/material";
+import Heading from "../../components/Heading";
+import Paragrafy from "../../components/Paragrafy/Paragrafy";
+import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 const ForgotPasswordPage = () => {
   return (
-
     <Container>
       <div className="main-div">
         <LeftVerifyEmail />
         <Button
-            className="leftBt"
-            sx={{
-              border: "2px solid #D8DADC ",
-              color: "black",
-              borderRadius: "10px",
-            }}
-          >
-            <KeyboardArrowLeftIcon />
-          </Button>
+          className="leftBt"
+          sx={{
+            border: "2px solid #D8DADC ",
+            color: "black",
+            borderRadius: "10px",
+          }}
+        >
+          <KeyboardArrowLeftIcon />
+        </Button>
         <div className="forgot-pass">
-      
-          <CustomHeading
-            text="Forgot password ?"
-            className="fgHead"
-          />
-          <CustomText
-            text="Don’t worry! It happens. Please enter the email associated with your account."
-            className="fgtext"
-          />
+          <Heading text="Forgot password ?" />
+          <Paragrafy text="Don’t worry! It happens. Please enter the email associated with your account." />
 
           <form>
             <CustomInput
@@ -46,11 +38,9 @@ const ForgotPasswordPage = () => {
               outline="none"
             />
             <Link to="/verifyemailpage">
-              <CustomButton
-                text="Verify Code"
-                backgroundColor="#8B6DE8"
-                color="#ffff"
-                className="custombtn"
+            <PrimaryButton
+                label="Verify Code"
+                type="button"
               />
             </Link>
           </form>
