@@ -37,7 +37,7 @@ const Input: FC<CustomInputProps> = ({
 
   return (
     <div className="input_div">
-      <Paragrafy text={label} />
+      <Paragrafy  text={label} />
       <div className="input_wrapper">
         <input
           {...register(name)} 
