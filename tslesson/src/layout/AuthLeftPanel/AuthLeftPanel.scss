@@ -64,13 +64,16 @@
     .leftpanel_bottomtext{
 top: 125px;
 left: 24px;
-.leftpanelWelcome_text{
-    font-size: 20px;
+.leftpanel_bottomwelcome{
+    font-size: 20px !important;
 }
 .leftpanel_bottom {
     font-size: 14px;
     width: 100% !important;
 height: 56px !important;
+.leftpanel_bottomabouttext{
+    font-size: 14px !important;
+}
 
 
 }
@@ -104,26 +107,20 @@ height: 56px !important;
         height: 125px;
         top: 292px;
         left: 32px;
+        .leftpanel_bottomwelcome{
+            font-size: 42px !important;
+           
+        }
      
      
-        
-.leftpanelWelcome_text{
-    font-size: 42px;
-}
 .leftpanel_bottom{
     font-size: 18px;
     width: 451px;
     height: 46px;
- 
-    
-
 }
-    }
-
-        
+    }    
     }
 }
-
 
 @media (min-width:1201px) and (max-width:1305px) {
     .leftpanel_container{

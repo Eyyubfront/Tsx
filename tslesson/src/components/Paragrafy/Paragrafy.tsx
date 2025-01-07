@@ -6,14 +6,15 @@ interface ParagrafyProps {
   fontsize?: string;
   fontfamily?: string;
   fontWeight?: string; 
+  className?: string; 
  
 }
 
-const Paragrafy: FC<ParagrafyProps> = ({ text, fontsize, fontfamily, fontWeight }) => {
+const Paragrafy: FC<ParagrafyProps> = ({ text,className, fontsize, fontfamily, fontWeight }) => {
   return (
     <p
-      className="signin_controlinfo"
-      style={{
+    className={className}
+      style={{ 
         fontSize: fontsize,  
         fontFamily: fontfamily,
         fontWeight: fontWeight,  

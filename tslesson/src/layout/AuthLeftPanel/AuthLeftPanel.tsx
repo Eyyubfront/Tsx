@@ -1,6 +1,7 @@
 import './AuthLeftPanel.scss'
 import star from "../../assets/images/AuthImages/star/starimg.png"
 import hand from "../../assets/images/AuthImages/hand/hand.png"
+import Paragrafy from '../../components/Paragrafy/Paragrafy'
 
 const AuthLeftPanel = () => {
   return (
@@ -10,11 +11,11 @@ const AuthLeftPanel = () => {
       </div>
       <div className="leftpanel_bottomtext">
         <div className="leftpanel_botomname">
-          <h2 className='leftpanelWelcome_text'>Hi, Welcome!</h2>
+          <Paragrafy className='leftpanel_bottomwelcome' fontsize='30px' fontfamily='DM Serif Display'  text={"Hi, Welcome!"}/>
           <img src={hand} alt="" />
         </div>
         <div className="leftpanel_bottom">
-          <p >Create your vocabulary, get reminders, and test your memory with quick quizzes!</p>
+        <Paragrafy className='leftpanel_bottomabouttext' fontsize='18px' fontfamily='DM Sans'  text={"Create your vocabulary, get reminders, and test your memory with quick quizzes!"}/>
         </div>
       </div>
     </div>
