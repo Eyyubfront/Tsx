@@ -8,14 +8,12 @@ import vocablaryfoor from "../../assets/images/vocablary/vocablaryfoor.svg";
 
 import "./VocabularyBuilder.scss";
 
-
 interface VocabularyControl {
     id: number;
     count: string;
     title: string;
     svg: JSX.Element; 
 }
-
 
 const vocablaryabout: VocabularyControl[] = [
     {
@@ -50,30 +48,38 @@ const vocablaryabout: VocabularyControl[] = [
     }
 ];
 
-const VocabularyBuilder = () => {
+
+interface VocabularyBuilderProps {
+    className?: string; 
+}
+
+
+const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
     return (
-        <Swiper
-        className="swipers"
-            slidesPerView={3.5}  
-            spaceBetween={0}  
-            pagination={{ clickable: true }} 
-            loop
-        >
-            {vocablaryabout.map(item => (
-                <SwiperSlide key={item.id}>
-                    <div className="vocablary_card">
-                        <div className="vocablary_left">
-                            <h3>{item.title}</h3>
-                            <p>{item.count}</p>
+        <div className="vocablary-builder">
+            <Swiper
+                className={`swipers ${className}`}
+                slidesPerView={(window.innerWidth <= 600) ? 2 : (window.innerWidth <= 1200 ? 3 : 3.5)}  
+                spaceBetween={0}  
+                pagination={{ clickable: true }} 
+                loop
+            >
+                {vocablaryabout.map(item => (
+                    <SwiperSlide key={item.id}>
+                        <div className="vocablary_card">
+                            <div className="vocablary_left">
+                                <h3>{item.title}</h3>
+                                <p>{item.count}</p>
+                            </div>
+                            <div className="vocablary_right">
+                                {item.svg}
+                            </div>
                         </div>
-                        <div className="vocablary_right">
-                            {item.svg}
-                        </div>
-                    </div>
-                </SwiperSlide>
-            ))}
-        </Swiper>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        </div>
     );
 }
 
-export default VocabularyBuilder;
+export default VocabularyBuilder; 

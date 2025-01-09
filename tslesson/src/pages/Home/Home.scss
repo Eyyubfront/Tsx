@@ -1,18 +1,116 @@
-.homepage_bottom{
+.homepage {
+  padding: 10px;
+.homepage_center{
+  .customvocabularyclass{
+    display: none;
+  }
+}
+  .homepage_bottom {
     margin-top: 32px;
     display: flex;
-   overflow: hidden;
-   justify-content: space-between;
-    .homepage_left{
+    overflow: hidden;
+    justify-content: space-between;
+
+    .homepage_left {
       width: 66%;
       overflow: hidden;
       display: flex;
-      gap: 20px;;
+      gap: 20px;
+      ;
       flex-direction: column;
-  
+
     }
-    .homepage_right{
-        width: 32%;
-     
+
+    .homepage_right {
+      width: 32%;
+
+    }
+  }
+
+  .homepage_quiz {
+    background: white;
+    background-image: url("../../assets/images/AuthImages/bacgroundimage/ezzedesign.png");
+    background-size: cover;
+    width: 360px;
+    height: 56px;
+    border-radius: 16px;
+    cursor: pointer;
+    display: none;
+  }
+}
+
+@media (max-width:600px) {
+  .homepage {
+    .homepage_center{
+      display: flex;
+      flex-direction: column-reverse;
+      .customvocabularyclass{
+        display: block;
       }
+    }
+    .homepage_bottom {
+      .homepage_left {
+      .vocablarpasscomponents{
+        display: none;
+      }
+  
+      }
+    }
+    .homepage_quiz {
+      width: 100%;
+      margin-top: 20px;
+      text-align: center;
+      padding: 15px;
+      display: block;
+    }
+  }
+}
+
+@media (min-width:601px) and (max-width:1200px) {
+  .homepage {
+    .homepage_center{
+      .customvocabularyclass{
+        display: block;
+      }
+    }
+    .homepage_bottom {
+   
+      .homepage_left {
+      .vocablarpasscomponents{
+        display: none;
+      }
+  
+      }
+    }
+
+    .homepage_quiz {
+      width: 100%;
+      margin-top: 20px;
+      text-align: center;
+      padding: 15px;
+      display: block;
+    }
+  }
+}
+
+@media (min-width:1201px) and (max-width:1305px) {
+  .homepage {
+    .homepage_bottom {
+   
+      .homepage_left {
+      .vocablarpasscomponents{
+        display: none;
+      }
+  
+      }
+    }
+
+    .homepage_quiz {
+      width: 100%;
+      margin-top: 20px;
+      text-align: center;
+      padding: 15px;
+      display: block;
+    }
+  }
 }

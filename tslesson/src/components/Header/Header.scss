@@ -80,14 +80,18 @@
     }
 }
 
-@media (max-width: 600px) {
-    .header{
-    background-color: rebeccapurple !important;
-  
+@media (max-width:600px) {
+   .header_center{
+    display: none;
+   }
+  }
+  @media (min-width:601px ) and (max-width:1200px) {
     .header_center{
-position: fixed;
-bottom: 0;
-    }
-    
-    }
-}
+        display: none;
+       }
+  }
+  @media (min-width:1201px) and (max-width:1305px) {
+    .header_center{
+        display: none;
+       }
+  }

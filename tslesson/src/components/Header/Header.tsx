@@ -36,7 +36,7 @@ const Header: React.FC = () => {
             </Select>
         </FormControl>
     </div>
-    <div className="header_center  eyyub">
+    <div className="header_center">
         <Link style={{textDecoration:"none",color:'black'}} to="" >
             <Paragrafy className='quiz_center' fontsize='24px' fontfamily='DM Serif Display' text='Let’s start quiz' />
         </Link>
