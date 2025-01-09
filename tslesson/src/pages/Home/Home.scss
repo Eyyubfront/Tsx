@@ -1,0 +1,18 @@
+.homepage_bottom{
+    margin-top: 32px;
+    display: flex;
+   overflow: hidden;
+   justify-content: space-between;
+    .homepage_left{
+      width: 66%;
+      overflow: hidden;
+      display: flex;
+      gap: 20px;;
+      flex-direction: column;
+  
+    }
+    .homepage_right{
+        width: 32%;
+     
+      }
+}

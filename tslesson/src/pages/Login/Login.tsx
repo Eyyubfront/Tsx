@@ -52,7 +52,10 @@ const Login = () => {
   return (
     <Container sx={{ display: "flex" }} className='all_login'>
       <div className="sign_left">
-        <AuthLeftPanel />
+        <AuthLeftPanel
+          TittleText="Hi, Welcome!"
+          descriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!"
+        />
       </div>
       <div className='sign_right'>
         <FormProvider {...methods}>
@@ -65,7 +68,7 @@ const Login = () => {
                 label='Email address'
                 type='email'
               />
-              </div>
+            </div>
             <div className="password-container">
               <UseFormInput
                 name='password'
@@ -95,7 +98,7 @@ const Login = () => {
               </>
             )}
             <div className="link_container">
-              <Paragrafy  fontfamily="Inter,sans-serif" fontsize="14px" fontWeight="300" text={signUp ? "Already have an account? " : "Already have an account? "} />
+              <Paragrafy fontfamily="Inter,sans-serif" fontsize="14px" fontWeight="300" text={signUp ? "Already have an account? " : "Already have an account? "} />
               <CustomLink fontfamily="Inter,sans-serif" onChange={handleLink} element={signUp} />
             </div>
           </form>

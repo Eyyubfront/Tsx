@@ -27,6 +27,7 @@
     "react-router-dom": "^7.0.2",
     "resolver": "^0.1.12",
     "sass": "^1.82.0",
+    "swiper": "^11.2.0",
     "yup": "^1.6.1"
   },
   "devDependencies": {
