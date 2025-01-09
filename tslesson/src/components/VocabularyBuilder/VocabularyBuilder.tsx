@@ -1,6 +1,6 @@
-import { Swiper, SwiperSlide } from "swiper/react"; 
-import 'swiper/css';
+// import 'swiper/css';
 import vocablarytwo from "../../assets/images/vocablary/vocablarytwo.svg";
+// import { Swiper, SwiperSlide } from "swiper/react"; 
 import vocablaryone from "../../assets/images/vocablary/vocablaryone.svg";
 import vocablarythree from "../../assets/images/vocablary/vocablarythree.svg";
 import vocablarythfive from "../../assets/images/vocablary/vocablarythfive.svg";
@@ -57,7 +57,7 @@ interface VocabularyBuilderProps {
 const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
     return (
         <div className="vocablary-builder">
-            <Swiper
+            {/* <Swiper
                 className={`swipers ${className}`}
                 slidesPerView={(window.innerWidth <= 600) ? 2 : (window.innerWidth <= 1200 ? 3 : 3.5)}  
                 spaceBetween={0}  
@@ -77,7 +77,7 @@ const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
                         </div>
                     </SwiperSlide>
                 ))}
-            </Swiper>
+            </Swiper> */}
         </div>
     );
 }

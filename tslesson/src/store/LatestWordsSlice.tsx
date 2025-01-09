@@ -1,27 +1,37 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface LastTextState {
-    items: string[];
+interface TextItem {
+    id: number;
+    text: string;
 }
 
-const initialState: LastTextState = {
+interface LatestWordsState {
+    items: TextItem[];
+}
+
+const initialState: LatestWordsState = {
     items: [],
 };
 
-const LatestWordsSlice = createSlice({
-    name: 'savedLastaddWords',
+const latestWordsSlice = createSlice({
+    name: 'latestWords',
     initialState,
     reducers: {
-        saveText: (state, action: PayloadAction<string>) => {
-            if (!state.items.includes(action.payload)) {
-                state.items.push(action.payload);
-            }
+        saveText: (state, action: PayloadAction<TextItem>) => {
+            state.items.push(action.payload);
         },
-        removeText: (state, action: PayloadAction<string>) => {
-            state.items = state.items.filter(item => item !== action.payload);
+        removeText: (state, action: PayloadAction<number>) => {
+            state.items = state.items.filter(item => item.id !== action.payload);
+        },
+        updateText: (state, action: PayloadAction<TextItem>) => {
+            const index = state.items.findIndex(item => item.id === action.payload.id);
+            if (index !== -1) {
+                state.items[index] = action.payload;
+            }
         },
     },
 });
 
-export const { saveText, removeText } = LatestWordsSlice.actions;
-export default LatestWordsSlice.reducer;
+export const { saveText, removeText, updateText } = latestWordsSlice.actions;
+
+export default latestWordsSlice.reducer;

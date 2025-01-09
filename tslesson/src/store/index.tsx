@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import SavedLearning from './LearingNowSlice'; 
-import SavedLastWords from './LatestWordsSlice'; 
+import learningNowReducer from './LearingNowSlice';
+import latestWordsReducer from './LatestWordsSlice';
 
 const store = configureStore({
     reducer: {
-        savedLearningNow: SavedLearning,
-        savedLastaddWords:SavedLastWords
+        learningNow: learningNowReducer,
+        latestWords: latestWordsReducer,
     },
 });
 
