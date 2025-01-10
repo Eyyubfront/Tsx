@@ -24,9 +24,9 @@ const learningNowSlice = createSlice({
             state.items = state.items.filter(item => item.id !== action.payload);
         },
         updateText: (state, action: PayloadAction<TextItem>) => {
-            const index = state.items.findIndex(item => item.id === action.payload.id);
-            if (index !== -1) {
-                state.items[index] = action.payload;
+            const item = state.items.find(item => item.id === action.payload.id);
+            if (item) {
+                item.text = action.payload.text;
             }
         },
     },

@@ -1,6 +1,6 @@
-// import 'swiper/css';
+import 'swiper/css';
 import vocablarytwo from "../../assets/images/vocablary/vocablarytwo.svg";
-// import { Swiper, SwiperSlide } from "swiper/react"; 
+import { Swiper, SwiperSlide } from "swiper/react"; 
 import vocablaryone from "../../assets/images/vocablary/vocablaryone.svg";
 import vocablarythree from "../../assets/images/vocablary/vocablarythree.svg";
 import vocablarythfive from "../../assets/images/vocablary/vocablarythfive.svg";
@@ -48,24 +48,23 @@ const vocablaryabout: VocabularyControl[] = [
     }
 ];
 
-
 interface VocabularyBuilderProps {
     className?: string; 
 }
 
-
 const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
     return (
         <div className="vocablary-builder">
-            {/* <Swiper
+            <Swiper
                 className={`swipers ${className}`}
-                slidesPerView={(window.innerWidth <= 600) ? 2 : (window.innerWidth <= 1200 ? 3 : 3.5)}  
-                spaceBetween={0}  
+                spaceBetween={10}  // Add space between cards
                 pagination={{ clickable: true }} 
                 loop
+                slidesPerView={"auto"}
+              
             >
                 {vocablaryabout.map(item => (
-                    <SwiperSlide key={item.id}>
+                    <SwiperSlide className='swiper_slide' key={item.id}>
                         <div className="vocablary_card">
                             <div className="vocablary_left">
                                 <h3>{item.title}</h3>
@@ -77,9 +76,9 @@ const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
                         </div>
                     </SwiperSlide>
                 ))}
-            </Swiper> */}
+            </Swiper>
         </div>
     );
 }
 
-export default VocabularyBuilder; 
+export default VocabularyBuilder;

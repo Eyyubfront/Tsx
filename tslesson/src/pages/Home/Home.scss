@@ -46,14 +46,22 @@
       flex-direction: column-reverse;
       .customvocabularyclass{
         display: block;
+    
       }
     }
     .homepage_bottom {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
       .homepage_left {
+        width: 100%;
       .vocablarpasscomponents{
         display: none;
       }
   
+      }
+      .homepage_right{
+        width: 100% ;
       }
     }
     .homepage_quiz {
@@ -71,6 +79,7 @@
     .homepage_center{
       .customvocabularyclass{
         display: block;
+      
       }
     }
     .homepage_bottom {
@@ -95,6 +104,12 @@
 
 @media (min-width:1201px) and (max-width:1305px) {
   .homepage {
+    .homepage_center{
+      .customvocabularyclass{
+        display: block;
+     
+      }
+    }
     .homepage_bottom {
    
       .homepage_left {
