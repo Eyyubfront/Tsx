@@ -1,10 +1,8 @@
-
 import { saveText, removeText, updateText } from '../../store/LearingNowSlice';
 import { RootState, useAppDispatch, useAppSelector } from '../../store';
 import { useState } from 'react';
 import {
-    Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-    TableSortLabel, Paper, TextField, Button
+    Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel, Paper, TextField, Button
 } from '@mui/material';
 import "./TableLearingNow.scss"
 

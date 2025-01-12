@@ -4,7 +4,7 @@
     align-items: center;
     padding: 10px;
 .headers_burger{
-    display: none !important;
+    display: none ;
 }
     .header_left {
         .selects {
@@ -27,6 +27,7 @@
 .quiz_center{
     text-align: center;
     margin-top: 10px;
+    
 }
 }
     .header_right {
@@ -72,7 +73,8 @@
             border-radius: 10px;
             background-color: #8B6DE8;
             cursor: pointer;
-            .words_count {
+            .words_count,
+            .newwordstext {
           font-weight: bold;
              color: #FFFFFF;
             
@@ -84,9 +86,9 @@
 
 @media (max-width:600px) {
     .header{
-        flex-direction: row-reverse !important;
+        flex-direction: row-reverse ;
         .headers_burger{
-            display: block !important;
+            display: block;
             width: 42px;
             height: 42px;
             border-radius: 42px;
@@ -100,7 +102,7 @@
         }
         .header_right{
          .header_setting{
-             display: none !important;
+             display: none ;
          }
          .header_words{
             width: 42px;
@@ -114,9 +116,15 @@
     }
   }
   @media (min-width:601px ) and (max-width:1200px) {
-    .header_center{
-        display: none;
-       }
+    .header{
+
+        .header_center{
+            display: none;
+           }
+           .header_right{
+            gap: 5px;
+           }
+    }
   }
   @media (min-width:1201px) and (max-width:1305px) {
     .header_center{

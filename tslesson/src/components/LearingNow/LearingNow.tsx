@@ -5,9 +5,9 @@ const LearningNow: React.FC = () => {
 
 
     return (
-     <div>
+    
         <TableLearingNow/>
-     </div>
+    
     );
 };
 

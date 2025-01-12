@@ -1,6 +1,9 @@
 .homepage {
   padding: 10px;
 .homepage_center{
+  display: flex;
+  flex-direction: column;
+ 
   .customvocabularyclass{
     display: none;
   }
@@ -15,8 +18,7 @@
       width: 66%;
       overflow: hidden;
       display: flex;
-      gap: 20px;
-      ;
+      gap: 20px;;
       flex-direction: column;
 
     }
@@ -32,7 +34,7 @@
     background-image: url("../../assets/images/AuthImages/bacgroundimage/ezzedesign.png");
     background-size: cover;
     width: 360px;
-    height: 56px;
+    height: auto;
     border-radius: 16px;
     cursor: pointer;
     display: none;
@@ -77,27 +79,34 @@
 @media (min-width:601px) and (max-width:1200px) {
   .homepage {
     .homepage_center{
+      gap: 20px ;
       .customvocabularyclass{
         display: block;
       
       }
     }
     .homepage_bottom {
-   
+      gap: 24px;
+   align-items: end;
+   justify-content: center;
       .homepage_left {
+      width: max-content;
       .vocablarpasscomponents{
         display: none;
       }
   
       }
+      .homepage_right{
+        width: max-content;
+      }
     }
-
     .homepage_quiz {
       width: 100%;
       margin-top: 20px;
       text-align: center;
       padding: 15px;
       display: block;
+     
     }
   }
 }

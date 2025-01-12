@@ -31,8 +31,10 @@ const LexiconCards = () => {
             <div className="lexion_cards">
                 {cardsabout.map(card => (
                     <div key={card.id} className="lexicon_card">
-                        <Paragrafy className="lexions_count" text={card.count}/>                   
+                       <div className="lexioncard_about">
+                       <Paragrafy className="lexions_count" text={card.count}/>                   
                             <Paragrafy  className="lexions_title" text={card.title}/>
+                       </div>
                     
                     </div>
                 ))}
