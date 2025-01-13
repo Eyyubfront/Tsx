@@ -73,7 +73,7 @@ const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
                     <SwiperSlide className='swiper_slide' key={item.id}>
                         <div className="vocablary_card">
                             <div className="vocablary_left">
-                                <h3>{item.title}</h3>
+                                <h3 className='vocablary_tittlename'>{item.title}</h3>
                                 <p>{item.count}</p>
                             </div>
                             <div className="vocablary_right">

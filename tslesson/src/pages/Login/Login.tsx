@@ -58,8 +58,12 @@ const Login = () => {
         />
       </div>
       <div className='sign_right'>
-        <FormProvider {...methods}>
-          <Heading fontsize="48px" text={signUp ? "Create account" : "Sign in"} />
+        <FormProvider  {...methods}>
+          <Heading
+            fontsize="48px"
+            text={signUp ? "Create account" : "Sign in"}
+            className="login_heading" 
+          />
           <Paragrafy fontsize="16px" fontfamily="DM Sans, sans-serif" text={"Now your finances are in one place and always under control"} />
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="email-container">

@@ -15,6 +15,11 @@
     flex-direction: column;
     justify-content: space-between;
     height: 60px;
+    .vocablary_tittlename{
+      font-family: "DM Serif Display";
+      font-weight: 400;
+      font-size: 20px;
+    }
   }
 
   .vocablary_right {
@@ -55,7 +60,7 @@
     }
 
     .vocablary_card {
-      width: max-content;  
+      width: auto;  
     }
   }
 }

@@ -1,13 +1,27 @@
 import './LearingNow.scss';
-import TableLearingNow from '../TableLearingNow/TableLearingNow';
+import { saveText, removeText, updateText } from '../../store/LearingNowSlice';
+import { RootState, useAppDispatch, useAppSelector } from '../../store';
+import TableComponent from '../TableComponents/TableComponents';
 
-const LearningNow: React.FC = () => {
+const predefinedWords = [
+    { id: 1, text: 'Welcome - Salam' },
+    { id: 2, text: 'Goodbye - Sagol' },
+    { id: 3, text: 'Thank you - Tesekkur' },
+   
+];
 
+const LearningNow = () => {
+    const dispatch = useAppDispatch();
+    const savedTexts = useAppSelector((state: RootState) => state.learningNow.items);
 
     return (
-    
-        <TableLearingNow/>
-    
+        <TableComponent
+            title="Latest added words"
+            items={savedTexts.length > 0 ? savedTexts : predefinedWords}
+            saveText={(item) => dispatch(saveText(item))}
+            removeText={(id) => dispatch(removeText(id))}
+            updateText={(item) => dispatch(updateText(item))}
+        />
     );
 };
 
