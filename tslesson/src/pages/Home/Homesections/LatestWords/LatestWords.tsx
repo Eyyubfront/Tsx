@@ -1,7 +1,7 @@
 import './LatestWords.scss';
-import { saveText, removeText, updateText } from '../../store/LearingNowSlice';
-import { RootState, useAppDispatch, useAppSelector } from '../../store';
-import TableComponent from '../TableComponents/TableComponents';
+import { saveText, removeText, updateText } from '../../../../store/LearingNowSlice';
+import { RootState, useAppDispatch, useAppSelector } from '../../../../store';
+import TableComponent from '../../../../components/TableComponents/TableComponents';
 const predefinedWords = [
     { id: 1, text: 'Welcome - Salam' },
     { id: 2, text: 'Goodbye - Sagol' },

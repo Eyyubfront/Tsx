@@ -1,12 +1,14 @@
 import { Container } from '@mui/material';
 import "./Home.scss";
 import Header from '../../components/Header/Header';
-import LexiconCards from '../../components/LexiconCards/LexiconCards';
-import VocabularyBuilder from '../../components/VocabularyBuilder/VocabularyBuilder';
-import LearingNow from '../../components/LearingNow/LearingNow';
-import LatestWords from '../../components/LatestWords/LatestWords';
+
 import { Link } from 'react-router-dom';
 import Paragrafy from '../../components/Paragrafy/Paragrafy';
+import LexiconCards from './Homesections/LexiconCards/LexiconCards';
+import VocabularyBuilder from './Homesections/VocabularyBuilder/VocabularyBuilder';
+import LearningNow from './Homesections/LearingNow/LearingNow';
+import LatestWords from './Homesections/LatestWords/LatestWords';
+
 
 const Home = () => {
     return (
@@ -21,7 +23,7 @@ const Home = () => {
                 <div className="homepage_bottom">
                     <div className="homepage_left">
                         <VocabularyBuilder className="vocablarpasscomponents" />
-                        <LearingNow />
+                        <LearningNow />
                     </div>
                     <div className="homepage_right">
                         <LatestWords />

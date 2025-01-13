@@ -1,4 +1,4 @@
-import Paragrafy from "../Paragrafy/Paragrafy";
+import Paragrafy from "../../../../components/Paragrafy/Paragrafy";
 import "./LexiconCards.scss"
 
 interface LexioncardControl {

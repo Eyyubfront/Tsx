@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Paragrafy from '../../components/Paragrafy/Paragrafy';
 import "./Header.scss"
-import BurgerMenu from '../Burgermenu/Burgermenu';
+import BurgerMenu from './HeaderBurger/Burgermenu/Burgermenu';
 import SelecetLanguage from '../SelecetLanguage/SelecetLanguage';
 import NotifactionComponents from '../NotifactionComponents/NotifactionComponents';
 

@@ -2,15 +2,14 @@ import 'swiper/css'; // CSS faylını düzgün daxil edin
 import { Pagination } from 'swiper/modules'; // Pagination modulunu import edin
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import vocablarytwo from "../../assets/images/vocablary/vocablarytwo.svg";
-import vocablaryone from "../../assets/images/vocablary/vocablaryone.svg";
-import vocablarythree from "../../assets/images/vocablary/vocablarythree.svg";
-import vocablarythfive from "../../assets/images/vocablary/vocablarythfive.svg";
-import vocablaryfoor from "../../assets/images/vocablary/vocablaryfoor.svg";
-
+import vocablarytwo from "../../../../assets/images/vocablary/vocablarytwo.svg";
+import vocablaryone from "../../../../assets/images/vocablary/vocablaryone.svg";
+import vocablarythree from "../../../../assets/images/vocablary/vocablarythree.svg";
+import vocablarythfive from "../../../../assets/images/vocablary/vocablarythfive.svg";
+import vocablaryfoor from "../../../../assets/images/vocablary/vocablaryfoor.svg";
 import "./VocabularyBuilder.scss";
 
-// Vocablary data
+
 const vocablaryabout = [
     {
         id: 0,
@@ -54,20 +53,20 @@ const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
             <Swiper
                 className={`swipers ${className}`}
                 spaceBetween={10}
-                pagination={{ clickable: true }} // Pagination ayarları
+                pagination={{ clickable: true }} 
                 loop
                 breakpoints={{
                     320: {
-                        slidesPerView: 1.3, // Mobil cihazlarda 1 kart
+                        slidesPerView: 1.3, 
                     },
                     600: {
-                        slidesPerView: 2.5, // Tabletlerde 2 kart
+                        slidesPerView: 2.5, 
                     },
                     1024: {
-                        slidesPerView: 3.5, // Desktop cihazlarda 3 kart
+                        slidesPerView: 3.5, 
                     }
-                }}  // Breakpoint ayarları
-                modules={[Pagination]}  // Pagination modulunu əlavə et
+                }}  
+                modules={[Pagination]}  
             >
                 {vocablaryabout.map(item => (
                     <SwiperSlide className='swiper_slide' key={item.id}>
