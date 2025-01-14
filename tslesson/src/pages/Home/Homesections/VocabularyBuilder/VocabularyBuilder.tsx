@@ -1,46 +1,22 @@
-import 'swiper/css'; // CSS faylını düzgün daxil edin
-import { Pagination } from 'swiper/modules'; // Pagination modulunu import edin
+import 'swiper/css'; 
+import { Pagination } from 'swiper/modules'; 
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import vocablarytwo from "../../../../assets/images/vocablary/vocablarytwo.svg";
-import vocablaryone from "../../../../assets/images/vocablary/vocablaryone.svg";
-import vocablarythree from "../../../../assets/images/vocablary/vocablarythree.svg";
-import vocablarythfive from "../../../../assets/images/vocablary/vocablarythfive.svg";
-import vocablaryfoor from "../../../../assets/images/vocablary/vocablaryfoor.svg";
+import  VocabularyTwo  from "../../../../assets/images/vocablary/vocablarytwo.svg";
+import  VocabularyOne  from "../../../../assets/images/vocablary/vocablaryone.svg";
+import  VocabularyThree  from  "../../../../assets/images/vocablary/vocablarythree.svg";
+import  VocabularyFive  from "../../../../assets/images/vocablary/vocablarythfive.svg"; 
+import  VocabularyFour  from "../../../../assets/images/vocablary/vocablaryfoor.svg"; 
+
 import "./VocabularyBuilder.scss";
 
 
-const vocablaryabout = [
-    {
-        id: 0,
-        count: "3 of 25",
-        title: "Vegetables",
-        svg: <img src={vocablarytwo} alt="Vegetables" />
-    },
-    {
-        id: 1,
-        count: "3 of 25",
-        title: "Travel",
-        svg: <img src={vocablaryone} alt="Travel" />
-    },
-    {
-        id: 2,
-        count: "3 of 25",
-        title: "Fruits",
-        svg: <img src={vocablarythree} alt="Fruits" />
-    },
-    {
-        id: 3,
-        count: "3 of 25",
-        title: "Weather",
-        svg: <img src={vocablarythfive} alt="Weather" />
-    },
-    {
-        id: 4,
-        count: "3 of 25",
-        title: "Camping",
-        svg: <img src={vocablaryfoor} alt="Camping" />
-    }
+const vocabularyItems = [
+    { id: 0, count: "3 of 25", title: "Vegetables", svg: VocabularyTwo  },
+    { id: 1, count: "3 of 25", title: "Travel", svg: VocabularyOne },
+    { id: 2, count: "3 of 25", title: "Fruits", svg: VocabularyThree  },
+    { id: 3, count: "3 of 25", title: "Weather", svg: VocabularyFive },
+    { id: 4, count: "3 of 25", title: "Camping", svg: VocabularyFour }
 ];
 
 interface VocabularyBuilderProps {
@@ -68,7 +44,7 @@ const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
                 }}  
                 modules={[Pagination]}  
             >
-                {vocablaryabout.map(item => (
+                {vocabularyItems.map(item => (
                     <SwiperSlide className='swiper_slide' key={item.id}>
                         <div className="vocablary_card">
                             <div className="vocablary_left">
@@ -76,7 +52,7 @@ const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
                                 <p>{item.count}</p>
                             </div>
                             <div className="vocablary_right">
-                                {item.svg}
+                               <img src={item.svg} alt="" /> 
                             </div>
                         </div>
                     </SwiperSlide>

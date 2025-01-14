@@ -1,6 +1,7 @@
 import Home from "./pages/Home/Home";
+import Routing from "./Routing/Routing";
 
-// import Routing from "./Routing/Routing";
+
 
 
 
@@ -9,7 +10,8 @@ import Home from "./pages/Home/Home";
 function App() {
   return (
 
-<Home/>
+
+<Routing/>
   );
 }
 

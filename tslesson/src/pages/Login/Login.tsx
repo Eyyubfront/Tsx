@@ -13,7 +13,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import "./Login.scss";
 import UseFormInput from '../../components/PrimaryInput/UseFormInput';
-
+import axios from 'axios';  // Import axios
 const schema = Yup.object().shape({
   email: Yup.string().email("Email is not valid.").required("Email is required."),
   password: Yup.string()
@@ -45,8 +45,23 @@ const Login = () => {
     setIsOn((prevState) => !prevState);
   };
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: { email: string, password: string }) => {
+    try {
+      const url = signUp
+        ? 'https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/Register'
+        : 'https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/Login';
+      
+      const response = await axios.post(url, {
+        email: data.email,
+        password: data.password,
+      });   
+      console.log(response.data);  
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        console.error("Hata:", error.response.data);
+        alert(error.response.data.message || "This is Error.");
+      } 
+    }
   };
 
   return (

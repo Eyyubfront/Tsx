@@ -6,16 +6,29 @@ import ForgotPasswordPage from "../pages/ForgotPasswordPage/ForgotPasswordPage";
 import VerifyEmailPage from "../pages/VerifyEmailPage/VerifyEmailPage";
 
 import Login from "../pages/Login/Login";
+import ProtectedRouting from "./ProtectedRouting";
+import PublicRouting from "./PublicRouting";
 
 const Routing = () => {
   return (
     <Routes>
-      <Route path="/changedpasswordpage" element={<ChangedPasswordPage />} />
-      <Route path="/checkemailpage" element={<CheckEmailPage />} />
-      <Route path="/forgotpasswordpage" element={<ForgotPasswordPage />} />
-      <Route path="/resetpasswordpage" element={<ResetPasswordPage />} />
+      <Route element={<PublicRouting />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/changedpasswordpage" element={<ChangedPasswordPage />} />
+        <Route path="/checkemailpage" element={<CheckEmailPage />} />
+        <Route path="/forgotpasswordpage" element={<ForgotPasswordPage />} />
+        <Route path="/resetpasswordpage" element={<ResetPasswordPage />} />
       <Route path="/verifyemailpage" element={<VerifyEmailPage />} />
-      <Route path="/" element={<Login />} />
+      </Route>
+
+
+
+
+      <Route element={<ProtectedRouting />}>
+
+  
+      </Route>
+
     </Routes>
   );
 };
