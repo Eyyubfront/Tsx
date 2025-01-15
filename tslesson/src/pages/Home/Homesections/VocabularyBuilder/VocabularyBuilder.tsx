@@ -1,15 +1,12 @@
 import 'swiper/css'; 
 import { Pagination } from 'swiper/modules'; 
 import { Swiper, SwiperSlide } from 'swiper/react';
-
 import  VocabularyTwo  from "../../../../assets/images/vocablary/vocablarytwo.svg";
 import  VocabularyOne  from "../../../../assets/images/vocablary/vocablaryone.svg";
 import  VocabularyThree  from  "../../../../assets/images/vocablary/vocablarythree.svg";
 import  VocabularyFive  from "../../../../assets/images/vocablary/vocablarythfive.svg"; 
 import  VocabularyFour  from "../../../../assets/images/vocablary/vocablaryfoor.svg"; 
-
 import "./VocabularyBuilder.scss";
-
 
 const vocabularyItems = [
     { id: 0, count: "3 of 25", title: "Vegetables", svg: VocabularyTwo  },

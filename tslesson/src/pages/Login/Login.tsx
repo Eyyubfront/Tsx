@@ -7,13 +7,16 @@ import Check from '../../components/Check/Check';
 import PrimaryButton from '../../components/PrimaryButton/PrimaryButton';
 import CustomLink from '../../components/CustomLink/CustomLink';
 import Toogle from '../../components/Toogle/Toogle';
-import { Link } from 'react-router-dom';
+import { Link, Navigate  } from 'react-router-dom';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import "./Login.scss";
 import UseFormInput from '../../components/PrimaryInput/UseFormInput';
-import axios from 'axios';  // Import axios
+import { RootState, useAppDispatch, useAppSelector } from '../../store';
+import { clearError } from '../../store/authSlice';
+import { login, register } from '../../store/actions/authActions';
+
 const schema = Yup.object().shape({
   email: Yup.string().email("Email is not valid.").required("Email is required."),
   password: Yup.string()
@@ -23,6 +26,8 @@ const schema = Yup.object().shape({
 });
 
 const Login = () => {
+  const dispatch = useAppDispatch();
+  const { isLoading, error } = useAppSelector((state: RootState) => state.Auth);
   const [signUp, setSignUp] = useState(true);
   const [iseye, setIseye] = useState(false);
   const [isOn, setIsOn] = useState(false);
@@ -31,10 +36,11 @@ const Login = () => {
     resolver: yupResolver(schema),
   });
 
-  const { handleSubmit } = methods
+  const { handleSubmit, reset } = methods;
 
   const handleLink = () => {
     setSignUp((prevState) => !prevState);
+    reset(); 
   };
 
   const handleEye = () => {
@@ -45,24 +51,25 @@ const Login = () => {
     setIsOn((prevState) => !prevState);
   };
 
-  const onSubmit = async (data: { email: string, password: string }) => {
-    try {
-      const url = signUp
-        ? 'https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/Register'
-        : 'https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/Login';
-      
-      const response = await axios.post(url, {
-        email: data.email,
-        password: data.password,
-      });   
-      console.log(response.data);  
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        console.error("Hata:", error.response.data);
-        alert(error.response.data.message || "This is Error.");
-      } 
+  const onSubmit = (data: { email: string, password: string }) => {
+    if (signUp) {
+      dispatch(register(data));
+    } else {
+      dispatch(login(data)).unwrap().then(() => {
+        <Navigate to="/verifyemailpages" />;
+      }); 
     }
   };
+
+  const handleErrorDisplay = () => {
+    if (error) {
+      alert(error);
+      dispatch(clearError());
+    }
+  };
+
+  // Call handleErrorDisplay whenever the component re-renders
+  handleErrorDisplay();
 
   return (
     <Container sx={{ display: "flex" }} className='all_login'>
@@ -73,13 +80,13 @@ const Login = () => {
         />
       </div>
       <div className='sign_right'>
-        <FormProvider  {...methods}>
+        <FormProvider {...methods}>
           <Heading
             fontsize="48px"
             text={signUp ? "Create account" : "Sign in"}
-            className="login_heading" 
+            className="login_heading"
           />
-          <Paragrafy fontsize="16px" fontfamily="DM Sans, sans-serif" text={"Now your finances are in one place and always under control"} />
+          <Paragrafy fontsize="16px" fontfamily="DM Sans, sans-serif" text={"Now your finances are in one place and always under control"} />
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="email-container">
               <UseFormInput
@@ -108,16 +115,16 @@ const Login = () => {
             {signUp ? (
               <>
                 <Check />
-                <PrimaryButton label={"Create account"} type="submit" />
+                <PrimaryButton label={"Create account"} type="submit" disabled={isLoading} />
               </>
             ) : (
               <>
-                <PrimaryButton label={"Sign in"} type="submit" />
+                <PrimaryButton label={"Sign in"} type="submit" disabled={isLoading} />
                 <Toogle isOn={isOn} handleToggle={handleToggle} />
               </>
             )}
             <div className="link_container">
-              <Paragrafy fontfamily="Inter,sans-serif" fontsize="14px" fontWeight="300" text={signUp ? "Already have an account? " : "Already have an account? "} />
+              <Paragrafy fontfamily="Inter,sans-serif" fontsize="14px" fontWeight="300" text={signUp ? "Already have an account? " : "Don't have an account? "} />
               <CustomLink fontfamily="Inter,sans-serif" onChange={handleLink} element={signUp} />
             </div>
           </form>

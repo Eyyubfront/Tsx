@@ -8,6 +8,7 @@ import VerifyEmailPage from "../pages/VerifyEmailPage/VerifyEmailPage";
 import Login from "../pages/Login/Login";
 import ProtectedRouting from "./ProtectedRouting";
 import PublicRouting from "./PublicRouting";
+import Home from "../pages/Home/Home";
 
 const Routing = () => {
   return (
@@ -19,13 +20,14 @@ const Routing = () => {
         <Route path="/forgotpasswordpage" element={<ForgotPasswordPage />} />
         <Route path="/resetpasswordpage" element={<ResetPasswordPage />} />
       <Route path="/verifyemailpage" element={<VerifyEmailPage />} />
+     
       </Route>
 
 
 
 
       <Route element={<ProtectedRouting />}>
-
+      <Route path="/" element={<Home />} />
   
       </Route>
 

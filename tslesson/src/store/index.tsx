@@ -3,12 +3,14 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import learningNowReducer from './LearingNowSlice';
 import latestWordsReducer from './LatestWordsSlice';
 import UserProviders from './userSlice';
+import AuthLogin from './authSlice';
 
 const store = configureStore({
     reducer: {
         learningNow: learningNowReducer,
         latestWords: latestWordsReducer,
-        UserAll:UserProviders
+        UserAll:UserProviders,
+        Auth :AuthLogin
     },
 });
 
