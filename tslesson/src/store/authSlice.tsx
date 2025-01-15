@@ -5,7 +5,7 @@ interface User {
     email: string;
     password: string;
     error?: string;
-    isAuh
+
 }
 
 interface AuthState {

@@ -1,4 +1,4 @@
-// actions/authActions.ts
+
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 

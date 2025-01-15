@@ -6,7 +6,7 @@ import Paragrafy from '../../components/Paragrafy/Paragrafy';
 import Check from '../../components/Check/Check';
 import PrimaryButton from '../../components/PrimaryButton/PrimaryButton';
 import CustomLink from '../../components/CustomLink/CustomLink';
-import Toogle from '../../components/Toogle/Toogle';
+import Toogle from './Toogle/Toogle';
 import { Link, Navigate  } from 'react-router-dom';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
