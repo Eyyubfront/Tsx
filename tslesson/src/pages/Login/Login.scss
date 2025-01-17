@@ -111,9 +111,12 @@
   }
   
 
-  @media (min-width: 1200px) {
+  @media (min-width: 1400px) {
     .all_login {
-        max-width: 100% !important;
-        padding: 16px !important;
+        max-width: 100% ;
+        padding: 16px ;
+        .sign_right{
+          width: 100%;
+        }
     }
 }

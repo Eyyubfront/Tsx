@@ -4,6 +4,7 @@ import "./Header.scss"
 import BurgerMenu from './HeaderBurger/Burgermenu/Burgermenu';
 import SelecetLanguage from '../SelecetLanguage/SelecetLanguage';
 import NotifactionComponents from '../NotifactionComponents/NotifactionComponents';
+import Add from '../../assets/images/header/Add.svg';
 
 const Header = () => {
 
@@ -27,7 +28,7 @@ const Header = () => {
                 </div>
                 <NotifactionComponents />
                 <div className="header_words">
-                    <Paragrafy className='words_count' text='+' />
+                    <img src={Add} alt="" />
                     <Paragrafy className='newwordstext' fontWeight="600" fontsize='16px' fontfamily='DM Sans' text=' New Words' />
                 </div>
             </div>

@@ -1,61 +1,81 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { login, register } from './actions/authActions'; 
 
-interface User {
-    email: string;
-    password: string;
-    error?: string;
-
-}
-
 interface AuthState {
-    isLoading: boolean;
-    error: string | null;
-    user: User | null;
+  accessToken: string | null;
+  refreshToken: string | null; 
+  loading: boolean;
+  error: string | null;
+  isAuth: boolean;
 }
 
 const initialState: AuthState = {
-    isLoading: false,
-    error: null,
-    user: null,
+  accessToken: null,
+  refreshToken: null,
+  loading: false,
+  error: null,
+  isAuth: false,
 };
 
 const authSlice = createSlice({
-    name: 'Auth',
-    initialState,
-    reducers: {
-        clearError(state) {
-            state.error = null;
-        },
+  name: 'auth',
+  initialState,
+  reducers: {
+    logout(state) {
+      state.accessToken = null;
+      state.refreshToken = null; 
+      state.isAuth = false; 
+      localStorage.removeItem('token'); 
+      localStorage.removeItem('refreshToken'); 
     },
-    extraReducers: (builder) => {
-        builder
-            .addCase(login.pending, (state) => {
-                state.isLoading = true;
-                state.error = null;
-            })
-            .addCase(login.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.user = action.payload;
-            })
-            .addCase(login.rejected, (state, action) => {
-                state.isLoading = false;
-                state.error = action.payload as string;
-            })
-            .addCase(register.pending, (state) => {
-                state.isLoading = true;
-                state.error = null;
-            })
-            .addCase(register.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.user = action.payload;
-            })
-            .addCase(register.rejected, (state, action) => {
-                state.isLoading = false;
-                state.error = action.payload as string;
-            });
+    setToken(state, action: PayloadAction<{ token: string; refreshToken: string }>) {
+      state.accessToken = action.payload.token; 
+      state.refreshToken = action.payload.refreshToken; 
+      state.isAuth = true; 
+      localStorage.setItem('token', action.payload.token); 
+      localStorage.setItem('refreshToken', action.payload.refreshToken); 
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(login.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.loading = false; 
+        state.accessToken = action.payload.accessToken; 
+        state.refreshToken = action.payload.refreshToken;
+        state.isAuth = true; 
+        localStorage.setItem('token', action.payload.accessToken); 
+        localStorage.setItem('refreshToken', action.payload.refreshToken);
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.loading = false; 
+        state.error = action.payload as string; 
+        state.isAuth = false; 
+      })
+      .addCase(register.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.loading = false; 
+        state.accessToken = action.payload.accessToken; 
+        state.refreshToken = action.payload.refreshToken; 
+        state.isAuth = true; 
+        localStorage.setItem('token', action.payload.accessToken); 
+        localStorage.setItem('refreshToken', action.payload.refreshToken); 
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.loading = false; 
+        state.error = action.payload as string; 
+        state.isAuth = false; 
+      });
+  },
 });
 
-export const { clearError } = authSlice.actions;
+
+export const { setToken, logout } = authSlice.actions;
+
 export default authSlice.reducer;

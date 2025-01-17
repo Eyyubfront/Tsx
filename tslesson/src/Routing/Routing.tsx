@@ -15,20 +15,20 @@ const Routing = () => {
     <Routes>
       <Route element={<PublicRouting />}>
         <Route path="/login" element={<Login />} />
+
         <Route path="/changedpasswordpage" element={<ChangedPasswordPage />} />
         <Route path="/checkemailpage" element={<CheckEmailPage />} />
         <Route path="/forgotpasswordpage" element={<ForgotPasswordPage />} />
         <Route path="/resetpasswordpage" element={<ResetPasswordPage />} />
-      <Route path="/verifyemailpage" element={<VerifyEmailPage />} />
-     
+
+        <Route path="/verifyemailpage" element={<VerifyEmailPage />} />
       </Route>
 
 
 
-
       <Route element={<ProtectedRouting />}>
-      <Route path="/" element={<Home />} />
-  
+        <Route path="/" element={<Home />} />
+
       </Route>
 
     </Routes>

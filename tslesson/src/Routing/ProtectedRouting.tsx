@@ -3,11 +3,11 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { RootState } from '../store';
 
 const ProtectedRoute = () => {
-  const user = useSelector((state: RootState) => state.UserAll.user);
-  const loading = useSelector((state: RootState) => state.UserAll.loading); 
+  const user = useSelector((state: RootState) => state.Auth.isAuth);
+
   let location = useLocation();
 
-  if (!user && !loading) {
+  if (!user) {
     return <Navigate to="/login" state={{ from: location }} />;
   }
 

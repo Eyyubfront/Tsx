@@ -35,3 +35,18 @@ const latestWordsSlice = createSlice({
 export const { saveText, removeText, updateText } = latestWordsSlice.actions;
 
 export default latestWordsSlice.reducer;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

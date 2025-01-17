@@ -36,7 +36,7 @@ const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
                         slidesPerView: 2.5, 
                     },
                     1024: {
-                        slidesPerView: 3.5, 
+                        slidesPerView: 3.3, 
                     }
                 }}  
                 modules={[Pagination]}  

@@ -1,7 +1,5 @@
-import { Container } from '@mui/material';
 import "./Home.scss";
 import Header from '../../components/Header/Header';
-
 import { Link } from 'react-router-dom';
 import Paragrafy from '../../components/Paragrafy/Paragrafy';
 import LexiconCards from './Homesections/LexiconCards/LexiconCards';
@@ -12,7 +10,9 @@ import LatestWords from './Homesections/LatestWords/LatestWords';
 
 const Home = () => {
     return (
-        <Container>
+
+        <div className="home_container">
+
             <Header />
             <div className="homepage">
             <div className="homepage_center">
@@ -35,7 +35,9 @@ const Home = () => {
                     </Link>
                 </div>
             </div>
-        </Container>
+        </div>
+  
+    
     );
 };
 
