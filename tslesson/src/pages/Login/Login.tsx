@@ -12,7 +12,7 @@ import * as Yup from 'yup';
 import "./Login.scss";
 import UseFormInput from '../../components/PrimaryInput/UseFormInput';
 import { RootState, useAppDispatch, useAppSelector } from '../../store';
-import { login } from '../../store/actions/authActions';
+import { login, register } from '../../store/actions/authActions';
 import Loading from '../../components/Loading/Loading';
 import { Link } from 'react-router-dom';
 
@@ -56,7 +56,7 @@ const Login = () => {
     console.log(data);
 
     if (signUp) {
-      // dispatch(register(data)); // Eğer kullanıcı kaydına yönlendirecekseniz burayı aktif edin
+      dispatch(register(data)); // Eğer kullanıcı kaydına yönlendirecekseniz burayı aktif edin
     } else {
       dispatch(login(data)).unwrap().then(() => {
 
@@ -66,6 +66,8 @@ const Login = () => {
       });
     }
   };
+
+
 
 
   return (
