@@ -3,14 +3,14 @@ import axiosInstance from '../axiosInstance';
 
 export interface TextItem {
     id: number; 
-    userId: string;               
+    userId: string|null;               
     source: string;              
     translation: string;         
     sourceLanguageId: number;     
     translationLanguageId: number; 
 }
 
-export const fetchTexts = createAsyncThunk('learningNow/fetchTexts', async (userId: string, thunkAPI) => {
+export const fetchTexts = createAsyncThunk('learningNow/fetchTexts', async (userId: string | null, thunkAPI) => {
     try {
         const response = await axiosInstance.get(`/UserVocabulary/GetAllLearningByUserId?userId=${userId}`);
         return response.data;
@@ -19,7 +19,7 @@ export const fetchTexts = createAsyncThunk('learningNow/fetchTexts', async (user
     }
 });
 
-export const saveText = createAsyncThunk('learningNow/saveText', async ({ item, userId }: { item: TextItem, userId: string }, thunkAPI) => {
+export const saveText = createAsyncThunk('learningNow/saveText', async ({ userId, ...item }: TextItem, thunkAPI) => {
     try {
         const response = await axiosInstance.post('/UserVocabulary/Create', {
             ...item

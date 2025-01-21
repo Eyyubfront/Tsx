@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { fetchTexts, saveText, removeText, updateText } from '../../../../store/actions/learingActions/learingnowActions';
+import { fetchTexts, saveText, removeText, updateText, TextItem } from '../../../../store/actions/learingActions/learingnowActions';
 import { RootState, useAppDispatch, useAppSelector } from '../../../../store';
 import TableComponent from '../../../../components/TableComponents/TableComponents';
 
@@ -15,11 +15,8 @@ const LearningNow = () => {
         }
     }, [dispatch, userId]);
     
-    const handleSaveText = (item) => {
-        dispatch(saveText({
-            ...item, // Spread existing item data
-            userId: userId // Include userId when saving
-        }));
+    const handleSaveText = (item:TextItem) => {
+        dispatch(saveText(item));
     };
 
     return (
@@ -27,7 +24,7 @@ const LearningNow = () => {
             title="Latest Added Words"
             items={savedTexts}
             saveText={handleSaveText} 
-            removeText={(id) => dispatch(removeText({ id, userId }))} 
+            // removeText={(id) => dispatch(removeText({ id, userId }))} Men tablecomponentdinden id bura gonderecem burda biden HandleRemove acib id dondurecem is bele olur
             updateText={({ id, source, translation }) => dispatch(updateText({ id, source, translation, userId }))} 
         />
     );

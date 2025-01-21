@@ -5,7 +5,7 @@ import { MdEdit } from "react-icons/md";
 import Savedicon from "../../assets/images/home/Bookmark.svg"; 
 
 
-interface TextItem {
+ export interface TextItem {
     id: number;
     userId?: string;              
     source?: string;           
