@@ -1,9 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import learningNowReducer from './LearingNowSlice';
-import latestWordsReducer from './LatestWordsSlice';
-
-import AuthLogin from './authSlice';
+import learningNowReducer from './slice/LearingNowSlice';
+import latestWordsReducer from './slice/LatestWordsSlice';
+import AuthLogin from './slice/authSlice';
 
 const store = configureStore({
     reducer: {

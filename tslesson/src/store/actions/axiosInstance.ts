@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { logout } from '../authSlice';
+import { logout } from '../slice/authSlice';
 import store from '../index';
 import { useNavigate } from 'react-router-dom';
 

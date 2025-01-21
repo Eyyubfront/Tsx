@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { login, register } from './actions/authActions'; 
+import { login, register, refreshToken } from '../actions/authActions'; 
 
 interface AuthState {
-  accessToken: string | null;
   refreshToken: string | null; 
+  accessToken: string | null;
   loading: boolean;
   error: string | null;
   isAuth: boolean;
@@ -11,8 +11,8 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  accessToken: null,
   refreshToken: null,
+  accessToken: null,
   loading: false,
   error: null,
   isAuth: false,
@@ -52,15 +52,13 @@ const authSlice = createSlice({
         state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken;
         state.isAuth = true;
-        localStorage.setItem('token', action.payload.accessToken);
-        localStorage.setItem('refreshToken', action.payload.refreshToken);
+        state.userId = action.payload.userId;  
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
         state.isAuth = false;
       })
-      
       .addCase(register.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -70,6 +68,19 @@ const authSlice = createSlice({
         state.userId = action.payload.userId;  
       })
       .addCase(register.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+        state.isAuth = false;
+      })
+      .addCase(refreshToken.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(refreshToken.fulfilled, (state) => {
+        state.loading = false;
+        state.isAuth = true;
+      })
+      .addCase(refreshToken.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
         state.isAuth = false;

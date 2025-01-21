@@ -4,13 +4,13 @@ import { RootState } from '../store';
 
 const PublicRouting = () => {
   const user = useSelector((state: RootState) => state.Auth.isAuth);
-  const token = localStorage.getItem('token'); 
 
-  if (user || token) {
-    return <Navigate to="/login" />;
+
+  if (!user ) {
+    return  <Outlet /> ;
   }
 
-  return <Outlet />;
+  return <Navigate to="/" /> ;
 };
 
 export default PublicRouting;

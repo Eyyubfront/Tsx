@@ -4,15 +4,15 @@ import { RootState } from '../store';
 
 const ProtectedRouting = () => {
   const user = useSelector((state: RootState) => state.Auth.isAuth);
-  const token = localStorage.getItem('token'); 
+
 
   let location = useLocation();
 
-  if (!user && !token) {
-    return <Navigate to="/" state={{ from: location }} />;
+  if (user ) {
+    return <Outlet />;
   }
-
-  return <Outlet />;
+  
+  return <Navigate to="/login" state={{ from: location }} />;
 };
 
 export default ProtectedRouting;

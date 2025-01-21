@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom"; 
 import { useEffect } from "react";
 import ChangedPasswordPage from "../pages/ChangedPasswordPage/ChangedPasswordPage";
 import CheckEmailPage from "../pages/CheckEmailPage/CheckEmailPage";
@@ -9,21 +9,17 @@ import Login from "../pages/Login/Login";
 import ProtectedRouting from "./ProtectedRouting";
 import PublicRouting from "./PublicRouting";
 import Home from "../pages/Home/Home";
-import { useAppSelector } from "../store";
-
+import { useAppDispatch } from "../store";
+import { refreshToken } from '../store/actions/authActions';
 
 const Routing = () => {
-  const navigate = useNavigate();
-
-
-  const { isAuth } = useAppSelector((state) => state.Auth);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!isAuth && !token) {
-      navigate("/login");
-    }
-  }, [isAuth, navigate]);  
+   dispatch(refreshToken())
+
+
+  }, []);
 
 
   return (

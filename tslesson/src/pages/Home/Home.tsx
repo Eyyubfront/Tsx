@@ -6,18 +6,11 @@ import LexiconCards from './Homesections/LexiconCards/LexiconCards';
 import VocabularyBuilder from './Homesections/VocabularyBuilder/VocabularyBuilder';
 import LearningNow from './Homesections/LearingNow/LearingNow';
 import LatestWords from './Homesections/LatestWords/LatestWords';
-import { useEffect } from "react";
+
 
 
 const Home = () => {
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-          console.log('Token:', token);
-        } else {
-          console.log('Token not ');
-        }
-      }, []);
+ 
     return (
         <div className="home_container">
             <Header />

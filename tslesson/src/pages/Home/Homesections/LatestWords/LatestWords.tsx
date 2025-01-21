@@ -1,5 +1,5 @@
 import './LatestWords.scss';
-import { saveText, removeText, updateText } from '../../../../store/LearingNowSlice';
+// import { saveText, removeText, updateText } from '../../../../store/slice/LearingNowSlice';
 import { RootState, useAppDispatch, useAppSelector } from '../../../../store';
 import TableComponent from '../../../../components/TableComponents/TableComponents';
 const predefinedWords = [
@@ -13,14 +13,14 @@ const LatestWords = () => {
         const savedTexts = useAppSelector((state: RootState) => state.latestWords.items);
 
     return (
-        <TableComponent
-        title="Learning Now"
-        items={savedTexts.length > 0 ? savedTexts : predefinedWords}
-        saveText={(item) => dispatch(saveText(item))}
-        removeText={(id) => dispatch(removeText(id))}
-        updateText={(item) => dispatch(updateText(item))}
-    />
-
+    //     <TableComponent
+    //     title="Learning Now"
+    //     items={savedTexts.length > 0 ? savedTexts : predefinedWords}
+    //     saveText={(item) => dispatch(saveText(item))}
+    //     removeText={(id) => dispatch(removeText(id))}
+    //     updateText={(item) => dispatch(updateText(item))}
+    // />
+<div>fgfg</div>
     );
 };
 

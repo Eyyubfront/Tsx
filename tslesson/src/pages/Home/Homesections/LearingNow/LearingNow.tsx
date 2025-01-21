@@ -1,26 +1,34 @@
-import './LearingNow.scss';
-import { saveText, removeText, updateText } from '../../../../store/LearingNowSlice';
+import { useEffect } from 'react';
+import { fetchTexts, saveText, removeText, updateText } from '../../../../store/actions/learingActions/learingnowActions';
 import { RootState, useAppDispatch, useAppSelector } from '../../../../store';
 import TableComponent from '../../../../components/TableComponents/TableComponents';
 
-const predefinedWords = [
-    { id: 1, text: 'Welcome - Salam' },
-    { id: 2, text: 'Goodbye - Sagol' },
-    { id: 3, text: 'Thank you - Tesekkur' },
-   
-];
-
 const LearningNow = () => {
     const dispatch = useAppDispatch();
+
     const savedTexts = useAppSelector((state: RootState) => state.learningNow.items);
+    const userId = useAppSelector((state: RootState) => state.Auth.userId);
+
+    useEffect(() => {
+        if (userId) {
+            dispatch(fetchTexts(userId));
+        }
+    }, [dispatch, userId]);
+    
+    const handleSaveText = (item) => {
+        dispatch(saveText({
+            ...item, // Spread existing item data
+            userId: userId // Include userId when saving
+        }));
+    };
 
     return (
         <TableComponent
-            title="Latest added words"
-            items={savedTexts.length > 0 ? savedTexts : predefinedWords}
-            saveText={(item) => dispatch(saveText(item))}
-            removeText={(id) => dispatch(removeText(id))}
-            updateText={(item) => dispatch(updateText(item))}
+            title="Latest Added Words"
+            items={savedTexts}
+            saveText={handleSaveText} 
+            removeText={(id) => dispatch(removeText({ id, userId }))} 
+            updateText={({ id, source, translation }) => dispatch(updateText({ id, source, translation, userId }))} 
         />
     );
 };
