@@ -1,6 +1,6 @@
 import React from "react";
 import LearnLayout from "../../layout/LearnLayout/LearnLayout";
-import { useAppSelector } from "../../slices/store";
+import { useAppSelector } from "../../store/index";
 import LanguageItem from "./LanguageItem";
 import "./LanguageSelector.scss";
 

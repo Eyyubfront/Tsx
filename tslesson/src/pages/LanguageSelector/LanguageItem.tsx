@@ -1,8 +1,8 @@
 import React from "react";
-import { selectLanguage } from "../../slices/languageSlice";
+import { selectLanguage } from "../../store/slice/languageSlice";
 import { Language } from "../../types/Types";
 import { ListItem, ListItemText, ListItemButton, ListItemIcon } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../slices/store";
+import { useAppDispatch, useAppSelector } from "../../store/index";
 
 interface LanguageState {
   selectedLanguage: Language | null;

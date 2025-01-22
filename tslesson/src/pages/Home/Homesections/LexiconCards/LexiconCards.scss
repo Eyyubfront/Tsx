@@ -1,0 +1,117 @@
+.lexicon_cardsall {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 48px;
+    height: 170px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 32px;
+    background-image: url("../../../../assets/images/AuthImages/bacgroundimage/ezzedesign.png");
+    background-position: center;
+}
+
+.lexion_cards {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+    padding: 10px;
+}
+
+.lexicon_card {
+    width: 420px;
+    height: 156px;
+    padding: 10px 12px;
+    border-radius: 20px;
+    border: 1px solid #D1C2FF00;
+    background-color: #F9F8FD;
+
+    .lexioncard_about {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+}
+
+.lexions_count {
+    font-size: 42px;
+    font-family: DM Serif Display;
+    font-weight: 400;
+    line-height: 54.6px;
+    letter-spacing: -0.01em;
+    text-align: left;
+    color: #8B6DE8;
+}
+
+.lexions_title {
+    color: #1D1730CC;
+    font-family: DM Sans;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: left;
+}
+
+@media (max-width: 600px) {
+    .lexicon_cardsall {
+        height: max-content;
+        overflow: hidden;
+    }
+
+    .lexion_cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 20px;
+        padding: 10px;
+    }
+
+    .lexion_cards>.lexicon_card:nth-child(3) {
+        grid-column: 2 / 3;
+        grid-row: 1 / 3;
+    }
+
+    .lexion_cards>.lexicon_card:nth-child(1) .lexioncard_about,
+    .lexion_cards>.lexicon_card:nth-child(2) .lexioncard_about {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .lexion_cards>.lexicon_card {
+        width: 100%;
+        height: 100%;
+    }
+
+    .lexion_cards>.lexicon_card:nth-child(3) .lexioncard_about {
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+        gap: 12px;
+    }
+
+    .lexicon_card {
+        overflow: hidden;
+    }
+
+    .lexioncard_about {
+        padding: 10px;
+        height: auto;
+        overflow: hidden;
+
+        .lexions_count {
+            font-size: 36px;
+        }
+
+        .lexions_title {
+            font-size: 14px;
+        }
+    }
+}

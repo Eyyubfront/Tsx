@@ -9,8 +9,8 @@ import { Container } from "@mui/material";
 import Heading from "../../components/Heading";
 import Paragrafy from "../../components/Paragrafy/Paragrafy";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
-import { confirmEmail, resendConfirmationToken } from "../../slices/emailVerificationSlice";
-import { useAppSelector } from "../../slices/store";
+import { confirmEmail, resendConfirmationToken } from "../../store/slice/emailVerificationSlice";
+import { useAppSelector } from "../../store/index";
 
 const VerifyEmailPage = () => {
   const [counter, setCounter] = useState(30);

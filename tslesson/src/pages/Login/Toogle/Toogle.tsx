@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { MdToggleOn, MdToggleOff } from "react-icons/md";
-import Paragrafy from "../Paragrafy/Paragrafy";
+import Paragrafy from "../../../components/Paragrafy/Paragrafy";
 import "./Toogle.scss"; 
 
 interface ToogleProps {

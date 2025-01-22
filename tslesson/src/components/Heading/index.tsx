@@ -1,13 +1,15 @@
 import { FC } from 'react';
-import "./Heading.scss"
+import "./Heading.scss";
+
 interface HeadingProps {
   text: string;
   fontsize?: string; 
+  className?: string; 
 }
 
-const Heading: FC<HeadingProps> = ({ text, fontsize }) => {
+const Heading: FC<HeadingProps> = ({ text, fontsize, className }) => {
   return (
-    <h2 className='signin_name' style={{ fontSize: fontsize }}>
+    <h2 className={`signin_name ${className}`} style={{ fontSize: fontsize }}> 
       {text}
     </h2>
   );

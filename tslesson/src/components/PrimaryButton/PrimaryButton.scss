@@ -1,5 +1,5 @@
 .button_primary {
-    width: 541px;
+    width: 100%;
     height: 56px;
     top: 567px;
     left: 16px;
@@ -22,19 +22,3 @@ cursor: pointer;
 }
 
 
-@media (max-width:600px) {
-    .button_primary {
-        width: 100% !important;
-        height: 56px;
-
-
-    }
-}
-@media (min-width:601px)and (max-width:1200px) {
-    .button_primary {
-        width: 100% !important;
-        height: 56px;
-
-
-    }
-}
