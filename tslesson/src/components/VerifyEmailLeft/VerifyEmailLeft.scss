@@ -1,0 +1,116 @@
+.verify-email-container {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  padding: 48px;
+  border-radius: 32px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  background-image: url('../../assets/images/AuthImages/bacgroundimage/uioydesign.png');
+
+  .verify-email-stars {
+    display: flex; 
+    align-items: center;
+    justify-content: space-between; 
+    position: absolute;
+    top: 15px;
+    left: 18px;
+
+    .verify-email-star-image {
+      width: 216px;
+    }
+
+    .my-icon {
+      display: none; 
+    }
+  }
+
+  .verify-email-content {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 2;
+    text-align: left;
+    max-width: 516px;
+    p{
+      color: #4A4559;
+      font-size: 18px;
+    }
+   
+
+    .verify-email-header {
+      display: flex;
+      align-items: center;
+
+      h2 {
+        color: #1d1730;
+        font-size:30px;
+        margin-bottom: 10px;
+      }
+    }
+
+    .verify-email-paragraph {
+      color: #4a4559;
+      font-size: 1rem;
+      margin: 10px 0;
+    }
+  }
+}
+
+
+@media only screen and (max-width:1200px){
+  .verify-email-container{
+    // width: 100%;
+    min-height: 450px;
+  }
+}
+
+
+@media only screen and (max-width: 600px) {
+  .verify-email-container {
+    max-width: 100%;
+    min-height: 200px;
+    padding: 0;
+    margin: 0;
+    background: none;
+
+    .verify-email-stars {
+      display: flex; 
+      align-items: center;
+      justify-content: space-between; 
+      padding: 10px;
+      width: 100%;
+
+      .my-icon {
+        display: block; 
+      }
+
+      .verify-email-star-image {
+        width: 56.04px;
+        height: 55px;
+        background-image: url('../../assets/images/AuthImages/bacgroundimage/thinsmooth.png');
+      }
+    }
+
+    .verify-email-content {
+      padding: 0;
+      margin: 0;
+      margin-top: 40px;
+      margin-left: -25px;
+
+      h2 {
+        font-size: 20px;
+        line-height: 26px;
+        font-weight: 400;
+      }
+
+      .verify-email-paragraph {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+      }
+    }
+  }
+}
