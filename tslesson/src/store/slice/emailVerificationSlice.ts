@@ -1,38 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice } from "@reduxjs/toolkit";
+import { confirmEmail, resendConfirmationToken } from "../actions/verifyemailActions/emailVerificationActions";
 
-// Confirm Email API
-export const confirmEmail = createAsyncThunk(
-  "emailVerification/confirmEmail",
-  async (code: string, { rejectWithValue }) => {
-    try {
-      const response = await axios.post("/api/ConfirmEmail", { code });
-      return response.data; 
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message || "Failed to confirm email."
-      );
-    }
-  }
-);
-
-
-// Resend Confirmation Token API
-export const resendConfirmationToken = createAsyncThunk(
-  "emailVerification/resendConfirmationToken",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await axios.post("/api/ResendEmailConfirmationToken");
-      return response.data;
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message || "Failed to resend confirmation token."
-      );
-    }
-  }
-);
-
-// Slice
 const emailVerificationSlice = createSlice({
   name: "emailVerification",
   initialState: {

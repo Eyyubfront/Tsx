@@ -26,3 +26,19 @@ export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export default store;
+
+
+
+   {/* {languages.length > 0 ? (
+              languages.map((language) => (
+                <li key={language.id}>
+                  <LanguageItem language={language} />
+                </li>
+              ))
+            ) : (
+              !loading && !error && (
+                <p className="selected-language">No languages available.</p>
+          
+
+              )
+            )} */}
