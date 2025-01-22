@@ -8,8 +8,8 @@ import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 const ChangedPasswordPage = () => {
   return (
     <Container>
-      <div className="main-div">
-        <LeftVerifyEmail />
+      <div className="changed-div">
+        <LeftVerifyEmail TitleText="Hi, Welcome!" DescriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!" />
         <div className="changed-pass">
           <div className="image">
             <img src={Icon} />

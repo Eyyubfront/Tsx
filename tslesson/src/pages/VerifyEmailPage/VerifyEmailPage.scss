@@ -9,6 +9,9 @@
   display: flex;
   align-items: center;
   justify-content:center;
+  // padding: 48px 0;
+  gap: 32px;
+  min-height: 100vh;
   .btn {
     position: absolute;
     top: 10%;

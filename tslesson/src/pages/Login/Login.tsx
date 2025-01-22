@@ -86,7 +86,7 @@ console.log("singup:",signUp)
       <div style={{ display: "flex" }} className='all_login'>
         <div className="sign_left">
           <AuthLeftPanel
-            TittleText="Hi, Welcome!"
+            tittleText="Hi, Welcome!"
             descriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!"
           />
         </div>

@@ -4,11 +4,11 @@ import hand from "../../assets/images/AuthImages/hand/hand.png";
 import Paragrafy from '../../components/Paragrafy/Paragrafy';
 
 interface LeftPanelProps {
-  TittleText: string;
+  tittleText: string;
   descriptionText: string;
 }
 
-const AuthLeftPanel: React.FC<LeftPanelProps> = ({ TittleText, descriptionText }) => {
+const AuthLeftPanel: React.FC<LeftPanelProps> = ({ tittleText, descriptionText }) => {
   return (
     <div className="leftpanel_container">
       <div className="leftpanel_staricon">
@@ -16,7 +16,7 @@ const AuthLeftPanel: React.FC<LeftPanelProps> = ({ TittleText, descriptionText }
       </div>
       <div className="leftpanel_bottomtext">
         <div className="leftpanel_botomname">
-          <Paragrafy className='leftpanel_bottomwelcome' fontsize='30px' fontfamily='DM Serif Display' text={TittleText} />
+          <Paragrafy className='leftpanel_bottomwelcome' fontsize='30px' fontfamily='DM Serif Display' text={tittleText} />
           <img src={hand} alt="" />
         </div>
         <div className="leftpanel_bottom">

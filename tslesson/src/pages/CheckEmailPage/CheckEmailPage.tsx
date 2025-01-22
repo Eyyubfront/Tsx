@@ -8,6 +8,7 @@ import Heading from "../../components/Heading";
 import Paragrafy from "../../components/Paragrafy/Paragrafy";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 
+
 const CheckEmailPage = () => {
   const [counter, setCounter] = useState(30);
   const [canResend, setCanResend] = useState(false);
@@ -31,8 +32,8 @@ const CheckEmailPage = () => {
 
   return (
       <Container>
-      <div className="main-div">
-        <LeftVerifyEmail />
+      <div className="check-div">
+        <LeftVerifyEmail TitleText="Hi, Welcome!" DescriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!" />
 
         <div className="check-email">
           <Button

@@ -11,6 +11,8 @@ import PublicRouting from "./PublicRouting";
 import Home from "../pages/Home/Home";
 import { useAppDispatch } from "../store";
 import { refreshToken } from '../store/actions/authActions';
+import LearnTime from "../pages/LearnTime/LearnTime";
+import LanguageSelector from "../pages/LanguageSelector/LanguageSelector";
 
 const Routing = () => {
   const dispatch = useAppDispatch();
@@ -31,11 +33,15 @@ const Routing = () => {
         <Route path="/forgotpasswordpage" element={<ForgotPasswordPage />} />
         <Route path="/resetpasswordpage" element={<ResetPasswordPage />} />
         <Route path="/verifyemailpage" element={<VerifyEmailPage />} />
+        <Route path="learntime" element={<LearnTime/>} />
+        <Route path="languageselector" element={<LanguageSelector/>} />
       </Route>
 
       <Route element={<ProtectedRouting />}>
         <Route path="/" element={<Home />} />
       </Route>
+
+      <Route path="/" element={<Login />} />
     </Routes>
   );
 };

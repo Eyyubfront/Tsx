@@ -10,9 +10,9 @@ import Paragrafy from "../../components/Paragrafy/Paragrafy";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 const ForgotPasswordPage = () => {
   return (
-    <Container>
-      <div className="main-div">
-        <LeftVerifyEmail />
+    <Container className="container">
+      <div className="forgot-div">
+        <LeftVerifyEmail TitleText="Hi, Welcome!" DescriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!" />
         <Button
           className="leftBt"
           sx={{
@@ -36,6 +36,7 @@ const ForgotPasswordPage = () => {
               border="1px solid #ccc"
               borderRadius="7px"
               outline="none"
+              className="forgot-input"
             />
             <Link to="/verifyemailpage">
             <PrimaryButton

@@ -3,12 +3,16 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import learningNowReducer from './slice/LearingNowSlice';
 import latestWordsReducer from './slice/LatestWordsSlice';
 import AuthLogin from './slice/authSlice';
+import languageReducer from './slice/languageSlice';
+import emailVerificationReducer from './slice/emailVerificationSlice';
 
 const store = configureStore({
     reducer: {
         learningNow: learningNowReducer,
         latestWords: latestWordsReducer,
-        Auth :AuthLogin
+        Auth :AuthLogin,
+        language: languageReducer,
+        emailVerification: emailVerificationReducer,
     },
 });
 
