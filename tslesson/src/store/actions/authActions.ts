@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import axiosInstance from './axiosInstance';
+
 
 interface LoginRequest {
   email: string;
@@ -28,7 +28,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async (request: LoginRequest, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post<AuthResponse>(
+      const response = await axios.post<AuthResponse>(
         'https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/Login',
         request
       );
