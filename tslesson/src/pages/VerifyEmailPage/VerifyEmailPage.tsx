@@ -1,21 +1,26 @@
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import LeftVerifyEmail from "../../components/LeftVerifyEmail/LeftVerifyEmail";
 import "./VerifyEmailPage.scss";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { Container } from "@mui/material";
 import Heading from "../../components/Heading";
 import Paragrafy from "../../components/Paragrafy/Paragrafy";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
+import { confirmEmail, resendConfirmationToken } from "../../slices/emailVerificationSlice";
+import { useAppSelector } from "../../slices/store";
 
 const VerifyEmailPage = () => {
   const [counter, setCounter] = useState(30);
   const [canResend, setCanResend] = useState(false);
   const [inputCode, setInputCode] = useState(["", "", "", "", ""]);
   const [errorMessage, setErrorMessage] = useState("");
-  const validCode = "12345";
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { isLoading, error, success } = useAppSelector((state: any) => state.emailVerification);
 
   useEffect(() => {
     if (counter > 0) {
@@ -29,9 +34,9 @@ const VerifyEmailPage = () => {
   }, [counter]);
 
   const handleResend = () => {
+    dispatch(resendConfirmationToken());
     setCounter(30);
     setCanResend(false);
-    console.log("Code resent!");
   };
 
   const handleInputChange = (value: any, index: any) => {
@@ -48,22 +53,25 @@ const VerifyEmailPage = () => {
     }
   };
 
-  const navigate = useNavigate();
-
   const handleSubmit = () => {
     const enteredCode = inputCode.join("");
-    if (enteredCode === validCode) {
-      console.log("Correct code! Verification successful.");
-      setErrorMessage("");
+    if (enteredCode.length === 5) {
+      dispatch(confirmEmail(enteredCode)).then((action: any) => {
+        if (action.meta.requestStatus === "fulfilled") {
+          navigate("/resetpasswordpage"); 
+        } else {
+          setErrorMessage(error || "Wrong code, please try again.");
+        }
+      });
     } else {
-      setErrorMessage("Wrong code, please try again");
+      setErrorMessage("Please enter a valid code.");
     }
   };
 
   return (
     <Container>
       <div className="main-div">
-        <LeftVerifyEmail />
+        <LeftVerifyEmail TitleText="Hi, Welcome!" DescriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!" />
         <Button className="btn" onClick={() => navigate("/forgotpasswordpage")}>
           <KeyboardArrowLeftIcon />
         </Button>
@@ -89,20 +97,14 @@ const VerifyEmailPage = () => {
 
              <div className="resend-code">
               {canResend ? (
-                <Button
-                  onClick={handleResend}
-                  className="btn2"
-                >Send code again</Button>
+                <Button onClick={handleResend} className="btn2">
+                  Send code again
+                </Button>
               ) : (
                 <p>Send code again in {counter} seconds</p>
               )}
             </div>
-            <Link to={"/resetpasswordpage"}>
-              <PrimaryButton
-                onClick={handleSubmit}
-                label="Verify Code"
-              />
-            </Link>
+            <PrimaryButton onClick={handleSubmit} label="Verify Code" />
           </div>
         </div>
       </div>

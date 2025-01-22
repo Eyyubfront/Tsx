@@ -1,11 +1,14 @@
-.container {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.main-div{
+.check-div{
   position: relative;
+  gap: 32px;
+  padding: 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -133,7 +136,7 @@
     }
   }
 
-  .main-div {
+  .check-div {
     justify-content: center;
     flex-direction: column;
   }
@@ -141,7 +144,7 @@
 
 @media (max-width: 576px) {
 
-  .main-div {
+  .check-div {
     justify-content: center;
     flex-direction: column;
     padding: 0;
