@@ -33,8 +33,6 @@ export const saveText = createAsyncThunk('learningNow/saveText', async (item: Te
 export const removeText = createAsyncThunk('learningNow/removeText', async ({ id, userId }: { id: number, userId: string }, thunkAPI) => {
     try {
         const response = await axiosInstance.delete(`/UserVocabulary/Delete/${id}`);
-
-
         thunkAPI.dispatch(fetchTexts(userId));
         return response.status;
     } catch (err) {
