@@ -60,7 +60,8 @@ console.log("singup:",signUp)
         .unwrap()
         .then(() => {
           console.log("Sign Up successful, switching to Sign In...");
-          setSignUp(false); 
+   
+          navigate("/verifyemailpage")
           console.log(signUp);
         })
         .catch((err) => {

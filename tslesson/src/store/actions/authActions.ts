@@ -1,10 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 interface LoginRequest {
   email: string;
   password: string;
-  
+
 }
 
 interface RegisterRequest {
@@ -19,16 +20,16 @@ interface AuthResponse {
   refreshToken: string;
   data: {
     userId: string;
-      accessToken: string;
-  refreshToken: string;
+    accessToken: string;
+    refreshToken: string;
   }
 }
 export const login = createAsyncThunk(
   'auth/login',
   async (request: LoginRequest, { rejectWithValue }) => {
     try {
-      const response = await axios.post<AuthResponse>(
-        'https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/Login',
+      const response = await axiosInstance.post<AuthResponse>(
+        '/Login',
         request
       );
       const userId = response.data.data.userId;
@@ -47,13 +48,13 @@ export const register = createAsyncThunk(
   async (request: RegisterRequest, { rejectWithValue }) => {
     try {
       const response = await axios.post<AuthResponse>(
-        'https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/Register',
+        '/Register',
         request
       );
-     
+
 
       const userId = response.data.data.userId;
-     
+
       return { ...response.data, userId };
 
     } catch (error) {
@@ -67,9 +68,9 @@ export const refreshToken = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.post<AuthResponse>(
-        'https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/RefreshToken',
+        '/RefreshToken',
         {
-          refreshToken:localStorage.getItem("refreshToken")
+          refreshToken: localStorage.getItem("refreshToken")
         }
       );
       localStorage.setItem('token', response.data.data.accessToken);

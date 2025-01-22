@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
-import { fetchTexts, saveText, removeText, updateText, TextItem } from '../../../../store/actions/learingActions/learingnowActions';
+import { fetchTexts, saveText, removeText, updateText as updateTextAction, TextItem } from '../../../../store/actions/learingActions/learingnowActions';
 import { RootState, useAppDispatch, useAppSelector } from '../../../../store';
 import TableComponent from '../../../../components/TableComponents/TableComponents';
 
 const LearningNow = () => {
     const dispatch = useAppDispatch();
-
-    const savedTexts = useAppSelector((state: RootState) => state.learningNow.items);
+    const items = useAppSelector((state: RootState) => state.learningNow.items);
     const userId = useAppSelector((state: RootState) => state.Auth.userId);
 
     useEffect(() => {
@@ -14,18 +13,27 @@ const LearningNow = () => {
             dispatch(fetchTexts(userId));
         }
     }, [dispatch, userId]);
-    
-    const handleSaveText = (item:TextItem) => {
+
+    const handleSaveText = (item: TextItem) => {
         dispatch(saveText(item));
     };
 
+    const handleRemoveText = (id: number, userId: string) => {
+        dispatch(removeText({ id, userId }));
+    };
+
+
+    const handleUpdateText = ({ id, source, translation, userId }: { id: number, source: string, translation: string, userId: string }) => {
+        const updatedItem = { id, source, translation, userId };
+        dispatch(updateTextAction(updatedItem));
+    };
     return (
         <TableComponent
             title="Latest Added Words"
-            items={savedTexts}
-            saveText={handleSaveText} 
-            // removeText={(id) => dispatch(removeText({ id, userId }))} Men tablecomponentdinden id bura gonderecem burda biden HandleRemove acib id dondurecem is bele olur
-            updateText={({ id, source, translation }) => dispatch(updateText({ id, source, translation, userId }))} 
+            items={items}
+            saveText={handleSaveText}
+            removeText={handleRemoveText}
+            updateText={handleUpdateText}
         />
     );
 };
