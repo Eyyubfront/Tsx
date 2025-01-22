@@ -2,7 +2,7 @@
     background-image: url("../../assets/images/AuthImages/bacgroundimage/ezzedesign.png");
     width: 100%;
     background-size: cover;
-    height: 664px;
+    height: 100%;
     padding: 48px;
     gap: 0px;
     border-radius: 32px;
@@ -47,7 +47,7 @@
 
 @media (max-width:600px) {
     .leftpanel_container {
-        height: max-content;
+      
         gap: 30px;
         padding: 16px;
 

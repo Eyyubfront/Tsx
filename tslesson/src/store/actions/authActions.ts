@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import axiosInstance from './axiosInstance';
+
 
 interface LoginRequest {
   email: string;
@@ -28,8 +28,8 @@ export const login = createAsyncThunk(
   'auth/login',
   async (request: LoginRequest, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post<AuthResponse>(
-        '/Login',
+      const response = await axios.post<AuthResponse>(
+        'https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/Login',
         request
       );
       const userId = response.data.data.userId;
@@ -48,7 +48,7 @@ export const register = createAsyncThunk(
   async (request: RegisterRequest, { rejectWithValue }) => {
     try {
       const response = await axios.post<AuthResponse>(
-        '/Register',
+        'https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/Register',
         request
       );
 
@@ -68,7 +68,7 @@ export const refreshToken = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.post<AuthResponse>(
-        '/RefreshToken',
+        'https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/RefreshToken',
         {
           refreshToken: localStorage.getItem("refreshToken")
         }

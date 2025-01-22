@@ -37,9 +37,9 @@ const learningNowSlice = createSlice({
                 state.status = 'loading';
                 state.error = null;
             })
-            .addCase(saveText.fulfilled, (state) => {
+            .addCase(saveText.fulfilled, (state,action) => {
                 state.status = 'succeeded';
-            
+                state.items = action.payload;
             })
             .addCase(saveText.rejected, (state, action) => {
                 state.status = 'failed';
@@ -50,7 +50,6 @@ const learningNowSlice = createSlice({
                 state.error = null;
             })
             .addCase(removeText.fulfilled, (state) => {
-          
                 state.status = 'succeeded';
             })
             .addCase(removeText.rejected, (state, action) => {
