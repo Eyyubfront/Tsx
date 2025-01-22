@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import LeftVerifyEmail from "../../components/LeftVerifyEmail/LeftVerifyEmail";
-import "./VerifyEmailPage.scss";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import Button from "@mui/material/Button";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Container } from "@mui/material";
+import Button from "@mui/material/Button";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import LeftVerifyEmail from "../../components/LeftVerifyEmail/LeftVerifyEmail";
 import Heading from "../../components/Heading";
 import Paragrafy from "../../components/Paragrafy/Paragrafy";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
-import { confirmEmail, resendConfirmationToken } from "../../store/slice/emailVerificationSlice";
-import { useAppSelector } from "../../store/index";
+import { confirmEmail, resendConfirmationToken } from "../../store/actions/verifyemailActions/emailVerificationActions";
+import { RootState, useAppSelector } from "../../store/index";
+import "./VerifyEmailPage.scss";
+
 
 const VerifyEmailPage = () => {
   const [counter, setCounter] = useState(30);
@@ -20,7 +21,14 @@ const VerifyEmailPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isLoading, error, success } = useAppSelector((state: any) => state.emailVerification);
+  const {error } = useAppSelector((state: any) => state.emailVerification);
+  const { userId } = useAppSelector((state:RootState) => state.Auth); 
+
+  useEffect(() => {
+    if (!userId) {
+      navigate("/login"); 
+    }
+  }, [userId, navigate]);
 
   useEffect(() => {
     if (counter > 0) {
@@ -58,7 +66,7 @@ const VerifyEmailPage = () => {
     if (enteredCode.length === 5) {
       dispatch(confirmEmail(enteredCode)).then((action: any) => {
         if (action.meta.requestStatus === "fulfilled") {
-          navigate("/resetpasswordpage"); 
+          navigate("/languageselector");
         } else {
           setErrorMessage(error || "Wrong code, please try again.");
         }
@@ -95,7 +103,7 @@ const VerifyEmailPage = () => {
               <p style={{ color: "red", marginTop: "10px" }}>{errorMessage}</p>
             )}
 
-             <div className="resend-code">
+            <div className="resend-code">
               {canResend ? (
                 <Button onClick={handleResend} className="btn2">
                   Send code again
