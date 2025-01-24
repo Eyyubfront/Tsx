@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import LearnLayout from "../../layout/LearnLayout/LearnLayout";
 import { useAppSelector, useAppDispatch } from "../../store/index";
-import "./LanguageSelector.scss";
+import "../LanguageSelector/LanguageSelector.scss";
 import { fetchLanguages } from "../../store/actions/languageActions/languageActions";
 import { selectLanguage } from "../../store/slice/languageSlice";
 import { useNavigate } from "react-router-dom";
 
-const LanguageSelector: React.FC = () => {
+const ChooseLearnLanguage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -18,12 +18,14 @@ const LanguageSelector: React.FC = () => {
   const error = useAppSelector((state) => state.language.error);
 
   useEffect(() => {
-    if (languages.length === 0) {
+    if (!selectedLanguage) {
+      navigate("/languageselector");
+    } else if (languages.length === 0) {
       dispatch(fetchLanguages())
         .unwrap()
         .catch((err) => console.error("Fetch error:", err));
     }
-  }, [dispatch, languages]);
+  }, [dispatch, languages, selectedLanguage, navigate]);
 
   const handleLanguageClick = (language: any) => {
     dispatch(selectLanguage(language));
@@ -31,14 +33,14 @@ const LanguageSelector: React.FC = () => {
 
   const handleContinueClick = () => {
     if (selectedLanguage) {
-      navigate("/chooselearnlanguage");
+      navigate("/learntime");
     }
   };
 
   return (
     <LearnLayout
-      titleText="Choose native language"
-      descriptionText="Select your native language to personalize your learning experience easily."
+      titleText="Choose the language you want to learn"
+      descriptionText="Select the language you want to learn to customize your learning experience."
     >
       <div className="lang-div">
         <div className="lang-content">
@@ -86,4 +88,4 @@ const LanguageSelector: React.FC = () => {
   );
 };
 
-export default LanguageSelector;
+export default ChooseLearnLanguage;
