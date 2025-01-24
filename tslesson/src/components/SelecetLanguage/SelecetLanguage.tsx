@@ -1,35 +1,50 @@
-import  { useState } from 'react';
-import { FormControl, Select, MenuItem } from '@mui/material';
-interface Soz {
-    id: number;
-    textone: string;
-    texttwo: string;
-}
+import { useEffect } from 'react';
+import { RootState, useAppDispatch, useAppSelector } from '../../store';
+import { FormControl, MenuItem, Select } from '@mui/material';
+import { getTexts } from '../../store/actions/languagehome/languagehome';
+import { setSelectedLanguage } from '../../store/slice/LanguageHomeSlice';
 
-const sozler: Soz[] = [
-    { id: 1, textone: 'English', texttwo: 'Spanish' },
 
-];
-const SelecetLanguage = () => {
-        const [secilenSoz, setSecilenSoz] = useState<string>('');
-        
-            const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
-                setSecilenSoz(event.target.value);
-            };
-  return (
-    <FormControl className='selects' fullWidth>
+const SelectLanguage = () => {
+    const dispatch = useAppDispatch();
+    const { texts, defaultText, loading, error, selectedLanguageId } = useAppSelector((state) => state.LanguagetextData);
+    
+    const userId = useAppSelector((state: RootState) => state.Auth.userId);
+
+    useEffect(() => {
+        if (userId) {
+            dispatch(getTexts(userId));
+        }
+    }, [dispatch, userId]);
+
+    useEffect(() => {
+        if (defaultText) {
+            dispatch(setSelectedLanguage(defaultText.id)); 
+        }
+    }, [dispatch, defaultText]);
+
+    const handleLanguageChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+        const value = event.target.value as number;
+        dispatch(setSelectedLanguage(value)); 
+    };
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
+
+    return (
+        <FormControl className='selects' fullWidth>
             <Select
-                value={secilenSoz}
-                onChange={handleChange}
+                value={selectedLanguageId || ''} 
+                onChange={handleLanguageChange}
             >
-                {sozler.map((soz) => (
-                    <MenuItem key={soz.id} value={soz.textone}>
-                        {soz.textone} - {soz.texttwo}
+                {texts.map((text) => (
+                    <MenuItem key={text.id} value={text.id}>
+                        {text.sourceLanguage} - {text.translationLanguage}
                     </MenuItem>
                 ))}
             </Select>
         </FormControl>
-  )
-}
+    );
+};
 
-export default SelecetLanguage
+export default SelectLanguage;

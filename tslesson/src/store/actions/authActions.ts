@@ -36,6 +36,7 @@ export const login = createAsyncThunk(
 
       localStorage.setItem('token', response.data.data.accessToken);
       localStorage.setItem('refreshToken', response.data.data.refreshToken);
+      localStorage.setItem('userId', response.data.data.userId);
       return { ...response.data, userId };
     } catch (error) {
       return rejectWithValue('Error');

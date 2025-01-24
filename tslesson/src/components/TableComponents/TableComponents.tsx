@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableRow, Button, TextField, Paper } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableRow, Button, TextField, Paper, Typography } from '@mui/material';
 import { MdDeleteOutline } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import Savedicon from "../../assets/images/home/Bookmark.svg";
 import { TextItem } from '../../store/actions/learingActions/learingnowActions';
 
-
+import "./TableComponents.scss"
 
 interface TableComponentProps {
     title: string;
@@ -37,8 +37,9 @@ const TableComponent: React.FC<TableComponentProps> = ({ title, items, saveText,
                     <TableBody>
                         {items.map(({ id, userId, source, translation, sourceLanguageId, translationLanguageId }) => (
                             <TableRow className='table_aligns' key={id}>
+                                    <Typography>{`${source} - ${translation}`}</Typography>
                                 <TableCell className='table_cards'>
-                                    <Button className='table_button' variant="outlined" onClick={() => saveText({ id, userId, source, translation, sourceLanguageId, translationLanguageId })}>
+                                    <Button className='table_button' variant="outlined" onClick={() => saveText({ id, userId, source, translation, sourceLanguageId, translationLanguageId, isLearningNow: true })}>
                                         <img src={Savedicon} alt="" />
                                     </Button>
                                     <Button className='table_button' variant="outlined" onClick={() => removeText(id, userId)}><MdDeleteOutline /></Button>

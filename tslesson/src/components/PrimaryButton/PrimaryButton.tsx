@@ -10,7 +10,6 @@ disabled:boolean
 
 const PrimaryButton:FC<CustomButtonProps> = ({label,onClick,type="button",disabled}) => {
   return (
-
       <button  className="button_primary" disabled={disabled} onClick={onClick} type={type} >
         {label}
       </button>

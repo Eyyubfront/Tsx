@@ -8,12 +8,15 @@ export interface TextItem {
     translation?: string;
     sourceLanguageId?: number;
     translationLanguageId?: number;
+    isLearningNow:boolean
 }
 
 export const fetchTexts = createAsyncThunk('learningNow/fetchTexts', async (userId: string, thunkAPI) => {
     try {
         const response = await axiosInstance.get(`/UserVocabulary/GetAllLearningByUserId?userId=${userId}`);
-        return response.data;
+        console.log(response.data);
+        return response.data.data;
+        
     } catch (error) {
         return thunkAPI.rejectWithValue(error);
     }
