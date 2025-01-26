@@ -4,13 +4,13 @@ import { FormControl, MenuItem, Select } from '@mui/material';
 import { getTexts } from '../../store/actions/languagehome/languagehome';
 import { setSelectedLanguage } from '../../store/slice/LanguageHomeSlice';
 
-
 const SelectLanguage = () => {
     const dispatch = useAppDispatch();
     const { texts, defaultText, loading, error, selectedLanguageId } = useAppSelector((state) => state.LanguagetextData);
-    
+
     const userId = useAppSelector((state: RootState) => state.Auth.userId);
 
+    // Veriler yüklendikten sonra default dili seçme
     useEffect(() => {
         if (userId) {
             dispatch(getTexts(userId));
@@ -18,14 +18,18 @@ const SelectLanguage = () => {
     }, [dispatch, userId]);
 
     useEffect(() => {
-        if (defaultText) {
-            dispatch(setSelectedLanguage(defaultText.id)); 
+      
+        if (texts.length > 0 && selectedLanguageId === null) {
+            const defaultLanguage = texts.find((text) => text.isDefault);
+            if (defaultLanguage) {
+                dispatch(setSelectedLanguage(defaultLanguage.id)); 
+            }
         }
-    }, [dispatch, defaultText]);
+    }, [texts, selectedLanguageId, dispatch]);
 
     const handleLanguageChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         const value = event.target.value as number;
-        dispatch(setSelectedLanguage(value)); 
+        dispatch(setSelectedLanguage(value));
     };
 
     if (loading) return <p>Loading...</p>;
@@ -34,10 +38,10 @@ const SelectLanguage = () => {
     return (
         <FormControl className='selects' fullWidth>
             <Select
-                value={selectedLanguageId || ''} 
+                value={selectedLanguageId ?? ''}
                 onChange={handleLanguageChange}
             >
-                {texts.map((text) => (
+                {texts?.map((text) => (
                     <MenuItem key={text.id} value={text.id}>
                         {text.sourceLanguage} - {text.translationLanguage}
                     </MenuItem>

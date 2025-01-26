@@ -8,7 +8,7 @@ export const getTexts = createAsyncThunk('learningNow/fetchTexts', async (userId
     try {
         const response = await axiosInstance.get(`/UserLanguage/GetAllByUserId?userId=${userId}`);
    
-        return response.data?.data;
+        return response.data.data;
         
     } catch (error) {
         return thunkAPI.rejectWithValue(error);

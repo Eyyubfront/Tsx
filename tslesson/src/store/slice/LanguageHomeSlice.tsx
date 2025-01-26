@@ -30,11 +30,7 @@ const LanguageHomeSlice = createSlice({
     initialState,
     reducers: {
         setSelectedLanguage(state, action) {
-            if (state.selectedLanguageId === -1) {
-                state.selectedLanguageId = action.payload; 
-            } else {
-                state.selectedLanguageId = action.payload; 
-            }
+            state.selectedLanguageId = action.payload; // Dil seçimi yapıldı
         },
     },
     extraReducers: (builder) => {
@@ -46,7 +42,7 @@ const LanguageHomeSlice = createSlice({
             .addCase(getTexts.fulfilled, (state, action: any) => {
                 state.loading = false;
                 state.texts = action.payload;
-                state.defaultText = action.payload.find((t: { isDefault: boolean; }) => t.isDefault);
+                state.defaultText = action.payload.find((t: { isDefault: boolean }) => t.isDefault); // Default dili bul
             })
             .addCase(getTexts.rejected, (state, action) => {
                 state.loading = false;

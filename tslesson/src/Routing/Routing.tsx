@@ -16,11 +16,8 @@ import LanguageSelector from "../pages/LanguageSelector/LanguageSelector";
 
 const Routing = () => {
   const dispatch = useAppDispatch();
-
   useEffect(() => {
    dispatch(refreshToken())
-
-
   }, []);
 
 

@@ -17,21 +17,21 @@ interface NewWordModalProps {
 }
 
 const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
-    const [englishWord, setEnglishWord] = useState('');
-    const [spanishWord, setSpanishWord] = useState('');
-    
-   
+    const [wordone, setWordOne] = useState('');
+    const [wordtwo, setWordTwo] = useState('');
+
     const selectedLanguageId = useSelector((state: RootState) => state.LanguagetextData.selectedLanguageId);
     const texts = useSelector((state: RootState) => state.LanguagetextData.texts);
     const userId = useSelector((state: RootState) => state.Auth.userId);
     const dispatch = useAppDispatch();
 
+  
     const selectedLanguage = texts.find((text) => text.id === selectedLanguageId);
 
     useEffect(() => {
         if (selectedLanguage) {
-            setEnglishWord(` ${selectedLanguage.sourceLanguage}`);
-            setSpanishWord(` ${selectedLanguage.translationLanguage}`);
+            setWordOne(` ${selectedLanguage.sourceLanguage}`);
+            setWordTwo(` ${selectedLanguage.translationLanguage}`);
         }
     }, [selectedLanguage]);
 
@@ -40,8 +40,8 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
             const newItem = { 
                 id: Date.now(), 
                 userId: userId, 
-                source: englishWord, 
-                translation: spanishWord, 
+                source: wordone, 
+                translation: wordtwo, 
                 languageId: selectedLanguageId, 
                 isLearningNow: true 
             };
@@ -50,7 +50,7 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
             console.error("userId not available.");
         }
     };
-   
+
     return (
         <Dialog className='dialoq' open={show} onClose={onClose} maxWidth="sm" fullWidth>
             <DialogTitle className='dialoqtitte_tops'>
@@ -64,15 +64,15 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
                     <input 
                         type="text" 
                         className='input_language'
-                        value={englishWord} 
-                        onChange={(e) => setEnglishWord(e.target.value)} 
+                        value={wordone} 
+                        onChange={(e) => setWordOne(e.target.value)} 
                         placeholder="" 
                     />
                     <input 
                         type="text" 
                         className='input_language'
-                        value={spanishWord} 
-                        onChange={(e) => setSpanishWord(e.target.value)} 
+                        value={wordtwo} 
+                        onChange={(e) => setWordTwo(e.target.value)} 
                         placeholder="" 
                     />
                 </div>
@@ -89,7 +89,7 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
                 <PrimaryButton 
                     label='Save Word' 
                     onClick={handleSave} 
-                    disabled={!englishWord || !spanishWord}
+                    disabled={!wordone || !wordtwo}
                 />
             </DialogActions>
         </Dialog>
