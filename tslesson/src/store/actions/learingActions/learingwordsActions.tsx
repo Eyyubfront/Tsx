@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../axiosInstance';
 
-export interface TextItem {
+export interface WordsItem {
     id: number;
     userId: string;
     source?: string;
@@ -11,7 +11,7 @@ export interface TextItem {
     isLearningNow:boolean
 }
 
-export const wordfetchTexts = createAsyncThunk('learningNow/fetchTexts', async (userId: string, thunkAPI) => {
+export const wordfetchTexts = createAsyncThunk('learningNow/wordfetchTexts', async (userId: string, thunkAPI) => {
     try {
         const response = await axiosInstance.get(`/UserVocabulary/GetAllByUserId?userId=${userId}`);
         console.log("words",response.data);
@@ -22,7 +22,7 @@ export const wordfetchTexts = createAsyncThunk('learningNow/fetchTexts', async (
     }
 });
 
-export const saveText = createAsyncThunk('learningNow/saveText', async (item: TextItem, thunkAPI) => {
+export const saveText = createAsyncThunk('learningNow/saveText', async (item: WordsItem, thunkAPI) => {
     try {
         const response = await axiosInstance.post('/UserVocabulary/Create', item);
 
@@ -33,10 +33,9 @@ export const saveText = createAsyncThunk('learningNow/saveText', async (item: Te
     }
 });
 
-export const removeText = createAsyncThunk('learningNow/removeText', async ({ id, userId }: { id: number, userId: string }, thunkAPI) => {
+export const removeText = createAsyncThunk('learningNow/removeText', async ({ id }: { id: number}, thunkAPI) => {
     try {
         const response = await axiosInstance.delete(`/UserVocabulary/Delete/${id}`);
-        thunkAPI.dispatch(wordfetchTexts(userId));
         return response.status;
     } catch (err) {
         return thunkAPI.rejectWithValue(err);

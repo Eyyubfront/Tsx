@@ -1,16 +1,14 @@
 import { useEffect } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from '../../store';
-import { FormControl, MenuItem, Select } from '@mui/material';
+import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { getTexts } from '../../store/actions/languagehome/languagehome';
 import { setSelectedLanguage } from '../../store/slice/LanguageHomeSlice';
 
 const SelectLanguage = () => {
     const dispatch = useAppDispatch();
-    const { texts, defaultText, loading, error, selectedLanguageId } = useAppSelector((state) => state.LanguagetextData);
-
+    const { texts, loading, error, selectedLanguageId } = useAppSelector((state) => state.LanguagetextData);
     const userId = useAppSelector((state: RootState) => state.Auth.userId);
 
-    // Veriler yüklendikten sonra default dili seçme
     useEffect(() => {
         if (userId) {
             dispatch(getTexts(userId));
@@ -18,7 +16,6 @@ const SelectLanguage = () => {
     }, [dispatch, userId]);
 
     useEffect(() => {
-      
         if (texts.length > 0 && selectedLanguageId === null) {
             const defaultLanguage = texts.find((text) => text.isDefault);
             if (defaultLanguage) {
@@ -27,8 +24,8 @@ const SelectLanguage = () => {
         }
     }, [texts, selectedLanguageId, dispatch]);
 
-    const handleLanguageChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        const value = event.target.value as number;
+    const handleLanguageChange = (event: SelectChangeEvent<number>) => {
+        const value = event.target.value as number; 
         dispatch(setSelectedLanguage(value));
     };
 

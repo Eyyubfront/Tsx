@@ -21,14 +21,14 @@ const VerifyEmailPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const {error } = useAppSelector((state: any) => state.emailVerification);
-  const { userId } = useAppSelector((state:RootState) => state.Auth); 
+  const { error } = useAppSelector((state: any) => state.emailVerification);
+  const { userId } = useAppSelector((state: RootState) => state.Auth);
 
   useEffect(() => {
     if (!userId) {
-      navigate("/login"); 
+      navigate("/login");
     }
-  }, [userId, navigate]);
+  }, [userId]);
 
   useEffect(() => {
     if (counter > 0) {

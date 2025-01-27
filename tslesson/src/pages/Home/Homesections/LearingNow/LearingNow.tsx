@@ -9,13 +9,14 @@ import { Button, TableBody, TableRow, TableCell, Typography, TextField } from '@
 
 const LearningNow = () => {
     const dispatch = useAppDispatch();
-    const items = useAppSelector((state: RootState) => state.learningNow.items);
+    const items = useAppSelector((state: RootState) => state.learningNow.items.nowitems);
+    console.log("itemss",items);
+    
     const userId = useAppSelector((state) => state.Auth.userId);
     const [editText, setEditText] = useState<{ id: number; source: string; translation: string; userId: string } | null>(null);
 
-
     useEffect(() => {
-        if (userId) { 
+        if (userId) {
             dispatch(fetchTexts(userId));
         }
     }, [dispatch, userId]);
@@ -24,8 +25,8 @@ const LearningNow = () => {
         dispatch(saveText(item));
     };
 
-    const handleRemoveText = (id: number, userId: string) => {
-        dispatch(removeText({ id, userId }));
+    const handleRemoveText = (id:number)=>{
+        dispatch(removeText(id));
     };
 
     const handleUpdateText = ({ id, source, translation, userId }: { id: number, source: string, translation: string, userId: string }) => {
@@ -50,7 +51,7 @@ const LearningNow = () => {
                 <TableBody>
                     {items?.map(({ id, userId, source, translation, sourceLanguageId, translationLanguageId }) => (
                         <TableRow className='table_aligns' key={id}>
-                            <TableCell>
+                            <TableCell sx={{borderBottom:"none"}}>
                                 <Typography>{`${source} - ${translation}`}</Typography>
                             </TableCell>
                             <TableCell className='table_cards'>
@@ -64,7 +65,7 @@ const LearningNow = () => {
                                 <Button
                                     className='table_button'
                                     variant="outlined"
-                                    onClick={() => handleRemoveText(id, userId)}
+                                    onClick={() => handleRemoveText(id)}
                                 >
                                     <MdDeleteOutline />
                                 </Button>
