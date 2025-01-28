@@ -17,7 +17,7 @@ export const sendForgotPasswordEmail = createAsyncThunk<
         "https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/ForgotPassword",
         { email }
       );
-      return response.data;
+      return response.data.data;
     } catch (error: any) {
       return rejectWithValue(
         error.response?.data?.message || "Something went wrong"

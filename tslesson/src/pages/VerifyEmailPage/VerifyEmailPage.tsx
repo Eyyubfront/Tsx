@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -9,26 +8,28 @@ import Heading from "../../components/Heading";
 import Paragrafy from "../../components/Paragrafy/Paragrafy";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import { confirmEmail, resendConfirmationToken } from "../../store/actions/verifyemailActions/emailVerificationActions";
-import { RootState, useAppSelector } from "../../store/index";
-import "./VerifyEmailPage.scss";
-
+import { useForm, FormProvider } from "react-hook-form";
+import UseFormInput from "../../components/PrimaryInput/UseFormInput";
+import { RootState, useAppDispatch, useAppSelector } from "../../store/index";
+import { resetState } from "../../store/slice/emailVerificationSlice";
 
 const VerifyEmailPage = () => {
   const [counter, setCounter] = useState(30);
   const [canResend, setCanResend] = useState(false);
-  const [inputCode, setInputCode] = useState(["", "", "", "", ""]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const methods = useForm();
+  const { handleSubmit } = methods;
 
-  const { error } = useAppSelector((state: any) => state.emailVerification);
-  const { userId } = useAppSelector((state: RootState) => state.Auth);
+  const { error, isLoading, isResetPassword } = useAppSelector((state: RootState) => state.emailVerification);
+  const { userId, veriyuse } = useAppSelector((state: RootState) => state.Auth);
+  console.log("userid", userId);
 
   useEffect(() => {
     if (!userId) {
       navigate("/login");
     }
-  }, [userId]);
+  }, [userId, navigate]);
 
   useEffect(() => {
     if (counter > 0) {
@@ -41,80 +42,88 @@ const VerifyEmailPage = () => {
     }
   }, [counter]);
 
+  
   const handleResend = () => {
-    dispatch(resendConfirmationToken());
-    setCounter(30);
-    setCanResend(false);
-  };
-
-  const handleInputChange = (value: any, index: any) => {
-    if (!/^\d*$/.test(value)) return;
-
-    const newInputCode = [...inputCode];
-    newInputCode[index] = value;
-    setInputCode(newInputCode);
-    setErrorMessage("");
-
-    if (value && index < inputCode.length - 1) {
-      const nextInput = document.getElementById(`input-${index + 1}`);
-      if (nextInput) nextInput.focus();
-    }
-  };
-
-  const handleSubmit = () => {
-    const enteredCode = inputCode.join("");
-    if (enteredCode.length === 5) {
-      dispatch(confirmEmail(enteredCode)).then((action: any) => {
-        if (action.meta.requestStatus === "fulfilled") {
-          navigate("/languageselector");
-        } else {
-          setErrorMessage(error || "Wrong code, please try again.");
-        }
-      });
+    if (userId) {
+      dispatch(resendConfirmationToken(userId)); 
+      setCounter(30);
+      setCanResend(false);
     } else {
-      setErrorMessage("Please enter a valid code.");
+      console.error("User ID bulunamadı.");
     }
   };
+
+  const onSubmit = (data: any) => {
+    const enteredCode = Object.values(data).join("");
+
+    if (veriyuse) {
+      if (enteredCode.length === 4) {
+        dispatch(confirmEmail({ code: enteredCode, userId: String(userId) })).then((action: any) => {
+          if (action.meta.requestStatus === "fulfilled") {
+            if (isResetPassword) {
+              navigate("/resetpasswordpage"); 
+            } else {
+              navigate("/languageselector"); 
+            }
+          } else {
+            // resetpaswordu gostermelidi actionu yazdikdan sonra hemin aciton url ise ConfirmPasswordResetCode
+            // fulfidinide elave et
+     
+          }
+        });
+      }
+    } else {
+      handleResend(); 
+    }
+  };
+
 
   return (
     <Container>
       <div className="main-div">
-        <LeftVerifyEmail titleText="Hi, Welcome!" descriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!" />
+        <LeftVerifyEmail
+          titleText="Hi, Welcome!"
+          descriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!"
+        />
         <Button className="btn" onClick={() => navigate("/forgotpasswordpage")}>
           <KeyboardArrowLeftIcon />
         </Button>
-        <div className="verify-email">
-          <div className="verify-content">
-            <Heading text="Verify E-mail address" />
-            <Paragrafy text="We’ve sent an activation code to your email" />
-            <div className="inputs">
-              {inputCode.map((digit, index) => (
-                <input
-                  key={index}
-                  id={`input-${index}`}
-                  type="text"
-                  maxLength={1}
-                  value={digit}
-                  onChange={(e) => handleInputChange(e.target.value, index)}
-                />
-              ))}
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="verify-email">
+              <div className="verify-content">
+                <Heading text="Verify E-mail address" />
+                <Paragrafy text="We’ve sent an activation code to your email" />
+                <div className="inputs">
+                  {Array.from({ length: 4 }).map((_, index) => (
+                    <UseFormInput
+                      key={index}
+                      name={`code-${index}`}
+                      label=""
+                      rules={{ required: "This field is required" }}
+                      type="text"
+                      maxLength={1}
+                      isEyeicon={false}
+                      iseye={false}
+                      handleEye={() => {}}
+                    />
+                  ))}
+                </div>
+                {error && <div className="error">{error}</div>}
+                <div className="resend-code">
+                  {canResend ? (
+                    <Button onClick={handleResend} className="btn2">
+                      Send code again
+                    </Button>
+                  ) : (
+                    <p>Send code again in {counter} seconds</p>
+                  )}
+                </div>
+                <PrimaryButton disabled={isLoading} type="submit" label="Verify Code" />
+              </div>
             </div>
-            {errorMessage && (
-              <p style={{ color: "red", marginTop: "10px" }}>{errorMessage}</p>
-            )}
-
-            <div className="resend-code">
-              {canResend ? (
-                <Button onClick={handleResend} className="btn2">
-                  Send code again
-                </Button>
-              ) : (
-                <p>Send code again in {counter} seconds</p>
-              )}
-            </div>
-            <PrimaryButton onClick={handleSubmit} label="Verify Code" />
-          </div>
-        </div>
+          </form>
+        </FormProvider>
       </div>
     </Container>
   );

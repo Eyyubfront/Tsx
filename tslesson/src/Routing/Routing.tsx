@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom"; 
-import { useEffect } from "react";
 import ChangedPasswordPage from "../pages/ChangedPasswordPage/ChangedPasswordPage";
 import CheckEmailPage from "../pages/CheckEmailPage/CheckEmailPage";
 import ResetPasswordPage from "../pages/ResetPasswordPage/ResetPasswordPage";
@@ -15,8 +14,6 @@ import ChooseLearnLanguage from "../pages/ChooseLanguage/ChooseLearnLanguage";
 
 
 const Routing = () => {
-
-
   return (
     <Routes>
   
@@ -27,9 +24,9 @@ const Routing = () => {
         <Route path="/forgotpasswordpage" element={<ForgotPasswordPage />} />
         <Route path="/resetpasswordpage" element={<ResetPasswordPage />} />
         <Route path="/verifyemailpage" element={<VerifyEmailPage />} />
-        <Route path="learntime" element={<LearnTime/>} />
-        <Route path="languageselector" element={<LanguageSelector/>} />
-        <Route path="chooselearnlanguage" element={<ChooseLearnLanguage/>} />
+        <Route path="/learntime" element={<LearnTime/>} />
+        <Route path="/languageselector" element={<LanguageSelector/>} />
+        <Route path="/chooselearnlanguage" element={<ChooseLearnLanguage/>} />
       </Route>
 
       <Route element={<ProtectedRouting />}>

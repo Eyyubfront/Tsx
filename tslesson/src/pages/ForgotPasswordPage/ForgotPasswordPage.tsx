@@ -1,87 +1,80 @@
-import React, { useState, FormEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import { sendForgotPasswordEmail } from "../../store/actions/forgotPasswordActions/forgotPasswordActions";
-import { RootState, AppDispatch } from "../../store/index";
+import { RootState, useAppDispatch, useAppSelector } from "../../store/index";
 import { useNavigate } from "react-router-dom";
 import LeftVerifyEmail from "../../components/LeftVerifyEmail/LeftVerifyEmail";
 import "./ForgotPasswordPage.scss";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import Button from "@mui/material/Button";
-import CustomInput from "../../components/CustomInput";
-import { Container } from "@mui/material";
+import { useForm, FormProvider } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
+import UseFormInput from "../../components/PrimaryInput/UseFormInput";
 import Heading from "../../components/Heading";
 import Paragrafy from "../../components/Paragrafy/Paragrafy";
-import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
+import { setIsResetPassword } from "../../store/slice/emailVerificationSlice";
+import { setVeryuse } from "../../store/slice/authSlice";
+
+const schema = Yup.object().shape({
+  email: Yup.string()
+    .email("Email is not valid.")
+    .required("Email is required."),
+});
 
 const ForgotPasswordPage: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const methods = useForm({
+    resolver: yupResolver(schema),
+    mode: "all"
+  });
 
-  const [email, setEmail] = useState<string>("");
-  const [inputError, setInputError] = useState<boolean>(false);
-
-  const { loading, error, success } = useSelector(
-    (state: RootState) => state.forgotPassword
+  const { loading, error, success } = useAppSelector(
+    (state: RootState) => state.Auth
   );
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    const result = await dispatch(sendForgotPasswordEmail({ email }));
-
-  
-    if (sendForgotPasswordEmail.rejected.match(result)) {
-      setInputError(true); 
-    }
-
-    if (sendForgotPasswordEmail.fulfilled.match(result)) {
-      const userId = result.payload.userId; 
-      localStorage.setItem("userId", userId); 
-      navigate("/resetpasswordpage");
-    }
-  };
-
-  const handleResend = () => {
-    dispatch(sendForgotPasswordEmail({ email })); 
+  const { handleSubmit } = methods;
+  const onSubmit = (data: { email: string }) => {
+    dispatch(setVeryuse(false))
+    dispatch(sendForgotPasswordEmail(data))
+      .unwrap()
+      .then(() => {
+        dispatch(setIsResetPassword(false)); // E-posta başarıyla gönderildi
+        navigate('/verifyemailpage'); // Doğru sayfaya yönlendirme
+      })
+      .catch(err => {
+        console.error("Error:", err);
+        
+      });
   };
 
   return (
-    <Container className="container">
-      <div className="forgot-div">
-        <LeftVerifyEmail
-          titleText="Hi, Welcome!"
-          descriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!"
-        />
-        <Button
-          className="leftBt"
-          sx={{
-            border: "2px solid #D8DADC ",
-            color: "black",
-            borderRadius: "10px",
-          }}
-        >
-          <KeyboardArrowLeftIcon />
-        </Button>
-        <div className="forgot-pass">
-          <Heading text="Forgot password ?" />
-          <Paragrafy text="Don’t worry! It happens. Please enter the email associated with your account." />
-
-          <form onSubmit={handleSubmit}>
-            <CustomInput
-              label="Email Address"
-              placeholder="Enter your email"
-              type="email"
-              fontSize="16px"
-              border="1px solid #ccc"
-              borderRadius="7px"
-              outline="none"
-              className={`forgot-input ${inputError ? "input-error" : ""}`} 
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                setInputError(false); 
-              }}
+    <div className="forgot-div">
+      <LeftVerifyEmail
+        titleText="Hi, Welcome!"
+        descriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!"
+      />
+      <Button
+        className="leftBt"
+        sx={{
+          border: "2px solid #D8DADC ",
+          color: "black",
+          borderRadius: "10px",
+        }}
+      >
+        <KeyboardArrowLeftIcon />
+      </Button>
+      <div className="forgot-pass">
+        <Heading text="Forgot password ?" />
+        <Paragrafy text="Don’t worry! It happens. Please enter the email associated with your account." />
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <UseFormInput
+              name='email'
+              label='Email address'
+              type='email'
             />
-
             {error && <p className="error">{error}</p>}
             {success && <p className="success">Code sent successfully!</p>}
 
@@ -91,9 +84,9 @@ const ForgotPasswordPage: React.FC = () => {
               disabled={loading}
             />
           </form>
-        </div>
+        </FormProvider>
       </div>
-    </Container>
+    </div>
   );
 };
 

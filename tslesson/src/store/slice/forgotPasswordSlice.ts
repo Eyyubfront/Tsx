@@ -28,6 +28,7 @@ const forgotPasswordSlice = createSlice({
       .addCase(sendForgotPasswordEmail.fulfilled, (state) => {
         state.loading = false;
         state.success = true;
+        
       })
       .addCase(
         sendForgotPasswordEmail.rejected,

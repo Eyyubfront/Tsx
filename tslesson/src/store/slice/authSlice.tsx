@@ -1,22 +1,27 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { login, register, refreshToken } from '../actions/authActions'; 
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { login, register, refreshToken } from '../actions/authActions';
+import { sendForgotPasswordEmail } from '../actions/forgotPasswordActions/forgotPasswordActions';
 
 interface AuthState {
-  refreshToken: string | null; 
+  refreshToken: string | null;
+  userId: string | null;
   accessToken: string | null;
   loading: boolean;
   error: string | null;
   isAuth: boolean;
-  userId: string | null;  
+  success: boolean;
+  veriyuse: Boolean
 }
 
 const initialState: AuthState = {
   refreshToken: null,
   accessToken: null,
+  userId: null,
   loading: false,
   error: null,
+  success: false,
   isAuth: false,
-  userId: null,  
+  veriyuse: false
 };
 
 const authSlice = createSlice({
@@ -31,11 +36,14 @@ const authSlice = createSlice({
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');
     },
- 
+    setVeryuse(state, action) {
+      state.veriyuse = action.payload
+    }
+
   },
   extraReducers: (builder) => {
     builder
-  
+
       .addCase(login.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -44,8 +52,8 @@ const authSlice = createSlice({
         state.loading = false;
         state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken;
+        state.userId = action.payload.userId;
         state.isAuth = true;
-        state.userId = action.payload.userId;  
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
@@ -58,7 +66,7 @@ const authSlice = createSlice({
       })
       .addCase(register.fulfilled, (state, action) => {
         state.loading = false;
-        state.userId = action.payload.userId;  
+        state.userId = action.payload.userId;
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;
@@ -78,9 +86,28 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
         state.isAuth = false;
-      });
+      })
+      .addCase(sendForgotPasswordEmail.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.success = false;
+      })
+      .addCase(sendForgotPasswordEmail.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        const userId = action.payload.userId
+        state.userId = userId;
+
+      })
+      .addCase(
+        sendForgotPasswordEmail.rejected,
+        (state, action: PayloadAction<string | undefined>) => {
+          state.loading = false;
+          state.error = action.payload || "An error occurred.";
+        }
+      );
   },
 });
 
-export const {  logout } = authSlice.actions;
+export const { logout, setVeryuse } = authSlice.actions;
 export default authSlice.reducer;

@@ -7,13 +7,15 @@ export const fetchLanguages = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(
-        "https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/Language/GetAll"
+        "/Language/GetAll"
       );
       const languages = response.data.data.map((item: any) => ({
         id: item.id,
         name: item.name,
-        image:item.image
+        image: item.image
       }));
+      console.log(languages);
+
 
       return languages;
     } catch (error: any) {

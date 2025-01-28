@@ -1,27 +1,61 @@
-import { useForm, SubmitHandler } from "react-hook-form";
+import  { useEffect } from "react";
+import { useForm, FormProvider } from "react-hook-form";
+import { useNavigate } from "react-router-dom"; 
 import LeftVerifyEmail from "../../components/LeftVerifyEmail/LeftVerifyEmail";
 import "./ResetPasswordPage.scss";
- // Burada PrimaryButton istifadə olunur
-import CustomInput from "../../components/CustomInput";
 import { Container } from "@mui/material";
 import Heading from "../../components/Heading";
 import Paragrafy from "../../components/Paragrafy/Paragrafy";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
+import UseFormInput from "../../components/PrimaryInput/UseFormInput";
+import { RootState, useAppDispatch, useAppSelector } from "../../store";
+import { resetPassword } from "../../store/actions/resetPasswordActions/resetPasswordActions";
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-interface FormInput {
-  email: string;
-  password: string;
-}
+// Yup validasyon şeması
+const schema = Yup.object().shape({
+  password: Yup.string()
+    .min(8, "Password must be at least 8 characters long.")
+    .matches(/(?=.*[A-Z])/, "Password must contain at least one uppercase letter.")
+    .required("Password is required."),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], "Passwords must match.")
+    .required("Please confirm your password.")
+});
 
 const ResetPasswordPage = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormInput>();
+  const navigate = useNavigate(); 
+  const methods = useForm({
+    resolver: yupResolver(schema),
+    mode: "all"  
+  });
 
-  const onSubmit: SubmitHandler<FormInput> = (data) => {
-    console.log("Form Data:", data);
+  const dispatch = useAppDispatch();
+  const { handleSubmit } = methods;
+  
+  const { isLoading, error, success } = useAppSelector((state: RootState) => state.passwordReset);
+  
+
+  const { userId } = useAppSelector((state: RootState) => state.Auth);
+
+  useEffect(() => {
+    if (success) {
+      navigate('/changedpasswordpage'); 
+    }
+  }, [success, navigate]);
+
+  const onSubmit = async (data: { password: string; confirmPassword: string; }) => {
+    if (!userId) {
+      console.error("userId is not available!");
+      return;
+    }
+    const newPasswordData = {
+      userId, 
+      newPassword: data.password, 
+    };
+    
+    await dispatch(resetPassword(newPasswordData)); 
   };
 
   return (
@@ -32,63 +66,30 @@ const ResetPasswordPage = () => {
           <div className="resetLeft-side">
             <Heading text="Reset password" />
             <Paragrafy text="Don’t worry! It happens. Please enter the email associated with your account." />
-            <form onSubmit={handleSubmit(onSubmit)}>
-              {/* Email Input */}
-              <div className="form-group">
-                <CustomInput
-                  className="inp"
-                  label="Password"
-                  type="password"
-                  fontSize="14px"
-                  border="1px solid #D8DADC"
-                  borderRadius="7px"
-                  outline="none"
-                  {...register("email", {
-                    required: "Email is required",
-                    pattern: {
-                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                      message: "Invalid email format",
-                    },
-                  })}
+            {error && <p className="error-message">{error}</p>} 
+            <FormProvider {...methods}>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="form-group">
+                  <UseFormInput
+                    name='password'
+                    label='New Password'
+                    type='password'
+                  />
+                </div>
+                <div className="form-group">
+                  <UseFormInput
+                    name='confirmPassword'
+                    label='Confirm Password'
+                    type='password'
+                  />
+                </div>
+                <PrimaryButton
+                  label="Reset Password"
+                  type="submit"
+                  disabled={isLoading}
                 />
-                {errors.email && (
-                  <p className="error-message" style={{ color: "red" }}>
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Password Input */}
-              <div className="form-group">
-                <CustomInput
-                  label="Password"
-                  type="password"
-                  fontSize="14px"
-                  border="1px solid #D8DADC"
-                  borderRadius="7px"
-                  outline="none"
-                  {...register("password", {
-                    required: "Password is required",
-                    minLength: {
-                      value: 8,
-                      message: "Password must be at least 8 characters long",
-                    },
-                  })}
-                />
-                {errors.password && (
-                  <p className="error-message" style={{ color: "red" }}>
-                    {errors.password.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Submit Button */}
-              <PrimaryButton
-                label="Reset Password"
-                onClick={handleSubmit(onSubmit)}
-                type="submit"
-              />
-            </form>
+              </form>
+            </FormProvider>
           </div>
           <div className="resetRight-side">
             <p>

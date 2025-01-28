@@ -1,16 +1,16 @@
-
 import React from 'react';
-import { Controller,  useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import PrimaryInput from './PrimaryInput';
 
 interface UseFormInputProps {
   name: string;
   rules?: any;
   label: string;
-  type?: "text" | "email" | "password";
+  type: "text" | "email" | "password";
   isEyeicon?: boolean; 
   iseye?: boolean;
   handleEye?: () => void;
+  maxLength?: number; // Buraya maxLength ekliyoruz
 }
 
 const UseFormInput: React.FC<UseFormInputProps> = ({
@@ -21,9 +21,9 @@ const UseFormInput: React.FC<UseFormInputProps> = ({
   isEyeicon,
   iseye,
   handleEye,
-
+  maxLength, // maxLength'i destructure ediyoruz
 }) => {
-    const { control} = useFormContext(); 
+  const { control } = useFormContext(); 
   return (
     <Controller
       name={name}
@@ -31,16 +31,15 @@ const UseFormInput: React.FC<UseFormInputProps> = ({
       rules={rules}
       render={({ field }) => (
         <PrimaryInput
-        
-          {...field} 
+          {...field}
           label={label}
           type={type}
           isEyeicon={isEyeicon}
           iseye={iseye}
           handleEye={handleEye}
+          maxLength={maxLength} // ve burada PrimaryInput'a maxLength'i iletiyoruz
         />
       )}
-     
     />
   );
 };
