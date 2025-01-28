@@ -10,7 +10,7 @@ const PublicRouting = () => {
     return  <Outlet /> ;
   }
 
-  return <Navigate to="/" /> ;
+  return <Navigate to="/login" /> ;
 };
 
 export default PublicRouting;

@@ -19,6 +19,12 @@
     text-decoration-skip-ink: none;
 cursor: pointer;
     border: 1px solid #8B6DE8;
+    &:disabled {
+        background-color: #cccccc; /* Disabled durumunda gri renk */
+        border-color: #cccccc;
+        color: #666666; /* Gri metin rengi */
+        cursor: not-allowed; /* Fare imlecini değiştir */
+      }
 }
 
 

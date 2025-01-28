@@ -30,14 +30,16 @@ const Input: FC<CustomInputProps> = ({
   useEffect(() => {
     const validateEmail = (email: string | undefined) => {
       if (!email) return false;
-      return email.includes("@") && email.includes(".") && email.indexOf("@") < email.lastIndexOf(".");
+      // Genel e-posta doğrulama düzeni
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      return emailPattern.test(email);
     };
     setIsEmailValid(validateEmail(email));
   }, [email]);
 
   return (
     <div className="input_div">
-      <Paragrafy  text={label} />
+      <Paragrafy text={label} />
       <div className="input_wrapper">
         <input
           {...register(name)} 

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { login, register, refreshToken } from '../actions/authActions'; 
 
 interface AuthState {
@@ -31,14 +31,7 @@ const authSlice = createSlice({
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');
     },
-    setToken(state, action: PayloadAction<{ token: string; refreshToken: string; userId: string }>) {
-      state.accessToken = action.payload.token;
-      state.refreshToken = action.payload.refreshToken;
-      state.isAuth = true;
-      state.userId = action.payload.userId; 
-      localStorage.setItem('token', action.payload.token);
-      localStorage.setItem('refreshToken', action.payload.refreshToken);
-    },
+ 
   },
   extraReducers: (builder) => {
     builder
@@ -76,9 +69,10 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(refreshToken.fulfilled, (state) => {
+      .addCase(refreshToken.fulfilled, (state, action) => {
         state.loading = false;
         state.isAuth = true;
+        state.userId = action.payload.data.userId
       })
       .addCase(refreshToken.rejected, (state, action) => {
         state.loading = false;
@@ -88,5 +82,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setToken, logout } = authSlice.actions;
+export const {  logout } = authSlice.actions;
 export default authSlice.reducer;

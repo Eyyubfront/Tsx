@@ -24,6 +24,7 @@ const Home = () => {
                     <div className="homepage_left">
                         <VocabularyBuilder className="vocablarpasscomponents" />
                         <LearningNow />
+                        
                     </div>
                     <div className="homepage_right">
                         <LatestWords />

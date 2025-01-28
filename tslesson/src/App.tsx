@@ -1,9 +1,17 @@
 
 import Routing from "./Routing/Routing";
-
+import { useAppDispatch } from "./store/index";
+import { refreshToken } from "./store/actions/authActions";
+import { useEffect } from "react";
 function App() {
-  console.log(3);
+  const dispatch = useAppDispatch();
   
+  useEffect(() => {
+   dispatch(refreshToken())
+  }, []);
+  console.log(refreshToken);
+  
+
   return (
 
 

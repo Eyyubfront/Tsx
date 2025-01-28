@@ -33,9 +33,12 @@ export const login = createAsyncThunk(
         request
       );
       const userId = response.data.data.userId;
+     
+      
 
       localStorage.setItem('token', response.data.data.accessToken);
       localStorage.setItem('refreshToken', response.data.data.refreshToken);
+      localStorage.setItem('userId', response.data.data.userId);
       return { ...response.data, userId };
     } catch (error) {
       return rejectWithValue('Error');
@@ -74,6 +77,8 @@ export const refreshToken = createAsyncThunk(
         }
       );
       localStorage.setItem('token', response.data.data.accessToken);
+      console.log(response.data);
+      
       localStorage.setItem('refreshToken', response.data.data.refreshToken);
       return response.data;
     } catch (error) {

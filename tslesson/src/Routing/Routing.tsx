@@ -9,24 +9,17 @@ import Login from "../pages/Login/Login";
 import ProtectedRouting from "./ProtectedRouting";
 import PublicRouting from "./PublicRouting";
 import Home from "../pages/Home/Home";
-import { useAppDispatch } from "../store";
-import { refreshToken } from '../store/actions/authActions';
 import LearnTime from "../pages/LearnTime/LearnTime";
 import LanguageSelector from "../pages/LanguageSelector/LanguageSelector";
 import ChooseLearnLanguage from "../pages/ChooseLanguage/ChooseLearnLanguage";
 
+
 const Routing = () => {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-   dispatch(refreshToken())
-
-
-  }, []);
 
 
   return (
     <Routes>
+  
       <Route element={<PublicRouting />}>
         <Route path="/login" element={<Login />} />
         <Route path="/changedpasswordpage" element={<ChangedPasswordPage />} />
@@ -41,9 +34,9 @@ const Routing = () => {
 
       <Route element={<ProtectedRouting />}>
         <Route path="/" element={<Home />} />
-      </Route>
+     
 
-      <Route path="/" element={<Login />} />
+      </Route>
     </Routes>
   );
 };

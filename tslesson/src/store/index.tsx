@@ -5,19 +5,28 @@ import latestWordsReducer from './slice/LatestWordsSlice';
 import AuthLogin from './slice/authSlice';
 import languageReducer from './slice/languageSlice';
 import emailVerificationReducer from './slice/emailVerificationSlice';
+
+import LanguageHomedata from './slice/LanguageHomeSlice';
+
 import timeReducer from './slice/timeSlice';
 import forgotPasswordReducer from "./slice/forgotPasswordSlice";
+
 
 const store = configureStore({
     reducer: {
         learningNow: learningNowReducer,
         latestWords: latestWordsReducer,
-        Auth :AuthLogin,
+        Auth: AuthLogin,
         language: languageReducer,
         emailVerification: emailVerificationReducer,
+
+        LanguagetextData: LanguageHomedata,
+
         time:timeReducer,
         forgotPassword: forgotPasswordReducer,
+
     },
+
 });
 
 
@@ -32,17 +41,3 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export default store;
 
 
-
-   {/* {languages.length > 0 ? (
-              languages.map((language) => (
-                <li key={language.id}>
-                  <LanguageItem language={language} />
-                </li>
-              ))
-            ) : (
-              !loading && !error && (
-                <p className="selected-language">No languages available.</p>
-          
-
-              )
-            )} */}
