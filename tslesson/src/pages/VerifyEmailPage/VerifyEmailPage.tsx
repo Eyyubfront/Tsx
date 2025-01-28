@@ -79,7 +79,7 @@ const VerifyEmailPage = () => {
   return (
     <Container>
       <div className="main-div">
-        <LeftVerifyEmail TitleText="Hi, Welcome!" DescriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!" />
+        <LeftVerifyEmail titleText="Hi, Welcome!" descriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!" />
         <Button className="btn" onClick={() => navigate("/forgotpasswordpage")}>
           <KeyboardArrowLeftIcon />
         </Button>

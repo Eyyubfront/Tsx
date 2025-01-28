@@ -11,6 +11,7 @@ import PublicRouting from "./PublicRouting";
 import Home from "../pages/Home/Home";
 import LearnTime from "../pages/LearnTime/LearnTime";
 import LanguageSelector from "../pages/LanguageSelector/LanguageSelector";
+import ChooseLearnLanguage from "../pages/ChooseLanguage/ChooseLearnLanguage";
 
 
 const Routing = () => {
@@ -28,6 +29,7 @@ const Routing = () => {
         <Route path="/verifyemailpage" element={<VerifyEmailPage />} />
         <Route path="learntime" element={<LearnTime/>} />
         <Route path="languageselector" element={<LanguageSelector/>} />
+        <Route path="chooselearnlanguage" element={<ChooseLearnLanguage/>} />
       </Route>
 
       <Route element={<ProtectedRouting />}>

@@ -1,18 +1,56 @@
+import React, { useState, FormEvent } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { sendForgotPasswordEmail } from "../../store/actions/forgotPasswordActions/forgotPasswordActions";
+import { RootState, AppDispatch } from "../../store/index";
+import { useNavigate } from "react-router-dom";
 import LeftVerifyEmail from "../../components/LeftVerifyEmail/LeftVerifyEmail";
 import "./ForgotPasswordPage.scss";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import Button from "@mui/material/Button";
 import CustomInput from "../../components/CustomInput";
-import { Link } from "react-router-dom";
 import { Container } from "@mui/material";
 import Heading from "../../components/Heading";
 import Paragrafy from "../../components/Paragrafy/Paragrafy";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
-const ForgotPasswordPage = () => {
+
+const ForgotPasswordPage: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState<string>("");
+  const [inputError, setInputError] = useState<boolean>(false);
+
+  const { loading, error, success } = useSelector(
+    (state: RootState) => state.forgotPassword
+  );
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    const result = await dispatch(sendForgotPasswordEmail({ email }));
+
+  
+    if (sendForgotPasswordEmail.rejected.match(result)) {
+      setInputError(true); 
+    }
+
+    if (sendForgotPasswordEmail.fulfilled.match(result)) {
+      const userId = result.payload.userId; 
+      localStorage.setItem("userId", userId); 
+      navigate("/resetpasswordpage");
+    }
+  };
+
+  const handleResend = () => {
+    dispatch(sendForgotPasswordEmail({ email })); 
+  };
+
   return (
     <Container className="container">
       <div className="forgot-div">
-        <LeftVerifyEmail TitleText="Hi, Welcome!" DescriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!" />
+        <LeftVerifyEmail
+          titleText="Hi, Welcome!"
+          descriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!"
+        />
         <Button
           className="leftBt"
           sx={{
@@ -27,7 +65,7 @@ const ForgotPasswordPage = () => {
           <Heading text="Forgot password ?" />
           <Paragrafy text="Don’t worry! It happens. Please enter the email associated with your account." />
 
-          <form>
+          <form onSubmit={handleSubmit}>
             <CustomInput
               label="Email Address"
               placeholder="Enter your email"
@@ -36,14 +74,22 @@ const ForgotPasswordPage = () => {
               border="1px solid #ccc"
               borderRadius="7px"
               outline="none"
-              className="forgot-input"
+              className={`forgot-input ${inputError ? "input-error" : ""}`} 
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setInputError(false); 
+              }}
             />
-            <Link to="/verifyemailpage">
+
+            {error && <p className="error">{error}</p>}
+            {success && <p className="success">Code sent successfully!</p>}
+
             <PrimaryButton
-                label="Verify Code"
-                type="button"
-              />
-            </Link>
+              label={loading ? "Sending..." : "Verify Code"}
+              type="submit"
+              disabled={loading}
+            />
           </form>
         </div>
       </div>

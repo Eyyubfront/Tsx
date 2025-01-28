@@ -5,7 +5,12 @@ import latestWordsReducer from './slice/LatestWordsSlice';
 import AuthLogin from './slice/authSlice';
 import languageReducer from './slice/languageSlice';
 import emailVerificationReducer from './slice/emailVerificationSlice';
+
 import LanguageHomedata from './slice/LanguageHomeSlice';
+
+import timeReducer from './slice/timeSlice';
+import forgotPasswordReducer from "./slice/forgotPasswordSlice";
+
 
 const store = configureStore({
     reducer: {
@@ -14,7 +19,12 @@ const store = configureStore({
         Auth: AuthLogin,
         language: languageReducer,
         emailVerification: emailVerificationReducer,
+
         LanguagetextData: LanguageHomedata,
+
+        time:timeReducer,
+        forgotPassword: forgotPasswordReducer,
+
     },
 
 });
