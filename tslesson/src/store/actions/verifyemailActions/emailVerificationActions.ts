@@ -32,3 +32,18 @@ export const resendConfirmationToken = createAsyncThunk(
     }
   }
 );
+
+
+export const confirmPasswordResetCode = createAsyncThunk(
+  "emailVerification/ConfirmPasswordResetCode",
+  async ({ code, userId }: { code: string; userId: string }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/ConfirmPasswordResetCode", { code, userId });
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to confirm email."
+      );
+    }
+  }
+);

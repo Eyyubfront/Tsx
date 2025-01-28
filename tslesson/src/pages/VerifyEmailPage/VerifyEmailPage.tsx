@@ -7,11 +7,10 @@ import LeftVerifyEmail from "../../components/LeftVerifyEmail/LeftVerifyEmail";
 import Heading from "../../components/Heading";
 import Paragrafy from "../../components/Paragrafy/Paragrafy";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
-import { confirmEmail, resendConfirmationToken } from "../../store/actions/verifyemailActions/emailVerificationActions";
+import { confirmEmail, confirmPasswordResetCode, resendConfirmationToken } from "../../store/actions/verifyemailActions/emailVerificationActions";
 import { useForm, FormProvider } from "react-hook-form";
 import UseFormInput from "../../components/PrimaryInput/UseFormInput";
 import { RootState, useAppDispatch, useAppSelector } from "../../store/index";
-import { resetState } from "../../store/slice/emailVerificationSlice";
 
 const VerifyEmailPage = () => {
   const [counter, setCounter] = useState(30);
@@ -21,7 +20,7 @@ const VerifyEmailPage = () => {
   const methods = useForm();
   const { handleSubmit } = methods;
 
-  const { error, isLoading, isResetPassword } = useAppSelector((state: RootState) => state.emailVerification);
+  const { error, isLoading } = useAppSelector((state: RootState) => state.emailVerification);
   const { userId, veriyuse } = useAppSelector((state: RootState) => state.Auth);
   console.log("userid", userId);
 
@@ -42,10 +41,10 @@ const VerifyEmailPage = () => {
     }
   }, [counter]);
 
-  
+
   const handleResend = () => {
     if (userId) {
-      dispatch(resendConfirmationToken(userId)); 
+      dispatch(resendConfirmationToken(userId));
       setCounter(30);
       setCanResend(false);
     } else {
@@ -56,26 +55,27 @@ const VerifyEmailPage = () => {
   const onSubmit = (data: any) => {
     const enteredCode = Object.values(data).join("");
 
-    if (veriyuse) {
+
       if (enteredCode.length === 4) {
-        dispatch(confirmEmail({ code: enteredCode, userId: String(userId) })).then((action: any) => {
-          if (action.meta.requestStatus === "fulfilled") {
-            if (isResetPassword) {
-              navigate("/resetpasswordpage"); 
-            } else {
-              navigate("/languageselector"); 
+        if (veriyuse) {
+          dispatch(confirmEmail({ code: enteredCode, userId: String(userId) })).then((action: any) => {
+            if (action.meta.requestStatus === "fulfilled") {
+              navigate("/languageselector");
             }
-          } else {
-            // resetpaswordu gostermelidi actionu yazdikdan sonra hemin aciton url ise ConfirmPasswordResetCode
-            // fulfidinide elave et
-     
-          }
-        });
+          });
+        }
+        else {
+          dispatch(confirmPasswordResetCode({ code: enteredCode, userId: String(userId) })).then((action: any) => {
+            if (action.meta.requestStatus === "fulfilled") {
+              navigate("/resetpasswordpage");
+
+            }
+          });
+        }
+
       }
-    } else {
-      handleResend(); 
-    }
-  };
+    } 
+  
 
 
   return (
@@ -105,7 +105,7 @@ const VerifyEmailPage = () => {
                       maxLength={1}
                       isEyeicon={false}
                       iseye={false}
-                      handleEye={() => {}}
+                      handleEye={() => { }}
                     />
                   ))}
                 </div>

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { confirmEmail, resendConfirmationToken } from "../actions/verifyemailActions/emailVerificationActions";
+import { confirmEmail, resendConfirmationToken, confirmPasswordResetCode } from "../actions/verifyemailActions/emailVerificationActions";
 
 interface EmailProps {
   refreshToken: string | null; 
@@ -20,7 +20,7 @@ const initialState: EmailProps = {
   error: null,
   success: false,
   resendAllowed: false,
-  isResetPassword: false, // Yeni durum başlangıcı
+  isResetPassword: false,
 };
 
 const emailVerificationSlice = createSlice({
@@ -32,15 +32,14 @@ const emailVerificationSlice = createSlice({
       state.error = null;
       state.success = false;
       state.resendAllowed = false;
-      state.isResetPassword = false; // Sıfırlama
+      state.isResetPassword = false; 
     },
     setIsResetPassword: (state, action) => {
-      state.isResetPassword = action.payload; // Durumu ayarlama reducer'ı
+      state.isResetPassword = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
-
       .addCase(confirmEmail.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -56,7 +55,6 @@ const emailVerificationSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string;
       })
-      // Resend Token
       .addCase(resendConfirmationToken.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -68,6 +66,19 @@ const emailVerificationSlice = createSlice({
       .addCase(resendConfirmationToken.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
+      })
+   
+      .addCase(confirmPasswordResetCode.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(confirmPasswordResetCode.fulfilled, (state) => {
+        state.isLoading = false;
+        state.success = true; 
+      })
+      .addCase(confirmPasswordResetCode.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string; 
       });
   },
 });

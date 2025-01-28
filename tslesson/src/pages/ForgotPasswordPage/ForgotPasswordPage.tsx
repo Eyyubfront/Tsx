@@ -40,7 +40,7 @@ const ForgotPasswordPage: React.FC = () => {
     dispatch(sendForgotPasswordEmail(data))
       .unwrap()
       .then(() => {
-        dispatch(setIsResetPassword(false)); // E-posta başarıyla gönderildi
+        dispatch(setIsResetPassword(true)); // E-posta başarıyla gönderildi
         navigate('/verifyemailpage'); // Doğru sayfaya yönlendirme
       })
       .catch(err => {
