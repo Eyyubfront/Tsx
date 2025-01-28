@@ -27,7 +27,7 @@ const ResetPasswordPage = () => {
   return (
     <Container>
       <div className="reset-div">
-        <LeftVerifyEmail TitleText="Hi, Welcome!" DescriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!" />
+        <LeftVerifyEmail titleText="Hi, Welcome!" descriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!" />
         <div className="reset-pass">
           <div className="resetLeft-side">
             <Heading text="Reset password" />

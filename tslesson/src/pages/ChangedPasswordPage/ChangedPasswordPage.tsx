@@ -9,7 +9,7 @@ const ChangedPasswordPage = () => {
   return (
     <Container>
       <div className="changed-div">
-        <LeftVerifyEmail TitleText="Hi, Welcome!" DescriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!" />
+        <LeftVerifyEmail titleText="Hi, Welcome!" descriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!" />
         <div className="changed-pass">
           <div className="image">
             <img src={Icon} />

@@ -1,6 +1,5 @@
 export interface Language {
-    id: number;
-    name: string;
-    flag: string;
-  }
-  
+  id: string;
+  name: string;
+  image: string; // Base64 formatındaki görüntüyü temsil eder
+}
