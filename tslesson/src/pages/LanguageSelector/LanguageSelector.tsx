@@ -50,26 +50,29 @@ const LanguageSelector: React.FC = () => {
           )}
 
           <ul className="language-list">
-            {languages.length > 0 ? (
-              languages.map((language) => (
-                <li
-                  key={language.id}
-                  className={`language-item ${
-                    selectedLanguage?.id === language.id ? "selected" : ""
-                  }`}
-                  onClick={() => handleLanguageClick(language)}
-                >
-                  <p>{language.flag}</p>
-                  <p>{language.name}</p>
-                </li>
-              ))
-            ) : (
-              !loading && !error && (
-                <p className="no-languages-message">
-                  No languages available at the moment.
-                </p>
-              )
-            )}
+            {languages.length > 0
+              ? languages.map((language) => (
+                  <li
+                    key={language.id}
+                    className={`language-item ${
+                      selectedLanguage?.id === language.id ? "selected" : ""
+                    }`}
+                    onClick={() => handleLanguageClick(language)}
+                  >
+                    <img
+                      src={`data:image/png;base64,${language.image}`}
+                      alt={`${language.name} flag`}
+                      className="language-flag"
+                    />
+                    <p>{language.name}</p>
+                  </li>
+                ))
+              : !loading &&
+                !error && (
+                  <p className="no-languages-message">
+                    No languages available at the moment.
+                  </p>
+                )}
           </ul>
         </div>
         <div className="check-lang">
