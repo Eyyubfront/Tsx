@@ -6,7 +6,7 @@ import { setSelectedLanguage } from '../../store/slice/LanguageHomeSlice';
 
 const SelectLanguage = () => {
     const dispatch = useAppDispatch();
-    const { texts, defaultText, loading, error, selectedLanguageId } = useAppSelector((state) => state.LanguagetextData);
+    const { texts, loading, error, selectedLanguageId } = useAppSelector((state) => state.LanguagetextData);
 
     const userId = useAppSelector((state: RootState) => state.Auth.userId);
 
