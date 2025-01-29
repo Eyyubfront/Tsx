@@ -1,41 +1,76 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import LearnLayout from "../../layout/LearnLayout/LearnLayout";
 import { useAppSelector, useAppDispatch } from "../../store/index";
 import "../LanguageSelector/LanguageSelector.scss";
-import { fetchLanguages } from "../../store/actions/languageActions/languageActions";
-import { selectLanguage } from "../../store/slice/languageSlice";
+import { createUserLanguage, fetchLanguages } from "../../store/actions/languageActions/languageActions";
+import { selectLanguage, setTranslationLanguageId } from "../../store/slice/languageSlice";
 import { useNavigate } from "react-router-dom";
 
+
 const ChooseLearnLanguage: React.FC = () => {
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const languages = useAppSelector((state) => state.language.languages);
-  const selectedLanguage = useAppSelector(
-    (state) => state.language.selectedLanguage
-  );
+  const { userId } = useAppSelector((state) => state.Auth);
+
+  const selectedSourceLanguage = useAppSelector((state) => state.language.selectedSourceLanguageId);
+  const selectedTranslationLanguage = useAppSelector((state) => state.language.selectedTranslationId);
+
   const loading = useAppSelector((state) => state.language.loading);
   const error = useAppSelector((state) => state.language.error);
+  const userLanguageCreated = useAppSelector((state) => state.language.userLanguageCreated);
+
 
   useEffect(() => {
-    if (!selectedLanguage) {
+    if (!selectedSourceLanguage) {
       navigate("/languageselector");
     } else if (languages.length === 0) {
       dispatch(fetchLanguages())
         .unwrap()
         .catch((err) => console.error("Fetch error:", err));
     }
-  }, [dispatch, languages, selectedLanguage, navigate]);
+  }, [dispatch, languages, selectedSourceLanguage, navigate]);
 
-  const handleLanguageClick = (language: any) => {
-    dispatch(selectLanguage(language));
-  };
-
-  const handleContinueClick = () => {
-    if (selectedLanguage) {
+  useEffect(() => {
+    if (userLanguageCreated) {
       navigate("/learntime");
     }
+  }, [userLanguageCreated, navigate]);
+
+  const handleLanguageClick = (language: any) => {
+    dispatch(setTranslationLanguageId(Number(language.id)));
+   
   };
+  
+
+  const handleContinueClick = () => {
+    if ( userId) {
+
+      if (selectedSourceLanguage === selectedTranslationLanguage) {
+        alert("Source and translation language cannot be the same.");
+        return; 
+      }
+    
+      console.log("eyyub");
+      
+     
+      dispatch(
+        createUserLanguage({
+          userId: userId,
+          sourceLanguageId: Number(selectedSourceLanguage),  
+          translationLanguageId: Number(selectedTranslationLanguage),  
+        })
+      )
+        .unwrap()
+        .catch((err) => {
+          console.error("Dil kaydedilirken hata oluştu:", err);
+        });
+    }
+  };
+
+  
 
   return (
     <LearnLayout
@@ -57,7 +92,7 @@ const ChooseLearnLanguage: React.FC = () => {
                   <li
                     key={language.id}
                     className={`language-item ${
-                      selectedLanguage?.id === language.id ? "selected" : ""
+                      Number(selectedTranslationLanguage )=== Number(language.id) ? "selected" : ""
                     }`}
                     onClick={() => handleLanguageClick(language)}
                   >
@@ -80,7 +115,7 @@ const ChooseLearnLanguage: React.FC = () => {
         <div className="check-lang">
           <button
             className="continue-button"
-            disabled={!selectedLanguage}
+            disabled={typeof selectedTranslationLanguage!=="number"}
             onClick={handleContinueClick}
           >
             Continue

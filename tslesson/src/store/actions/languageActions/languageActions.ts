@@ -23,3 +23,22 @@ export const fetchLanguages = createAsyncThunk(
     }
   }
 );
+export const createUserLanguage = createAsyncThunk(
+  'userLanguage/createUserLanguage',
+  async (params: { userId: string; sourceLanguageId: number; translationLanguageId: number }, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post(
+        "/UserLanguage/Create",
+        {
+          userId: params.userId,
+          sourceLanguageId: params.sourceLanguageId,
+          translationLanguageId: params.translationLanguageId,
+        }
+      );
+
+      return response.data; 
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error)
+    }
+  }
+);

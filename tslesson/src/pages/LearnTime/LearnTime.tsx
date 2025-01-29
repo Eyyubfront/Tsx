@@ -6,6 +6,7 @@ import TimeInput from "../../components/TimeInput/TimeInput";
 import LearnLayout from "../../layout/LearnLayout/LearnLayout";
 import { useNavigate } from "react-router-dom";
 import "./LearnTime.scss";
+import { useEffect } from "react";
 
 const LearnTime = () => {
   const dispatch = useAppDispatch();
@@ -17,6 +18,15 @@ const LearnTime = () => {
   const handleTimeRangeClick = (range: string) => {
     dispatch(setTimeRange(range));
   };
+  const selectedSourceLanguage = useAppSelector((state) => state.language.selectedSourceLanguageId);
+  const selectedTranslationLanguage = useAppSelector((state) => state.language.selectedTranslationId);
+
+useEffect(()=>{
+if(!selectedTranslationLanguage|| !selectedSourceLanguage){
+  navigate("/languageselector")
+}
+},[selectedSourceLanguage,selectedTranslationLanguage])
+
 
   const handleSubmit = async () => {
     if (!startTime || !endTime || !timeRange) {

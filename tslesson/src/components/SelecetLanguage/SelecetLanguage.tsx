@@ -8,6 +8,10 @@ const SelectLanguage = () => {
     const dispatch = useAppDispatch();
     const { texts, loading, error, selectedLanguageId } = useAppSelector((state) => state.LanguagetextData);
     const userId = useAppSelector((state: RootState) => state.Auth.userId);
+    const languages = useAppSelector((state) => state.language.languages);
+    const selectedSourceLanguage = useAppSelector((state) => state.language.selectedSourceLanguageId);
+    const { language } = useAppSelector((state) => state.language);
+    const selectedTranslationLanguage = useAppSelector((state) => state.language.selectedTranslationId);
 
     useEffect(() => {
         if (userId) {
@@ -38,9 +42,9 @@ const SelectLanguage = () => {
                 value={selectedLanguageId ?? ''}
                 onChange={handleLanguageChange}
             >
-                {texts?.map((text) => (
-                    <MenuItem key={text.id} value={text.id}>
-                        {text.sourceLanguage} - {text.translationLanguage}
+                {languages?.map((language) => (
+                    <MenuItem key={language.id} value={language.id}>
+                        {language.selectedSourceLanguage} - {language.selectedTranslationLanguage}
                     </MenuItem>
                 ))}
             </Select>

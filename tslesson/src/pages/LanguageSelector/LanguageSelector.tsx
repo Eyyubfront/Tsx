@@ -3,7 +3,7 @@ import LearnLayout from "../../layout/LearnLayout/LearnLayout";
 import { useAppSelector, useAppDispatch } from "../../store/index";
 import "./LanguageSelector.scss";
 import { fetchLanguages } from "../../store/actions/languageActions/languageActions";
-import { selectLanguage } from "../../store/slice/languageSlice";
+import {  setSourceLanguageId } from "../../store/slice/languageSlice";
 import { useNavigate } from "react-router-dom";
 
 const LanguageSelector: React.FC = () => {
@@ -11,9 +11,8 @@ const LanguageSelector: React.FC = () => {
   const navigate = useNavigate();
 
   const languages = useAppSelector((state) => state.language.languages);
-  const selectedLanguage = useAppSelector(
-    (state) => state.language.selectedLanguage
-  );
+
+  const selectedSourceLanguage = useAppSelector((state) => state.language.selectedSourceLanguageId);
   const loading = useAppSelector((state) => state.language.loading);
   const error = useAppSelector((state) => state.language.error);
 
@@ -26,11 +25,11 @@ const LanguageSelector: React.FC = () => {
   }, [dispatch, languages]);
 
   const handleLanguageClick = (language: any) => {
-    dispatch(selectLanguage(language));
+    dispatch(setSourceLanguageId(Number(language.id)));
   };
 
   const handleContinueClick = () => {
-    if (selectedLanguage) {
+    if (selectedSourceLanguage) {
       navigate("/chooselearnlanguage");
     }
   };
@@ -55,7 +54,7 @@ const LanguageSelector: React.FC = () => {
                   <li
                     key={language.id}
                     className={`language-item ${
-                      selectedLanguage?.id === language.id ? "selected" : ""
+                      Number(selectedSourceLanguage )=== Number(language.id)  ? "selected" : ""
                     }`}
                     onClick={() => handleLanguageClick(language)}
                   >
@@ -78,7 +77,7 @@ const LanguageSelector: React.FC = () => {
         <div className="check-lang">
           <button
             className="continue-button"
-            disabled={!selectedLanguage}
+            disabled={typeof selectedSourceLanguage!=="number"}
             onClick={handleContinueClick}
           >
             Continue

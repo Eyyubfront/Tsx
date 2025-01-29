@@ -12,17 +12,19 @@ interface TextItem {
 interface TextState {
     texts: TextItem[];
     defaultText: TextItem | null;
-    selectedLanguageId: number | null; 
+    selectedLanguageId: number | null;
     loading: boolean;
     error: string | null;
+ 
 }
 
 const initialState: TextState = {
     texts: [],
     defaultText: null,
-    selectedLanguageId: null, 
+    selectedLanguageId: null,
     loading: false,
     error: null,
+
 };
 
 const LanguageHomeSlice = createSlice({
@@ -30,7 +32,7 @@ const LanguageHomeSlice = createSlice({
     initialState,
     reducers: {
         setSelectedLanguage(state, action) {
-            state.selectedLanguageId = action.payload; 
+            state.selectedLanguageId = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -42,12 +44,13 @@ const LanguageHomeSlice = createSlice({
             .addCase(getTexts.fulfilled, (state, action: any) => {
                 state.loading = false;
                 state.texts = action.payload;
-                state.defaultText = action.payload.find((t: { isDefault: boolean }) => t.isDefault); 
+                state.defaultText = action.payload.find((t: { isDefault: boolean }) => t.isDefault);
             })
             .addCase(getTexts.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
-            });
+            })
+          
     },
 });
 
