@@ -13,7 +13,7 @@ import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import UseFormInput from "../../components/PrimaryInput/UseFormInput";
 import Heading from "../../components/Heading";
 import Paragrafy from "../../components/Paragrafy/Paragrafy";
-import { setIsResetPassword } from "../../store/slice/emailVerificationSlice";
+import { setIsResetPassword, setTitle } from "../../store/slice/emailVerificationSlice";
 import { setVeryuse } from "../../store/slice/authSlice";
 
 const schema = Yup.object().shape({
@@ -37,6 +37,7 @@ const ForgotPasswordPage: React.FC = () => {
   const { handleSubmit } = methods;
   const onSubmit = (data: { email: string }) => {
     dispatch(setVeryuse(false))
+    dispatch(setTitle("Please check your email")); 
     dispatch(sendForgotPasswordEmail(data))
       .unwrap()
       .then(() => {

@@ -19,7 +19,7 @@ const VerifyEmailPage = () => {
   const methods = useForm();
   const { handleSubmit } = methods;
 
-  const { error, isLoading } = useAppSelector((state: RootState) => state.emailVerification);
+  const {title, error, isLoading } = useAppSelector((state: RootState) => state.emailVerification);
   const { userId, veriyuse } = useAppSelector((state: RootState) => state.Auth);
 
 
@@ -95,7 +95,7 @@ const VerifyEmailPage = () => {
           <form className="formverify" onSubmit={handleSubmit(onSubmit)}>
             <div className="verify-email">
               <div className="verify-content">
-                <Heading text="Verify E-mail address" />
+                <Heading text={title || "Verify E-mail address"} />
                 <Paragrafy className="verify_aboutmail" text="We’ve sent an activation code to your email" />
                 <div style={{flexDirection:"row"}} className="inputs">
                   {Array.from({ length: 4 }).map((_, index) => (
