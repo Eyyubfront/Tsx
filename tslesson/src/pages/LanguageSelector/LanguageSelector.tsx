@@ -1,20 +1,26 @@
 import React, { useEffect } from "react";
 import LearnLayout from "../../layout/LearnLayout/LearnLayout";
 import { useAppSelector, useAppDispatch } from "../../store/index";
-import "./LanguageSelector.scss";
 import { fetchLanguages } from "../../store/actions/languageActions/languageActions";
-import {  setSourceLanguageId } from "../../store/slice/languageSlice";
+import { setSourceLanguageId } from "../../store/slice/languageSlice";
 import { useNavigate } from "react-router-dom";
+import "./LanguageSelector.scss";
 
 const LanguageSelector: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const languages = useAppSelector((state) => state.language.languages);
-
   const selectedSourceLanguage = useAppSelector((state) => state.language.selectedSourceLanguageId);
   const loading = useAppSelector((state) => state.language.loading);
   const error = useAppSelector((state) => state.language.error);
+  const isConfirmed = useAppSelector((state) => state.Auth.veriyuse); 
+
+  useEffect(() => {
+    if (!isConfirmed) {
+      navigate("/verifyemailpage"); 
+    }
+  }, [isConfirmed, navigate]);
 
   useEffect(() => {
     if (languages.length === 0) {
@@ -54,7 +60,7 @@ const LanguageSelector: React.FC = () => {
                   <li
                     key={language.id}
                     className={`language-item ${
-                      Number(selectedSourceLanguage )=== Number(language.id)  ? "selected" : ""
+                      Number(selectedSourceLanguage) === Number(language.id) ? "selected" : ""
                     }`}
                     onClick={() => handleLanguageClick(language)}
                   >
@@ -77,7 +83,7 @@ const LanguageSelector: React.FC = () => {
         <div className="check-lang">
           <button
             className="continue-button"
-            disabled={typeof selectedSourceLanguage!=="number"}
+            disabled={typeof selectedSourceLanguage !== "number"}
             onClick={handleContinueClick}
           >
             Continue

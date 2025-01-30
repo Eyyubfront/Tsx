@@ -2,7 +2,7 @@ import React from "react";
 import { sendForgotPasswordEmail } from "../../store/actions/forgotPasswordActions/forgotPasswordActions";
 import { RootState, useAppDispatch, useAppSelector } from "../../store/index";
 import { useNavigate } from "react-router-dom";
-import LeftVerifyEmail from "../../components/LeftVerifyEmail/LeftVerifyEmail";
+import LeftVerifyEmail from "../../layout/SidePanel/SidePanel";
 import "./ForgotPasswordPage.scss";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import Button from "@mui/material/Button";
@@ -30,7 +30,7 @@ const ForgotPasswordPage: React.FC = () => {
     mode: "all"
   });
 
-  const { loading, error, success } = useAppSelector(
+  const { loading, success } = useAppSelector(
     (state: RootState) => state.Auth
   );
 
@@ -40,8 +40,8 @@ const ForgotPasswordPage: React.FC = () => {
     dispatch(sendForgotPasswordEmail(data))
       .unwrap()
       .then(() => {
-        dispatch(setIsResetPassword(true)); // E-posta başarıyla gönderildi
-        navigate('/verifyemailpage'); // Doğru sayfaya yönlendirme
+        dispatch(setIsResetPassword(true)); 
+        navigate('/verifyemailpage');
       })
       .catch(err => {
         console.error("Error:", err);
@@ -75,7 +75,7 @@ const ForgotPasswordPage: React.FC = () => {
               label='Email address'
               type='email'
             />
-            {error && <p className="error">{error}</p>}
+           
             {success && <p className="success">Code sent successfully!</p>}
 
             <PrimaryButton

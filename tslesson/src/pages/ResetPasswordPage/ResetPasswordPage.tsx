@@ -1,7 +1,7 @@
 import  { useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useNavigate } from "react-router-dom"; 
-import LeftVerifyEmail from "../../components/LeftVerifyEmail/LeftVerifyEmail";
+import LeftVerifyEmail from "../../layout/SidePanel/SidePanel";
 import "./ResetPasswordPage.scss";
 import { Container } from "@mui/material";
 import Heading from "../../components/Heading";

@@ -14,3 +14,5 @@ export const getTexts = createAsyncThunk('learningNow/getTexts', async (userId: 
         return thunkAPI.rejectWithValue(error);
     }
 });
+
+

@@ -8,7 +8,7 @@ interface AuthState {
   accessToken: string | null;
   loading: boolean;
   error: string | null;
-  isAuth: boolean;
+  isAuth: boolean|null;
   success: boolean;
   veriyuse: Boolean
 }
@@ -20,7 +20,7 @@ const initialState: AuthState = {
   loading: false,
   error: null,
   success: false,
-  isAuth: false,
+  isAuth: null,
   veriyuse: false
 };
 

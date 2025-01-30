@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { submitTimePreferences } from "../actions/timeActions/timeActions";
 
 interface TimeState {
+  userId: string; 
+  intervalId: number | null;
   startTime: string;
   endTime: string;
   timeRange: string | null;
@@ -10,8 +12,10 @@ interface TimeState {
 }
 
 const initialState: TimeState = {
-  startTime: "08:00",
-  endTime: "18:00",
+  userId: "",
+  intervalId: null, 
+  startTime: "",
+  endTime: "",
   timeRange: null,
   loading: false,
   error: null,
@@ -21,13 +25,19 @@ const timeSlice = createSlice({
   name: "time",
   initialState,
   reducers: {
+    setUserId(state, action: PayloadAction<string>) {
+      state.userId = action.payload;
+    },
+    setIntervalId(state, action: PayloadAction<number | null>) {
+      state.intervalId = action.payload; 
+    },
     setStartTime(state, action: PayloadAction<string>) {
-      state.startTime=action.payload;
+      state.startTime = action.payload;
     },
     setEndTime(state, action: PayloadAction<string>) {
       state.endTime = action.payload;
     },
-    setTimeRange(state, action: PayloadAction<string>) {
+    setTimeRange(state, action: PayloadAction<string | null>) {
       state.timeRange = action.payload;
     },
   },
@@ -39,6 +49,7 @@ const timeSlice = createSlice({
       })
       .addCase(submitTimePreferences.fulfilled, (state) => {
         state.loading = false;
+        state.error = null;
       })
       .addCase(submitTimePreferences.rejected, (state, action) => {
         state.loading = false;
@@ -47,5 +58,7 @@ const timeSlice = createSlice({
   },
 });
 
-export const { setStartTime, setEndTime, setTimeRange } = timeSlice.actions;
+
+export const { setUserId, setIntervalId, setStartTime, setEndTime, setTimeRange } = timeSlice.actions;
+
 export default timeSlice.reducer;

@@ -11,13 +11,11 @@ export const confirmEmail = createAsyncThunk(
       localStorage.setItem('userId', response.data.data.userId);
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message || "Failed to confirm email."
-      );
+      const errorMessage = error.response?.data?.errors?.[0] || error.response?.data?.message || "Failed to confirm email.";
+      return rejectWithValue(errorMessage);
     }
   }
 );
-
 
 export const resendConfirmationToken = createAsyncThunk(
   "emailVerification/resendConfirmationToken",

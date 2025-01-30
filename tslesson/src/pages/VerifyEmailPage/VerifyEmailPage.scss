@@ -1,199 +1,125 @@
-.container {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.main-div {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content:center;
-  // padding: 48px 0;
+.verify__email {
   gap: 32px;
-  min-height: 100vh;
-  .btn {
-    position: absolute;
-    top: 10%;
-    right: 38%;
-    border:2px solid #D8DADC;
-    color: black;
-    border-radius: 10px;
-  }
-}
-
-.verify-email {
-  text-align: left;
-  font-family: Arial, sans-serif;
-  padding: 0 47px;
-  width: 100%;
-  max-width: 541px;
-  height: 100%;
-  margin: 0 auto;
+  padding: 32px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  height: 100vh;
 
- .resend-code{
-  text-align: center;
-  padding: 7px 0;
-
-  .btn2{
-    border:1px solid #fff;
-    color: #fff;
-    background-color:#6a5acd;
-    border-radius: 8px;
+  .verifyemail__left {
+    width: 100%;
+    height: 100%;
   }
- }
+
+
+  .veriyfemail_right {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    gap: 35px;
+    width: 50%;
+    position: relative;
+    .verify-content{
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+  }
 
   .inputs {
+
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    align-items: center;
     gap: 10px;
-    margin: 10px 0;
+    justify-content: center;
 
     input {
-      width: 40px;
-      height: 40px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      width: 66px;
+      height: 66px;
+      margin-right: 8px;
+      font-size: 24px;
       text-align: center;
-      font-size: 18px;
-      
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      outline: none;
+
       &:focus {
-        border-color: #6a5acd;
-        outline: none;
+        border-color: #007bff;
       }
     }
   }
 
-  .verify-content {
-    .signin_name {
-      font-family: DM Serif Display;
-      color: rgb(29, 23, 48);
-      line-height: 62.4px;
-      font-size: 46px;
-      font-weight: 400;
-    }
-    .signin_controlinfo {
-      font-family:DM Sans;
-      color: #000000b2;
-      line-height: 25px;
-      font-size: 16px;
-      font-weight: 400;
-    }
+  .verify_aboutmail {
+    font-family: DM Sans;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 25.6px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
   }
 
   .resend-code {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #4a4559;
-  }
+    text-align: center;
 
-  .resend-button {
-    background-color: #6a5acd;
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
+    .sendcodes {
+      font-family: Inter;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 20px;
+      text-align: center;
+      cursor: pointer;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
 
-    &:hover {
-      background-color: #5740ba;
     }
   }
 }
 
-@media (max-width: 1290px) {
-
-  .main-div{
-    justify-content: center;
+@media (max-width: 600px) {
+  .verify__email {
     flex-direction: column;
-    .btn {
-      position: absolute;
-      top: 10%;
-      right: 80%;
-      border: 2px solid #D8DADC;
-      color: #fff;
-      border-radius: 10px;
-    }
-   
-  }
-   
-  .verify-content {
-    text-align: center;
-  }
+    align-items: baseline;
+    margin-top: 0px;
+    padding: 16px !important;
+    justify-content: center;
 
-  .verify-email {
-    position: relative;
-    width: 90%;
-    padding: 0 20px;
-    .customhead {
-      font-size: 36px;
+    .veriyfemail_right {
+      width: 100%;
+
+      .formverify {
+        width: 100%;
+      }
     }
+
     .inputs {
       input {
-        width: 35px;
-        height: 35px;
-        font-size: 16px;
+        width: 100%;
+        margin-right: 0;
       }
     }
-
-    .resend-code {
-      font-size: 12px;
-    }
-
-    .resend-button {
-      padding: 8px 12px;
-    }
   }
-
 }
 
-@media (max-width: 576px) {
-  .main-div {
+@media (min-width: 601px) and (max-width: 1200px) {
+  .verify__email {
+    flex-direction: column;
+    align-items: baseline;
+    margin-top: 0px;
+    padding: 16px !important;
     justify-content: center;
-    flex-direction: column;
-    padding: 0;
-    position: relative;
-    .btn {
-      top: 12%;
-      left: 8%;
-      color: #fff;
-      position: absolute;
-    }
-  }
 
-  .verify-email {
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    .veriyfemail_right {
+      width: 100%;
 
-    // .btn {
-    //   position: absolute;
-    //   top: 10%;
-    //   right: 38%;
-    // }
-
-    .verify-content {
-      text-align: center;
-      .vrfhead {
-        font-family: serif;
-        color: rgb(29, 23, 48);
-        font-size: 32px;
-        font-weight: 400;
+      .formverify {
+        width: 100%;
       }
-      .inputs {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    }
 
-        input {
-          text-align: center;
-          margin: 0;
-          box-sizing: border-box;
-        }
+    .inputs {
+      input {
+        width: 100%;
+        margin-right: 0;
       }
     }
   }

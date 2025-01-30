@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import LeftVerifyEmail from "../../components/LeftVerifyEmail/LeftVerifyEmail";
+import LeftVerifyEmail from "../../layout/SidePanel/SidePanel";
 import "./CheckEmailPage.scss";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import Button from "@mui/material/Button";

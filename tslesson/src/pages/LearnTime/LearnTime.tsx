@@ -1,46 +1,82 @@
+import  { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/index";
-import { setStartTime, setEndTime, setTimeRange } from "../../store/slice/timeSlice";
 import { submitTimePreferences } from "../../store/actions/timeActions/timeActions";
 import Paragrafy from "../../components/Paragrafy/Paragrafy";
-import TimeInput from "../../components/TimeInput/TimeInput";
+import TimeOptions from "../../components/TimeOptions/TimeOptions"; 
 import LearnLayout from "../../layout/LearnLayout/LearnLayout";
 import { useNavigate } from "react-router-dom";
+import { useForm, FormProvider } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import moment from 'moment';
+import UseFormTimeInput from "../../components/PrimaryInput/UseFormTimeInput";
 import "./LearnTime.scss";
-import { useEffect } from "react";
+
+const schema = yup.object().shape({
+  startTime: yup.string().required("Start time is required"),
+  endTime: yup.string().required("End time is required"),
+  timeRange: yup.string().required("Time range is required"),
+  intervalId: yup.number().required("Interval ID is required"),
+});
 
 const LearnTime = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const methods = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      startTime: "",
+      endTime: "",
+      timeRange: "",
+      intervalId: undefined,
+    },
+  });
 
-  const { startTime, endTime, timeRange, loading, error } = useAppSelector((state) => state.time);
-  const timeOptions = ["15 min", "30 min", "1 hour"]; 
+  const { loading } = useAppSelector((state) => state.time);
 
-  const handleTimeRangeClick = (range: string) => {
-    dispatch(setTimeRange(range));
-  };
+  const timeOptions = [
+    { label: "15 min", id: 1 },
+    { label: "30 min", id: 2 },
+    { label: "1 hour", id: 3 },
+  ];
+
   const selectedSourceLanguage = useAppSelector((state) => state.language.selectedSourceLanguageId);
+  const { userId } = useAppSelector((state) => state.Auth);
   const selectedTranslationLanguage = useAppSelector((state) => state.language.selectedTranslationId);
 
-useEffect(()=>{
-if(!selectedTranslationLanguage|| !selectedSourceLanguage){
-  navigate("/languageselector")
-}
-},[selectedSourceLanguage,selectedTranslationLanguage])
-
-
-  const handleSubmit = async () => {
-    if (!startTime || !endTime || !timeRange) {
-      alert("All fields are required. Please fill them out before continuing.");
-      return;
+  useEffect(() => {
+    if (!selectedTranslationLanguage || !selectedSourceLanguage) {
+      navigate("/languageselector");
     }
+  }, [selectedSourceLanguage, selectedTranslationLanguage]);
 
-    const result = await dispatch(submitTimePreferences({ startTime, endTime, timeRange }));
+  const handleSubmit = async (data:any) => {
+    try {
+      const targetDate = moment().format("YYYY-MM-DD");
+      const utcStartTime = moment(`${targetDate} ${data.startTime}`).utc().toISOString();
+      const utcEndTime = moment(`${targetDate} ${data.endTime}`).utc().toISOString();
 
-    if (submitTimePreferences.fulfilled.match(result)) {
-      navigate("/login"); 
-    } else {
-      console.error(result.payload || "Failed to submit time preferences");
+      const result = await dispatch(submitTimePreferences({
+        userId: userId,
+        intervalId: data.intervalId,
+        startTime: utcStartTime,
+        endTime: utcEndTime,
+        timeRange: data.timeRange
+      }));
+
+      if (submitTimePreferences.fulfilled.match(result)) {
+        navigate("/login");
+      } else {
+        console.error(result.payload || "Failed to submit time preferences");
+      }
+    } catch (error) {
+      console.error(error);
     }
+  };
+
+  const handleOptionSelect = (label: string, id: number) => {
+    methods.setValue("timeRange", label);
+    methods.setValue("intervalId", id);
   };
 
   return (
@@ -48,48 +84,40 @@ if(!selectedTranslationLanguage|| !selectedSourceLanguage){
       titleText="What’s the Best Time for Learning?"
       descriptionText="Tell us when and how often you'd like to receive notifications. You can adjust these settings anytime to fit your schedule."
     >
-      <div className="box">
-        <div className="left-box">
-          <Paragrafy text="Select Time Range" className="timeparagraf" />
-          <div className="time-inputs">
-            <TimeInput
-              label="Start Time"
-              value={startTime}
-              onChange={(value) => dispatch(setStartTime(value))}
-              style={{ width: "100%", maxWidth: "200px" }}
-            />
-            <TimeInput
-              label="End Time"
-              value={endTime}
-              onChange={(value) => dispatch(setEndTime(value))}
-              style={{ width: "100%", maxWidth: "200px" }}
-            />
-          </div>
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(handleSubmit)}>
+          <div className="box">
+            <div className="left-box">
+              <Paragrafy text="Select Time Range" className="timeparagraf" />
+              <div className="time-inputs">
+                <UseFormTimeInput
+                  label="Start Time"
+                  name="startTime"
+                />
+                <UseFormTimeInput
+                  label="End Time"
+                  name="endTime"
+                />
+              </div>
 
-          <Paragrafy text="Select Time Range" className="timeparagraf" />
-          <div className="pa-group">
-            {timeOptions.map((option) => (
-              <p
-                key={option}
-                className={`time-option ${
-                  timeRange === option ? "selected" : ""
-                }`}
-                onClick={() => handleTimeRangeClick(option)}
-              >
-                {option}
-              </p>
-            ))}
-          </div>
-        </div>
+              <Paragrafy text="Select Time Range" className="timeparagraf" />
+              <TimeOptions
+                timeOptions={timeOptions}
+                selectedOption={methods.watch("timeRange")}
+                onOptionSelect={handleOptionSelect}
+                errorMessage={methods.formState.errors.intervalId?.message}
+              />
+            </div>
 
-        <div className="right-box">
-          {loading && <p>Submitting...</p>}
-          {error && <p className="error-message">{error}</p>}
-          <button className="butt" onClick={handleSubmit} disabled={loading}>
-            Continue
-          </button>
-        </div>
-      </div>
+            <div className="right-box">
+              {loading && <p>Submitting...</p>}
+              <button className="butt" type="submit" disabled={loading}>
+                Continue
+              </button>
+            </div>
+          </div>
+        </form>
+      </FormProvider>
     </LearnLayout>
   );
 };

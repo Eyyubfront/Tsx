@@ -26,6 +26,7 @@ const schema = Yup.object().shape({
     .matches(/(?=.*[A-Z])/, "Password must contain at least one uppercase letter.")
     .required("Password is required."),
 });
+
 const Login = () => {
   const dispatch = useAppDispatch();
   const { loading } = useAppSelector((state: RootState) => state.Auth);
@@ -56,7 +57,7 @@ const Login = () => {
 
   const onSubmit = (data: { email: string, password: string }) => {
     if (signUp) {
-      dispatch(setVeryuse(true))
+      dispatch(setVeryuse(true));
       dispatch(register(data))
         .unwrap()
         .then(() => {
@@ -64,7 +65,7 @@ const Login = () => {
           navigate("/verifyemailpage");
         })
         .catch(err => {
-          console.error("Error:", err);
+          console.error("Registration error:", err);
         });
     } else {
       dispatch(login(data))
@@ -121,7 +122,8 @@ const Login = () => {
               )}
             </div>
 
-
+      
+         
             {signUp ? (
               <>
                 <Check />

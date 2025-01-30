@@ -29,7 +29,7 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
     const selectedLanguage = texts.find((text) => text.id === selectedLanguageId);
 
     useEffect(() => {
-        console.log("dfdf")
+       
         if (selectedLanguage) {
             setWordOne(` ${selectedLanguage.sourceLanguage}`);
             setWordTwo(` ${selectedLanguage.translationLanguage}`);

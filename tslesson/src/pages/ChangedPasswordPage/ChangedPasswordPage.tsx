@@ -1,4 +1,4 @@
-import LeftVerifyEmail from "../../components/LeftVerifyEmail/LeftVerifyEmail";
+import LeftVerifyEmail from "../../layout/SidePanel/SidePanel";
 import "./ChangedPasswordPage.scss";
 import Icon from "../../assets/images/verify/Icon.png";
 import { Container } from "@mui/material";

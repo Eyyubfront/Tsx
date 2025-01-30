@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import LearnLayout from "../../layout/LearnLayout/LearnLayout";
 import { useAppSelector, useAppDispatch } from "../../store/index";
 import "../LanguageSelector/LanguageSelector.scss";
 import { createUserLanguage, fetchLanguages } from "../../store/actions/languageActions/languageActions";
-import { selectLanguage, setTranslationLanguageId } from "../../store/slice/languageSlice";
+import {setTranslationLanguageId } from "../../store/slice/languageSlice";
 import { useNavigate } from "react-router-dom";
 
 
@@ -21,7 +21,13 @@ const ChooseLearnLanguage: React.FC = () => {
   const loading = useAppSelector((state) => state.language.loading);
   const error = useAppSelector((state) => state.language.error);
   const userLanguageCreated = useAppSelector((state) => state.language.userLanguageCreated);
+  const isConfirmed = useAppSelector((state) => state.Auth.veriyuse); 
 
+  useEffect(() => {
+    if (!isConfirmed) {
+      navigate("/verifyemailpage"); 
+    }
+  }, [isConfirmed, navigate]);
 
   useEffect(() => {
     if (!selectedSourceLanguage) {
@@ -52,8 +58,7 @@ const ChooseLearnLanguage: React.FC = () => {
         alert("Source and translation language cannot be the same.");
         return; 
       }
-    
-      console.log("eyyub");
+
       
      
       dispatch(
