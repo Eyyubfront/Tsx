@@ -4,9 +4,9 @@ import axiosInstance from "../axiosInstance";
 
 
 
-export const getTexts = createAsyncThunk('learningNow/getTexts', async (userId: string, thunkAPI) => {
+export const getTexts = createAsyncThunk('learningNow/getTexts', async (_,thunkAPI) => {
     try {
-        const response = await axiosInstance.get(`/UserLanguage/GetAllByUserId?userId=${userId}`);
+        const response = await axiosInstance.get(`/UserLanguage/GetAllByUserId`);
    
         return response.data.data;
         

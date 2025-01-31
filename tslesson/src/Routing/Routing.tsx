@@ -24,13 +24,13 @@ const Routing = () => {
         <Route path="/forgotpasswordpage" element={<ForgotPasswordPage />} />
         <Route path="/resetpasswordpage" element={<ResetPasswordPage />} />
         <Route path="/verifyemailpage" element={<VerifyEmailPage />} />
+        <Route path="/languageselector" element={<LanguageSelector/>} />
+        <Route path="/chooselearnlanguage" element={<ChooseLearnLanguage/>} />
+        <Route path="/learntime" element={<LearnTime/>} />
       </Route>
 
       <Route element={<ProtectedRouting />}>
         <Route path="/" element={<Home />} />
-        <Route path="/languageselector" element={<LanguageSelector/>} />
-        <Route path="/chooselearnlanguage" element={<ChooseLearnLanguage/>} />
-        <Route path="/learntime" element={<LearnTime/>} />
       </Route>
     </Routes>
   );

@@ -3,11 +3,8 @@ import { fetchTexts, saveText, removeText, updateText } from '../actions/learing
 
 interface items {
     id: number;
-    userId: string;
     source?: string;
     translation?: string;
-    sourceLanguageId?: number;
-    translationLanguageId?: number;
     isLearningNow: boolean
 }
 

@@ -1,6 +1,6 @@
 
 import React from 'react';
-
+import "./TimeOptions.scss"
 interface TimeOption {
   label: string;
   id: number;
@@ -19,7 +19,7 @@ const TimeOptions: React.FC<TimeOptionsProps> = ({ timeOptions, selectedOption, 
       {timeOptions.map(option => (
         <p
           key={option.id} 
-          className={`time-option ${selectedOption === option.label ? "selected" : ""}`}
+          className={`time-option ${selectedOption === option.label ? "selectedtime" : ""}`}
           onClick={() => onOptionSelect(option.label, option.id)}
         >
           {option.label}

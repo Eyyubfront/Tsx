@@ -1,9 +1,10 @@
 
 import { useFormContext } from 'react-hook-form';
-
+import "./UseFormTimeInput.scss"
 interface UseFormInputProps {
   label: string;
   name: string;
+
 }
 
 const UseFormTimeInput: React.FC<UseFormInputProps> = ({ label, name }) => {
@@ -12,12 +13,13 @@ const UseFormTimeInput: React.FC<UseFormInputProps> = ({ label, name }) => {
   console.log(errors[name]?.message)
   return (
     <div className="use-form-input">
-      <label>{label}</label>
+      <label className='labelinputtime'>{label}</label>
       <input
         type="time"
         {...register(name, {
           required: "Zaman zorunludur", 
         })}
+        className='inputtime'
       />
      
      {errors[name] && (

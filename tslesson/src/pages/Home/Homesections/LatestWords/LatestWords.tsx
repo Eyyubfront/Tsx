@@ -15,16 +15,15 @@ import { Button, TableBody, TableRow, TableCell, Typography, TextField } from '@
 const LatestWords = () => {
     const dispatch = useAppDispatch();
     const items = useAppSelector((state: RootState) => state.latestWords.items.items);
-    console.log(items);
+
     
-    const userId = useAppSelector((state) => state.Auth.userId);
-    const [editText, setEditText] = useState<{ id: number; source: string; translation: string; userId: string } | null>(null);
+    const [editText, setEditText] = useState<{ id: number; source: string; translation: string; } | null>(null);
 
     useEffect(() => {
-        if (userId) {
-            dispatch(wordfetchTexts(userId));
-        }
-    }, [dispatch, userId]);
+  
+            dispatch(wordfetchTexts());
+    
+    }, [dispatch]);
 
     const handleSaveText = (item: WordsItem) => {
         dispatch(saveText(item));
@@ -34,13 +33,13 @@ const LatestWords = () => {
         dispatch(removeText({ id }));
     };
 
-    const handleUpdateText = ({ id, source, translation, userId }: { id: number; source: string; translation: string; userId: string }) => {
-        const updatedItem = { id, source, translation, userId };
+    const handleUpdateText = ({ id, source, translation }: { id: number; source: string; translation: string}) => {
+        const updatedItem = { id, source, translation };
         dispatch(updateTextAction(updatedItem));
     };
 
-    const handleEdit = (id: number, source: string, translation: string, userId: string) => {
-        setEditText({ id, source, translation, userId });
+    const handleEdit = (id: number, source: string, translation: string) => {
+        setEditText({ id, source, translation });
     };
 
     const handleUpdate = () => {
@@ -54,7 +53,7 @@ const LatestWords = () => {
         <div>
             <TableComponent title="Words">
                 <TableBody>
-                    {items.map(({ id, userId, source, translation }) => (
+                    {items.map(({ id,source, translation }) => (
                         <TableRow className='table_aligns' key={id}>
                             <TableCell sx={{ borderBottom: "none" }}>
                                 <Typography>{`${source} - ${translation}`}</Typography>
@@ -63,7 +62,7 @@ const LatestWords = () => {
                                 <Button
                                     className='table_button'
                                     variant="outlined"
-                                    onClick={() => handleSaveText({ id, userId, source, translation, sourceLanguageId: undefined, translationLanguageId: undefined, isLearningNow: true })}
+                                    onClick={() => handleSaveText({ id,source, translation ,isLearningNow: true})}
                                 >
                                     <img src={Savedicon} alt="Save" />
                                 </Button>
@@ -77,7 +76,7 @@ const LatestWords = () => {
                                 <Button
                                     className='table_button'
                                     variant="outlined"
-                                    onClick={() => handleEdit(id, source || '', translation || '', userId || '')}
+                                    onClick={() => handleEdit(id, source || '', translation || '')}
                                 >
                                     <MdEdit />
                                 </Button>

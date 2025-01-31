@@ -4,11 +4,8 @@ import { wordfetchTexts, saveText, removeText, updateText } from '../actions/lea
 
 interface wordsitems {
     id: number;
-    userId: string;
     source?: string;
     translation?: string;
-    sourceLanguageId?: number;
-    translationLanguageId?: number;
     isLearningNow: boolean
 }
 
@@ -57,7 +54,6 @@ const LatestWordsSlice = createSlice({
                 state.status = 'succeeded';
          
                 state.items.items.push(action.payload);
-           
             })
      
             .addCase(removeText.fulfilled, (state, action) => {

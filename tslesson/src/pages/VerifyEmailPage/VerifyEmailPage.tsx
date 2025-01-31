@@ -23,6 +23,7 @@ const VerifyEmailPage = () => {
   const { userId, veriyuse } = useAppSelector((state: RootState) => state.Auth);
 
 
+
   useEffect(() => {
     if (!userId) {
       navigate("/login");
@@ -58,6 +59,7 @@ const VerifyEmailPage = () => {
       if (veriyuse) {
         dispatch(confirmEmail({ code: enteredCode, userId: String(userId) })).then((action: any) => {
           if (action.meta.requestStatus === "fulfilled") {
+          
             navigate("/languageselector");
           } else {
             console.error("Email confirmation failed.");
@@ -86,11 +88,11 @@ const VerifyEmailPage = () => {
           titleText="Hi, Welcome!"
           descriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!"
         />
-      </div>
-      <div className="veriyfemail_right">
-        <Button className="btn" onClick={() => navigate("/forgotpasswordpage")}>
+             <Button className="LeftButton" onClick={() => navigate("/forgotpasswordpage")}>
           <KeyboardArrowLeftIcon />
         </Button>
+      </div>
+      <div className="veriyfemail_right">
         <FormProvider {...methods}>
           <form className="formverify" onSubmit={handleSubmit(onSubmit)}>
             <div className="verify-email">

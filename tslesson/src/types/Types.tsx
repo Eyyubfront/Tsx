@@ -1,5 +1,5 @@
 export interface Language {
-  id: string;
+  id: number;
   name: string;
   image: string; // Base64 formatındaki görüntüyü temsil eder
   selectedSourceLanguageId: string;  // Add this field

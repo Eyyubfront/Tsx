@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
-import LearnLayout from "../../layout/LearnLayout/LearnLayout";
+import React, { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../store/index";
 import "../LanguageSelector/LanguageSelector.scss";
 import { createUserLanguage, fetchLanguages } from "../../store/actions/languageActions/languageActions";
-import {setTranslationLanguageId } from "../../store/slice/languageSlice";
 import { useNavigate } from "react-router-dom";
-
-
+import "./ChooseLearnLanguage.scss"
+import SidePanel from "../../layout/SidePanel/SidePanel";
+import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
+import BackButton from "../../components/BackButton/BackButton";
 const ChooseLearnLanguage: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const [togleselectedId, setToogleSelectedId] = useState<number>(0);
   const languages = useAppSelector((state) => state.language.languages);
   const { userId } = useAppSelector((state) => state.Auth);
 
@@ -21,11 +21,11 @@ const ChooseLearnLanguage: React.FC = () => {
   const loading = useAppSelector((state) => state.language.loading);
   const error = useAppSelector((state) => state.language.error);
   const userLanguageCreated = useAppSelector((state) => state.language.userLanguageCreated);
-  const isConfirmed = useAppSelector((state) => state.Auth.veriyuse); 
+  const isConfirmed = useAppSelector((state) => state.Auth.veriyuse);
 
   useEffect(() => {
     if (!isConfirmed) {
-      navigate("/verifyemailpage"); 
+      navigate("/verifyemailpage");
     }
   }, [isConfirmed, navigate]);
 
@@ -46,59 +46,58 @@ const ChooseLearnLanguage: React.FC = () => {
   }, [userLanguageCreated, navigate]);
 
   const handleLanguageClick = (language: any) => {
-    dispatch(setTranslationLanguageId(Number(language.id)));
-   
+    setToogleSelectedId(language.id);
   };
-  
+
 
   const handleContinueClick = () => {
-    if ( userId) {
+    if (userId) {
 
       if (selectedSourceLanguage === selectedTranslationLanguage) {
         alert("Source and translation language cannot be the same.");
-        return; 
+        return;
       }
-
-      
-     
       dispatch(
         createUserLanguage({
-          userId: userId,
-          sourceLanguageId: Number(selectedSourceLanguage),  
-          translationLanguageId: Number(selectedTranslationLanguage),  
+          sourceLanguageId: Number(selectedSourceLanguage),
+          translationLanguageId: Number(selectedTranslationLanguage),
         })
       )
         .unwrap()
         .catch((err) => {
-          console.error("Dil kaydedilirken hata oluştu:", err);
+          console.error("Language seleceted problems", err);
         });
     }
   };
 
-  
+
 
   return (
-    <LearnLayout
-      titleText="Choose the language you want to learn"
-      descriptionText="Select the language you want to learn to customize your learning experience."
-    >
-      <div className="lang-div">
-        <div className="lang-content">
-          {loading && <p>Loading languages...</p>}
-          {error && (
-            <p className="error-message">
-              Failed to load languages. Please try again later.
-            </p>
-          )}
+    <div className="chooselanguage_selector">
+      <div className="chooselanguageselector__left">
+        <SidePanel
+          titleText="Choose the Language to Learn"
+          descriptionText="Select your native language to personalize your learning experience easily."
+        />
+        <BackButton onClick={() => navigate("/login")} />
+      </div>
+      <div className="chooselanguageselector__right">
+        <div className="lang-div">
+          <div className="lang-content">
+            {loading && <p>Loading languages...</p>}
+            {error && (
+              <p className="error-message">
+                Failed to load languages. Please try again later.
+              </p>
+            )}
 
-          <ul className="language-list">
-            {languages.length > 0
-              ? languages.map((language) => (
+            <ul className="language-list">
+              {languages.length > 0
+                ? languages.map((language) => (
                   <li
                     key={language.id}
-                    className={`language-item ${
-                      Number(selectedTranslationLanguage )=== Number(language.id) ? "selected" : ""
-                    }`}
+                    className={`language-item ${togleselectedId === language.id ? "selected" : ""
+                      }`}
                     onClick={() => handleLanguageClick(language)}
                   >
                     <img
@@ -109,25 +108,24 @@ const ChooseLearnLanguage: React.FC = () => {
                     <p>{language.name}</p>
                   </li>
                 ))
-              : !loading &&
+                : !loading &&
                 !error && (
                   <p className="no-languages-message">
                     No languages available at the moment.
                   </p>
                 )}
-          </ul>
-        </div>
-        <div className="check-lang">
-          <button
-            className="continue-button"
-            disabled={typeof selectedTranslationLanguage!=="number"}
-            onClick={handleContinueClick}
-          >
-            Continue
-          </button>
+            </ul>
+          </div>
+          <div className="check-lang">
+            <PrimaryButton
+              onClick={handleContinueClick}
+              label="Continue"
+              disabled={togleselectedId === 0}
+            />
+          </div>
         </div>
       </div>
-    </LearnLayout>
+    </div>
   );
 };
 

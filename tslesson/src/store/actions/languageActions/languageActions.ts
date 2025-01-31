@@ -25,12 +25,11 @@ export const fetchLanguages = createAsyncThunk(
 );
 export const createUserLanguage = createAsyncThunk(
   'userLanguage/createUserLanguage',
-  async (params: { userId: string; sourceLanguageId: number; translationLanguageId: number }, thunkAPI) => {
+  async (params: { sourceLanguageId: number; translationLanguageId: number }, thunkAPI) => {
     try {
       const response = await axiosInstance.post(
         "/UserLanguage/Create",
         {
-          userId: params.userId,
           sourceLanguageId: params.sourceLanguageId,
           translationLanguageId: params.translationLanguageId,
         }
