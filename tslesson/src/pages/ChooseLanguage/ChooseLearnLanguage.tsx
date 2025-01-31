@@ -30,9 +30,7 @@ const ChooseLearnLanguage: React.FC = () => {
   }, [isConfirmed, navigate]);
 
   useEffect(() => {
-    if (!selectedSourceLanguage) {
-      navigate("/languageselector");
-    } else if (languages.length === 0) {
+if (languages.length === 0) {
       dispatch(fetchLanguages())
         .unwrap()
         .catch((err) => console.error("Fetch error:", err));

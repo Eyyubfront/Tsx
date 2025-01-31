@@ -48,7 +48,7 @@ const VerifyEmailPage = () => {
       setCounter(30);
       setCanResend(false);
     } else {
-      console.error("User ID bulunamadı.");
+      console.error("User ID not found.");
     }
   };
 

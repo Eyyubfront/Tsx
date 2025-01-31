@@ -38,7 +38,7 @@ const LanguageSelector: React.FC = () => {
   const handleContinueClick = () => {
     if (toggleSelectedId !== 0) {
       console.log('Navigating to /chooselearnlanguage');
-      navigate("chooselearnlanguage");
+      navigate("/chooselearnlanguage");
     } else {
       console.warn('Noo language.');
     }
