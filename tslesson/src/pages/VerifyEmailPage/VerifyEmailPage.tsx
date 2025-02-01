@@ -9,7 +9,7 @@ import Heading from "../../components/Heading";
 import Paragrafy from "../../components/Paragrafy/Paragrafy";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import { confirmEmail, resendConfirmationToken } from "../../store/actions/verifyemailActions/emailVerificationActions";
-import { RootState, useAppSelector } from "../../store/index";
+import { RootState, useAppDispatch, useAppSelector } from "../../store/index";
 import "./VerifyEmailPage.scss";
 
 
@@ -18,7 +18,7 @@ const VerifyEmailPage = () => {
   const [canResend, setCanResend] = useState(false);
   const [inputCode, setInputCode] = useState(["", "", "", "", ""]);
   const [errorMessage, setErrorMessage] = useState("");
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const {error } = useAppSelector((state: any) => state.emailVerification);

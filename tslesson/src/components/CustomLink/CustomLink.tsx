@@ -19,7 +19,7 @@ const CustomLink: FC<LinkProps> = ({ element, fontfamily, onChange }) => {
     <div>
       <a
         href="#" 
-        style={{ color: "black", fontFamily: fontfamily }}
+        style={{ color: "black", fontFamily: fontfamily,textDecoration:"none" }}
         className="signlink"
         onClick={handleClick} 
       >

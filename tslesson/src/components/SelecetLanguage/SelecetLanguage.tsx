@@ -10,7 +10,7 @@ const SelectLanguage = () => {
 
     const userId = useAppSelector((state: RootState) => state.Auth.userId);
 
-    // Veriler yüklendikten sonra default dili seçme
+    
     useEffect(() => {
         if (userId) {
             dispatch(getTexts(userId));

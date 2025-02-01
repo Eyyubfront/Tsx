@@ -37,11 +37,9 @@ const LanguageSelector: React.FC = () => {
     >
       <div className="lang-div">
         <div className="lang-content">
-          {/* Yükləmə və Xəta Mesajları */}
+    
           {loading && <p>Loading languages...</p>}
           {error && <p className="error-message">{error}</p>}
-
-          {/* Dillərin siyahısı */}
           <ul className="language-list">
             {languages.length > 0 ? (
               languages.map((language) => (

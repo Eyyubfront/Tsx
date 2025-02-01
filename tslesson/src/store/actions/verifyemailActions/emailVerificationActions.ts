@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosInstance from "../axiosInstance";
 
 
 export const confirmEmail = createAsyncThunk(
   "emailVerification/confirmEmail",
   async (code: string, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/api/ConfirmEmail", { code });
+      const response = await axiosInstance.post("/ConfirmEmail", { code });
       return response.data;
     } catch (error: any) {
       return rejectWithValue(
@@ -20,7 +20,7 @@ export const resendConfirmationToken = createAsyncThunk(
   "emailVerification/resendConfirmationToken",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/api/ResendEmailConfirmationToken");
+      const response = await axiosInstance.post("/ResendEmailConfirmationToken");
       return response.data;
     } catch (error: any) {
       return rejectWithValue(
