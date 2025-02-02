@@ -13,7 +13,6 @@ const PrimaryButton:FC<CustomButtonProps> = ({label,onClick,type="button",disabl
       <button  className="button_primary" disabled={disabled} onClick={onClick} type={type} >
         {label}
       </button>
-     
   )
 }
 

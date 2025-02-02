@@ -84,8 +84,8 @@ const LearnTime = () => {
         <BackButton onClick={() => navigate("/login")} />
       </div>
       <div className="learntime_right">
-        <FormProvider {...methods}>
-          <form className="formslearntime" onSubmit={handleSubmit(onSubmit)}>
+        <FormProvider {...methods} >
+          <form onSubmit={handleSubmit(onSubmit)} className="formslearntime">
             <div className="box">
               <div className="left-box">
                 <Paragrafy text="Select Time Range" className="timeparagraf" />
@@ -105,7 +105,7 @@ const LearnTime = () => {
 
               <div className="right-box">
                 {loading && <p>Submitting...</p>}
-                <PrimaryButton disabled={loading} label="Continue" />
+                <PrimaryButton type="submit" disabled={loading} label="Continue" />
               </div>
             </div>
           </form>
