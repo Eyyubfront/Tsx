@@ -52,7 +52,6 @@ const ForgotPasswordPage: React.FC = () => {
   return (
 
     <div className="forgotpasswordpage__all">
-          <p>eyyub</p>
       <div className="forgotpassword__left">
         <SidePanel
           titleText="Hi, Welcome!"

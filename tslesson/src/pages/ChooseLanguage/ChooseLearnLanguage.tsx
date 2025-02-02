@@ -65,7 +65,6 @@ const ChooseLearnLanguage: React.FC = () => {
 
   return (
     <div className="chooselanguage_selector">
-          <p>eyyub</p>
       <div className="chooselanguageselector__left">
         <SidePanel
           titleText="Choose the Language to Learn"

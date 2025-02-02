@@ -47,7 +47,7 @@ const LanguageSelector: React.FC = () => {
 
   return (
     <div className="language_selector">
-          <p>eyyub</p>
+
       <div className="languageselector__left">
         <SidePanel
           titleText="Choose native language"

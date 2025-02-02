@@ -84,7 +84,7 @@ const LearnTime = () => {
 
   return (
     <div className="learntime">
-      <p>eyyub</p>
+
       <div className="learntime_left">
         <SidePanel
           titleText="What’s the Best Time for Learning?"
