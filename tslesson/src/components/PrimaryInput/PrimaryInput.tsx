@@ -13,6 +13,7 @@ interface CustomInputProps {
   iseye?: boolean;
   name: string;
   errorMessage?: string; 
+  maxLength?: number; 
 }
 
 const Input: FC<CustomInputProps> = ({
@@ -20,6 +21,7 @@ const Input: FC<CustomInputProps> = ({
   label,
   isEyeicon,
   iseye,
+  maxLength,
   handleEye,
   name,
 }) => {
@@ -30,7 +32,7 @@ const Input: FC<CustomInputProps> = ({
   useEffect(() => {
     const validateEmail = (email: string | undefined) => {
       if (!email) return false;
-      // Genel e-posta doğrulama düzeni
+
       const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       return emailPattern.test(email);
     };
@@ -44,6 +46,7 @@ const Input: FC<CustomInputProps> = ({
         <input
           {...register(name)} 
           type={type} 
+          maxLength={maxLength} 
           placeholder={label} 
           className={`input_primary ${errors[name] ? 'error' : ''}`} 
         />

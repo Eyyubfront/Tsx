@@ -1,18 +1,34 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { wordfetchTexts, saveText, removeText, updateText, TextItem } from '../actions/learingActions/learingwordsActions';
+import { wordfetchTexts, saveText, removeText, updateText } from '../actions/learingActions/learingwordsActions';
 
 
-interface LearingWords {
-    items: TextItem[];
+interface wordsitems {
+    id: number;
+    source?: string;
+    translation?: string;
+    isLearningNow: boolean
+}
+
+export interface LearingWords {
+    items: wordsitems[],
+    count: number,
+}
+
+interface LearningWordState {
+    items: LearingWords;
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
 }
 
-const initialState: LearingWords = {
-    items: [],
+const initialState: LearningWordState = {
+    items: {
+        items: [],
+        count: 0
+    },
     status: 'idle',
     error: null,
 };
+
 const LatestWordsSlice = createSlice({
     name: 'latestWords',
     initialState,
@@ -27,62 +43,37 @@ const LatestWordsSlice = createSlice({
             })
             .addCase(wordfetchTexts.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.items = action.payload;
+                state.items = action.payload; 
             })
             .addCase(wordfetchTexts.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message || 'Failed to fetch texts';
             })
-            .addCase(saveText.pending, (state) => {
-                state.status = 'loading';
-                state.error = null;
-            })
-            .addCase(saveText.fulfilled, (state,action) => {
+   
+            .addCase(saveText.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.items = action.payload;
+         
+                state.items.items.push(action.payload);
             })
-            .addCase(saveText.rejected, (state, action) => {
-                state.status = 'failed';
-                state.error = action.error.message || 'Failed to save text';
-            })
-            .addCase(removeText.pending, (state) => {
-                state.status = 'loading';
-                state.error = null;
-            })
-            .addCase(removeText.fulfilled, (state) => {
+     
+            .addCase(removeText.fulfilled, (state, action) => {
                 state.status = 'succeeded';
+             
+                state.items.items = state.items.items.filter(item => item.id !== action.payload); 
+          
             })
-            .addCase(removeText.rejected, (state, action) => {
-                state.status = 'failed';
-                state.error = action.error.message || 'Failed to remove text';
-            })
-            .addCase(updateText.pending, (state) => {
-                state.status = 'loading';
-                state.error = null;
-            })
-            .addCase(updateText.fulfilled, (state) => {
+
+            .addCase(updateText.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                
-            })
-            .addCase(updateText.rejected, (state, action) => {
-                state.status = 'failed';
-                state.error = action.error.message || 'Failed to update text';
+      
+                const updatedIndex = state.items.items.findIndex(item => item.id === action.payload.id);
+                if (updatedIndex !== -1) {
+                    state.items.items[updatedIndex] = action.payload;
+                }
             });
     },
 });
 
 export const { resetState } = LatestWordsSlice.actions;
 export default LatestWordsSlice.reducer;
-
-
-
-
-
-
-
-
-
-
-
-
 

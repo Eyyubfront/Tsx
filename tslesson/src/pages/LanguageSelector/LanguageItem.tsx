@@ -35,7 +35,13 @@ const LanguageItem: React.FC<LanguageItemProps> = ({ language }) => {
           },
         }}
       >
-        <ListItemIcon>{language.flag}</ListItemIcon>
+        <ListItemIcon>
+          <img 
+            src={language.image}
+            alt={`${language.name} flag`} 
+            style={{ width: '30px', height: '20px', objectFit: 'cover' }} 
+          />
+        </ListItemIcon>
         <ListItemText primary={language.name} />
       </ListItemButton>
     </ListItem>

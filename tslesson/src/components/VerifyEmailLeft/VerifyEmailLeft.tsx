@@ -3,10 +3,10 @@ import "./VerifyEmailLeft.scss";
 import BackIcon from "../BacIcon/BackIcon";
 
 interface VerifyProps{
-  TitleText:string,
-  DescriptionText:string
+  titleText:string,
+  descriptionText:string
 }
-const VerifyEmailLeft :React.FC<VerifyProps> = ({TitleText,DescriptionText}) => {
+const VerifyEmailLeft :React.FC<VerifyProps> = ({titleText,descriptionText}) => {
   return (
     <div
       className="verify-email-container"
@@ -17,9 +17,9 @@ const VerifyEmailLeft :React.FC<VerifyProps> = ({TitleText,DescriptionText}) => 
       </div>
       <div className="verify-email-content">
         <div className="verify-email-header">
-          <h2>{TitleText}</h2>
+          <h2>{titleText}</h2>
         </div>
-       <p>{DescriptionText}</p>
+       <p>{descriptionText}</p>
       </div>
     </div>
   );

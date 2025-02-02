@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Paragrafy from "../../../../components/Paragrafy/Paragrafy";
 import "./LexiconCards.scss"
 
@@ -31,10 +32,12 @@ const LexiconCards = () => {
             <div className="lexion_cards">
                 {cardsabout.map(card => (
                     <div key={card.id} className="lexicon_card">
-                       <div className="lexioncard_about">
+                    <Link to="/vocablarypage">
+                    <div className="lexioncard_about">
                        <Paragrafy className="lexions_count" text={card.count}/>                   
                             <Paragrafy  className="lexions_title" text={card.title}/>
                        </div>
+                    </Link>
                     
                     </div>
                 ))}

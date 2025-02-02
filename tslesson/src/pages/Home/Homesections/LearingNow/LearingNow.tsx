@@ -9,32 +9,29 @@ import { Button, TableBody, TableRow, TableCell, Typography, TextField } from '@
 
 const LearningNow = () => {
     const dispatch = useAppDispatch();
-    const items = useAppSelector((state: RootState) => state.learningNow.items);
-    const userId = useAppSelector((state) => state.Auth.userId);
-    const [editText, setEditText] = useState<{ id: number; source: string; translation: string; userId: string } | null>(null);
-
+    const items = useAppSelector((state: RootState) => state.learningNow.items.nowitems);
+   
+    const [editText, setEditText] = useState<{ id: number; source: string; translation: string } | null>(null);
 
     useEffect(() => {
-        if (userId) { 
-            dispatch(fetchTexts(userId));
-        }
-    }, [dispatch, userId]);
+            dispatch(fetchTexts());
+    }, [dispatch]);
 
     const handleSaveText = (item: TextItem) => {
         dispatch(saveText(item));
     };
 
-    const handleRemoveText = (id: number, userId: string) => {
-        dispatch(removeText({ id, userId }));
+    const handleRemoveText = (id:number)=>{
+        dispatch(removeText(id));
     };
 
-    const handleUpdateText = ({ id, source, translation, userId }: { id: number, source: string, translation: string, userId: string }) => {
-        const updatedItem = { id, source, translation, userId };
+    const handleUpdateText = ({ id, source, translation }: { id: number, source: string, translation: string }) => {
+        const updatedItem = { id, source, translation };
         dispatch(updateTextAction(updatedItem));
     };
 
-    const handleEdit = (id: number, source: string, translation: string, userId: string) => {
-        setEditText({ id, source, translation, userId });
+    const handleEdit = (id: number, source: string, translation: string) => {
+        setEditText({ id, source, translation });
     };
 
     const handleUpdate = () => {
@@ -48,30 +45,30 @@ const LearningNow = () => {
         <div>
             <TableComponent title="Learning Now">
                 <TableBody>
-                    {items?.map(({ id, userId, source, translation, sourceLanguageId, translationLanguageId }) => (
+                    {items?.map(({ id, source, translation, }) => (
                         <TableRow className='table_aligns' key={id}>
-                            <TableCell>
+                            <TableCell sx={{borderBottom:"none"}}>
                                 <Typography>{`${source} - ${translation}`}</Typography>
                             </TableCell>
                             <TableCell className='table_cards'>
                                 <Button
                                     className='table_button'
                                     variant="outlined"
-                                    onClick={() => handleSaveText({ id, userId, source, translation, sourceLanguageId, translationLanguageId, isLearningNow: true })}
+                                    onClick={() => handleSaveText({ id, source, translation, isLearningNow: true })}
                                 >
                                     <img src={Savedicon} alt="" />
                                 </Button>
                                 <Button
                                     className='table_button'
                                     variant="outlined"
-                                    onClick={() => handleRemoveText(id, userId)}
+                                    onClick={() => handleRemoveText(id)}
                                 >
                                     <MdDeleteOutline />
                                 </Button>
                                 <Button
                                     className='table_button'
                                     variant="outlined"
-                                    onClick={() => handleEdit(id, source || '', translation || '', userId || '')}
+                                    onClick={() => handleEdit(id, source || '', translation || '')}
                                 >
                                     <MdEdit />
                                 </Button>

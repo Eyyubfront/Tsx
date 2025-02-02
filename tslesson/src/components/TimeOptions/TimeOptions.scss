@@ -1,0 +1,39 @@
+.pa-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  
+
+    .time-option {
+        width: 95px;
+        height: 52px;
+        padding: 12px 24px 12px 24px;
+        border-radius: 44px;
+        border: 1px solid #F9F8FD;
+        &.selectedtime{
+            background-color: red;
+        }
+        cursor: pointer;
+        background-color: #F9F8FD;
+    }
+  
+}
+
+@media (max-width: 600px) {
+    .pa-group{
+        flex-direction: column;
+        .time-option{
+            width: 100%;
+        }
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1200px) {
+    .pa-group{
+        flex-direction: column;
+        .time-option{
+            width: 100%;
+        }
+    }
+}

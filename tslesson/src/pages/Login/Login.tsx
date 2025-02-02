@@ -14,6 +14,7 @@ import UseFormInput from '../../components/PrimaryInput/UseFormInput';
 import { RootState, useAppDispatch, useAppSelector } from '../../store';
 import { login, register } from '../../store/actions/authActions';
 import { Link, useNavigate } from 'react-router-dom';
+import { setVeryuse } from '../../store/slice/authSlice';
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -25,6 +26,7 @@ const schema = Yup.object().shape({
     .matches(/(?=.*[A-Z])/, "Password must contain at least one uppercase letter.")
     .required("Password is required."),
 });
+
 const Login = () => {
   const dispatch = useAppDispatch();
   const { loading } = useAppSelector((state: RootState) => state.Auth);
@@ -35,7 +37,7 @@ const Login = () => {
   const navigate = useNavigate();
   const methods = useForm({
     resolver: yupResolver(schema),
-    mode: "all"  
+    mode: "all"
   });
 
   const { handleSubmit, reset, formState } = methods;
@@ -55,6 +57,7 @@ const Login = () => {
 
   const onSubmit = (data: { email: string, password: string }) => {
     if (signUp) {
+      dispatch(setVeryuse(true));
       dispatch(register(data))
         .unwrap()
         .then(() => {
@@ -62,7 +65,7 @@ const Login = () => {
           navigate("/verifyemailpage");
         })
         .catch(err => {
-          console.error("Error:", err);
+          console.error("Registration error:", err);
         });
     } else {
       dispatch(login(data))
@@ -119,18 +122,19 @@ const Login = () => {
               )}
             </div>
 
-
+      
+         
             {signUp ? (
-                <>
-                  <Check />
-                  <PrimaryButton label={"Create account"} type="submit"    disabled={!formState.isValid || loading}  />
-                </>
-              ) : (
-                <>
-                  <PrimaryButton     disabled={!formState.isValid || loading}  label={"Sign in"} type="submit" />
-                  <Toogle isOn={isOn} handleToggle={handleToggle} />
-                </>
-              )}
+              <>
+                <Check />
+                <PrimaryButton label={"Create account"} type="submit" disabled={!formState.isValid || loading} />
+              </>
+            ) : (
+              <>
+                <PrimaryButton disabled={!formState.isValid || loading} label={"Sign in"} type="submit" />
+                <Toogle isOn={isOn} handleToggle={handleToggle} />
+              </>
+            )}
             <div className="link_container">
               <Paragrafy fontfamily="Inter,sans-serif" fontsize="14px" fontWeight="300" text={signUp ? "Already have an account? " : "Don't have an account? "} />
               <CustomLink fontfamily="Inter,sans-serif" onChange={handleLink} element={signUp} />

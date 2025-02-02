@@ -1,18 +1,25 @@
 import { useSelector } from 'react-redux';
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import {  Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { RootState } from '../store';
+import { useEffect } from 'react';
 
 const ProtectedRouting = () => {
   const user = useSelector((state: RootState) => state.Auth.isAuth);
 
 
   let location = useLocation();
+  let navigate = useNavigate();
 
-  if (user ) {
+  useEffect(() => {
+    if (user === false) {
+      navigate("/login", { state: location.pathname })
+    }
+  }, [user])
+
+  if (user === true) {
     return <Outlet />;
   }
-  
-  return <Navigate to="/login" state={{ from: location }} />;
+  return null;
 };
 
 export default ProtectedRouting;

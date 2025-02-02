@@ -6,7 +6,9 @@ import AuthLogin from './slice/authSlice';
 import languageReducer from './slice/languageSlice';
 import emailVerificationReducer from './slice/emailVerificationSlice';
 import LanguageHomedata from './slice/LanguageHomeSlice';
-
+import timeReducer from './slice/timeSlice';
+import forgotPasswordReducer from "./slice/forgotPasswordSlice";
+import passwordResetReducer from "./slice/passwordResetSlice";
 const store = configureStore({
     reducer: {
         learningNow: learningNowReducer,
@@ -15,6 +17,10 @@ const store = configureStore({
         language: languageReducer,
         emailVerification: emailVerificationReducer,
         LanguagetextData: LanguageHomedata,
+        time:timeReducer,
+        forgotPassword: forgotPasswordReducer,
+        passwordReset:passwordResetReducer
+
     },
 
 });

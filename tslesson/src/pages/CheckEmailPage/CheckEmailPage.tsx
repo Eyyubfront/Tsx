@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import LeftVerifyEmail from "../../components/LeftVerifyEmail/LeftVerifyEmail";
+import LeftVerifyEmail from "../../layout/SidePanel/SidePanel";
 import "./CheckEmailPage.scss";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import Button from "@mui/material/Button";
@@ -33,7 +33,7 @@ const CheckEmailPage = () => {
   return (
       <Container>
       <div className="check-div">
-        <LeftVerifyEmail TitleText="Hi, Welcome!" DescriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!" />
+        <LeftVerifyEmail titleText="Hi, Welcome!" descriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!" />
 
         <div className="check-email">
           <Button
