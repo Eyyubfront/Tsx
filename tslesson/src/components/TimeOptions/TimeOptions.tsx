@@ -1,6 +1,6 @@
-
 import React from 'react';
 import "./TimeOptions.scss"
+
 interface TimeOption {
   label: string;
   id: number;
@@ -8,8 +8,8 @@ interface TimeOption {
 
 interface TimeOptionsProps {
   timeOptions: TimeOption[];
-  selectedOption: string;
-  onOptionSelect: (label: string, id: number) => void;
+  selectedOption: number;  // selectedOption'ı number olarak değiştiriyoruz
+  onOptionSelect: (id: number) => void;  // sadece id parametresi alacak
   errorMessage: string | undefined;
 }
 
@@ -19,8 +19,8 @@ const TimeOptions: React.FC<TimeOptionsProps> = ({ timeOptions, selectedOption, 
       {timeOptions.map(option => (
         <p
           key={option.id} 
-          className={`time-option ${selectedOption === option.label ? "selectedtime" : ""}`}
-          onClick={() => onOptionSelect(option.label, option.id)}
+          className={`time-option ${selectedOption === option.id ? "selectedtime" : ""}`}  // selectedOption ve option.id karşılaştırılıyor
+          onClick={() => onOptionSelect(option.id)}  // sadece id'yi gönderiyoruz
         >
           {option.label}
         </p>

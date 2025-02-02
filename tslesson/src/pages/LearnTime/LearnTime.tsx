@@ -11,14 +11,12 @@ import * as yup from "yup";
 import moment from "moment";
 import UseFormTimeInput from "../../components/PrimaryInput/UseFormTimeInput";
 import SidePanel from "../../layout/SidePanel/SidePanel";
-
 import BackButton from "../../components/BackButton/BackButton";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 
 const schema = yup.object().shape({
   startTime: yup.string().required("Start time is required"),
   endTime: yup.string().required("End time is required"),
-  timeRange: yup.string().required("Time range is required"),
   intervalId: yup.number().required("Interval ID is required"),
 });
 
@@ -30,15 +28,12 @@ const LearnTime = () => {
     defaultValues: {
       startTime: "",
       endTime: "",
-      timeRange: "",
       intervalId: undefined,
     },
   });
 
   const { loading } = useAppSelector((state) => state.time);
-  console.log("Loading:", loading);
   const { handleSubmit, formState: { errors }, watch } = methods;
-  console.log("er:", errors);
 
   const timeOptions = [
     { label: "15 min", id: 1 },
@@ -56,8 +51,8 @@ const LearnTime = () => {
   }, [selectedSourceLanguage, selectedTranslationLanguage]);
 
   const onSubmit = async (data: any) => {
-    console.log("Form", data);
-
+  console.log(data);
+  
     try {
       const targetDate = moment().format("YYYY-MM-DD");
       const utcStartTime = moment(`${targetDate} ${data.startTime}`).utc().toISOString();
@@ -67,24 +62,20 @@ const LearnTime = () => {
         intervalId: data.intervalId,
         startTime: utcStartTime,
         endTime: utcEndTime,
-        
       })).unwrap().then(() => {
         navigate("/login");
       });
-
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleOptionSelect = (label: string, id: number) => {
-    methods.setValue("timeRange", label);
+  const handleOptionSelect = (id: number) => {
     methods.setValue("intervalId", id);
   };
 
   return (
     <div className="learntime">
-
       <div className="learntime_left">
         <SidePanel
           titleText="What’s the Best Time for Learning?"
@@ -102,19 +93,14 @@ const LearnTime = () => {
                   <UseFormTimeInput label="Start Time" name="startTime" />
                   <UseFormTimeInput label="End Time" name="endTime" />
                 </div>
-                <Paragrafy text="Select Time Range" className="timeparagraf" />
+                <Paragrafy text="Select Time Interval" className="timeparagraf" />
                 <TimeOptions
                   timeOptions={timeOptions}
-                  selectedOption={watch("timeRange")}
+                  selectedOption={watch("intervalId")}
                   onOptionSelect={handleOptionSelect}
                   errorMessage={errors.intervalId?.message}
                 />
-                <div className="error-message">
-                  {errors.startTime && <span>{errors.startTime.message}</span>}
-                  {errors.endTime && <span>{errors.endTime.message}</span>}
-                  
-                  {errors.intervalId && <span>{errors.intervalId.message}</span>}
-                </div>
+            
               </div>
 
               <div className="right-box">

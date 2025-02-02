@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+
+import axiosInstance from "../axiosInstance";
 
 interface SubmitTimePreferencesPayload {
   intervalId: number;
@@ -15,7 +16,7 @@ export const submitTimePreferences = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await axios.post("https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/NotificationSetting/Create", {
+      const response = await axiosInstance.post("/NotificationSetting/Create", {
         intervalId,
         startTime,
         endTime,

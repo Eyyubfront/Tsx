@@ -6,7 +6,7 @@ interface TimeState {
   intervalId: number | null;
   startTime: string;
   endTime: string;
- 
+
   loading: boolean;
   error: string | null;
 }
