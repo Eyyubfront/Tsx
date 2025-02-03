@@ -59,7 +59,6 @@ const VerifyEmailPage = () => {
       if (veriyuse) {
         dispatch(confirmEmail({ code: enteredCode, userId: String(userId) })).then((action: any) => {
           if (action.meta.requestStatus === "fulfilled") {
-          
             navigate("/languageselector");
           } else {
             console.error("Email confirmation failed.");

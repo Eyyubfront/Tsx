@@ -6,21 +6,20 @@ import "./ChooseLearnLanguage.scss";
 import SidePanel from "../../layout/SidePanel/SidePanel";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import BackButton from "../../components/BackButton/BackButton";
-import { setTranslationLanguageId } from "../../store/slice/languageSlice";  // Redux action for setting translation language
+import { setTranslationLanguageId } from "../../store/slice/languageSlice";  
 
 const ChooseLearnLanguage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [selectedTranslationId, setSelectedTranslationId] = useState<number>(0);  // Track selected translation language ID
+  const [selectedTranslationId, setSelectedTranslationId] = useState<number>(0);  
   const languages = useAppSelector((state) => state.language.languages);
-  const selectedSourceLanguageId = useAppSelector((state) => state.language.selectedSourceLanguageId);  // Source language ID from store
-  const userId = useAppSelector((state) => state.Auth.userId);  // Get user ID from store
+  const selectedSourceLanguageId = useAppSelector((state) => state.language.selectedSourceLanguageId);  
+  const userId = useAppSelector((state) => state.Auth.userId);  
   const loading = useAppSelector((state) => state.language.loading);
   const error = useAppSelector((state) => state.language.error);
   const userLanguageCreated = useAppSelector((state) => state.language.userLanguageCreated);
+  
 
-
-  // Fetch languages if not loaded yet
   useEffect(() => {
     if (languages.length === 0) {
       dispatch(fetchLanguages())
@@ -29,21 +28,21 @@ const ChooseLearnLanguage: React.FC = () => {
     }
   }, [dispatch, languages]);
 
-  // Redirect if user language is successfully created
+
   useEffect(() => {
     if (userLanguageCreated) {
       navigate("/learntime");
     }
   }, [userLanguageCreated, navigate]);
 
-  // Handle translation language selection
+
   const handleTranslationLanguageClick = (language: any) => {
     if (language.id === selectedSourceLanguageId) {
       alert("Source language and translation language cannot be the same.");
       return;
     }
     setSelectedTranslationId(language.id);
-    dispatch(setTranslationLanguageId(language.id)); // Set selected language as translation language
+    dispatch(setTranslationLanguageId(language.id)); 
   };
 
   const handleContinueClick = () => {
