@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import axiosInstance from './axiosInstance';
+import axios from 'axios';
 
 
 interface LoginRequest {
@@ -35,8 +36,6 @@ export const login = createAsyncThunk(
       );
       const userId = response.data.data.userId;
      
-      
-
       localStorage.setItem('token', response.data.data.accessToken);
       localStorage.setItem('refreshToken', response.data.data.refreshToken);
       localStorage.setItem('userId', response.data.data.userId);
@@ -51,8 +50,8 @@ export const register = createAsyncThunk(
   'auth/register',
   async (request: RegisterRequest, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post<AuthResponse>(
-        '/Register',
+      const response = await axios.post<AuthResponse>(
+        'https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/Register',
         request
       );
 
@@ -82,6 +81,20 @@ export const refreshToken = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue('Error refreshing token');
+    }
+  }
+);
+
+
+export const deleteUser = createAsyncThunk(
+  'auth/deleteUser',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.delete('/DeleteUser');
+      return response.data;
+    } catch (error) {
+  
+      return rejectWithValue("error");
     }
   }
 );

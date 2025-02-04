@@ -14,10 +14,11 @@ import SidePanel from "../../layout/SidePanel/SidePanel";
 const VerifyEmailPage = () => {
   const [counter, setCounter] = useState(30);
   const [canResend, setCanResend] = useState(false);
+  
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const methods = useForm();
-  const { handleSubmit } = methods;
+  const { handleSubmit,formState } = methods;
 
   const {title, error, isLoading } = useAppSelector((state: RootState) => state.emailVerification);
   const { userId, veriyuse } = useAppSelector((state: RootState) => state.Auth);
@@ -104,7 +105,7 @@ const VerifyEmailPage = () => {
                       key={index}
                       name={`code-${index}`}
                       label=""
-                      rules={{ required: "This field is required" }}
+                      rules={{ required: "This" }}
                       type="text"
                       maxLength={1}
                       isEyeicon={false}
@@ -123,7 +124,7 @@ const VerifyEmailPage = () => {
                     <p>Send code again in {counter} seconds</p>
                   )}
                 </div>
-                <PrimaryButton disabled={isLoading} type="submit" label="Verify Code" />
+                <PrimaryButton   disabled={!formState.isValid || isLoading} type="submit" label="Verify Code" />
               </div>
             </div>
           </form>

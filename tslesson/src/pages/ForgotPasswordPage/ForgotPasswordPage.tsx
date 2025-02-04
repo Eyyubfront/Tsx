@@ -33,7 +33,7 @@ const ForgotPasswordPage: React.FC = () => {
     (state: RootState) => state.Auth
   );
 
-  const { handleSubmit } = methods;
+  const { handleSubmit,formState } = methods;
   const onSubmit = (data: { email: string }) => {
     dispatch(setVeryuse(false))
     dispatch(setTitle("Please check your email"));
@@ -71,13 +71,11 @@ const ForgotPasswordPage: React.FC = () => {
                 label='Email address'
                 type='email'
               />
-
               {success && <p className="success">Code sent successfully!</p>}
-
               <PrimaryButton
                 label={loading ? "Sending..." : "Verify Code"}
                 type="submit"
-                disabled={loading}
+                disabled={!formState.isValid || loading}
               />
             </form>
           </FormProvider>

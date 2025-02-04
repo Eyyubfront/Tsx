@@ -51,7 +51,7 @@ const LearnTime = () => {
   }, [selectedSourceLanguage, selectedTranslationLanguage]);
 
   const onSubmit = async (data: any) => {
-  console.log(data);
+  
   
     try {
       const targetDate = moment().format("YYYY-MM-DD");
@@ -64,6 +64,8 @@ const LearnTime = () => {
         endTime: utcEndTime,
       })).unwrap().then(() => {
         navigate("/login");
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
       });
     } catch (error) {
       console.error(error);
@@ -100,9 +102,7 @@ const LearnTime = () => {
                   onOptionSelect={handleOptionSelect}
                   errorMessage={errors.intervalId?.message}
                 />
-            
               </div>
-
               <div className="right-box">
                 {loading && <p>Submitting...</p>}
                 <PrimaryButton type="submit" disabled={loading} label="Continue" />

@@ -107,7 +107,9 @@
   }
   @media (min-width:601px ) and (max-width:1200px) {
     .header{
-
+.headers_burger{
+    display: none;
+}
         .header_center{
             display: none;
            }

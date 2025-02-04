@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { login, register, refreshToken } from '../actions/authActions';
+import { login, register, refreshToken, deleteUser } from '../actions/authActions';
 import { sendForgotPasswordEmail } from '../actions/forgotPasswordActions/forgotPasswordActions';
 
 interface AuthState {
@@ -60,6 +60,24 @@ const authSlice = createSlice({
         state.error = action.payload as string;
         state.isAuth = false;
       })
+      .addCase(deleteUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteUser.fulfilled, (state) => {
+        state.loading = false;
+        state.isAuth = false; 
+        state.accessToken = null;
+        state.refreshToken = null;
+        state.userId = null;
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('userId');
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
       .addCase(register.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -67,6 +85,7 @@ const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.loading = false;
         state.userId = action.payload.userId;
+        state.isAuth = false;
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;

@@ -1,8 +1,12 @@
 .pa-group {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    align-items: baseline;
     gap: 16px;
+    .time_group{
+        display: flex;
+        align-items: center;
+    }
   
 
     .time-option {
@@ -12,10 +16,14 @@
         border-radius: 44px;
         border: 1px solid #F9F8FD;
         &.selectedtime{
-            background-color: red;
+            background-color: #DCD3F8;
         }
         cursor: pointer;
         background-color: #F9F8FD;
+    }
+    .erormesage{
+        color: red;
+
     }
   
 }
@@ -23,6 +31,7 @@
 @media (max-width: 600px) {
     .pa-group{
         flex-direction: column;
+        align-items: baseline;
         .time-option{
             width: 100%;
         }
@@ -32,6 +41,7 @@
 @media (min-width: 601px) and (max-width: 1200px) {
     .pa-group{
         flex-direction: column;
+        align-items: baseline;
         .time-option{
             width: 100%;
         }

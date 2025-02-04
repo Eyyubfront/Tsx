@@ -1,0 +1,94 @@
+.burger_alls {
+    background-color: #fff;
+    color: #333;
+    margin-top: 60px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+
+    .burger_topcontainer {
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+        gap: 20px;
+
+        .burgermenu_topcards {
+
+            width: 100%;
+
+            .burgermenu_top {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                height: 52px;
+                padding: 6px;
+                background-color: #F9F8FD;
+                border: 1px solid #F9F8FD;
+                border-radius: 24px;
+                .extralinks{
+                    display: flex;
+                    justify-content: end;
+                }
+
+                .burgermenu_topname {
+                    font-family: Inter;
+                    font-size: 16px;
+                    font-weight: 600;
+                    line-height: 20px;
+                    text-align: left;
+                    text-underline-position: from-font;
+                    text-decoration-skip-ink: none;
+
+                }
+
+                .cardsicons {
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+        }
+    }
+
+    .burger_bottomcontainer {
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+        gap: 20px;
+
+        .burgermenu_bottom {
+            width: 100%;
+
+            .burgermenu_bottomcards {
+                cursor: pointer;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                height: 52px;
+                padding: 8px;
+                background-color: #F9F8FD;
+                border: 1px solid #F9F8FD;
+                border-radius: 24px;
+
+                .burgermenubottom_name {
+                    font-family: Inter;
+                    font-size: 16px;
+                    font-weight: 600;
+                    line-height: 20px;
+                    text-align: left;
+                    text-underline-position: from-font;
+                    text-decoration-skip-ink: none;
+
+                }
+
+                .accountManagementicons {
+                    width: 22px;
+                    height: 22px;
+                }
+            }
+        }
+    }
+}

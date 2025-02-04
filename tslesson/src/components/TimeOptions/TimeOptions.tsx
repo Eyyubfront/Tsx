@@ -16,16 +16,22 @@ interface TimeOptionsProps {
 const TimeOptions: React.FC<TimeOptionsProps> = ({ timeOptions, selectedOption, onOptionSelect, errorMessage }) => {
   return (
     <div className="pa-group">
-      {timeOptions.map(option => (
-        <p
+     <div  className="time_group">
+     {timeOptions.map(option => (
+      <div>
+          <p
           key={option.id} 
           className={`time-option ${selectedOption === option.id ? "selectedtime" : ""}`}  
           onClick={() => onOptionSelect(option.id)} 
         >
           {option.label}
         </p>
+      </div>
       ))}
-      {errorMessage}
+     </div>
+   <div className="erormesage">
+   {errorMessage}
+   </div>
     </div>
   );
 };
