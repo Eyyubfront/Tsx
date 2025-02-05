@@ -42,10 +42,8 @@ const learningNowSlice = createSlice({
             })
             .addCase(fetchTexts.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.items ={
-                    nowitems:action.payload.items,
-                    count:action.payload.count
-                }; 
+                state.items.nowitems = action.payload.items,
+                state.items.count= action.payload.count
             })
             .addCase(fetchTexts.rejected, (state, action) => {
                 state.status = 'failed';

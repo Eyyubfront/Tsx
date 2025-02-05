@@ -50,6 +50,7 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
         } else {
             console.error("userId not available.");
         }
+        onClose()
     };
 
     const handleSavedIconClick = () => {
