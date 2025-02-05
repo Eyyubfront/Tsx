@@ -15,6 +15,11 @@
     flex-direction: column;
     justify-content: space-between;
     height: 60px;
+    .vocablaryleft_butom{
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
     .vocablary_tittlename{
       font-family: "DM Serif Display";
       font-weight: 400;
@@ -23,8 +28,11 @@
   }
 
   .vocablary_right {
-    width: 50px;
-    height: 50px;
+
+    .vocablary_img{
+      width: 70px;
+      height: 70px;
+    }
   }
 }
 

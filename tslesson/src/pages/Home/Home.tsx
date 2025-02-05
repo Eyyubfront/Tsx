@@ -35,6 +35,7 @@ const Home = () => {
                         <Paragrafy className='quiz_center' fontsize='24px' fontfamily='DM Serif Display' text='Let’s start quiz' />
                     </Link>
                 </div>
+             
             </div>
         </div>
   

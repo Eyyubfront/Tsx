@@ -20,6 +20,7 @@ export const wordfetchTexts = createAsyncThunk('learningNow/wordfetchTexts', asy
 export const saveText = createAsyncThunk('learningNow/saveText', async (item: WordsItem, thunkAPI) => {
     try {
         const response = await axiosInstance.post('/UserVocabulary/Create', item);
+         thunkAPI.dispatch(wordfetchTexts());
         return response.data;
     } catch (err) {
         return thunkAPI.rejectWithValue(err);
@@ -28,8 +29,8 @@ export const saveText = createAsyncThunk('learningNow/saveText', async (item: Wo
 
 export const removeText = createAsyncThunk('learningNow/removeText', async ({ id }: { id: number }, thunkAPI) => {
     try {
-        const response = await axiosInstance.delete(`/UserVocabulary/Delete/${id}`);
-        return response.status;
+        await axiosInstance.delete(`/UserVocabulary/Delete/${id}`);
+        thunkAPI.dispatch(wordfetchTexts());
     } catch (err) {
         return thunkAPI.rejectWithValue(err);
     }

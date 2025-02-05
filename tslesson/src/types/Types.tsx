@@ -5,3 +5,11 @@ export interface Language {
   selectedSourceLanguageId: string;  // Add this field
   selectedTranslationId: string;     // Add this field
 }
+export interface LanguageHomes {
+  id?: number;
+  isSelected?: boolean;
+  sourceLanguage?: string;  
+  translationLanguage?: string; 
+}
+
+

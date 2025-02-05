@@ -11,7 +11,7 @@ import LogoutIcon from "../../../../assets/images/header/burgermenuicons/Logout.
 import Deleteaccount from "../../../../assets/images/header/burgermenuicons/Trash_Full.svg";
 import { logout } from "../../../../store/slice/authSlice";
 import "./Burgermenu.scss";
-import {useAppDispatch } from "../../../../store";
+import { useAppDispatch } from "../../../../store";
 import { deleteUser } from "../../../../store/actions/authActions";
 
 interface NameProps {
@@ -33,22 +33,29 @@ const cards = [
 
 const accountManagement = [
     { name: 'Delete account', img: Deleteaccount },
-    { name: 'Log out', img: LogoutIcon } 
+    { name: 'Log out', img: LogoutIcon }
 ];
 
 const BurgerMenu: React.FC<NameProps> = ({ className }) => {
-   
     const [open, setOpen] = useState<boolean>(false);
-    const dispatch = useAppDispatch(); 
-
+    const dispatch = useAppDispatch();
 
     const handleLogout = () => {
-        dispatch(logout()); 
+        dispatch(logout());
     };
+
     const handleDeleteAccount = () => {
         const confirmDelete = window.confirm("Are you sure you want to delete your account?");
         if (confirmDelete) {
-            dispatch(deleteUser()); 
+            dispatch(deleteUser());
+        }
+    };
+
+    const handleAccountAction = (action: string) => {
+        if (action === 'Log out') {
+            handleLogout();
+        } else if (action === 'Delete account') {
+            handleDeleteAccount();
         }
     };
 
@@ -82,7 +89,7 @@ const BurgerMenu: React.FC<NameProps> = ({ className }) => {
                         <Stack className="burger_bottomcontainer">
                             {accountManagement.map((card, index) => (
                                 <Box className="burgermenu_bottom" key={index}>
-                                    <Card className="burgermenu_bottomcards"  onClick={card.name === 'Log out' ? handleLogout : card.name === 'Delete account' ? handleDeleteAccount : undefined}>
+                                    <Card className="burgermenu_bottomcards" onClick={() => handleAccountAction(card.name)}>
                                         <CardContent>
                                             <Typography className="burgermenubottom_name" variant="h6">{card.name}</Typography>
                                         </CardContent>

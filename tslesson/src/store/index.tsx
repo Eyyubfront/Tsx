@@ -9,6 +9,8 @@ import LanguageHomedata from './slice/LanguageHomeSlice';
 import timeReducer from './slice/timeSlice';
 import forgotPasswordReducer from "./slice/forgotPasswordSlice";
 import passwordResetReducer from "./slice/passwordResetSlice";
+import categoryReducer from "./slice/CategroySlice";
+import lexionReducer from "./slice/LexionSlice";
 const store = configureStore({
     reducer: {
         learningNow: learningNowReducer,
@@ -19,7 +21,9 @@ const store = configureStore({
         LanguagetextData: LanguageHomedata,
         time:timeReducer,
         forgotPassword: forgotPasswordReducer,
-        passwordReset:passwordResetReducer
+        passwordReset:passwordResetReducer,
+        category:categoryReducer,
+        lexioncard:lexionReducer,
 
     },
 

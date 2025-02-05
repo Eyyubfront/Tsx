@@ -7,6 +7,7 @@
     display: none ;
 }
     .header_left {
+   
         .selects {
             width: 250px;
             height: 56px;
@@ -119,7 +120,5 @@
     }
   }
   @media (min-width:1201px) and (max-width:1305px) {
-    .header_center{
-        display: none;
-       }
+   
   }

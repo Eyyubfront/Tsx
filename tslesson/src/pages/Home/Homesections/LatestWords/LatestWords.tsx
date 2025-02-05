@@ -20,7 +20,6 @@ const LatestWords = () => {
     const [editText, setEditText] = useState<{ id: number; source: string; translation: string; } | null>(null);
 
     useEffect(() => {
-  
             dispatch(wordfetchTexts());
     
     }, [dispatch]);
