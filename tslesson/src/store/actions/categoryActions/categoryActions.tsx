@@ -24,8 +24,8 @@ export const categoryfetch = createAsyncThunk(
           vocabularyCount:item.vocabularyCount
         }));
         return category;
-      } catch (error: any) {
-        return rejectWithValue(error.response?.data || "Failed to fetch category data");
+      } catch (error) {
+        return rejectWithValue("Failed to fetch category data");
       }
     }
   );

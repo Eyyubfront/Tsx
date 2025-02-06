@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchTexts, saveText, removeText, updateText } from '../actions/learingActions/learingnowActions';
+import { fetchTexts, removeText, updateText, learingnowsaveText } from '../actions/learingActions/learingnowActions';
 
 interface items {
     id: number;
@@ -50,27 +50,19 @@ const learningNowSlice = createSlice({
                 state.error = action.error.message || 'Failed to fetch texts';
             })
    
-            .addCase(saveText.fulfilled, (state, action) => {
+            .addCase(learingnowsaveText.fulfilled, (state) => {
                 state.status = 'succeeded';
-         
-                state.items.nowitems.push(action.payload);
 
             })
      
-            .addCase(removeText.fulfilled, (state, action) => {
+            .addCase(removeText.fulfilled, (state) => {
                 state.status = 'succeeded';
              
-                state.items.nowitems = state.items.nowitems.filter(item => item.id !== action.payload); 
-             
+              
             })
 
-            .addCase(updateText.fulfilled, (state, action) => {
+            .addCase(updateText.fulfilled, (state) => {
                 state.status = 'succeeded';
-      
-                const updatedIndex = state.items.nowitems.findIndex(item => item.id === action.payload.id);
-                if (updatedIndex !== -1) {
-                    state.items.nowitems[updatedIndex] = action.payload;
-                }
             });
     },
 });

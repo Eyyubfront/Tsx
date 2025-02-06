@@ -19,10 +19,11 @@ const VerifyEmailPage = () => {
   const navigate = useNavigate();
   const methods = useForm();
   const { handleSubmit,formState } = methods;
-
+  
   const {title, error, isLoading } = useAppSelector((state: RootState) => state.emailVerification);
   const { userId, veriyuse } = useAppSelector((state: RootState) => state.Auth);
-
+  
+  
 
 
   useEffect(() => {
@@ -105,12 +106,13 @@ const VerifyEmailPage = () => {
                       key={index}
                       name={`code-${index}`}
                       label=""
-                      rules={{ required: "This" }}
+                      rules={{ required: " " }}
                       type="text"
                       maxLength={1}
                       isEyeicon={false}
                       iseye={false}
                       handleEye={() => { }}
+                      
                     />
                   ))}
                 </div>

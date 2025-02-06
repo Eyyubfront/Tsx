@@ -1,19 +1,19 @@
-import { Button } from "@mui/material"
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { FC } from "react";
 import "./BackButton.scss"
 
 interface BackButtonProps{
     onClick?:(e:any)=>void;
+    className?:string
   }
-const BackButton:FC<BackButtonProps> = ({onClick}) => {
+const BackButton:FC<BackButtonProps> = ({onClick,className}) => {
   return (
-    <Button
+    <div
+    className={`LeftButton ${className}`}
     onClick={onClick}
-    className="LeftButton"
   >
     <KeyboardArrowLeftIcon />
-  </Button>
+  </div>
   )
 }
 

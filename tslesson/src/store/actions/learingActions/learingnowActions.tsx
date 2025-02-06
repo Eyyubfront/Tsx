@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../axiosInstance';
 import { lexioncountfetch } from '../lexioncountActions/lexioncountActions';
+import { wordfetchTexts } from './learingwordsActions';
 
 export interface TextItem {
     id?: number;
@@ -18,11 +19,12 @@ export const fetchTexts = createAsyncThunk('learningNow/fetchTexts', async (_,th
     }
 });
 
-export const saveText = createAsyncThunk('learningNow/saveText', async (item: TextItem, thunkAPI) => {
+export const learingnowsaveText = createAsyncThunk('learningNow/saveText', async (item: TextItem, thunkAPI) => {
     try {
         const response = await axiosInstance.post('/UserVocabulary/Create', item);
         thunkAPI.dispatch(fetchTexts());
         thunkAPI.dispatch(lexioncountfetch())
+        thunkAPI.dispatch(wordfetchTexts())
         return response.data;
     } catch (err: any) {
         return thunkAPI.rejectWithValue(err.response ? err.response.data : 'Error saving text');

@@ -33,7 +33,7 @@ const categorySlice = createSlice({
             })
             .addCase(categoryfetch.rejected, (state, action) => {
                 state.status = "error";
-                state.error = action.payload;
+                state.error = action.payload as string;
             });
     },
 });

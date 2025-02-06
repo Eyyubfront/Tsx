@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import ChangedPasswordPage from "../pages/ChangedPasswordPage/ChangedPasswordPage";
 import CheckEmailPage from "../pages/CheckEmailPage/CheckEmailPage";
 import ResetPasswordPage from "../pages/ResetPasswordPage/ResetPasswordPage";
@@ -13,6 +13,10 @@ import LanguageSelector from "../pages/LanguageSelector/LanguageSelector";
 import ChooseLearnLanguage from "../pages/ChooseLanguage/ChooseLearnLanguage";
 import VerifyRouting from "./VerifyRouting";
 
+import SettingsLayout from "../layout/SettingsLayout/SettingsLayout";
+import Languagesettings from "../pages/LanguageSettings/Languagesettings";
+import TimeSettings from "../pages/Home/TimeSettings/TimeSettings";
+
 
 
 const Routing = () => {
@@ -25,7 +29,7 @@ const Routing = () => {
         <Route path="/forgotpasswordpage" element={<ForgotPasswordPage />} />
         <Route path="/verifyemailpage" element={<VerifyEmailPage />} />
         <Route path="/resetpasswordpage" element={<ResetPasswordPage />} />
-          <Route path="/changedpasswordpage" element={<ChangedPasswordPage />} />
+        <Route path="/changedpasswordpage" element={<ChangedPasswordPage />} />
         <Route element={<VerifyRouting />}>
           <Route path="/languageselector" element={<LanguageSelector />} />
           <Route path="/chooselearnlanguage" element={<ChooseLearnLanguage />} />
@@ -36,6 +40,13 @@ const Routing = () => {
 
       <Route element={<ProtectedRouting />}>
         <Route path="/" element={<Home />} />
+        <Route path="settingspage" element={<SettingsLayout />}>
+          <Route index element={<Navigate to="languagesettings" />} />
+          <Route path="languagesettings" element={<Languagesettings />} />
+          <Route path="timesettings" element={<TimeSettings />} />
+        </Route>
+
+
       </Route>
     </Routes>
   );

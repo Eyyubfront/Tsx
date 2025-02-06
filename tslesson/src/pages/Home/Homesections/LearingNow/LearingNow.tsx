@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchTexts, saveText, removeText, updateText as updateTextAction, TextItem } from '../../../../store/actions/learingActions/learingnowActions';
+import { fetchTexts,removeText, updateText as updateTextAction, TextItem, learingnowsaveText } from '../../../../store/actions/learingActions/learingnowActions';
 import { RootState, useAppDispatch, useAppSelector } from '../../../../store/index';
 import TableComponent from '../../../../components/TableComponents/TableComponents';
 import { MdDeleteOutline } from "react-icons/md";
@@ -18,7 +18,7 @@ const LearningNow = () => {
     }, [dispatch]);
 
     const handleSaveText = (item: TextItem) => {
-        dispatch(saveText(item));
+        dispatch(learingnowsaveText(item));
     };
 
     const handleRemoveText = (id:number)=>{

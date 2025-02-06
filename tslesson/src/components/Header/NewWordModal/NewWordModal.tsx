@@ -6,10 +6,8 @@ import PrimaryButton from '../../PrimaryButton/PrimaryButton';
 import { Dialog, DialogTitle, DialogContent, DialogActions, IconButton } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import "./NewWordModal.scss";
-import { saveText } from '../../../store/actions/learingActions/learingnowActions';
-import { useAppDispatch } from '../../../store';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store/index';
+import { learingnowsaveText } from '../../../store/actions/learingActions/learingnowActions';
+import { useAppDispatch, useAppSelector } from '../../../store';
 import Paragrafy from '../../Paragrafy/Paragrafy';
 
 interface NewWordModalProps {
@@ -22,9 +20,9 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
     const [wordtwo, setWordTwo] = useState('');
     const [isSaved, setIsSaved] = useState(false); 
 
-    const selectedLanguageId = useSelector((state: RootState) => state.LanguagetextData.selectedLanguageId);
-    const texts = useSelector((state: RootState) => state.LanguagetextData.texts);
-    const userId = useSelector((state: RootState) => state.Auth.userId);
+    const selectedLanguageId = useAppSelector((state) => state.LanguagetextData.selectedLanguageId);
+    const texts = useAppSelector((state) => state.LanguagetextData.texts);
+    const userId = useAppSelector((state) => state.Auth.userId);
     const dispatch = useAppDispatch();
     const selectedLanguage = texts.find((text) => text.id === selectedLanguageId);
     
@@ -46,7 +44,7 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
                 translation: wordtwo,
                 isLearningNow: isSaved
             };
-            dispatch(saveText(newItem));
+            dispatch(learingnowsaveText(newItem));
         } else {
             console.error("userId not available.");
         }
@@ -91,7 +89,6 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
                     <div>
                         <img 
                             src={isSaved ? Savedicon : NotSavedicon} 
-                            alt=""
                             onClick={handleSavedIconClick}
                         />
                     </div>

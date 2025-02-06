@@ -17,7 +17,7 @@ export const wordfetchTexts = createAsyncThunk('learningNow/wordfetchTexts', asy
     }
 });
 
-export const saveText = createAsyncThunk('learningNow/saveText', async (item: WordsItem, thunkAPI) => {
+export const saveText = createAsyncThunk('learningWords/saveText', async (item: WordsItem, thunkAPI) => {
     try {
         const response = await axiosInstance.post('/UserVocabulary/Create', item);
          thunkAPI.dispatch(wordfetchTexts());
