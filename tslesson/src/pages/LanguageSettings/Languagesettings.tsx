@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../store";
-import { getTexts } from "../../store/actions/languagehome/languagehome";
+import {  useState } from "react";
+import {  useAppSelector } from "../../store";
 import { LanguageHomes } from "../../types/Types";
 import { MenuItem } from "@mui/material";
 import "./Languagesettings.scss"
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import LanguageSettingsModal from "./LanguageSettingsModal/LanguageSettingsModal";
+
 
 const Languagesettings = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -17,12 +17,10 @@ const Languagesettings = () => {
   const handleOpenModal = () => {
     setShowModal(true);
   };
-  const dispatch = useAppDispatch();
-  const { texts } = useAppSelector((state) => state.LanguagetextData);
+  const { texts,loading } = useAppSelector((state) => state.LanguagetextData);
 
-  useEffect(() => {
-    dispatch(getTexts());
-  }, [dispatch]);
+
+
   return (
     <div className="language_settings">
       <div className="languagesetings__top">
@@ -32,10 +30,11 @@ const Languagesettings = () => {
               {language.sourceLanguage} - {language.translationLanguage}
             </MenuItem>
           ))}
+          
         </p>
       </div>
       <div onClick={handleOpenModal} className="languagesetings__bottom">
-        <PrimaryButton label="+ New Languages" />
+        <PrimaryButton disabled={loading}  label="+ New Languages" />
       </div>
       <LanguageSettingsModal show={showModal} onClose={handleCloseModal} />
     </div>

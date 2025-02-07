@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../axiosInstance";
+import { getTexts } from "../languagehome/languagehome";
 
 
 export interface FethcLanguagesProps {
@@ -40,6 +41,7 @@ export const createUserLanguage = createAsyncThunk(
         }
       );
       thunkAPI.dispatch(fetchLanguages())
+      thunkAPI.dispatch(getTexts())
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error)

@@ -9,35 +9,50 @@ import "./NewWordModal.scss";
 import { learingnowsaveText } from '../../../store/actions/learingActions/learingnowActions';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import Paragrafy from '../../Paragrafy/Paragrafy';
+import { useForm, FormProvider } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+import UseFormModalInput from '../../PrimaryInput/UseFormModalInput';
 
 interface NewWordModalProps {
     show: boolean;
     onClose: () => void;
 }
 
-const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
-    const [wordone, setWordOne] = useState('');
-    const [wordtwo, setWordTwo] = useState('');
-    const [isSaved, setIsSaved] = useState(false); 
+const schema = Yup.object().shape({
+    wordone: Yup.string().required("Source word is required"),
+    wordtwo: Yup.string().required("Translation word is required"),
+});
 
+const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
+    const [isSaved, setIsSaved] = useState(false);
     const selectedLanguageId = useAppSelector((state) => state.LanguagetextData.selectedLanguageId);
     const texts = useAppSelector((state) => state.LanguagetextData.texts);
     const userId = useAppSelector((state) => state.Auth.userId);
     const dispatch = useAppDispatch();
     const selectedLanguage = texts.find((text) => text.id === selectedLanguageId);
-    
+
     const defaultSourceLanguage = selectedLanguage?.sourceLanguage || '';
     const defaultTranslationLanguage = selectedLanguage?.translationLanguage || '';
 
+    const methods = useForm({
+        defaultValues: {
+            wordone: '',
+            wordtwo: ''
+        },
+        resolver: yupResolver(schema),
+    });
+
+    const { formState } = methods;
+
     useEffect(() => {
         if (selectedLanguage) {
-            setWordOne('');
-            setWordTwo('');
-            
+            methods.reset({ wordone: '', wordtwo: '' });
         }
     }, [selectedLanguage, show]);
 
     const handleSave = () => {
+        const { wordone, wordtwo } = methods.getValues();
         if (userId) {
             const newItem = {
                 source: wordone,
@@ -48,11 +63,11 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
         } else {
             console.error("userId not available.");
         }
-        onClose()
+        onClose();
     };
 
     const handleSavedIconClick = () => {
-        setIsSaved(prevState => !prevState); 
+        setIsSaved(prevState => !prevState);
     };
 
     return (
@@ -64,41 +79,38 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-                <div className="text__input">
-                    <label className='input_label'>{defaultSourceLanguage || "Source Language"}</label>
-                    <input
-                        type="text"
-                        className='input_language'
-                        value={wordone}
-                        onChange={(e) => setWordOne(e.target.value)}
-                        placeholder="" 
-                    />
-                    <label className='input_labeltwo'>{defaultTranslationLanguage || "Translation Language"}</label>
-                    <input
-                        type="text"
-                        className='input_language'
-                        value={wordtwo}
-                        onChange={(e) => setWordTwo(e.target.value)}
-                        placeholder="" 
-                    />
-                </div>
-                <div className="text_saved">
-                    <Link to="/">
-                        <Paragrafy text='Add to Learning now ' />
-                    </Link>
-                    <div>
-                        <img 
-                            src={isSaved ? Savedicon : NotSavedicon} 
-                            onClick={handleSavedIconClick}
-                        />
-                    </div>
-                </div>
+                <FormProvider {...methods}>
+                    <form>
+                        <div className="text__input">
+                      <div className="sourcetop">
+                      <label className='modals_labelsource' htmlFor="">{defaultSourceLanguage}</label>
+                      <UseFormModalInput className='newwords_input' type='select' name="wordone" label={defaultSourceLanguage || "Source Language"}/>
+                      </div>
+                   <div className="translationbutom">
+                   <label className='modals_labeltranslation' htmlFor="">{defaultTranslationLanguage}</label>
+                   <UseFormModalInput  className='newwords_input' type='select' name="wordtwo" label={defaultTranslationLanguage|| "Translation Language"} />
+                   </div>
+                        </div>
+                        <div className="text_saved">
+                            <Link to="/">
+                                <Paragrafy text='Add to Learning now ' />
+                            </Link>
+                            <div>
+                                <img
+                                    src={isSaved ? Savedicon : NotSavedicon}
+                                    onClick={handleSavedIconClick}
+                                    alt="Save Icon"
+                                />
+                            </div>
+                        </div>
+                    </form>
+                </FormProvider>
             </DialogContent>
             <DialogActions>
                 <PrimaryButton
                     label='Save Word'
                     onClick={handleSave}
-                    disabled={!wordone || !wordtwo}
+                    disabled={!formState.isValid}
                 />
             </DialogActions>
         </Dialog>

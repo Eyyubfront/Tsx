@@ -16,6 +16,7 @@ import VerifyRouting from "./VerifyRouting";
 import SettingsLayout from "../layout/SettingsLayout/SettingsLayout";
 import Languagesettings from "../pages/LanguageSettings/Languagesettings";
 import TimeSettings from "../pages/Home/TimeSettings/TimeSettings";
+import ChangedPasswordSettings from "../pages/ChangedPasswordSettings/ChangedPasswordSettings";
 
 
 
@@ -41,9 +42,9 @@ const Routing = () => {
       <Route element={<ProtectedRouting />}>
         <Route path="/" element={<Home />} />
         <Route path="settingspage" element={<SettingsLayout />}>
-          <Route index element={<Navigate to="languagesettings" />} />
           <Route path="languagesettings" element={<Languagesettings />} />
           <Route path="timesettings" element={<TimeSettings />} />
+          <Route path="passwordchecksettings" element={<ChangedPasswordSettings />} />
         </Route>
 
 

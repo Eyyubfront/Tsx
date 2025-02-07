@@ -11,6 +11,7 @@ import forgotPasswordReducer from "./slice/forgotPasswordSlice";
 import passwordResetReducer from "./slice/passwordResetSlice";
 import categoryReducer from "./slice/CategroySlice";
 import lexionReducer from "./slice/LexionSlice";
+import PasswordcheckSettingsReducer from "./slice/PasswordSettingsSlice";
 const store = configureStore({
     reducer: {
         learningNow: learningNowReducer,
@@ -24,6 +25,7 @@ const store = configureStore({
         passwordReset:passwordResetReducer,
         category:categoryReducer,
         lexioncard:lexionReducer,
+        passwordchecksettings:PasswordcheckSettingsReducer,
 
     },
 

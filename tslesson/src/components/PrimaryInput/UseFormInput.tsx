@@ -5,12 +5,14 @@ import PrimaryInput from './PrimaryInput';
 interface UseFormInputProps {
   name: string;
   rules?: any;
-  label: string;
-  type: "text" | "email" | "password";
+  label?: string;
+  type: "text" | "email" | "password"|"select";
   isEyeicon?: boolean; 
   iseye?: boolean;
   handleEye?: () => void;
   maxLength?: number;
+  className?: string;
+
 }
 
 const UseFormInput: React.FC<UseFormInputProps> = ({
@@ -22,6 +24,7 @@ const UseFormInput: React.FC<UseFormInputProps> = ({
   iseye,
   handleEye,
   maxLength, 
+  className
 }) => {
   const { control } = useFormContext(); 
   return (
@@ -34,6 +37,7 @@ const UseFormInput: React.FC<UseFormInputProps> = ({
           {...field}
           label={label}
           type={type}
+          className={className}
           isEyeicon={isEyeicon}
           iseye={iseye}
           handleEye={handleEye}

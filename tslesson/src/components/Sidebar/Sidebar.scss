@@ -58,6 +58,18 @@
 
 @media (max-width:600px) {
     .sidebar_box{
-        display: none;
+        width: 100%;
+        display: block;
+        background-color: white;
+        border: 1px solid white;
+        .sidebar_toplinks,
+        .sidebar_botomnames{
+            background-color: #F9F8FD;
+            border: 1px solid #F9F8FD;
+            background-color: #F9F8FD;
+            height: 44px;
+            border-radius: 10px;
+            padding: 10px;
+        }
     }
 }

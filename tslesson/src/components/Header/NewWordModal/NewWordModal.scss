@@ -36,36 +36,77 @@
         gap: 16px;
         position: relative;
         margin-top: 16px;
-.input_label{
-    position: absolute;
-    top: 20px;
-    left: 10px;
-    font-weight: bold;
-    font-family: DM Serif Display;
-font-size: 18px;
-font-weight: 400;
-line-height: 23.4px;
-letter-spacing: -0.01em;
-text-align: left;
-text-underline-position: from-font;
-text-decoration-skip-ink: none;
 
-}
-.input_labeltwo{
-    position: absolute;
-    top: 130px;
-    font-weight: bold;
-    font-family: DM Serif Display;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 23.4px;
-    letter-spacing: -0.01em;
-    text-align: left;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
-    
-    left: 10px;
-}
+        .sourcetop,
+        .translationbutom {
+            position: relative;
+
+            .modals_labelsource {
+                position: absolute;
+                top: 30px;
+                left: 10px;
+                font-family: DM Serif Display;
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 23.4px;
+                letter-spacing: -0.01em;
+                text-align: left;
+                text-underline-position: from-font;
+                text-decoration-skip-ink: none;
+
+            }
+            .modals_labeltranslation{
+                position: absolute;
+                top: 30px;
+                left: 10px;
+                font-family: DM Serif Display;
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 23.4px;
+                letter-spacing: -0.01em;
+                text-align: left;
+                text-underline-position: from-font;
+                text-decoration-skip-ink: none;
+            }
+        }
+
+        .newwords_input {
+            height: 80px;
+
+        }
+
+        .input_label {
+            position: absolute;
+            top: 20px;
+            left: 10px;
+            font-weight: bold;
+            font-family: DM Serif Display;
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 23.4px;
+            letter-spacing: -0.01em;
+            text-align: left;
+            text-underline-position: from-font;
+            text-decoration-skip-ink: none;
+
+        }
+
+        .input_labeltwo {
+            position: absolute;
+            top: 130px;
+            font-weight: bold;
+            font-family: DM Serif Display;
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 23.4px;
+            letter-spacing: -0.01em;
+            text-align: left;
+            text-underline-position: from-font;
+            text-decoration-skip-ink: none;
+
+            left: 10px;
+        }
+
         .input_language {
             background-color: #F3F3F5;
             border-color: #F3F3F5;
