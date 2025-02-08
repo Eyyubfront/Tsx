@@ -10,7 +10,7 @@ import axiosInstance from "../axiosInstance";
 }
 
 export const categoryfetch = createAsyncThunk(
-    "language/categoryfetch",
+    "home/categoryfetch",
     async (_, { rejectWithValue }) => {
       try {
         const response = await axiosInstance.get(
@@ -24,6 +24,22 @@ export const categoryfetch = createAsyncThunk(
           vocabularyCount:item.vocabularyCount
         }));
         return category;
+      } catch (error) {
+        return rejectWithValue("Failed to fetch category data");
+      }
+    }
+  );
+
+  export const categoryIdfetch = createAsyncThunk(
+    "home/categoryIdfetch",
+    async (categoryId: number, { rejectWithValue }) => {
+      try {
+        const response = await axiosInstance.get(
+          `/Vocabulary/GetAllByCategoryId?categoryId=${categoryId}`
+        );
+ 
+        
+        return response.data.data;
       } catch (error) {
         return rejectWithValue("Failed to fetch category data");
       }

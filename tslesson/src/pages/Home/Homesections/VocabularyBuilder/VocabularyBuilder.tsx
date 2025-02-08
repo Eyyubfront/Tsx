@@ -3,8 +3,9 @@ import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import "./VocabularyBuilder.scss";
 import { RootState, useAppDispatch, useAppSelector } from '../../../../store';
-import { categoryfetch } from '../../../../store/actions/categoryActions/categoryActions';
+import { categoryIdfetch, categoryfetch } from '../../../../store/actions/categoryActions/categoryActions';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -13,11 +14,20 @@ interface VocabularyBuilderProps {
 }
 
 const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
+
     const categories = useAppSelector((state: RootState) => state.category.categories);
     useEffect(() => {
         dispatch(categoryfetch());
     }, [dispatch]);
+    const handleCategoryClick = (categoryId: number, categoryName: string) => {
+        dispatch(categoryIdfetch(categoryId));
+        
+        // Pass the category name along with the ID using the state
+        navigate(`/category/${categoryId}`, { state: { categoryName } });
+        console.log("vocabid", categoryId);
+    };
     return (
         <div className="vocablary-builder">
             <Swiper
@@ -39,7 +49,7 @@ const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
                 modules={[Pagination]}
             >
                 {categories.map(item => (
-                    <SwiperSlide className='swiper_slide' key={item.id}>
+                    <SwiperSlide className='swiper_slide' key={item.id} onClick={() => handleCategoryClick(item.id,item.name)}>
                         <div className="vocablary_card">
                             <div className="vocablary_left">
                                 <h3 className='vocablary_tittlename'>{item.name}</h3>
@@ -52,7 +62,7 @@ const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
                             </div>
                             <div className="vocablary_right">
                                 <img
-                                    src={`data:image/png;base64,${item.image}`}     
+                                    src={`data:image/png;base64,${item.image}`}
                                     className="item-flag"
                                 />
                             </div>

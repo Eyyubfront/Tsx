@@ -4,7 +4,7 @@ import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { getTexts } from '../../store/actions/languagehome/languagehome';
 import { setSelectedLanguage } from '../../store/slice/LanguageHomeSlice';
 import { LanguageHomes } from '../../types/Types';
-import "./SelecetLanguage.scss"
+import "./SelecetLanguage.scss";
 
 const SelectLanguage = () => {
     const dispatch = useAppDispatch();
@@ -14,12 +14,10 @@ const SelectLanguage = () => {
         dispatch(getTexts());
     }, [dispatch]);
 
+
     useEffect(() => {
         if (texts.length > 0 && selectedLanguageId === null) {
-            const defaultLanguage = texts.find((text) => text.isDefault);
-            if (defaultLanguage) {
-                dispatch(setSelectedLanguage(defaultLanguage.id));
-            }
+            dispatch(setSelectedLanguage(texts[0].id));
         }
     }, [texts, selectedLanguageId, dispatch]);
 
@@ -28,14 +26,12 @@ const SelectLanguage = () => {
         dispatch(setSelectedLanguage(value));
     };
 
-   
     return (
         <FormControl className='selecetlanguages' fullWidth>
             <Select
-             className='formselecet'
-                value={selectedLanguageId ?? ''}
+                className='formselecet'
+                value={selectedLanguageId || (texts.length > 0 ? texts[0]?.id : '')} 
                 onChange={handleLanguageChange}
-                
             >
                 {texts?.map((language: LanguageHomes) => (
                     <MenuItem key={language.id} value={language.id}>

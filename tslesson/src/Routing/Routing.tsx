@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import {  Route, Routes } from "react-router-dom";
 import ChangedPasswordPage from "../pages/ChangedPasswordPage/ChangedPasswordPage";
 import CheckEmailPage from "../pages/CheckEmailPage/CheckEmailPage";
 import ResetPasswordPage from "../pages/ResetPasswordPage/ResetPasswordPage";
@@ -17,6 +17,8 @@ import SettingsLayout from "../layout/SettingsLayout/SettingsLayout";
 import Languagesettings from "../pages/LanguageSettings/Languagesettings";
 import TimeSettings from "../pages/Home/TimeSettings/TimeSettings";
 import ChangedPasswordSettings from "../pages/ChangedPasswordSettings/ChangedPasswordSettings";
+import VocabularyBuilder from "../pages/Home/Homesections/VocabularyBuilder/VocabularyBuilder";
+import CategoryDetail from "../pages/Home/Homesections/CategoryDetail/CategoryDetail";
 
 
 
@@ -41,6 +43,8 @@ const Routing = () => {
 
       <Route element={<ProtectedRouting />}>
         <Route path="/" element={<Home />} />
+        <Route path="/category" element={<VocabularyBuilder />} />  
+        <Route path="/category/:categoryId" element={<CategoryDetail />} />
         <Route path="settingspage" element={<SettingsLayout />}>
           <Route path="languagesettings" element={<Languagesettings />} />
           <Route path="timesettings" element={<TimeSettings />} />
