@@ -44,7 +44,9 @@ const Header = () => {
           <Paragrafy className='newwordstext' fontWeight="600" fontsize='16px' fontfamily='DM Sans' text=' New Words' />
         </div>
       </div>
-      <BurgerMenu className="headers_burger" />
+      <div className="header_burgermenu">
+      <BurgerMenu />
+      </div>
       <NewWordModal show={showModal} onClose={handleCloseModal} />
     </div>
   );

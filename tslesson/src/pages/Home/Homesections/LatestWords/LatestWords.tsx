@@ -20,7 +20,7 @@ const LatestWords = () => {
     const [editText, setEditText] = useState<{ id: number; source: string; translation: string; } | null>(null);
 
     useEffect(() => {
-            dispatch(wordfetchTexts());
+            dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
     
     }, [dispatch]);
 
@@ -50,7 +50,7 @@ const LatestWords = () => {
 
     return (
         <div>
-            <TableComponent title="Words">
+            <TableComponent title="Latest added words">
                 <TableBody>
                     {items.map(({ id,source, translation }) => (
                         <TableRow className='table_aligns' key={id}>

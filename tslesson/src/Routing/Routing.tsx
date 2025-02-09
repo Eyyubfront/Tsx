@@ -19,6 +19,8 @@ import TimeSettings from "../pages/Home/TimeSettings/TimeSettings";
 import ChangedPasswordSettings from "../pages/ChangedPasswordSettings/ChangedPasswordSettings";
 import VocabularyBuilder from "../pages/Home/Homesections/VocabularyBuilder/VocabularyBuilder";
 import CategoryDetail from "../pages/Home/Homesections/CategoryDetail/CategoryDetail";
+import LearningNow from "../pages/Home/Homesections/LearingNow/LearingNow";
+import LatestWords from "../pages/Home/Homesections/LatestWords/LatestWords";
 
 
 
@@ -50,6 +52,8 @@ const Routing = () => {
           <Route path="timesettings" element={<TimeSettings />} />
           <Route path="passwordchecksettings" element={<ChangedPasswordSettings />} />
         </Route>
+          <Route path="/learingnow" element={<LearningNow />} />
+          <Route path="/vocablarypage" element={<LatestWords />} />
 
 
       </Route>

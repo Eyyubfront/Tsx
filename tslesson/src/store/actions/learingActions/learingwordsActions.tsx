@@ -8,10 +8,10 @@ export interface WordsItem {
     isLearningNow: boolean;
 }
 
-export const wordfetchTexts = createAsyncThunk('learningNow/wordfetchTexts', async (_, thunkAPI) => {
+export const wordfetchTexts = createAsyncThunk('learningNow/wordfetchTexts', async ({ page, pageSize }: { page: number; pageSize: number }, thunkAPI) => {
     try {
-        const response = await axiosInstance.get(`/UserVocabulary/GetAllByUserId`);
-        return response.data.data;
+        const response = await axiosInstance.get(`/UserVocabulary/GetPaginatedByUserId?page=${page}&pageSize=${pageSize}`);
+        return response.data.data;  
     } catch (error) {
         return thunkAPI.rejectWithValue(error);
     }
@@ -20,7 +20,7 @@ export const wordfetchTexts = createAsyncThunk('learningNow/wordfetchTexts', asy
 export const saveText = createAsyncThunk('learningWords/saveText', async (item: WordsItem, thunkAPI) => {
     try {
         const response = await axiosInstance.post('/UserVocabulary/Create', item);
-         thunkAPI.dispatch(wordfetchTexts());
+         thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
         return response.data;
     } catch (err) {
         return thunkAPI.rejectWithValue(err);
@@ -30,7 +30,7 @@ export const saveText = createAsyncThunk('learningWords/saveText', async (item: 
 export const removeText = createAsyncThunk('learningNow/removeText', async ({ id }: { id: number }, thunkAPI) => {
     try {
         await axiosInstance.delete(`/UserVocabulary/Delete/${id}`);
-        thunkAPI.dispatch(wordfetchTexts());
+        thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
     } catch (err) {
         return thunkAPI.rejectWithValue(err);
     }
@@ -43,6 +43,7 @@ export const updateText = createAsyncThunk('learningNow/updateText', async ({ id
             source,
             translation
         });
+        thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
         return response.data;
     } catch (err) {
         return thunkAPI.rejectWithValue(err);

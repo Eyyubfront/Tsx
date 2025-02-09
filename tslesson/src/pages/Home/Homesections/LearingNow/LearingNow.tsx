@@ -14,9 +14,9 @@ const LearningNow = () => {
     const [editText, setEditText] = useState<{ id: number; source: string; translation: string } | null>(null);
 
     useEffect(() => {
-            dispatch(fetchTexts());
-    }, [dispatch]);
-
+        dispatch(fetchTexts({ page: 1, pageSize: 10 }));
+      }, [dispatch]);
+      
     const handleSaveText = (item: TextItem) => {
         dispatch(learingnowsaveText(item));
     };

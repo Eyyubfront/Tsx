@@ -54,11 +54,8 @@ const learningNowSlice = createSlice({
                 state.status = 'succeeded';
 
             })
-     
             .addCase(removeText.fulfilled, (state) => {
                 state.status = 'succeeded';
-             
-              
             })
 
             .addCase(updateText.fulfilled, (state) => {

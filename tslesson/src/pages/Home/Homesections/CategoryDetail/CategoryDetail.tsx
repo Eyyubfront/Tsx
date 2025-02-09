@@ -1,8 +1,10 @@
 import { useParams, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../store';
-import { categoryIdfetch } from '../../../../store/actions/categoryActions/categoryActions';
+
 import Header from '../../../../components/Header/Header';
+import { categoryIdfetch } from '../../../../store/actions/categoryActions/categoryActions';
+import { addFromVocabulary } from '../../../../store/actions/LearingaddformActions/LearingaddformActions';
 
 interface CategoryItem {
     id: number;
@@ -25,6 +27,10 @@ const CategoryDetail: React.FC = () => {
         }
     }, [categoryId, dispatch]);
 
+    const handleSaveClick = (item: CategoryItem) => {
+        dispatch(addFromVocabulary(item.id));
+    };
+
     if (status === 'loading') {
         return <div>Loading...</div>;
     }
@@ -37,12 +43,17 @@ const CategoryDetail: React.FC = () => {
         <div className="category-detail">
             <Header />
             <div className="categorydetailabout">
-                <h2>{categoryName}</h2> 
+                <h2>{categoryName}</h2>
                 {categoryDetails.map((item: CategoryItem) => (
                     <div key={item.id} className="category-item">
                         <p><strong>Source:</strong> {item.source}</p>
                         <p><strong>Translation:</strong> {item.translation}</p>
-                        <p><strong>Is Added:</strong> {item.isAdded ? "Yes" : "No"}</p>
+                        <button 
+                            onClick={() => handleSaveClick(item)}
+                            className="save-button"
+                        >
+                            Save
+                        </button>
                     </div>
                 ))}
             </div>

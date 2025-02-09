@@ -50,26 +50,15 @@ const LatestWordsSlice = createSlice({
                 state.error = action.error.message || 'Failed to fetch texts';
             })
    
-            .addCase(saveText.fulfilled, (state, action) => {
+            .addCase(saveText.fulfilled, (state) => {
                 state.status = 'succeeded';
-         
-                state.items.items.push(action.payload);
             })
-     
-            .addCase(removeText.fulfilled, (state, action) => {
-                state.status = 'succeeded';
-             
-                state.items.items = state.items.items.filter(item => item.id !== action.payload); 
-          
+            .addCase(removeText.fulfilled, (state) => {
+                state.status = 'succeeded';    
             })
 
-            .addCase(updateText.fulfilled, (state, action) => {
+            .addCase(updateText.fulfilled, (state) => {
                 state.status = 'succeeded';
-      
-                const updatedIndex = state.items.items.findIndex(item => item.id === action.payload.id);
-                if (updatedIndex !== -1) {
-                    state.items.items[updatedIndex] = action.payload;
-                }
             });
     },
 });

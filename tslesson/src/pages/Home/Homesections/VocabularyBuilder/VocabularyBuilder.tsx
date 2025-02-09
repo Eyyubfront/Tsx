@@ -23,8 +23,7 @@ const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
     }, [dispatch]);
     const handleCategoryClick = (categoryId: number, categoryName: string) => {
         dispatch(categoryIdfetch(categoryId));
-        
-        // Pass the category name along with the ID using the state
+    
         navigate(`/category/${categoryId}`, { state: { categoryName } });
         console.log("vocabid", categoryId);
     };
