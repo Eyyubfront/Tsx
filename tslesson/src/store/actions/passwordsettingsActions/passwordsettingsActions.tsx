@@ -11,7 +11,7 @@ export const passwordChecksave = createAsyncThunk(
     async (params: { currentPassword: string; newPassword: string }, { rejectWithValue }) => {
         try {
             const response = await axiosInstance.post(
-                "https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/ChangePassword",
+                "https://learn-language-api.azurewebsites.net/api/ChangePassword",
                 {
                     currentPassword: params.currentPassword,
                     newPassword: params.newPassword,

@@ -2,12 +2,10 @@ import 'swiper/css';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import "./VocabularyBuilder.scss";
-import { RootState, useAppDispatch, useAppSelector } from '../../../../store';
-import { categoryIdfetch, categoryfetch } from '../../../../store/actions/categoryActions/categoryActions';
-import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../../store';
+import { categoryfetch } from '../../../../store/actions/categoryActions/categoryActions';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-
 
 interface VocabularyBuilderProps {
     className?: string;
@@ -16,17 +14,37 @@ interface VocabularyBuilderProps {
 const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const categories = useAppSelector((state) => state.category.categories);
 
-    const categories = useAppSelector((state: RootState) => state.category.categories);
+    const [clickedCardId, setClickedCardId] = useState<number | null>(null);
+    const [layout, setLayout] = useState<'horizontal' | 'vertical'>('vertical');
+
     useEffect(() => {
         dispatch(categoryfetch());
+
+        const handleResize = () => {
+            if (window.innerWidth <= 600) {
+                setLayout('horizontal'); 
+            } else {
+                setLayout('vertical'); 
+            }
+        };
+
+        handleResize(); 
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
     }, [dispatch]);
-    const handleCategoryClick = (categoryId: number, categoryName: string) => {
-        dispatch(categoryIdfetch(categoryId));
-    
-        navigate(`/category/${categoryId}`, { state: { categoryName } });
-        console.log("vocabid", categoryId);
+
+    const handleCategoryClick = async (categoryId: number) => {
+        try {
+            setClickedCardId(categoryId); 
+            navigate(`/category/${categoryId}`);
+        } catch (error) {
+            console.error(error);
+        }
     };
+
     return (
         <div className="vocablary-builder">
             <Swiper
@@ -36,20 +54,24 @@ const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
                 loop
                 breakpoints={{
                     320: {
-                        slidesPerView: 1.3,
+                        slidesPerView: layout === 'horizontal' ? 1 : 1.3,
                     },
                     600: {
-                        slidesPerView: 2.5,
+                        slidesPerView: layout === 'horizontal' ? 1.5 : 2.5,
                     },
                     1024: {
-                        slidesPerView: 3.3,
+                        slidesPerView: layout === 'vertical' ? 2 : 3.3,
                     }
                 }}
                 modules={[Pagination]}
             >
                 {categories.map(item => (
-                    <SwiperSlide className='swiper_slide' key={item.id} onClick={() => handleCategoryClick(item.id,item.name)}>
-                        <div className="vocablary_card">
+                    <SwiperSlide 
+                        className='swiper_slide'
+                        key={item.id} 
+                        onClick={() => handleCategoryClick(item.id)}
+                    >
+                        <div className={`vocablary_card ${clickedCardId === item.id ? 'clicked' : ''}`}>
                             <div className="vocablary_left">
                                 <h3 className='vocablary_tittlename'>{item.name}</h3>
                                 <div className="vocablaryleft_butom">

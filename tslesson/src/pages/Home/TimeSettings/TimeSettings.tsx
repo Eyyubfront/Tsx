@@ -3,7 +3,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import moment from "moment";
-import {  getTime, updateTime } from "../../../store/actions/timeActions/timeActions";
+import { getTime, updateTime } from "../../../store/actions/timeActions/timeActions";
 import Paragrafy from "../../../components/Paragrafy/Paragrafy";
 import UseFormTimeInput from "../../../components/PrimaryInput/UseFormTimeInput";
 import TimeOptions from "../../../components/TimeOptions/TimeOptions";
@@ -20,7 +20,7 @@ const schema = yup.object().shape({
 const TimeSettings = () => {
   const dispatch = useAppDispatch();
 
- 
+
   const methods = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -30,7 +30,7 @@ const TimeSettings = () => {
     },
   });
 
-  const { loading, startTime, endTime, intervalId } = useAppSelector((state) => state.time);
+  const { loading} = useAppSelector((state) => state.time);
   const { handleSubmit, formState: { errors }, watch, setValue } = methods;
 
   const timeOptions = [
@@ -74,8 +74,8 @@ const TimeSettings = () => {
   return (
     <div className="time_settings">
       <div className="timesettings_top">
-    <Paragrafy className="setings_tittle" text="Choosen time for learning"/>
-    <Paragrafy className="settings_about" text="Choosen time for receiving notifications"/>
+        <Paragrafy className="setings_tittle" text="Choosen time for learning" />
+        <Paragrafy className="settings_about" text="Choosen time for receiving notifications" />
       </div>
       <div className="timesetting-right">
         <FormProvider {...methods}>

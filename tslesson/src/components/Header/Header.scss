@@ -73,12 +73,17 @@
             }
         }
     }
-
+.header_burgermenu{
+    display: none;
+}
 }
 
 @media (max-width:600px) {
     .header{
         flex-direction: row-reverse ;
+        .header_burgermenu{
+            display: block;
+        }
         .headers_burger{
             display: block;
             width: 42px;

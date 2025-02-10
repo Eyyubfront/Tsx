@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "@mui/material/Button";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import Heading from "../../components/Heading";
 import Paragrafy from "../../components/Paragrafy/Paragrafy";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
@@ -10,6 +8,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import UseFormInput from "../../components/PrimaryInput/UseFormInput";
 import { RootState, useAppDispatch, useAppSelector } from "../../store/index";
 import SidePanel from "../../layout/SidePanel/SidePanel";
+import BackButton from "../../components/BackButton/BackButton";
 
 const VerifyEmailPage = () => {
   const [counter, setCounter] = useState(30);
@@ -89,9 +88,7 @@ const VerifyEmailPage = () => {
           titleText="Hi, Welcome!"
           descriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!"
         />
-             <Button className="LeftButton" onClick={() => navigate("/forgotpasswordpage")}>
-          <KeyboardArrowLeftIcon />
-        </Button>
+        <BackButton  onClick={() => navigate("/login")}/>
       </div>
       <div className="veriyfemail_right">
         <FormProvider {...methods}>

@@ -51,7 +51,7 @@ export const register = createAsyncThunk(
   async (request: RegisterRequest, { rejectWithValue }) => {
     try {
       const response = await axios.post<AuthResponse>(
-        'https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/Register',
+        'https://learn-language-api.azurewebsites.net/api/Register',
         request
       );
 

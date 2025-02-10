@@ -4,7 +4,7 @@ import store from '../index';
 import { useNavigate } from 'react-router-dom';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api',
+  baseURL: 'https://learn-language-api.azurewebsites.net/api',
 });
 
 axiosInstance.interceptors.request.use((config) => {

@@ -14,7 +14,7 @@ export const sendForgotPasswordEmail = createAsyncThunk<
   async ({ email }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/ForgotPassword",
+        "https://learn-language-api.azurewebsites.net/api/ForgotPassword",
         { email }
       );
       return response.data.data;

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getTexts } from "../actions/languagehome/languagehome";
+import { getTexts, selecetlangaugesave } from "../actions/languagehome/languagehome";
 
 interface TextItem {
     text: string;
@@ -15,7 +15,6 @@ interface TextState {
     selectedLanguageId: number | null;
     loading: boolean;
     error: string | null;
- 
 }
 
 const initialState: TextState = {
@@ -24,7 +23,6 @@ const initialState: TextState = {
     selectedLanguageId: null,
     loading: false,
     error: null,
-
 };
 
 const LanguageHomeSlice = createSlice({
@@ -50,7 +48,19 @@ const LanguageHomeSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload as string;
             })
-          
+            .addCase(selecetlangaugesave.pending, (state) => {
+                state.loading = true;
+                state.error = null; 
+            })
+            .addCase(selecetlangaugesave.fulfilled, (state, action) => {
+                state.loading = false;
+                const updatedLanguage = action.payload;
+                state.selectedLanguageId = updatedLanguage.id; 
+            })
+            .addCase(selecetlangaugesave.rejected, (state, action) => {
+                state.loading = false; 
+                state.error = action.payload as string; 
+            });
     },
 });
 
