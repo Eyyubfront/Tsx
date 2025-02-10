@@ -66,13 +66,17 @@
           width: 100% ;
         }
       }
-      .homepage_quiz {
-        width: 100%;
-        margin-top: 20px;
-        text-align: center;
-        padding: 15px;
+      .homepage_quiz{
         display: block;
-      }
+        background-image: url("../../assets/images/AuthImages/bacgroundimage/ezzedesign.png");
+        background-size: cover;
+        width: 100%;
+        text-align: center;
+        height: 56px;
+        border-radius: 16px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
     }
   }
 }
@@ -103,14 +107,18 @@
           width: max-content;
         }
       }
-      .homepage_quiz {
-        width: 100%;
-        margin-top: 20px;
-        text-align: center;
-        padding: 15px;
+      .homepage_quiz{
         display: block;
-       
-      }
+        background-image: url("../../assets/images/AuthImages/bacgroundimage/ezzedesign.png");
+        background-size: cover;
+        width: 100%;
+        text-align: center;
+        height: 56px;
+        border-radius: 16px;
+        cursor: pointer;
+        margin-top: 20px;
+    
+    }
     }
   }
 }
@@ -135,13 +143,7 @@
         }
       }
   
-      .homepage_quiz {
-        width: 100%;
-        margin-top: 20px;
-        text-align: center;
-        padding: 15px;
-        display: block ;
-      }
+     
     }
 
   }

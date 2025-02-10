@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../axiosInstance";
 import { fetchTexts } from "../learingActions/learingnowActions";
 import { wordfetchTexts } from "../learingActions/learingwordsActions";
-import { categoryfetch, categoryIdfetch } from "../categoryActions/categoryActions";
+import { categoryfetch } from "../categoryActions/categoryActions";
 import { lexioncountfetch } from "../lexioncountActions/lexioncountActions";
 
 
