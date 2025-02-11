@@ -1,13 +1,21 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { IoCheckmark } from "react-icons/io5";
 import Paragrafy from '../Paragrafy/Paragrafy';
 import "./Check.scss";
 
-const Check = () => {
+interface CheckProps {
+  onCheck: (checked: boolean) => void; 
+}
+
+const Check: React.FC<CheckProps> = ({ onCheck }) => {
   const [check, setCheck] = useState<boolean>(false);
-  
+
   const handleCheck = () => {
-    setCheck((prevCheck) => !prevCheck);
+    setCheck((prevCheck) => {
+      const newCheck = !prevCheck;
+      onCheck(newCheck); 
+      return newCheck;
+    });
   };
 
   return (

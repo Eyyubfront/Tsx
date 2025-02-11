@@ -1,0 +1,189 @@
+.lexion_layout {
+    height: 100vh;
+    padding: 10px;
+
+
+        .lexion_container {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+
+            .eyyub {
+                width: 20%;
+                height: max-content;
+
+                .lexicon_card {
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
+
+            .lexionslayout_cards {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                align-items: center;
+
+                .lexionslayout_search {
+                    width: 100%;
+                    position: relative;
+
+                    .search_icons {
+                        position: absolute;
+                        top: 50px;
+                        left: 25px;
+                    }
+
+                    .css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input {
+                        padding: 16.5px 52px;
+                    }
+                }
+
+                .lexionlayout_secioncomponnet {
+                    width: 100%;
+                }
+            }
+        }
+
+
+    .homepage_quiz {
+        display: none;
+    }
+}
+
+@media (max-width:600px) {
+    .lexion_layout {
+        .lexion_container {
+            flex-direction: column;
+
+            .eyyub {
+                width: 100%;
+
+
+                .lexicon_card {
+
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    grid-template-rows: auto auto;
+                    gap: 20px;
+                    padding: 10px;
+
+                    .lexioncard_about {
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: space-between;
+                        gap: 30px;
+                    }
+
+                    .lexion3 {
+                        .lexioncard_about {
+                            flex-direction: column;
+                        }
+                    }
+
+                    .lexion1,
+                    .lexion2 {
+                        height: 100% !important;
+                    }
+                }
+            }
+
+            .lexionslayout_cards {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                align-items: center;
+
+                .lexionslayout_search {
+                    width: 100%;
+                    position: relative;
+
+                    .search_icons {
+                        position: absolute;
+                        top: 50px;
+                        left: 25px;
+                    }
+
+                    .css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input {
+                        padding: 16.5px 52px;
+                    }
+                }
+
+                .lexionlayout_secioncomponnet {
+                    width: 100%;
+                }
+            }
+        }
+
+        .homepage_quiz {
+            display: block;
+            background-image: url("../../assets/images/AuthImages/bacgroundimage/ezzedesign.png");
+            background-size: cover;
+            width: 100%;
+            text-align: center;
+            height: 56px;
+            border-radius: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            .quiz_center{
+                padding: 10px;
+              }
+
+        }
+    }
+}
+
+
+
+@media (min-width:600px) and (max-width:1200px) {
+    .lexion_layout {
+        height: 100vh;
+        padding: 10px;
+
+        .lexion_container {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+
+            .eyyub {
+                width: 20%;
+                height: max-content;
+
+                .lexicon_card {
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
+
+            .lexionslayout_cards {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                align-items: center;
+
+                .lexionslayout_search {
+                    width: 100%;
+                    position: relative;
+
+                    .search_icons {
+                        position: absolute;
+                        top: 50px;
+                        left: 25px;
+                    }
+
+                    .css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input {
+                        padding: 16.5px 52px;
+                    }
+                }
+
+                .lexionlayout_secioncomponnet {
+                    width: 100%;
+                }
+            }
+        }
+
+        .homepage_quiz {
+            display: none;
+        }
+    }
+}

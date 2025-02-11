@@ -10,6 +10,7 @@ import TimeOptions from "../../../components/TimeOptions/TimeOptions";
 import PrimaryButton from "../../../components/PrimaryButton/PrimaryButton";
 import { useAppDispatch, useAppSelector } from "../../../store";
 import "./TimeSettings.scss"
+import { Skeleton } from "@mui/material";
 
 const schema = yup.object().shape({
   startTime: yup.string().required("Start time is required"),
@@ -30,7 +31,7 @@ const TimeSettings = () => {
     },
   });
 
-  const { loading} = useAppSelector((state) => state.time);
+  const { loading } = useAppSelector((state) => state.time);
   const { handleSubmit, formState: { errors }, watch, setValue } = methods;
 
   const timeOptions = [
@@ -72,38 +73,43 @@ const TimeSettings = () => {
   };
 
   return (
-    <div className="time_settings">
-      <div className="timesettings_top">
-        <Paragrafy className="setings_tittle" text="Choosen time for learning" />
-        <Paragrafy className="settings_about" text="Choosen time for receiving notifications" />
-      </div>
-      <div className="timesetting-right">
-        <FormProvider {...methods}>
-          <form className="formsettings" onSubmit={handleSubmit(onSubmit)}>
-            <div className="box">
-              <div className="left-box">
-                <Paragrafy text="Select Time Range" className="timeparagraf" />
-                <div className="time-inputs">
-                  <UseFormTimeInput label="Start Time" name="startTime" />
-                  <UseFormTimeInput label="End Time" name="endTime" />
+    <>
+      {
+        loading ? <Skeleton style={{ height: "500px", width: "600px" }} /> : <div className="time_settings">
+          <div className="timesettings_top">
+            <Paragrafy className="setings_tittle" text="Choosen time for learning" />
+            <Paragrafy className="settings_about" text="Choosen time for receiving notifications" />
+          </div>
+          <div className="timesetting-right">
+            <FormProvider {...methods}>
+              <form className="formsettings" onSubmit={handleSubmit(onSubmit)}>
+                <div className="box">
+                  <div className="left-box">
+                    <Paragrafy text="Select Time Range" className="timeparagraf" />
+                    <div className="time-inputs">
+                      <UseFormTimeInput label="Start Time" name="startTime" />
+                      <UseFormTimeInput label="End Time" name="endTime" />
+                    </div>
+                    <Paragrafy text="Select Time Range" className="timeparagraf" />
+                    <TimeOptions
+                      timeOptions={timeOptions}
+                      selectedOption={watch("intervalId")}
+                      onOptionSelect={handleOptionSelect}
+                      errorMessage={errors.intervalId?.message}
+                    />
+                  </div>
+                  <div className="right-box">
+
+                    <PrimaryButton type="submit" disabled={loading} label="Save" />
+                  </div>
                 </div>
-                <Paragrafy text="Select Time Range" className="timeparagraf" />
-                <TimeOptions
-                  timeOptions={timeOptions}
-                  selectedOption={watch("intervalId")}
-                  onOptionSelect={handleOptionSelect}
-                  errorMessage={errors.intervalId?.message}
-                />
-              </div>
-              <div className="right-box">
-                {loading && <p>Submitting...</p>}
-                <PrimaryButton type="submit" disabled={loading} label="Save" />
-              </div>
-            </div>
-          </form>
-        </FormProvider>
-      </div>
-    </div>
+              </form>
+            </FormProvider>
+          </div>
+        </div>
+      }
+
+    </>
   );
 };
 

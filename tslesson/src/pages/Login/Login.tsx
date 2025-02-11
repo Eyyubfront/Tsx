@@ -34,6 +34,7 @@ const Login = () => {
   const [signUp, setSignUp] = useState(false);
   const [iseye, setIseye] = useState(false);
   const [isOn, setIsOn] = useState(false);
+  const [isChecked, setIsChecked] = useState<boolean>(false);
   const navigate = useNavigate();
   const methods = useForm({
     resolver: yupResolver(schema),
@@ -122,16 +123,22 @@ const Login = () => {
               )}
             </div>
 
-      
-         
             {signUp ? (
               <>
-                <Check />
-                <PrimaryButton label={"Create account"} type="submit" disabled={!formState.isValid || loading} />
+                <Check onCheck={(checked: boolean) => setIsChecked(checked)} />
+                <PrimaryButton
+                  label={"Create account"}
+                  type="submit"
+                  disabled={!formState.isValid || loading || !isChecked}
+                />
               </>
             ) : (
               <>
-                <PrimaryButton disabled={!formState.isValid || loading} label={"Sign in"} type="submit" />
+                <PrimaryButton
+                  disabled={!formState.isValid || loading}
+                  label={"Sign in"}
+                  type="submit"
+                />
                 <Toogle isOn={isOn} handleToggle={handleToggle} />
               </>
             )}

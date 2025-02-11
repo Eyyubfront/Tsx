@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { wordfetchTexts, saveText, removeText, updateText } from '../actions/learingActions/learingwordsActions';
+import { wordfetchTexts, saveText, removeText, updateText, selecetwordText } from '../actions/learingActions/learingwordsActions';
 
 
 interface wordsitems {
@@ -52,6 +52,13 @@ const LatestWordsSlice = createSlice({
    
             .addCase(saveText.fulfilled, (state) => {
                 state.status = 'succeeded';
+            })
+          
+            .addCase(selecetwordText.fulfilled, (state) => {
+                state.status = 'succeeded';
+            })
+            .addCase(selecetwordText.rejected, (state) => {
+                state.status = 'failed';
             })
             .addCase(removeText.fulfilled, (state) => {
                 state.status = 'succeeded';    

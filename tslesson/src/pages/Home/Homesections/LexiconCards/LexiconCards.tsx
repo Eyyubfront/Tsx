@@ -3,49 +3,48 @@ import "./LexiconCards.scss"
 import { RootState, useAppDispatch, useAppSelector } from "../../../../store";
 import { useEffect } from "react";
 import { lexioncountfetch } from "../../../../store/actions/lexioncountActions/lexioncountActions";
+import { Skeleton } from "@mui/material";
 
+interface LexionProps{
+    className?:string
+}
 
-
-const LexiconCards = () => {
+const LexiconCards:React.FC<LexionProps> = ({className}) => {
     const dispatch = useAppDispatch();
     const lexioncountalls = useAppSelector((state: RootState) => state.lexioncard.lexionCards);
+    const loading = useAppSelector((state: RootState) => state.lexioncard.loading);
+
     useEffect(() => {
         dispatch(lexioncountfetch());
     }, [dispatch]);
-    return (
-        <div className="lexicon_cardsall">
-            <div className="lexion_cards">
-                <div className="lexicon_card">
-                    <div className="lexionsseconds">
-                        <div className="lexionone">
-                            <Link className="links_lexion" to="/vocablarypage">
-                                <div className="lexioncard_about">
-                                    <p className="about_toplexion">{lexioncountalls.totalCount}</p>
-                                    <p className="about_bottomlexion">Vocablary</p>
-                                </div>
-                            </Link>
-                        </div>
-                        <div className="lexiontwo">
-                            <Link className="links_lexion" to="/learingnow">
-                                <div className="lexioncard_about">
-                                    <p className="about_toplexion">{lexioncountalls.learningCount}</p>
-                                    <p className="about_bottomlexion">Learingnow</p>
-                                </div>
-                            </Link>
-                        </div>
-                    </div>
-                    <div className="lexionthree">
-                        <Link className="links_lexion" to="/mastered">
-                            <div className="lexioncard_about">
-                                <p className="about_toplexion">{lexioncountalls.masteredCount}</p>
-                                <p className="about_bottomlexion">Mastered</p>
-                            </div>
-                        </Link>
-                    </div>
-                </div>
 
-            </div>
-        </div>
+    const linkData = [
+        { count: lexioncountalls.totalCount, label: 'Vocablary', id: 'vocablary' },
+        { count: lexioncountalls.learningCount, label: 'Learning now', id: 'learning' },
+        { count: lexioncountalls.masteredCount, label: 'Mastered', id: 'mastered' },
+    ];
+
+    return (
+        <>
+            {
+                loading ? <Skeleton style={{ height: "200px" }} /> : (
+                    <div className={`lexicon_cardsall ${className}`}>
+                            <div className={`lexicon_card`}>  
+                                    {linkData.slice(0, 3).map((data, index) => (
+                                        <div className={`lexion${index + 1}`} key={data.id}>
+                                            <Link className="links_lexion" to={`/lexioncards/${data.id}`}>
+                                                <div className="lexioncard_about">
+                                                    <p className="about_toplexion">{data.count}</p>
+                                                    <p className="about_bottomlexion">{data.label}</p>
+                                                </div>
+                                            </Link>
+                                        </div>
+                                    ))}
+                            </div>
+                    </div>
+                )
+            }
+        </>
     );
 }
 

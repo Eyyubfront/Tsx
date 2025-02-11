@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { FormControl, MenuItem, Select, SelectChangeEvent, Skeleton } from '@mui/material';
 import { getTexts, selecetlangaugesave } from '../../store/actions/languagehome/languagehome'; 
 import { setSelectedLanguage } from '../../store/slice/LanguageHomeSlice';
 import { LanguageHomes } from '../../types/Types';
@@ -8,7 +8,7 @@ import "./SelecetLanguage.scss";
 
 const SelectLanguage = () => {
     const dispatch = useAppDispatch();
-    const { texts, selectedLanguageId } = useAppSelector((state) => state.LanguagetextData);  
+    const { texts, selectedLanguageId ,loading} = useAppSelector((state) => state.LanguagetextData);  
     useEffect(() => {
         dispatch(getTexts());
     }, [dispatch]);
@@ -26,7 +26,9 @@ const SelectLanguage = () => {
     };
 
     return (
-        <FormControl className='selecetlanguages' fullWidth>
+     <div>
+           {
+            loading ?  <Skeleton  style={{height:"70px",width:"250px"}}  /> :    <FormControl className='selecetlanguages' fullWidth>
             <Select
                 className='formselecet'
                 value={selectedLanguageId || (texts.length > 0 ? texts[0]?.id : '')} 
@@ -39,6 +41,9 @@ const SelectLanguage = () => {
                 ))}
             </Select>
         </FormControl>
+        }
+     </div>
+     
     );
 };
 

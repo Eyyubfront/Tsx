@@ -11,94 +11,79 @@
     border-radius: 32px;
     background-image: url("../../../../assets/images/AuthImages/bacgroundimage/ezzedesign.png");
     background-position: center;
-}
 
-.lexion_cards {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    gap: 20px;
-    padding: 10px;
-}
+    .lexicon_card {
 
-.lexicon_card {
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    width: 100%;
-
-    .lexionsseconds {
-        display: flex;
-        align-items: center;
-        width: 100%;
         gap: 20px;
-
-        .lexionone {
-            padding: 10px 12px;
-            border-radius: 20px;
-            border: 1px solid #D1C2FF00;
-            background-color: #F9F8FD;
-            width: 100%;
-            height: 156px;
-        }
-
-        .lexiontwo {
-            padding: 10px 12px;
-            border-radius: 20px;
-            border: 1px solid #D1C2FF00;
-            background-color: #F9F8FD;
-            height: 156px;
-            width: 100%;
-        }
-    }
-
-    .lexionthree {
-        padding: 10px 12px;
-        border-radius: 20px;
-        border: 1px solid #D1C2FF00;
-        background-color: #F9F8FD;
-        width: 50%;
-        height: 156px;
-    }
-
-    .links_lexion {
-        text-decoration: none;
-    }
-
-    .about_bottomlexion {
-        font-family: DM Sans;
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 20px;
-        text-align: left;
-        text-underline-position: from-font;
-        text-decoration-skip-ink: none;
-        color: #1D1730CC;
-    }
-
-
-
-
-    .lexioncard_about {
+        padding: 10px;
+        width: 100%;
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 100%;
 
-        .about_toplexion {
-            color: #8B6DE8;
-            font-family: DM Serif Display;
-            font-size: 42px;
-            font-weight: 400;
-            line-height: 54.6px;
-            letter-spacing: -0.01em;
-            text-align: left;
-            text-underline-position: from-font;
-            text-decoration-skip-ink: none;
-
+        .lexion1 {
+            padding: 10px 12px;
+            border-radius: 20px;
+            border: 1px solid #D1C2FF00;
+            background-color: #F9F8FD;
+            width: 100%;
+            height: 156px;
         }
+
+        .lexion2 {
+            padding: 10px 12px;
+            border-radius: 20px;
+            border: 1px solid #D1C2FF00;
+            background-color: #F9F8FD;
+            height: 156px;
+            width: 100%;
+        }
+
+        .lexion3 {
+            padding: 10px 12px;
+            border-radius: 20px;
+            border: 1px solid #D1C2FF00;
+            background-color: #F9F8FD;
+            width: 100%;
+            height: 156px;
+        }
+
+
+        .links_lexion {
+            text-decoration: none;
+
+            .lexioncard_about {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 100%;
+
+                .about_bottomlexion {
+                    font-family: DM Sans;
+                    font-size: 16px;
+                    font-weight: 400;
+                    line-height: 20px;
+                    text-align: left;
+                    text-underline-position: from-font;
+                    text-decoration-skip-ink: none;
+                    color: #1D1730CC;
+                }
+
+
+                .about_toplexion {
+                    color: #8B6DE8;
+                    font-family: DM Serif Display;
+                    font-size: 42px;
+                    font-weight: 400;
+                    line-height: 54.6px;
+                    letter-spacing: -0.01em;
+                    text-align: left;
+                    text-underline-position: from-font;
+                    text-decoration-skip-ink: none;
+
+                }
+            }
+        }
+
+
     }
 }
 
@@ -106,11 +91,14 @@
 
 @media (max-width: 600px) {
     .lexicon_cardsall {
+
         height: max-content;
         overflow: hidden;
+      
+    
     }
 
-    .lexicon_cardsall>.lexion_cards {
+    .lexicon_cardsall>.lexicon_card {
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
@@ -118,13 +106,13 @@
         padding: 10px;
     }
 
-    .lexion_cards>.lexicon_card .lexionthree {
+    .lexicon_cardsall>.lexicon_card .lexion3 {
         grid-column: 2 / 3;
         grid-row: 1 / 3;
     }
 
-    .lexion_cards>.lexicon_card .lexionone .lexioncard_about,
-    .lexion_cards>.lexicon_card .lexiontwo .lexioncard_about {
+    .lexion_cards>.lexicon_card .lexion1 .lexioncard_about,
+    .lexion_cards>.lexicon_card .lexion2 .lexioncard_about {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -132,47 +120,46 @@
         align-items: center;
     }
 
-    .lexion_cards>.lexicon_card {
+    .lexicon_cardsall>.lexicon_card {
         width: 100%;
         height: 100%;
     }
 
-  
 
-    .lexion_cards>.lexicon_card .lexionthree .lexioncard_about {
+    
+    .lexicon_card {
+
+        .lexion1,
+        .lexion2 {
+            height: max-content !important;
+        }
+        .lexion3 {
+            height: 100% !important;
+            width: 100% !important;
+        }
+        
+            .lexioncard_about {
+                padding: 10px;
+                height: auto;
+                overflow: hidden;
+        
+                .lexions_count {
+                    font-size: 36px;
+                }
+        
+                .lexions_title {
+                    font-size: 14px;
+                }
+            }
+    }
+
+
+    .lexicon_cardsall>.lexicon_card .lexion3 .lexioncard_about {
         display: flex;
         flex-direction: column;
         align-items: baseline;
         gap: 12px;
     }
 
-    .lexicon_card {
-        overflow: hidden;
-        .lexionsseconds {
-            display: flex;
-            flex-direction: column;
-            .lexionone,
-            .lexiontwo{
-                height: max-content ;
-            }
-        }
-        .lexionthree{
-            height: 100%;
-            width: 100%;
-        }
-    }
 
-    .lexioncard_about {
-        padding: 10px;
-        height: auto;
-        overflow: hidden;
-
-        .lexions_count {
-            font-size: 36px;
-        }
-
-        .lexions_title {
-            font-size: 14px;
-        }
-    }
 }

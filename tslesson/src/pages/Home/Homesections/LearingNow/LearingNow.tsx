@@ -1,27 +1,30 @@
 import { useEffect, useState } from 'react';
-import { fetchTexts,removeText, updateText as updateTextAction, TextItem, learingnowsaveText } from '../../../../store/actions/learingActions/learingnowActions';
-import { RootState, useAppDispatch, useAppSelector } from '../../../../store/index';
+import { fetchTexts, removeText, updateText as updateTextAction, learingnowsaveText, TextItem, ITextItem } from '../../../../store/actions/learingActions/learingnowActions';
+import { useAppDispatch, useAppSelector } from '../../../../store/index';
 import TableComponent from '../../../../components/TableComponents/TableComponents';
 import { MdDeleteOutline } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import Savedicon from "../../../../assets/images/home/Bookmark.svg";
 import { Button, TableBody, TableRow, TableCell, Typography, TextField } from '@mui/material';
+import "./LearingNow.scss"
+interface LearnSearchProps {
+    searchTerm?: string;
+}
 
-const LearningNow = () => {
+const LearningNow = ({ searchTerm = "" }: LearnSearchProps) => {
     const dispatch = useAppDispatch();
-    const items = useAppSelector((state: RootState) => state.learningNow.items.nowitems);
-   
+    const items = useAppSelector((state) => state.learningNow.items.nowitems);
     const [editText, setEditText] = useState<{ id: number; source: string; translation: string } | null>(null);
 
     useEffect(() => {
         dispatch(fetchTexts({ page: 1, pageSize: 10 }));
-      }, [dispatch]);
-      
+    }, [dispatch]);
+
     const handleSaveText = (item: TextItem) => {
         dispatch(learingnowsaveText(item));
     };
 
-    const handleRemoveText = (id:number)=>{
+    const handleRemoveText = (id: number) => {
         dispatch(removeText(id));
     };
 
@@ -41,13 +44,20 @@ const LearningNow = () => {
         }
     };
 
+    const filteredItems = items.filter((item: ITextItem) =>
+        item.source?.toLowerCase().includes(searchTerm?.toLowerCase()) || item.translation?.toLowerCase().includes(searchTerm?.toLowerCase())
+    
+);
+
+
     return (
         <div>
             <TableComponent title="Learning Now">
                 <TableBody>
-                    {items?.map(({ id, source, translation, }) => (
+                    {filteredItems?.length ? 
+                    filteredItems?.map(({ id, source, translation }) => (
                         <TableRow className='table_aligns' key={id}>
-                            <TableCell sx={{borderBottom:"none"}}>
+                            <TableCell sx={{ borderBottom: "none" }}>
                                 <Typography>{`${source} - ${translation}`}</Typography>
                             </TableCell>
                             <TableCell className='table_cards'>
@@ -74,29 +84,31 @@ const LearningNow = () => {
                                 </Button>
                             </TableCell>
                         </TableRow>
-                    ))}
+                    ))
+                    :
+                    <div className='data_undifendsbox'>NO DATA FOUND</div>
+                }
                 </TableBody>
+                {editText && (
+                    <div style={{ marginTop: '20px' }}>
+                        <TextField
+                            label="Source"
+                            variant="outlined"
+                            value={editText.source}
+                            onChange={(e) => setEditText({ ...editText, source: e.target.value })}
+                            style={{ marginRight: '10px' }}
+                        />
+                        <TextField
+                            label="Translation"
+                            variant="outlined"
+                            value={editText.translation}
+                            onChange={(e) => setEditText({ ...editText, translation: e.target.value })}
+                            style={{ marginRight: '10px' }}
+                        />
+                        <Button variant="contained" onClick={handleUpdate}>Update</Button>
+                    </div>
+                )}
             </TableComponent>
-
-            {editText && (
-                <div style={{ marginTop: '20px' }}>
-                    <TextField
-                        label="Source"
-                        variant="outlined"
-                        value={editText.source}
-                        onChange={(e) => setEditText({ ...editText, source: e.target.value })}
-                        style={{ marginRight: '10px' }}
-                    />
-                    <TextField
-                        label="Translation"
-                        variant="outlined"
-                        value={editText.translation}
-                        onChange={(e) => setEditText({ ...editText, translation: e.target.value })}
-                        style={{ marginRight: '10px' }}
-                    />
-                    <Button variant="contained" onClick={handleUpdate}>Update</Button>
-                </div>
-            )}
         </div>
     );
 };

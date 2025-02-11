@@ -3,11 +3,11 @@ import { useForm, FormProvider } from "react-hook-form";
 import Paragrafy from "../../components/Paragrafy/Paragrafy";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import UseFormInput from "../../components/PrimaryInput/UseFormInput";
-import { RootState, useAppDispatch, useAppSelector } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { passwordChecksave } from "../../store/actions/passwordsettingsActions/passwordsettingsActions";
-import { Alert } from "@mui/material";
+import { Alert, Skeleton } from "@mui/material";
 import CheckIcon from '@mui/icons-material/Check';
 import "./ChangedPasswordSettings.scss"
 const schema = Yup.object().shape({
@@ -33,12 +33,13 @@ const ChangedPasswordSettings = () => {
     });
 
     const { handleSubmit, formState } = methods;
-    const { isLoading, error,success } = useAppSelector((state: RootState) => state.passwordchecksettings);
+    const {  error, success,isLoading } = useAppSelector((state) => state.passwordchecksettings);
+
 
 
     const onSubmit = async (data: { password: string; newPassword: string; confirmPassword: string; }) => {
         const newPasswordData = {
-            currentPassword: data.password,  
+            currentPassword: data.password,
             newPassword: data.newPassword,
         };
 
@@ -67,9 +68,11 @@ const ChangedPasswordSettings = () => {
     };
 
     return (
-        <div className="changedpasswordsettings">
-              <div className="changedpasswordforms">
-                     <Paragrafy className="passwordsetingstittle" text="Change password"/>
+        <>
+            {
+                isLoading ? <Skeleton style={{height:"100%",width:"540px"}} /> : <div className="changedpasswordsettings">
+                    <div className="changedpasswordforms">
+                        <Paragrafy className="passwordsetingstittle" text="Change password" />
                         <Paragrafy className="resettittle" text="Please type something you’ll remember" />
                         {error && <p className="error-message">{error}</p>}
                         <FormProvider {...methods}>
@@ -86,7 +89,7 @@ const ChangedPasswordSettings = () => {
                                 </div>
                                 <div className="form-group">
                                     <UseFormInput
-                                        name='newPassword' 
+                                        name='newPassword'
                                         label='New Password'
                                         isEyeicon={true}
                                         handleEye={handleEyePassword}
@@ -117,14 +120,16 @@ const ChangedPasswordSettings = () => {
                             <Alert
                                 icon={<CheckIcon fontSize="inherit" />}
                                 severity="success"
-                                style={{display:"flex",alignItems:"center",marginTop:"5px"}}
+                                style={{ display: "flex", alignItems: "center", marginTop: "5px" }}
                                 sx={{ display: isAlertVisible ? "block" : "none" }}
                             >
                                 Your code has been successfully changed
                             </Alert>
                         )}
                     </div>
-        </div>
+                </div>
+            }
+        </>
     );
 };
 

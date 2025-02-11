@@ -7,7 +7,11 @@ export interface TextItem {
     id?: number;
     source?: string;
     translation?: string;
-    isLearningNow: boolean;
+    isLearningNow?: boolean;
+}
+
+export interface ITextItem extends TextItem {
+    isMastered?: boolean
 }
 
 export const fetchTexts = createAsyncThunk('learningNow/fetchTexts', async ({ page, pageSize }: { page: number; pageSize: number }, thunkAPI) => {

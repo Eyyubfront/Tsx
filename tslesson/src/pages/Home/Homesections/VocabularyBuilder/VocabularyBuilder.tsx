@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../../../store';
 import { categoryfetch } from '../../../../store/actions/categoryActions/categoryActions';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Skeleton } from '@mui/material';
 
 interface VocabularyBuilderProps {
     className?: string;
@@ -15,6 +16,7 @@ const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const categories = useAppSelector((state) => state.category.categories);
+    const status = useAppSelector((state) => state.category.status);
 
     const [clickedCardId, setClickedCardId] = useState<number | null>(null);
     const [layout, setLayout] = useState<'horizontal' | 'vertical'>('vertical');
@@ -46,7 +48,9 @@ const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
     };
 
     return (
-        <div className="vocablary-builder">
+     <>
+        {
+            status==="loading" ? <Skeleton style={{height:"121px"}} /> :  <div className="vocablary-builder">
             <Swiper
                 className={`swipers ${className}`}
                 spaceBetween={10}
@@ -54,13 +58,13 @@ const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
                 loop
                 breakpoints={{
                     320: {
-                        slidesPerView: layout === 'horizontal' ? 1 : 1.3,
+                        slidesPerView:  4,
                     },
                     600: {
-                        slidesPerView: layout === 'horizontal' ? 1.5 : 2.5,
+                        slidesPerView:2.5,
                     },
                     1024: {
-                        slidesPerView: layout === 'vertical' ? 2 : 3.3,
+                        slidesPerView: 3.3,
                     }
                 }}
                 modules={[Pagination]}
@@ -92,6 +96,9 @@ const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
                 ))}
             </Swiper>
         </div>
+        }
+     </>
+    
     );
 }
 

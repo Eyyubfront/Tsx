@@ -1,11 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../axiosInstance';
+import { fetchTexts } from './learingnowActions';
 
 export interface WordsItem {
     id: number;
     source?: string;
     translation?: string;
-    isLearningNow: boolean;
+    isLearningNow?: boolean;
+}
+export interface IWordsitem extends WordsItem {
+    isMastered?: boolean
 }
 
 export const wordfetchTexts = createAsyncThunk('learningNow/wordfetchTexts', async ({ page, pageSize }: { page: number; pageSize: number }, thunkAPI) => {
@@ -26,6 +30,21 @@ export const saveText = createAsyncThunk('learningWords/saveText', async (item: 
         return thunkAPI.rejectWithValue(err);
     }
 });
+
+export const selecetwordText = createAsyncThunk(
+    "learningWords/selecetwordText",
+    async (id: number, { rejectWithValue,dispatch }) => {
+      try {
+        const response = await axiosInstance.post(`/UserVocabulary/SetLearning/${id}`);
+        dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
+        dispatch(fetchTexts({ page: 1, pageSize: 10 })); 
+        return response.data.data;
+      } catch (error) {
+        return rejectWithValue(error);
+      }
+    }
+  );
+
 
 export const removeText = createAsyncThunk('learningNow/removeText', async ({ id }: { id: number }, thunkAPI) => {
     try {

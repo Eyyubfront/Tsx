@@ -21,6 +21,8 @@ import VocabularyBuilder from "../pages/Home/Homesections/VocabularyBuilder/Voca
 import CategoryDetail from "../pages/Home/Homesections/CategoryDetail/CategoryDetail";
 import LearningNow from "../pages/Home/Homesections/LearingNow/LearingNow";
 import LatestWords from "../pages/Home/Homesections/LatestWords/LatestWords";
+import LexiconCards from "../pages/Home/Homesections/LexiconCards/LexiconCards";
+import LexionLayout from "../layout/LexionLayout/LexionLayout";
 
 
 
@@ -47,6 +49,9 @@ const Routing = () => {
         <Route path="/" element={<Home />} />
         <Route path="/category" element={<VocabularyBuilder />} />  
         <Route path="/category/:categoryId" element={<CategoryDetail />} />
+        <Route path="/lexioncards" element={<LexiconCards />} />  
+        <Route path="/lexioncards/:id" element={<LexionLayout />} />
+
         <Route path="settingspage" element={<SettingsLayout />}>
           <Route path="languagesettings" element={<Languagesettings />} />
           <Route path="timesettings" element={<TimeSettings />} />

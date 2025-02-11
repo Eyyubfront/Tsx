@@ -1,38 +1,55 @@
 import { useEffect, useState } from 'react';
 import {
     wordfetchTexts,
-    saveText,
     removeText,
     updateText as updateTextAction,
     WordsItem,
+    IWordsitem,
+    selecetwordText,
 } from '../../../../store/actions/learingActions/learingwordsActions';
 import { RootState, useAppDispatch, useAppSelector } from '../../../../store/index';
 import TableComponent from '../../../../components/TableComponents/TableComponents';
 import { MdDeleteOutline, MdEdit } from "react-icons/md";
 import Savedicon from "../../../../assets/images/home/Bookmark.svg";
+import NotSavedicon from "../../../../assets/images/home/nosaved.svg"; 
 import { Button, TableBody, TableRow, TableCell, Typography, TextField } from '@mui/material';
+import "./LatestWords.scss"
+interface LearnSearchProps {
+    searchTerm?: string;
+}
 
-const LatestWords = () => {
+const LatestWords = ({ searchTerm = "" }: LearnSearchProps) => {
     const dispatch = useAppDispatch();
     const items = useAppSelector((state: RootState) => state.latestWords.items.items);
-
     
     const [editText, setEditText] = useState<{ id: number; source: string; translation: string; } | null>(null);
+    const [savedItems, setSavedItems] = useState<WordsItem[]>([]); 
 
     useEffect(() => {
-            dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
+        dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
+       
     
     }, [dispatch]);
 
     const handleSaveText = (item: WordsItem) => {
-        dispatch(saveText(item));
-    };
+        const isItemSaved = savedItems.some(savedItem => savedItem.id === item.id);
+        if (isItemSaved) {
+            setSavedItems(prevItems => prevItems.filter(savedItem => savedItem.id !== item.id));
+            localStorage.removeItem(`item-${item.id}`);
+        } else {
+            const newItem = { ...item, isAdded: true };
+            setSavedItems(prevItems => [...prevItems, newItem]);
+            localStorage.setItem(`item-${item.id}`, JSON.stringify(newItem));
+        }
 
+        dispatch(selecetwordText(item.id));
+    };
+    
     const handleRemoveText = (id: number) => {
         dispatch(removeText({ id }));
     };
 
-    const handleUpdateText = ({ id, source, translation }: { id: number; source: string; translation: string}) => {
+    const handleUpdateText = ({ id, source, translation }: { id: number; source: string; translation: string }) => {
         const updatedItem = { id, source, translation };
         dispatch(updateTextAction(updatedItem));
     };
@@ -48,11 +65,15 @@ const LatestWords = () => {
         }
     };
 
+    const filteredItems = items.filter((item: IWordsitem) =>
+        item.source?.toLowerCase().includes(searchTerm?.toLowerCase()) || item.translation?.toLowerCase().includes(searchTerm?.toLowerCase())
+    );
+
     return (
         <div>
             <TableComponent title="Latest added words">
                 <TableBody>
-                    {items.map(({ id,source, translation }) => (
+                    {filteredItems?.length ? filteredItems.map(({ id, source, translation }) => (
                         <TableRow className='table_aligns' key={id}>
                             <TableCell sx={{ borderBottom: "none" }}>
                                 <Typography>{`${source} - ${translation}`}</Typography>
@@ -61,9 +82,9 @@ const LatestWords = () => {
                                 <Button
                                     className='table_button'
                                     variant="outlined"
-                                    onClick={() => handleSaveText({ id,source, translation ,isLearningNow: true})}
+                                    onClick={() => handleSaveText({ id, source, translation, isLearningNow: true })}
                                 >
-                                    <img src={Savedicon} alt="Save" />
+                                    <img src={savedItems.some(saved => saved.id === id) ? Savedicon : NotSavedicon} alt="Save" />
                                 </Button>
                                 <Button
                                     className='table_button'
@@ -81,7 +102,11 @@ const LatestWords = () => {
                                 </Button>
                             </TableCell>
                         </TableRow>
-                    ))}
+                    ))
+                    :
+                    <div className='data_undifendsbox'>NO DATA FOUND</div>
+                    
+                    }
                 </TableBody>
             </TableComponent>
 
