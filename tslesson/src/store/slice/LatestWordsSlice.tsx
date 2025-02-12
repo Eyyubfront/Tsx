@@ -56,6 +56,7 @@ const LatestWordsSlice = createSlice({
           
             .addCase(selecetwordText.fulfilled, (state) => {
                 state.status = 'succeeded';
+     
             })
             .addCase(selecetwordText.rejected, (state) => {
                 state.status = 'failed';

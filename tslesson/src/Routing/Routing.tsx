@@ -12,7 +12,6 @@ import LearnTime from "../pages/LearnTime/LearnTime";
 import LanguageSelector from "../pages/LanguageSelector/LanguageSelector";
 import ChooseLearnLanguage from "../pages/ChooseLanguage/ChooseLearnLanguage";
 import VerifyRouting from "./VerifyRouting";
-
 import SettingsLayout from "../layout/SettingsLayout/SettingsLayout";
 import Languagesettings from "../pages/LanguageSettings/Languagesettings";
 import TimeSettings from "../pages/Home/TimeSettings/TimeSettings";
@@ -51,7 +50,6 @@ const Routing = () => {
         <Route path="/category/:categoryId" element={<CategoryDetail />} />
         <Route path="/lexioncards" element={<LexiconCards />} />  
         <Route path="/lexioncards/:id" element={<LexionLayout />} />
-
         <Route path="settingspage" element={<SettingsLayout />}>
           <Route path="languagesettings" element={<Languagesettings />} />
           <Route path="timesettings" element={<TimeSettings />} />

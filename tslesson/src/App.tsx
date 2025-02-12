@@ -8,7 +8,10 @@ function App() {
   
   useEffect(() => {
    dispatch(refreshToken())
+    
   }, []);
+
+
   console.log(refreshToken);
   
 

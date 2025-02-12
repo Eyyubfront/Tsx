@@ -77,7 +77,7 @@ const Sidebar = () => {
 
 {
                 loading ? <Skeleton style={{height:"400px",width:"400px"}} /> : 
-                <div className="sidebar_box" style={{ display: isSidebarVisible ? "block" : "none" }}>
+                <div className="sidebar_box desktop-bar"   style={{ display: isSidebarVisible ? "block" : "none" }}>
                     <div className="sidebar_topcontainer">
                         {cards.map((card, index) => (
                             <NavLink className="sidebar_toplinks" to={card.link} style={{ textDecoration: "none" }} key={index}>

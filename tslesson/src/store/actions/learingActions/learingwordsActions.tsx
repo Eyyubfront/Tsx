@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../axiosInstance';
 import { fetchTexts } from './learingnowActions';
+import { lexioncountfetch } from '../lexioncountActions/lexioncountActions';
 
 export interface WordsItem {
     id: number;
@@ -15,7 +16,7 @@ export interface IWordsitem extends WordsItem {
 export const wordfetchTexts = createAsyncThunk('learningNow/wordfetchTexts', async ({ page, pageSize }: { page: number; pageSize: number }, thunkAPI) => {
     try {
         const response = await axiosInstance.get(`/UserVocabulary/GetPaginatedByUserId?page=${page}&pageSize=${pageSize}`);
-        return response.data.data;  
+        return response.data.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(error);
     }
@@ -24,7 +25,8 @@ export const wordfetchTexts = createAsyncThunk('learningNow/wordfetchTexts', asy
 export const saveText = createAsyncThunk('learningWords/saveText', async (item: WordsItem, thunkAPI) => {
     try {
         const response = await axiosInstance.post('/UserVocabulary/Create', item);
-         thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
+        thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
+        thunkAPI.dispatch(lexioncountfetch());
         return response.data;
     } catch (err) {
         return thunkAPI.rejectWithValue(err);
@@ -33,17 +35,18 @@ export const saveText = createAsyncThunk('learningWords/saveText', async (item: 
 
 export const selecetwordText = createAsyncThunk(
     "learningWords/selecetwordText",
-    async (id: number, { rejectWithValue,dispatch }) => {
-      try {
-        const response = await axiosInstance.post(`/UserVocabulary/SetLearning/${id}`);
-        dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
-        dispatch(fetchTexts({ page: 1, pageSize: 10 })); 
-        return response.data.data;
-      } catch (error) {
-        return rejectWithValue(error);
-      }
+    async (id: number, { rejectWithValue, dispatch }) => {
+        try {
+            const response = await axiosInstance.post(`/UserVocabulary/SetLearning/${id}`);
+            dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
+            dispatch(fetchTexts({ page: 1, pageSize: 10 }));
+            dispatch(lexioncountfetch());
+            return response.data.data;
+        } catch (error) {
+            return rejectWithValue(error);
+        }
     }
-  );
+);
 
 
 export const removeText = createAsyncThunk('learningNow/removeText', async ({ id }: { id: number }, thunkAPI) => {

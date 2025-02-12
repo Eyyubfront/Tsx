@@ -12,9 +12,11 @@ const SelectLanguage = () => {
     useEffect(() => {
         dispatch(getTexts());
     }, [dispatch]);
-
     useEffect(() => {
-        if (texts.length > 0 && selectedLanguageId === null) {
+        const storedLanguageId = localStorage.getItem('selectedLanguageId');
+        if (storedLanguageId) {
+            dispatch(setSelectedLanguage(parseInt(storedLanguageId)));
+        } else if (texts.length > 0 && selectedLanguageId === null) {
             dispatch(setSelectedLanguage(texts[0].id));
         }
     }, [texts, selectedLanguageId, dispatch]);
@@ -23,6 +25,7 @@ const SelectLanguage = () => {
         const value = event.target.value as number;
         dispatch(setSelectedLanguage(value));
         dispatch(selecetlangaugesave(value)); 
+        localStorage.setItem('selectedLanguageId', value.toString());
     };
 
     return (

@@ -93,14 +93,13 @@
 
                 .settingssidebar__top {
                     .settingsbackicon {
-                        display: none;
-                    }
-
-                    .settingsbackiconmobilversion {
-
                         display: block;
                         text-align: center;
                         padding: 5px;
+                    }
+
+                    .settingsbackiconmobilversion {
+                        display: none;
                     }
                 }
             }

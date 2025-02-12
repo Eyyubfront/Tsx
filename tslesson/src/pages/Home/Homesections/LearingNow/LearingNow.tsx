@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchTexts, removeText, updateText as updateTextAction, learingnowsaveText, TextItem, ITextItem } from '../../../../store/actions/learingActions/learingnowActions';
+import { fetchTexts, removeText, updateText as updateTextAction, TextItem, ITextItem } from '../../../../store/actions/learingActions/learingnowActions';
 import { useAppDispatch, useAppSelector } from '../../../../store/index';
 import TableComponent from '../../../../components/TableComponents/TableComponents';
 import { MdDeleteOutline } from "react-icons/md";
@@ -7,23 +7,25 @@ import { MdEdit } from "react-icons/md";
 import Savedicon from "../../../../assets/images/home/Bookmark.svg";
 import { Button, TableBody, TableRow, TableCell, Typography, TextField } from '@mui/material';
 import "./LearingNow.scss"
+import { selecetwordText } from '../../../../store/actions/learingActions/learingwordsActions';
+import NotSavedicon from "../../../../assets/images/home/nosaved.svg"; 
 interface LearnSearchProps {
     searchTerm?: string;
 }
 
-const LearningNow = ({ searchTerm = "" }: LearnSearchProps) => {
+const LearningNow = ({ searchTerm = "",showAll=false }: LearnSearchProps & {showAll?:boolean}) => {
     const dispatch = useAppDispatch();
     const items = useAppSelector((state) => state.learningNow.items.nowitems);
     const [editText, setEditText] = useState<{ id: number; source: string; translation: string } | null>(null);
 
     useEffect(() => {
-        dispatch(fetchTexts({ page: 1, pageSize: 10 }));
+        dispatch(fetchTexts({ page: 1, pageSize : showAll?1000: 10 }));
     }, [dispatch]);
 
-    const handleSaveText = (item: TextItem) => {
-        dispatch(learingnowsaveText(item));
-    };
-
+      const handleSaveText = (item: TextItem) => {
+  
+          dispatch(selecetwordText(item.id));
+      };
     const handleRemoveText = (id: number) => {
         dispatch(removeText(id));
     };
@@ -66,7 +68,7 @@ const LearningNow = ({ searchTerm = "" }: LearnSearchProps) => {
                                     variant="outlined"
                                     onClick={() => handleSaveText({ id, source, translation, isLearningNow: true })}
                                 >
-                                    <img src={Savedicon} alt="" />
+                                  <img src={items.some(saved => saved.id === id && saved.isLearningNow) ? Savedicon : NotSavedicon} alt="Save" />
                                 </Button>
                                 <Button
                                     className='table_button'

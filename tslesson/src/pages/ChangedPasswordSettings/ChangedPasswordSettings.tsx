@@ -118,6 +118,7 @@ const ChangedPasswordSettings = () => {
                         </FormProvider>
                         {success && (
                             <Alert
+                            
                                 icon={<CheckIcon fontSize="inherit" />}
                                 severity="success"
                                 style={{ display: "flex", alignItems: "center", marginTop: "5px" }}

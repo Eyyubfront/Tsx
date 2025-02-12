@@ -1,8 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../axiosInstance";
 
+
 export interface LexionProps {
-    id?:number,
+    id?: number,
     totalCount: number,
     masteredCount: number,
     learningCount: number

@@ -1,10 +1,10 @@
-import { useSelector } from 'react-redux';
+
 import {  Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { RootState } from '../store';
+import { RootState, useAppSelector } from '../store';
 import { useEffect } from 'react';
 
 const PublicRouting = () => {
-  const user = useSelector((state: RootState) => state.Auth.isAuth);
+  const user = useAppSelector((state: RootState) => state.Auth.isAuth);
 
   let location = useLocation();
   let navigate = useNavigate();

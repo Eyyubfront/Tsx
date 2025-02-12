@@ -83,7 +83,7 @@ const LearnTime = () => {
           titleText="What’s the Best Time for Learning?"
           descriptionText="Tell us when and how often you'd like to receive notifications. You can adjust these settings anytime to fit your schedule."
         />
-        <BackButton onClick={() => navigate("/login")} />
+        <BackButton className="learnback" onClick={() => navigate("/login")} />
       </div>
       <div className="learntime_right">
         <FormProvider {...methods} >

@@ -18,30 +18,17 @@ interface LearnSearchProps {
     searchTerm?: string;
 }
 
-const LatestWords = ({ searchTerm = "" }: LearnSearchProps) => {
+const LatestWords = ({ searchTerm = "",showAll=false }: LearnSearchProps& {showAll?:boolean}) => {
     const dispatch = useAppDispatch();
     const items = useAppSelector((state: RootState) => state.latestWords.items.items);
-    
     const [editText, setEditText] = useState<{ id: number; source: string; translation: string; } | null>(null);
-    const [savedItems, setSavedItems] = useState<WordsItem[]>([]); 
-
     useEffect(() => {
-        dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
+        dispatch(wordfetchTexts({ page: 1,  pageSize : showAll?1000: 10  }));
        
     
     }, [dispatch]);
 
     const handleSaveText = (item: WordsItem) => {
-        const isItemSaved = savedItems.some(savedItem => savedItem.id === item.id);
-        if (isItemSaved) {
-            setSavedItems(prevItems => prevItems.filter(savedItem => savedItem.id !== item.id));
-            localStorage.removeItem(`item-${item.id}`);
-        } else {
-            const newItem = { ...item, isAdded: true };
-            setSavedItems(prevItems => [...prevItems, newItem]);
-            localStorage.setItem(`item-${item.id}`, JSON.stringify(newItem));
-        }
-
         dispatch(selecetwordText(item.id));
     };
     
@@ -84,7 +71,7 @@ const LatestWords = ({ searchTerm = "" }: LearnSearchProps) => {
                                     variant="outlined"
                                     onClick={() => handleSaveText({ id, source, translation, isLearningNow: true })}
                                 >
-                                    <img src={savedItems.some(saved => saved.id === id) ? Savedicon : NotSavedicon} alt="Save" />
+                                    <img src={items.some(saved => saved.id === id &&  saved.isLearningNow) ? Savedicon : NotSavedicon} alt="Save" />
                                 </Button>
                                 <Button
                                     className='table_button'

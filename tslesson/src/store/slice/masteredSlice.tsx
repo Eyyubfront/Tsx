@@ -30,7 +30,7 @@ const categorySlice = createSlice({
             })
             .addCase(getAllMastered.fulfilled, (state, action) => {
                 state.loading = false;
-                state.mastereds = action.payload;
+                state.mastereds = action.payload.items;
             })
             .addCase(getAllMastered.rejected, (state, action) => {
                 state.loading = false;

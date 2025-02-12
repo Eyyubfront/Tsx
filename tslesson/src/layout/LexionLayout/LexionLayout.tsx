@@ -21,7 +21,7 @@ const LexionLayout = () => {
           <BackButton className="settingsbackicon" onClick={() => navigate("/")} />
           </div>
             <div className="lexion_container">
-                <LexiconCards className="eyyub" />
+                <LexiconCards className="layout_lexionprops" />
                 <div className="lexionslayout_cards">
                     <div className="lexionslayout_search">
                         <div className="search_icons">
@@ -39,8 +39,8 @@ const LexionLayout = () => {
                         />
                     </div>
                     <div className="lexionlayout_secioncomponnet">
-                        {id === "learning" && <LearningNow searchTerm={searchTerm} />}
-                        {id === "vocablary" && <LatestWords searchTerm={searchTerm} />}
+                        {id === "learning" && <LearningNow searchTerm={searchTerm} showAll={true} />}
+                        {id === "vocablary" && <LatestWords searchTerm={searchTerm} showAll={true} />}
                         {id === "mastered" && <MasteredWords  searchTerm={searchTerm} />}
                     </div>
                 </div>
