@@ -2,9 +2,8 @@ import 'swiper/css';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import "./VocabularyBuilder.scss";
-import { useAppDispatch, useAppSelector } from '../../../../store';
-import { categoryfetch } from '../../../../store/actions/categoryActions/categoryActions';
-import { useEffect, useState } from 'react';
+import {  useAppSelector } from '../../../../store';
+import {  useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Skeleton } from '@mui/material';
 
@@ -14,29 +13,11 @@ interface VocabularyBuilderProps {
 
 const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
     const categories = useAppSelector((state) => state.category.categories);
     const status = useAppSelector((state) => state.category.status);
 
     const [clickedCardId, setClickedCardId] = useState<number | null>(null);
-    const [layout, setLayout] = useState<'horizontal' | 'vertical'>('vertical');
-
-    useEffect(() => {
-        dispatch(categoryfetch());
-
-        const handleResize = () => {
-            if (window.innerWidth <= 600) {
-                setLayout('horizontal'); 
-            } else {
-                setLayout('vertical'); 
-            }
-        };
-
-        handleResize(); 
-        window.addEventListener('resize', handleResize);
-
-        return () => window.removeEventListener('resize', handleResize);
-    }, [dispatch]);
+ 
 
     const handleCategoryClick = async (categoryId: number) => {
         try {

@@ -73,7 +73,7 @@
     flex-direction: column;
     align-items: baseline;
 
-    justify-content: center;
+    justify-content: space-between;
 
     .chooselanguageselector__left {
       flex-direction: column;
@@ -92,7 +92,8 @@
     display: flex;
     flex-direction: column;
     align-items: baseline;
-    justify-content: center;
+    justify-content: space-between;
+
     gap: 32px;
 
     .chooselanguageselector__left {

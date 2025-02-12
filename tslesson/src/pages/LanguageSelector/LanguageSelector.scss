@@ -68,9 +68,8 @@
   .language_selector {
     flex-direction: column;
     align-items: baseline;
+    justify-content: space-between;
 
-    height: max-content;
-    justify-content: center;
 
     .languageselector__left {
       flex-direction: column;
@@ -87,8 +86,8 @@
     display: flex !important;
     flex-direction: column !important;
     align-items: baseline;
-    height: max-content;
-    justify-content: center;
+    justify-content: space-between;
+
  
 
     .languageselector__left {

@@ -25,7 +25,7 @@ const schema = Yup.object().shape({
 });
 
 const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
-    const [isSaved, setIsSaved] = useState(false);
+    const [isSaved, setIsSaved] = useState<boolean>(false);
     const selectedLanguageId = useAppSelector((state) => state.LanguagetextData.selectedLanguageId);
     const texts = useAppSelector((state) => state.LanguagetextData.texts);
     const userId = useAppSelector((state) => state.Auth.userId);
@@ -55,20 +55,26 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
         const { wordone, wordtwo } = methods.getValues();
         if (userId) {
             const newItem = {
+                id: selectedLanguageId,
                 source: wordone,
                 translation: wordtwo,
                 isLearningNow: isSaved
             };
             dispatch(learingnowsaveText(newItem));
+            setIsSaved(false); 
         } else {
             console.error("userId not available.");
         }
         onClose();
     };
-
     const handleSavedIconClick = () => {
-        setIsSaved(prevState => !prevState);
+        if (!isSaved) {
+            setIsSaved(true);
+        } else {
+            setIsSaved(false); 
+        }
     };
+
 
     return (
         <Dialog className='dialoq' open={show} onClose={onClose} maxWidth="sm" fullWidth>
