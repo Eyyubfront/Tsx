@@ -75,6 +75,7 @@ const Input: FC<CustomInputProps> = ({
       {errors[name] && (
         <span className="error_message">{String(errors[name]?.message)}</span>
       )}
+   
     </div>
   );
 };

@@ -57,7 +57,7 @@ const ForgotPasswordPage: React.FC = () => {
           titleText="Hi, Welcome!"
           descriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!"
         />
-        <BackButton onClick={() => navigate("/login")} />
+        <BackButton className="forgotback" onClick={() => navigate("/login")} />
       </div>
       <div className="forgotpassword__right">
 

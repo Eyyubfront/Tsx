@@ -5,25 +5,23 @@ import Paragrafy from "../../components/Paragrafy/Paragrafy";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import { confirmEmail, confirmPasswordResetCode, resendConfirmationToken } from "../../store/actions/verifyemailActions/emailVerificationActions";
 import { useForm, FormProvider } from "react-hook-form";
-import UseFormInput from "../../components/PrimaryInput/UseFormInput";
 import { RootState, useAppDispatch, useAppSelector } from "../../store/index";
 import SidePanel from "../../layout/SidePanel/SidePanel";
 import BackButton from "../../components/BackButton/BackButton";
+import { MuiOtpInput } from 'mui-one-time-password-input';
 
 const VerifyEmailPage = () => {
   const [counter, setCounter] = useState(30);
   const [canResend, setCanResend] = useState(false);
-  
+  const [otp, setOtp] = useState('');
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const methods = useForm();
-  const { handleSubmit,formState } = methods;
-  
-  const {title, error, isLoading } = useAppSelector((state: RootState) => state.emailVerification);
-  const { userId, veriyuse } = useAppSelector((state: RootState) => state.Auth);
-  
-  
+  const { handleSubmit } = methods;
 
+  const { title, error, isLoading } = useAppSelector((state: RootState) => state.emailVerification);
+  const { userId, veriyuse } = useAppSelector((state: RootState) => state.Auth);
 
   useEffect(() => {
     if (!userId) {
@@ -42,7 +40,6 @@ const VerifyEmailPage = () => {
     }
   }, [counter]);
 
-
   const handleResend = () => {
     if (userId) {
       dispatch(resendConfirmationToken(userId));
@@ -53,12 +50,10 @@ const VerifyEmailPage = () => {
     }
   };
 
-  const onSubmit = (data: any) => {
-    const enteredCode = Object.values(data).join("");
-
-    if (enteredCode.length === 4) {
+  const onSubmit = () => {
+    if (otp.length === 4) {
       if (veriyuse) {
-        dispatch(confirmEmail({ code: enteredCode, userId: String(userId) })).then((action: any) => {
+        dispatch(confirmEmail({ code: otp, userId: String(userId) })).then((action: any) => {
           if (action.meta.requestStatus === "fulfilled") {
             navigate("/languageselector");
           } else {
@@ -66,7 +61,7 @@ const VerifyEmailPage = () => {
           }
         });
       } else {
-        dispatch(confirmPasswordResetCode({ code: enteredCode, userId: String(userId) })).then((action: any) => {
+        dispatch(confirmPasswordResetCode({ code: otp, userId: String(userId) })).then((action: any) => {
           if (action.meta.requestStatus === "fulfilled") {
             navigate("/resetpasswordpage");
           } else {
@@ -79,8 +74,6 @@ const VerifyEmailPage = () => {
     }
   };
 
-
-
   return (
     <div className="verify__email">
       <div className="verifyemail__left">
@@ -88,7 +81,7 @@ const VerifyEmailPage = () => {
           titleText="Hi, Welcome!"
           descriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!"
         />
-        <BackButton  onClick={() => navigate("/login")}/>
+        <BackButton onClick={() => navigate("/login")} />
       </div>
       <div className="veriyfemail_right">
         <FormProvider {...methods}>
@@ -97,21 +90,8 @@ const VerifyEmailPage = () => {
               <div className="verify-content">
                 <Heading text={title || "Verify E-mail address"} />
                 <Paragrafy className="verify_aboutmail" text="We’ve sent an activation code to your email" />
-                <div style={{flexDirection:"row"}} className="inputs">
-                  {Array.from({ length: 4 }).map((_, index) => (
-                    <UseFormInput
-                      key={index}
-                      name={`code-${index}`}
-                      label=""
-                      rules={{ required: " " }}
-                      type="text"
-                      maxLength={1}
-                      isEyeicon={false}
-                      iseye={false}
-                      handleEye={() => { }}
-                      
-                    />
-                  ))}
+                <div className="otp-input">
+                  <MuiOtpInput value={otp} onChange={setOtp} />
                 </div>
                 {error && <div className="error">{error}</div>}
                 <div className="resend-code">
@@ -123,14 +103,13 @@ const VerifyEmailPage = () => {
                     <p>Send code again in {counter} seconds</p>
                   )}
                 </div>
-                <PrimaryButton   disabled={!formState.isValid || isLoading} type="submit" label="Verify Code" />
+                <PrimaryButton disabled={otp.length < 4 || isLoading} type="submit" label="Verify Code" />
               </div>
             </div>
           </form>
         </FormProvider>
       </div>
     </div>
-
   );
 };
 

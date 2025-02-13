@@ -14,6 +14,7 @@ import lexionReducer from "./slice/LexionSlice";
 import PasswordcheckSettingsReducer from "./slice/PasswordSettingsSlice";
 import UserVocabularyReducer from "./slice/userVocabularySlice";
 import MasteredReducers from "./slice/masteredSlice";
+import QuizReducer from "./slice/quizSlice";
 const store = configureStore({
     reducer: {
         learningNow: learningNowReducer,
@@ -30,6 +31,7 @@ const store = configureStore({
         passwordchecksettings: PasswordcheckSettingsReducer,
         userVocabulary: UserVocabularyReducer,
         mastered: MasteredReducers,
+        quizslice: QuizReducer,
 
     },
 
