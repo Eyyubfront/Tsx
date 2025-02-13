@@ -10,10 +10,18 @@ import Search from '../../assets/images/home/Search_Magnifying_Glass.svg';
 import MasteredWords from "../../pages/Home/Homesections/MasteredWords/MasteredWords"
 import Paragrafy from "../../components/Paragrafy/Paragrafy"
 import BackButton from "../../components/BackButton/BackButton"
+import { useAppDispatch } from "../../store"
+import { openQuizModal } from "../../store/slice/LanguageHomeSlice"
+import QuizModal from "../../components/QuizModal/QuizModal"
 const LexionLayout = () => {
     const { id } = useParams()
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
+    const handleQuizClick = () => {
+        dispatch(openQuizModal());
+      };
+    
     return (
         <div className="lexion_layout">
             <Header />
@@ -46,10 +54,11 @@ const LexionLayout = () => {
                 </div>
             </div>
             <div className="homepage_quiz">
-                    <Link style={{ textDecoration: "none", color: 'black' }} to="">
+                    <Link onClick={handleQuizClick} style={{ textDecoration: "none", color: 'black' }} to="">
                         <Paragrafy className='quiz_center' fontsize='24px' fontfamily='DM Serif Display' text='Let’s start quiz' />
                     </Link>
                 </div>
+                <QuizModal />
         </div>
     )
 }

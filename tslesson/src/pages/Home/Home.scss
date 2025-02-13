@@ -21,7 +21,10 @@
         display: flex;
         gap: 20px;;
         flex-direction: column;
-  
+        .vocablarpasscomponents{
+          display: block;
+      
+        }
       }
   
       .homepage_right {

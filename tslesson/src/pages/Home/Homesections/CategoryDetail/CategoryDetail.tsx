@@ -13,6 +13,7 @@ import NotSavedicon from "../../../../assets/images/home/nosaved.svg";
 import BackButton from '../../../../components/BackButton/BackButton';
 import Search from '../../../../assets/images/home/Search_Magnifying_Glass.svg';
 import Paragrafy from '../../../../components/Paragrafy/Paragrafy';
+import QuizModal from '../../../../components/QuizModal/QuizModal';
 
  export interface CategoryItem {
     id: number;
@@ -123,6 +124,7 @@ const CategoryDetail: React.FC = () => {
                     <Paragrafy className='quiz_center' fontsize='24px' fontfamily='DM Serif Display' text='Let’s start quiz' />
                 </Link>
             </div>
+            <QuizModal />
         </div>
     );
 };

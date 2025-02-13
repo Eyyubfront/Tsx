@@ -5,10 +5,11 @@ import BurgerMenu from './HeaderBurger/Burgermenu/Burgermenu';
 import SelecetLanguage from '../SelecetLanguage/SelecetLanguage';
 import NotifactionComponents from '../NotifactionComponents/NotifactionComponents';
 import Add from '../../assets/images/header/Add.svg';
-import NewWordModal from './NewWordModal/NewWordModal'; 
+import NewWordModal from './NewWordModal/NewWordModal';
 import { useState } from 'react';
-import QuizModal from '../QuizModal/QuizModal';
-import QuizComponent from '../QuizModal/QuizModal';
+import { useAppDispatch } from '../../store';
+import { openQuizModal } from '../../store/slice/LanguageHomeSlice';
+
 
 const Header = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -20,14 +21,11 @@ const Header = () => {
   const handleOpenModal = () => {
     setShowModal(true);
   };
-  const [showModals, setShowModals] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
-  const handleCloseModals = () => {
-    setShowModals(false);
-  };
 
-  const handleOpenModals = () => {
-    setShowModals(true);
+  const handleQuizClick = () => {
+    dispatch(openQuizModal());
   };
 
   return (
@@ -36,12 +34,10 @@ const Header = () => {
         <SelecetLanguage />
       </div>
       <div className="header_center">
-        <Link onClick={handleOpenModals} style={{ textDecoration: "none", color: 'black' }} to="">
+        <Link onClick={handleQuizClick} style={{ textDecoration: "none", color: 'black' }} to="">
           <Paragrafy className='quiz_center' fontsize='24px' fontfamily='DM Serif Display' text='Let’s start quiz' />
         </Link>
       </div>
-  
-      <QuizModal  show={showModals} onClose={handleCloseModals}/>
       <div className="header_right">
         <Link to="/settingspage">
           <div className="header_setting">
@@ -58,7 +54,7 @@ const Header = () => {
         </div>
       </div>
       <div className="header_burgermenu">
-      <BurgerMenu />
+        <BurgerMenu />
       </div>
       <NewWordModal show={showModal} onClose={handleCloseModal} />
     </div>
