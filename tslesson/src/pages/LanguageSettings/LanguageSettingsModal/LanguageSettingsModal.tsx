@@ -47,7 +47,7 @@ const LanguageSettingsModal: React.FC<NewWordModalProps> = ({ show, onClose }) =
                     <Close />
                 </IconButton>
             </DialogTitle>
-            <DialogContent>
+            <DialogContent sx={{padding:"10px"}}>
                 <FormControl fullWidth variant="outlined" style={{ marginTop: '15px' }} >
 
                     <InputLabel id="source-language-label">Native</InputLabel>

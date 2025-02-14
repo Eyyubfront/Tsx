@@ -10,7 +10,7 @@
   border-radius: 24px;
   justify-content: space-between;
 
-
+cursor: pointer;
   .vocablary_left {
     display: flex;
     flex-direction: column;
@@ -57,7 +57,7 @@
 
 @media (max-width: 1023px) and (min-width: 600px) {
   .vocablary-builder {
-    background-color: rebeccapurple;
+ 
     .swipers {
       display: flex;
       flex-wrap: wrap;

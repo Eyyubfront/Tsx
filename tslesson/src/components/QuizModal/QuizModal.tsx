@@ -13,27 +13,29 @@ import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import Paragrafy from "../Paragrafy/Paragrafy";
 import "./QuizModal.scss"
 import { closeQuizModal } from "../../store/slice/LanguageHomeSlice";
-import Heart from "../../assets/images/home/UnHeart.svg";
-import Noheart from "../../assets/images/home/Heart_01.svg";
+import Smile from "../../assets/images/home/Smile.svg";
+import BadSmile from "../../assets/images/home/BadSmile.svg";
+
 const QuizModal = () => {
     const dispatch = useAppDispatch();
     const isQuizModalOpen = useAppSelector((state) => state.LanguagetextData.isOpen);
-    console.log("Modal open state:", isQuizModalOpen);  
-    
-    
     const { quizData } = useAppSelector((state) => state.quizslice);
+    console.log(quizData?.id);
     const methods = useForm();
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
     const [lives, setLives] = useState(3);
     const [answerMessage, setAnswerMessage] = useState<string>("");
     const [isSaved, setIsSaved] = useState(false);
+    const [answeredQuestions, setAnsweredQuestions] = useState<number[]>([]);
 
     useEffect(() => {
-        dispatch(fetchQuizData(0));
-        setLives(3);
-        setAnswerMessage("");
-    }, [dispatch]);
+        if (isQuizModalOpen) {
+            dispatch(fetchQuizData([0]));
+            setLives(3);
+            setAnswerMessage("");
+        }
+    }, [dispatch, isQuizModalOpen]);
 
     const handleAnswerClick = (answer: string, isCorrect: boolean) => {
         setSelectedAnswer(answer);
@@ -43,11 +45,25 @@ const QuizModal = () => {
     const handleSubmit = () => {
         if (isCorrect) {
             setAnswerMessage("Correct!");
-            dispatch(fetchQuizData(0));
         } else {
             setAnswerMessage("Incorrect");
             setLives((prevLives) => prevLives - 1);
         }
+        setTimeout(() => {
+
+            if (!!quizData) {
+                dispatch(fetchQuizData([...answeredQuestions, quizData.id]));
+                setAnsweredQuestions((prev) => [...prev, quizData.id]);
+                
+            }
+            else {
+                setAnswerMessage("Game lkk!");
+                console.log(1)
+                handleClose()
+            }
+        }, 3000);
+
+        setIsSaved(false);
 
         setTimeout(() => {
             if (lives - 1 <= 0) {
@@ -62,7 +78,7 @@ const QuizModal = () => {
     const handleClose = () => {
         dispatch(closeQuizModal());
     };
-    
+
 
     const toggleSave = () => {
         setIsSaved(!isSaved);
@@ -120,26 +136,49 @@ const QuizModal = () => {
                         </div>
 
                     </div>
-                    <PrimaryButton
-                        type="submit"
-                        label="Next"
-                        onClick={handleSubmit}
-                        disabled={selectedAnswer === null}
-                    />
-
+                    {answerMessage ? null : <div className="button_quiznext">
+                        <PrimaryButton
+                            type="submit"
+                            label="Next"
+                            onClick={handleSubmit}
+                            disabled={selectedAnswer === null}
+                        />
+                    </div>
+                    }
                     <Typography variant="body2" sx={{ mt: 2, textAlign: "center" }}>
                         {answerMessage && isCorrect && quizData?.id ? (
-                            <div onClick={toggleSave}>
-                                <img src={isSaved ? Savedicon : NotSavedicon} alt="Save icon" />
+                            <div className="save__words">
+                                <div className="savewords__tittle">
+                                    <Paragrafy className="master_wordstittle" text="Add to Master words" />
+                                </div>
+                                <div onClick={toggleSave}>
+                                    <img className="icons_savequiz" src={isSaved ? Savedicon : NotSavedicon} />
+                                </div>
+
                             </div>
                         ) : null}
 
-                        {answerMessage && (
-                            <div className={`feedback-icon ${isCorrect ? "correct" : "incorrect"}`}>
-                                <img src={isCorrect ? Heart : Noheart} />
-                            </div>
-                        )}
                     </Typography>
+                    <div className={`feeadback_bottom `}>
+                        {answerMessage && <div className={`feedback_container ${isCorrect ? "correct" : "incorrect"}`}>
+                            {answerMessage && (
+                                <div  >
+                                    <img src={isCorrect ? Smile : BadSmile} />
+                                </div>
+                            )}
+                            <div className="feedback_bottomright">
+                                <div className="feedback_tittle">
+                                    {answerMessage}
+                                </div>
+                                {
+                                    answerMessage && <div className="feedback_text">
+                                        <Paragrafy text="Friend" />
+                                    </div>
+                                }
+                            </div>
+                        </div>}
+                    
+                    </div>
                 </FormProvider>
             </DialogContent>
         </Dialog>

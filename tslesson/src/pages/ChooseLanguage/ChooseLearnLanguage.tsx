@@ -69,7 +69,7 @@ const ChooseLearnLanguage: React.FC = () => {
           titleText="Choose the Language to Learn"
           descriptionText="Select your target language to continue learning."
         />
-        <BackButton onClick={() => navigate("/login")} />
+        <BackButton className="chooselanguge_back" onClick={() => navigate("/login")} />
       </div>
       <div className="chooselanguageselector__right">
         <div className="lang-div">

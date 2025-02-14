@@ -59,15 +59,16 @@ const LanguageHomeSlice = createSlice({
             .addCase(selecetlangaugesave.pending, (state) => {
                 state.loading = true;
                 state.error = null; 
+                console.log("pending")
             })
-            .addCase(selecetlangaugesave.fulfilled, (state, action) => {
+            .addCase(selecetlangaugesave.fulfilled, (state) => {
                 state.loading = false;
-                const updatedLanguage = action.payload;
-                state.selectedLanguageId = updatedLanguage.id; 
+                
             })
             .addCase(selecetlangaugesave.rejected, (state, action) => {
                 state.loading = false; 
                 state.error = action.payload as string; 
+                console.log("rejected")
             });
     },
 });

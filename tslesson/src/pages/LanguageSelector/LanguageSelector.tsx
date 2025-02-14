@@ -53,7 +53,7 @@ const LanguageSelector: React.FC = () => {
           titleText="Choose native language"
           descriptionText="Select your native language to personalize your learning experience easily."
         />
-        <BackButton onClick={() => navigate("/login")} />
+        <BackButton className="back_languageselect" onClick={() => navigate("/login")} />
       </div>
       <div className="languageselector__right">
         <div className="lang-div">

@@ -2,13 +2,16 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../axiosInstance";
 import { getAllMastered } from "../masteredActions/masteredActions";
 import { lexioncountfetch } from "../lexioncountActions/lexioncountActions";
+import { fetchTexts } from "../learingActions/learingnowActions";
+import { wordfetchTexts } from "../learingActions/learingwordsActions";
 
 export const fetchQuizData = createAsyncThunk(
     "home/fetchQuizData",
-    async (excludeIds: number, { rejectWithValue }) => {
+    async (excludeIds: number[], { rejectWithValue }) => {
+      const idsGenerate = excludeIds.map(id => `excludeIds=${id}`).join("&")
       try {
         const response = await axiosInstance.get(
-          `/Quiz/GetQuestion?excludeIds=${excludeIds}`
+          `/Quiz/GetQuestion?${idsGenerate}`
         );
        
         return response.data.data;
@@ -25,9 +28,11 @@ export const fetchQuizData = createAsyncThunk(
     async (id: number, { rejectWithValue, dispatch }) => {
       try {
         const response = await axiosInstance.post(`/UserVocabulary/SetMastered/${id}`);
-        dispatch(fetchQuizData(0)); 
+        dispatch(fetchQuizData([0])); 
         dispatch(lexioncountfetch()); 
-     
+        dispatch(getAllMastered()); 
+        dispatch(fetchTexts({ page: 1, pageSize: 10 })); 
+        dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
         return response.data.data;
       } catch (error) {
         return rejectWithValue(error);

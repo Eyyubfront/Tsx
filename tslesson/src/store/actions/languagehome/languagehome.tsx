@@ -24,13 +24,15 @@ export const selecetlangaugesave = createAsyncThunk(
     async (id: number, { rejectWithValue, dispatch }) => {
       try {
         const response = await axiosInstance.post(`/UserLanguage/SetSelected/${id}`);
+        
+        
         dispatch(getTexts()); 
         dispatch(categoryfetch()); 
         dispatch(lexioncountfetch()); 
         dispatch(fetchTexts({ page: 1, pageSize: 10 })); 
         dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
      
-        return response.data.data;
+        return response.data?.data;
       } catch (error) {
         return rejectWithValue(error);
       }

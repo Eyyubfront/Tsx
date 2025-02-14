@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../axiosInstance';
 import { lexioncountfetch } from '../lexioncountActions/lexioncountActions';
 import { wordfetchTexts } from './learingwordsActions';
+import { fetchQuizData } from '../quizActions/quizActions';
 
 export interface TextItem {
     id: number|null;
@@ -19,7 +20,6 @@ export const fetchTexts = createAsyncThunk('learningNow/fetchTexts', async ({ pa
    
         const response = await axiosInstance.get(`/UserVocabulary/GetPaginatedLearningByUserId?page=${page}&pageSize=${pageSize}`);
         return response.data.data;  
-        
     } catch (error: any) {
         return thunkAPI.rejectWithValue(error.response ? error.response.data : 'Error fetching texts');
     }
@@ -31,6 +31,7 @@ export const learingnowsaveText = createAsyncThunk('learningNow/saveText', async
     
         thunkAPI.dispatch(fetchTexts({ page: 1, pageSize: 10 })); 
         thunkAPI.dispatch(lexioncountfetch()); 
+    
         thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
         
         return response.data;

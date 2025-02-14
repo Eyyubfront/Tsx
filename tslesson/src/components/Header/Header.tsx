@@ -33,8 +33,8 @@ const Header = () => {
       <div className="header_left">
         <SelecetLanguage />
       </div>
-      <div className="header_center">
-        <Link onClick={handleQuizClick} style={{ textDecoration: "none", color: 'black' }} to="">
+      <div onClick={handleQuizClick} className="header_center">
+        <Link  style={{ textDecoration: "none", color: 'black',cursor:"pointer" }} to="">
           <Paragrafy className='quiz_center' fontsize='24px' fontfamily='DM Serif Display' text='Let’s start quiz' />
         </Link>
       </div>

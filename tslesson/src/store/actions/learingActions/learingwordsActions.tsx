@@ -4,7 +4,7 @@ import { fetchTexts } from './learingnowActions';
 import { lexioncountfetch } from '../lexioncountActions/lexioncountActions';
 
 export interface WordsItem {
-    id: number;
+    id: number|null;
     source?: string;
     translation?: string;
     isLearningNow?: boolean;
