@@ -24,8 +24,8 @@ export const fetchLanguages = createAsyncThunk(
       }));
 
       return languages;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data || "Failed to fetch languages");
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );

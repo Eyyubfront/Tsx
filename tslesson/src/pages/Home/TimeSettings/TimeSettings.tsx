@@ -3,7 +3,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import moment from "moment";
-import { getTime, updateTime } from "../../../store/actions/timeActions/timeActions";
+import { SubmitTimePreferencesPayload, getTime, updateTime } from "../../../store/actions/timeActions/timeActions";
 import Paragrafy from "../../../components/Paragrafy/Paragrafy";
 import UseFormTimeInput from "../../../components/PrimaryInput/UseFormTimeInput";
 import TimeOptions from "../../../components/TimeOptions/TimeOptions";
@@ -52,7 +52,7 @@ const TimeSettings = () => {
     fetchData();
   }, [dispatch, setValue]);
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: SubmitTimePreferencesPayload) => {
     try {
       const targetDate = moment().format("YYYY-MM-DD");
       const utcStartTime = moment(`${targetDate} ${data.startTime}`).utc().toISOString();

@@ -4,9 +4,7 @@ import { fetchQuizData, quizSaveData } from "../actions/quizActions/quizActions"
 
 
 interface Answer {
-  train: boolean;
-  luggage: boolean;
-  gelll: boolean;
+  [key: string]: boolean;
 }
 
 interface QuizData {
@@ -14,6 +12,7 @@ interface QuizData {
   question: string;
   answers: Answer;
 }
+
 
 interface HomeState {
   quizData: QuizData | null;

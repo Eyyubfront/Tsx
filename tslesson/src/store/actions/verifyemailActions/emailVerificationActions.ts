@@ -23,10 +23,8 @@ export const resendConfirmationToken = createAsyncThunk(
     try {
       const response = await axios.post("https://learn-language-api.azurewebsites.net/api/ResendEmailConfirmationCode", { userId });
       return response.data;
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message || "Failed to resend confirmation token."
-      );
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -38,10 +36,8 @@ export const confirmPasswordResetCode = createAsyncThunk(
     try {
       const response = await axios.post("https://learn-language-api.azurewebsites.net/api/ConfirmPasswordResetCode", { code, userId });
       return response.data;
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message || "Failed to confirm email."
-      );
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );

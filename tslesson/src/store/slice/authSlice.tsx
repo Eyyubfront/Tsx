@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { login, register, refreshToken, deleteUser } from '../actions/authActions';
 import { sendForgotPasswordEmail } from '../actions/forgotPasswordActions/forgotPasswordActions';
 
@@ -8,7 +8,7 @@ interface AuthState {
   accessToken: string | null;
   loading: boolean;
   error: string | null;
-  isAuth: boolean|null;
+  isAuth: boolean | null;
   success: boolean;
   veriyuse: Boolean
 }
@@ -66,7 +66,7 @@ const authSlice = createSlice({
       })
       .addCase(deleteUser.fulfilled, (state) => {
         state.loading = false;
-        state.isAuth = false; 
+        state.isAuth = false;
         state.accessToken = null;
         state.refreshToken = null;
         state.userId = null;
@@ -120,9 +120,9 @@ const authSlice = createSlice({
       })
       .addCase(
         sendForgotPasswordEmail.rejected,
-        (state, action: PayloadAction<string | undefined>) => {
+        (state, action) => {
           state.loading = false;
-          state.error = action.payload || "An error occurred.";
+          state.error = action.payload as string;
         }
       );
   },

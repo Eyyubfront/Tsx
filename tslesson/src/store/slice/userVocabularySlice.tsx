@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { addFromVocabulary } from "../actions/LearingaddformActions/LearingaddformActions";
 
 
@@ -35,9 +35,9 @@ const userVocabularySlice = createSlice({
       .addCase(addFromVocabulary.fulfilled, (state) => {
         state.status = 'succeeded';
       })
-      .addCase(addFromVocabulary.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(addFromVocabulary.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload; 
+        state.error = action.payload as string; 
       });
   },
 });

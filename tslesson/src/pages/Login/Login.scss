@@ -15,6 +15,11 @@
       width: 50%;
       position: relative;
       flex-grow: 1; 
+      .login_headingtittle{
+        .login_heading{
+          font-size: 48px;
+        }
+      }
       form{
         width: 100%;
         display: flex;
@@ -73,8 +78,10 @@
   
       .sign_right {
         width: 100% ;
-        .login_heading{
-          font-size: 32px !important;
+        .login_headingtittle{
+          .login_heading{
+            font-size: 32px;
+          }
         }
       }
   

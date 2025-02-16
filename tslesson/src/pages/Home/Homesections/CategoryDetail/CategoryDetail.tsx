@@ -15,11 +15,11 @@ import Search from '../../../../assets/images/home/Search_Magnifying_Glass.svg';
 import Paragrafy from '../../../../components/Paragrafy/Paragrafy';
 import QuizModal from '../../../../components/QuizModal/QuizModal';
 
- export interface CategoryItem {
+export interface CategoryItem {
     id: number;
     source: string;
     translation: string;
-    isAdded: boolean; 
+    isAdded: boolean;
 }
 
 const CategoryDetail: React.FC = () => {
@@ -37,7 +37,7 @@ const CategoryDetail: React.FC = () => {
 
     useEffect(() => {
         const savedItemsArray: CategoryItem[] = [];
-        
+
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
             if (key && key.startsWith('item-')) {
@@ -63,7 +63,7 @@ const CategoryDetail: React.FC = () => {
         dispatch(addFromVocabulary(item.id));
     };
 
-    const filteredItems = categoryDetails?.filter((item: CategoryItem) => 
+    const filteredItems = categoryDetails?.filter((item: CategoryItem) =>
         item.source.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.translation.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -74,49 +74,52 @@ const CategoryDetail: React.FC = () => {
             <div className="category_container">
                 <div className="categorydetail_left">
                     <BackButton onClick={() => navigate("/")} />
-                    <VocabularyBuilder className='category_vocablary' />
-                </div>
-            {
-                loading==="loading" ? <Skeleton /> :     <div className="categorydetailabout">
-                <div className="search_category">
-                    <div className="search_icons">
-                        <img className='search_img' src={Search} alt="Search" />
-                    </div>
-                    <div className="input_categorbox">
-                        <TextField
-                            className='inputs_category'
-                            variant="outlined"
-                            placeholder="Search for word"
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            value={searchTerm}
-                            fullWidth
-                            style={{padding:"16px 11px"}}
-                            margin="normal"
-                        />
+                    <div className="category_vocabcard">
+                        <VocabularyBuilder className='category_vocablary' />
                     </div>
                 </div>
-                <TableComponent title="">
-                    <TableBody>
-                        {filteredItems?.map((item: CategoryItem) => (
-                            <TableRow className='table_aligns' key={item.id}>
-                                <TableCell sx={{ borderBottom: "none" }}>
-                                    <Typography>{`${item.source} - ${item.translation}`}</Typography>
-                                </TableCell>
-                                <TableCell className='table_cards'>
-                                    <Button
-                                        variant="outlined"
-                                        onClick={() => handleSaveClick(item)}
-                                        className="save-button"
-                                    >
-                                        <img src={savedItems.some(saved => saved.id === item.id) ? Savedicon : NotSavedicon} alt="" />
-                                    </Button>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </TableComponent>
-            </div>
-            }
+                {
+                    loading === "loading" ? <Skeleton /> : <div className="categorydetailabout">
+                        <div className="search_category">
+                            <div className="search_icons">
+                                <img className='search_img' src={Search} alt="Search" />
+                            </div>
+                            <div className="input_categorbox">
+                                <TextField
+                                    className='inputs_category'
+                                    variant="outlined"
+                                    placeholder="Search for word"
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    value={searchTerm}
+                                    fullWidth
+                                    style={{ padding: "16px 11px" }}
+                                    margin="normal"
+                                />
+                            </div>
+                        </div>
+                        <TableComponent title="">
+                            <TableBody>
+                                {filteredItems?.map((item: CategoryItem) => (
+                                    <TableRow className='table_aligns' key={item.id}>
+                                        <TableCell sx={{ borderBottom: "none" }}>
+                                            <Typography>{`${item.source} - ${item.translation}`}</Typography>
+                                        </TableCell>
+                                        <TableCell className='table_cards'>
+                                            <Button
+                                                variant="outlined"
+                                                style={{borderColor:"transparent"}}
+                                                onClick={() => handleSaveClick(item)}
+                                                className="save-button"
+                                            >
+                                                <img src={savedItems.some(saved => saved.id === item.id) ? Savedicon : NotSavedicon} alt="" />
+                                            </Button>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </TableComponent>
+                    </div>
+                }
             </div>
 
             <div className="homepage_quiz">

@@ -43,6 +43,7 @@ const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
                         spaceBetween={10}
                         pagination={{ clickable: true }}
                         loop
+                        slidesPerView="auto"
                         breakpoints={{
                             320: {
                                 slidesPerView: 4,
@@ -85,7 +86,6 @@ const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
                 </div>
             }
         </>
-
     );
 }
 

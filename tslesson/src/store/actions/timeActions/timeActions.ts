@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import axiosInstance from "../axiosInstance";
 
-interface SubmitTimePreferencesPayload {
+ export interface SubmitTimePreferencesPayload {
   intervalId: number;
   startTime: string;
   endTime: string;
@@ -36,8 +36,8 @@ export const submitTimePreferences = createAsyncThunk(
       });
       dispatch(getTime());
       return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data || "Something went wrong");
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -55,8 +55,8 @@ export const updateTime = createAsyncThunk(
       });
       dispatch(getTime());
       return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data || "Something went wrong");
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );

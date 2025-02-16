@@ -7,6 +7,7 @@ import SidePanel from "../../layout/SidePanel/SidePanel";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import BackButton from "../../components/BackButton/BackButton";
 import { setTranslationLanguageId } from "../../store/slice/languageSlice";  
+import { Language } from "../../types/Types";
 
 const ChooseLearnLanguage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -36,7 +37,7 @@ const ChooseLearnLanguage: React.FC = () => {
   }, [userLanguageCreated, navigate]);
 
 
-  const handleTranslationLanguageClick = (language: any) => {
+  const handleTranslationLanguageClick = (language: Language) => {
     if (language.id === selectedSourceLanguageId) {
       alert("Source language and translation language cannot be the same.");
       return;

@@ -69,19 +69,19 @@ cursor: pointer;
 
 @media (max-width: 600px) {
   .vocablary-builder {
-   
-    .vocablary_card {
-      width: auto;  
-    }
+    .customvocabularyclass
+      .swiper-wrapper{
+        .swiper-slide{
+          min-width:  200px ;
+        }
+      }
+      .vocablary_card {
+        width: auto;  
+      }
+    
   }
-  .swipers {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 
-    .swiper-slide{
-      width: 200px !important;
-    }
-  }
+  
 
 }
+

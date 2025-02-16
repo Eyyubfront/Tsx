@@ -23,9 +23,11 @@ const LearningNow = ({ searchTerm = "", showAll = false }: LearnSearchProps & { 
     }, [dispatch]);
 
     const handleSaveText = (item: TextItem) => {
-
-        dispatch(selecetwordText(item.id));
+        if (item.id !== null) {
+            dispatch(selecetwordText(item.id));
+        }
     };
+    
     const handleRemoveText = (id: number) => {
         dispatch(removeText(id));
     };
@@ -55,7 +57,7 @@ const LearningNow = ({ searchTerm = "", showAll = false }: LearnSearchProps & { 
     return (
         <div>
             <TableComponent title="Learning Now">
-                <TableBody>
+                <TableBody className='a'>
                     {filteredItems?.length ?
                         filteredItems?.map(({ id, source, translation }) => (
                             <TableRow className='table_aligns' key={id}>

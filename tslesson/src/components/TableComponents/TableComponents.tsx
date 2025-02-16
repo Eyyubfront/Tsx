@@ -22,7 +22,7 @@ const TableComponent: React.FC<TableComponentProps> = ({ title, children }) => {
             {
                 loading ? <Skeleton style={{height:"600px",width:"100vh"}} /> : <div className='table_alls'>
                     <h2>{title}</h2>
-                    <TableContainer className='table_container' component={Paper}>
+                    <TableContainer  className='table_container' component={Paper}>
                         <Table>
                             {children}
                         </Table>

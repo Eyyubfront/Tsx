@@ -17,7 +17,6 @@ export interface IMasteredProps extends MasteredPropsUse {
 export const getAllMastered = createAsyncThunk('alltext/getAllMastered', async (_, thunkAPI) => {
     try {
       const response = await axiosInstance.get(`/UserVocabulary/GetAllMasteredByUserId`);
-      console.log(response);
       return response.data.data;
       
     } catch (error) {

@@ -29,7 +29,7 @@ const schema = Yup.object().shape({
 
 const Login = () => {
   const dispatch = useAppDispatch();
-  const { loading } = useAppSelector((state: RootState) => state.Auth);
+  const { loading, error } = useAppSelector((state: RootState) => state.Auth);
 
   const [signUp, setSignUp] = useState(false);
   const [iseye, setIseye] = useState(false);
@@ -80,7 +80,7 @@ const Login = () => {
         });
     }
   };
-
+ 
   return (
     <div style={{ display: "flex" }} className='all_login'>
       <div className="sign_left">
@@ -91,19 +91,13 @@ const Login = () => {
       </div>
       <div className='sign_right'>
         <FormProvider {...methods}>
-          <Heading
-            fontsize="48px"
-            text={signUp ? "Create account" : "Sign in"}
-            className="login_heading"
-          />
+          <div className='login_headingtittle'>
+            <Heading text={signUp ? "Create account" : "Sign in"} className="login_heading" />
+          </div>
           <Paragrafy fontsize="16px" fontfamily="DM Sans, sans-serif" text={"Now your finances are in one place and always under control"} />
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="email-container">
-              <UseFormInput
-                name='email'
-                label='Email address'
-                type='email'
-              />
+              <UseFormInput name='email' label='Email address' type='email' />
             </div>
             <div className="password-container">
               <UseFormInput
@@ -122,7 +116,7 @@ const Login = () => {
                 </div>
               )}
             </div>
-
+            
             {signUp ? (
               <>
                 <Check onCheck={(checked: boolean) => setIsChecked(checked)} />
@@ -142,6 +136,9 @@ const Login = () => {
                 <Toogle isOn={isOn} handleToggle={handleToggle} />
               </>
             )}
+            
+
+            
             <div className="link_container">
               <Paragrafy fontfamily="Inter,sans-serif" fontsize="14px" fontWeight="300" text={signUp ? "Already have an account? " : "Don't have an account? "} />
               <CustomLink fontfamily="Inter,sans-serif" onChange={handleLink} element={signUp} />

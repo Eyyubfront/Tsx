@@ -28,8 +28,8 @@ export const saveText = createAsyncThunk('learningWords/saveText', async (item: 
         thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
         thunkAPI.dispatch(lexioncountfetch());
         return response.data;
-    } catch (err) {
-        return thunkAPI.rejectWithValue(err);
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error);
     }
 });
 
@@ -53,8 +53,8 @@ export const removeText = createAsyncThunk('learningNow/removeText', async ({ id
     try {
         await axiosInstance.delete(`/UserVocabulary/Delete/${id}`);
         thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
-    } catch (err) {
-        return thunkAPI.rejectWithValue(err);
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error);
     }
 });
 
@@ -67,7 +67,7 @@ export const updateText = createAsyncThunk('learningNow/updateText', async ({ id
         });
         thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
         return response.data;
-    } catch (err) {
-        return thunkAPI.rejectWithValue(err);
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error);
     }
 });

@@ -13,8 +13,8 @@ export const addFromVocabulary = createAsyncThunk(
                 }
             );
             return response.data; 
-        } catch (error: any) {
-            return thunkAPI.rejectWithValue(error.response ? error.response.data : 'Error adding vocabulary');
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
         }
     }
 );

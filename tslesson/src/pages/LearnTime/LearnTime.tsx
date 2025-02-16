@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/index";
-import { submitTimePreferences } from "../../store/actions/timeActions/timeActions";
+import { SubmitTimePreferencesPayload, submitTimePreferences } from "../../store/actions/timeActions/timeActions";
 import Paragrafy from "../../components/Paragrafy/Paragrafy";
 import TimeOptions from "../../components/TimeOptions/TimeOptions";
 import "./LearnTime.scss";
@@ -50,7 +50,7 @@ const LearnTime = () => {
     }
   }, [selectedSourceLanguage, selectedTranslationLanguage]);
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: SubmitTimePreferencesPayload) => {
   
   
     try {

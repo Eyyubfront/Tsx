@@ -7,6 +7,7 @@ import SidePanel from "../../layout/SidePanel/SidePanel";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import BackButton from "../../components/BackButton/BackButton";
 import { setSourceLanguageId } from "../../store/slice/languageSlice";
+import { Language } from "../../types/Types";
 
 const LanguageSelector: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -31,7 +32,7 @@ const LanguageSelector: React.FC = () => {
     }
   }, [dispatch, languages]);
 
-  const handleLanguageClick = (language: any) => {
+  const handleLanguageClick = (language: Language) => {
     setToggleSelectedId(language.id);  
     dispatch(setSourceLanguageId(language.id));
   };

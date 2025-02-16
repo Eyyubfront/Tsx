@@ -1,18 +1,17 @@
 import React from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext, RegisterOptions } from 'react-hook-form';
 import PrimaryInput from './PrimaryInput';
 
 interface UseFormInputProps {
   name: string;
-  rules?: any;
+  rules?: RegisterOptions;
   label?: string;
-  type: "text" | "email" | "password"|"select";
+  type: "text" | "email" | "password" | "select";
   isEyeicon?: boolean; 
   iseye?: boolean;
   handleEye?: () => void;
   maxLength?: number;
   className?: string;
-
 }
 
 const UseFormInput: React.FC<UseFormInputProps> = ({
@@ -31,7 +30,7 @@ const UseFormInput: React.FC<UseFormInputProps> = ({
     <Controller
       name={name}
       control={control}
-      rules={rules}
+      rules={rules} 
       render={({ field }) => (
         <PrimaryInput
           {...field}

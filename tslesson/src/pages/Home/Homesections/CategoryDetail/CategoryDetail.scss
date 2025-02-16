@@ -1,7 +1,5 @@
 .category-detail {
-
     height: 100vh;
-
     .category_container {
         display: flex;
        align-items: flex-start;
@@ -27,8 +25,8 @@
                 }
 
                 .swiper-slide {
-                    width: 100% !important;
-                    height: 91px !important;
+                    min-width: 100% ;
+                    height: 91px ;
                 }
             }
         }
@@ -49,11 +47,15 @@
                     position: absolute;
                     top: 48px;
                     left: 30px;
+                    z-index: 99999999;
                 }
 
             }
             .css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input{
                 padding: 16.5px 52px;
+                border: 1px solid #D8DADC;
+                background-color: #F9F8FD;
+                border-radius: 10px;
             }
         }
     }
@@ -62,7 +64,9 @@
         display: none;
     }
 }
-
+.css-1btmbba-MuiButtonBase-root-MuiButton-root{
+    border-color: transparent;
+}
 
 @media (max-width:600px)  {
     .category-detail{
@@ -76,12 +80,13 @@
                     cursor: pointer;
                     .swiper-wrapper {
                      display: flex;
+                     width: 200px;
+                     .swiper-slide {
+                         width: auto ;
+                         height: 91px ;
+                     }
                     }
     
-                    .swiper-slide {
-                        width: max-content !important;
-                        height: 91px !important;
-                    }
                 }
             }
             
@@ -130,11 +135,12 @@
                         grid-template-columns: 1fr ;
                         grid-template-rows: auto auto auto auto auto auto auto auto auto auto;
                         grid-auto-flow: column ;
-                    }
-    
-                    .swiper-slide {
-                        width: 100% !important;
-                        height: 91px !important;
+                        
+                        .swiper-slide {
+                            min-width: max-content;
+                            height: 91px ;
+
+                        }
                     }
                 }
             }

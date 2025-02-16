@@ -29,7 +29,9 @@ const LatestWords = ({ searchTerm = "",showAll=false }: LearnSearchProps& {showA
     }, [dispatch]);
 
     const handleSaveText = (item: WordsItem) => {
-        dispatch(selecetwordText(item.id));
+       if (item.id !== null) {
+            dispatch(selecetwordText(item.id));
+        }
     };
     
     const handleRemoveText = (id: number) => {

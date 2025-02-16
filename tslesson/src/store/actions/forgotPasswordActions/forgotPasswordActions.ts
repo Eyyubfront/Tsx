@@ -7,8 +7,7 @@ interface ForgotPasswordPayload {
 
 export const sendForgotPasswordEmail = createAsyncThunk<
   any, 
-  ForgotPasswordPayload, 
-  { rejectValue: string } 
+  ForgotPasswordPayload
 >(
   "forgotPassword/sendForgotPasswordEmail",
   async ({ email }, { rejectWithValue }) => {
@@ -18,10 +17,8 @@ export const sendForgotPasswordEmail = createAsyncThunk<
         { email }
       );
       return response.data.data;
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message || "Something went wrong"
-      );
+    } catch (error) {
+      return rejectWithValue( error);
     }
   }
 );

@@ -41,7 +41,7 @@ export const login = createAsyncThunk(
       localStorage.setItem('userId', response.data.data.userId);
       return { ...response.data, userId };
     } catch (error) {
-      return rejectWithValue('Error');
+      return rejectWithValue(error);
     }
   }
 );
@@ -54,17 +54,18 @@ export const register = createAsyncThunk(
         'https://learn-language-api.azurewebsites.net/api/Register',
         request
       );
-
-
+      
       const userId = response.data.data.userId;
 
       return { ...response.data, userId };
 
-    } catch (error) {
-      return rejectWithValue('Error');
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.errors?.[0] || error.message || 'Unknown error occurred';
+      return rejectWithValue(errorMessage);
     }
   }
 );
+
 
 export const refreshToken = createAsyncThunk(
   'auth/refreshToken',
@@ -80,7 +81,7 @@ export const refreshToken = createAsyncThunk(
       localStorage.setItem('refreshToken', response.data.data.refreshToken);
       return response.data;
     } catch (error) {
-      return rejectWithValue('Error refreshing token');
+      return rejectWithValue(error);
     }
   }
 );
@@ -94,7 +95,7 @@ export const deleteUser = createAsyncThunk(
       return response.data;
     } catch (error) {
   
-      return rejectWithValue("error");
+      return rejectWithValue(error);
     }
   }
 );

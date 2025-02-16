@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {  createSlice } from "@reduxjs/toolkit";
 import { getTexts, selecetlangaugesave } from "../actions/languagehome/languagehome";
 
 interface TextItem {
@@ -47,7 +47,7 @@ const LanguageHomeSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(getTexts.fulfilled, (state, action: any) => {
+            .addCase(getTexts.fulfilled, (state, action) => {
                 state.loading = false;
                 state.texts = action.payload;
                 state.defaultText = action.payload.find((t: { isDefault: boolean }) => t.isDefault);
@@ -68,7 +68,7 @@ const LanguageHomeSlice = createSlice({
             .addCase(selecetlangaugesave.rejected, (state, action) => {
                 state.loading = false; 
                 state.error = action.payload as string; 
-                console.log("rejected")
+
             });
     },
 });

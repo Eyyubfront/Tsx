@@ -86,8 +86,8 @@
 }
 @media (min-width: 601px) and (max-width: 1200px) {
   .language_selector {
-    display: flex !important;
-    flex-direction: column !important;
+    display: flex ;
+    flex-direction: column ;
     align-items: baseline;
     justify-content: space-between;
 

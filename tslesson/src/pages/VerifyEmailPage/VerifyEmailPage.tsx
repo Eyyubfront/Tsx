@@ -5,7 +5,7 @@ import Paragrafy from "../../components/Paragrafy/Paragrafy";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import { confirmEmail, confirmPasswordResetCode, resendConfirmationToken } from "../../store/actions/verifyemailActions/emailVerificationActions";
 import { useForm, FormProvider } from "react-hook-form";
-import { RootState, useAppDispatch, useAppSelector } from "../../store/index";
+import { useAppDispatch, useAppSelector } from "../../store/index";
 import SidePanel from "../../layout/SidePanel/SidePanel";
 import BackButton from "../../components/BackButton/BackButton";
 import { MuiOtpInput } from 'mui-one-time-password-input';
@@ -14,14 +14,15 @@ const VerifyEmailPage = () => {
   const [counter, setCounter] = useState(30);
   const [canResend, setCanResend] = useState(false);
   const [otp, setOtp] = useState('');
+  const [isOtpIncorrect, setIsOtpIncorrect] = useState(false); 
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const methods = useForm();
   const { handleSubmit } = methods;
 
-  const { title, error, isLoading } = useAppSelector((state: RootState) => state.emailVerification);
-  const { userId, veriyuse } = useAppSelector((state: RootState) => state.Auth);
+  const { title, isLoading } = useAppSelector((state) => state.emailVerification);
+  const { userId, veriyuse } = useAppSelector((state) => state.Auth);
 
   useEffect(() => {
     if (!userId) {
@@ -57,7 +58,7 @@ const VerifyEmailPage = () => {
           if (action.meta.requestStatus === "fulfilled") {
             navigate("/languageselector");
           } else {
-            console.error("Email confirmation failed.");
+            setIsOtpIncorrect(true);
           }
         });
       } else {
@@ -65,7 +66,7 @@ const VerifyEmailPage = () => {
           if (action.meta.requestStatus === "fulfilled") {
             navigate("/resetpasswordpage");
           } else {
-            console.error("Password reset code confirmation failed.");
+            setIsOtpIncorrect(true);
           }
         });
       }
@@ -81,7 +82,7 @@ const VerifyEmailPage = () => {
           titleText="Hi, Welcome!"
           descriptionText="Create your vocabulary, get reminders, and test your memory with quick quizzes!"
         />
-        <BackButton onClick={() => navigate("/login")} />
+        <BackButton className="verify_back" onClick={() => navigate("/login")} />
       </div>
       <div className="veriyfemail_right">
         <FormProvider {...methods}>
@@ -90,10 +91,13 @@ const VerifyEmailPage = () => {
               <div className="verify-content">
                 <Heading text={title || "Verify E-mail address"} />
                 <Paragrafy className="verify_aboutmail" text="We’ve sent an activation code to your email" />
-                <div className="otp-input">
-                  <MuiOtpInput value={otp} onChange={setOtp} />
+                <div className={`otp-input`}>
+                  <MuiOtpInput
+                    className={isOtpIncorrect ? "input-error" : ""} 
+                    value={otp}
+                    onChange={setOtp}
+                  />
                 </div>
-                {error && <div className="error">{error}</div>}
                 <div className="resend-code">
                   {canResend ? (
                     <p onClick={handleResend} className="sendcodes">
