@@ -12,8 +12,6 @@ function App() {
   }, []);
 
 
-  console.log(refreshToken);
-  
 
   return (
 

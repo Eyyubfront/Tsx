@@ -43,8 +43,19 @@ export const createUserLanguage = createAsyncThunk(
       thunkAPI.dispatch(fetchLanguages())
       thunkAPI.dispatch(getTexts())
       return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error)
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue( "User language pair already exists");
     }
   }
 );
+
+export const removeLanguage = createAsyncThunk('language/removeLanguage', async (id: number, thunkAPI) => {
+  try {
+    await axiosInstance.delete(`/UserLanguage/Delete/${id}`);
+
+    thunkAPI.dispatch(getTexts())
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue("Selected user language cannot be deleted");
+  }
+});
+

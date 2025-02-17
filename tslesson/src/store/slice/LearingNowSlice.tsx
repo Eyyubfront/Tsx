@@ -43,16 +43,19 @@ const learningNowSlice = createSlice({
             .addCase(fetchTexts.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.items.nowitems = action.payload.items,
-                state.items.count= action.payload.count
+                    state.items.count = action.payload.count
             })
             .addCase(fetchTexts.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message || 'Failed to fetch texts';
             })
-   
-            .addCase(learingnowsaveText.fulfilled, (state) => {
-                state.status = 'succeeded';
 
+            .addCase(learingnowsaveText.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.error = action.payload as string
+            })
+            .addCase(learingnowsaveText.rejected, (state, action) => {
+                state.error = action.payload as string
             })
             .addCase(removeText.fulfilled, (state) => {
                 state.status = 'succeeded';

@@ -1,25 +1,54 @@
-import React, { useEffect, useState } from "react";
-import { useAppSelector, useAppDispatch } from "../../store/index";
-import { createUserLanguage, fetchLanguages } from "../../store/actions/languageActions/languageActions";
-import { useNavigate } from "react-router-dom";
+import React, {
+  useEffect,
+  useState,
+} from "react";
+import {
+  useAppSelector,
+  useAppDispatch,
+} from "../../store/index";
+import {
+  createUserLanguage,
+  fetchLanguages,
+} from "../../store/actions/languageActions/languageActions";
+import {
+  useNavigate,
+} from "react-router-dom";
 import "./ChooseLearnLanguage.scss";
 import SidePanel from "../../layout/SidePanel/SidePanel";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import BackButton from "../../components/BackButton/BackButton";
-import { setTranslationLanguageId } from "../../store/slice/languageSlice";  
-import { Language } from "../../types/Types";
+import {
+  setTranslationLanguageId,
+} from "../../store/slice/languageSlice";
+import {
+  Language,
+} from "../../types/Types";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { IconButton } from "@mui/material";
+import { Close } from "@mui/icons-material";
 
 const ChooseLearnLanguage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [selectedTranslationId, setSelectedTranslationId] = useState<number>(0);  
+  const [selectedTranslationId, setSelectedTranslationId] =
+    useState<number>(0);
   const languages = useAppSelector((state) => state.language.languages);
-  const selectedSourceLanguageId = useAppSelector((state) => state.language.selectedSourceLanguageId);  
-  const userId = useAppSelector((state) => state.Auth.userId);  
+  const selectedSourceLanguageId = useAppSelector(
+    (state) => state.language.selectedSourceLanguageId
+  );
+  const userId = useAppSelector((state) => state.Auth.userId);
   const loading = useAppSelector((state) => state.language.loading);
   const error = useAppSelector((state) => state.language.error);
-  const userLanguageCreated = useAppSelector((state) => state.language.userLanguageCreated);
-  
+  const userLanguageCreated = useAppSelector(
+    (state) => state.language.userLanguageCreated
+  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+
 
   useEffect(() => {
     if (languages.length === 0) {
@@ -28,7 +57,6 @@ const ChooseLearnLanguage: React.FC = () => {
         .catch((err) => console.error("Fetch error:", err));
     }
   }, [dispatch, languages]);
-
 
   useEffect(() => {
     if (userLanguageCreated) {
@@ -39,11 +67,12 @@ const ChooseLearnLanguage: React.FC = () => {
 
   const handleTranslationLanguageClick = (language: Language) => {
     if (language.id === selectedSourceLanguageId) {
-      alert("Source language and translation language cannot be the same.");
+      setModalMessage("Source language and translation language cannot be the same.");
+      setIsModalOpen(true);
       return;
     }
     setSelectedTranslationId(language.id);
-    dispatch(setTranslationLanguageId(language.id)); 
+    dispatch(setTranslationLanguageId(language.id));
   };
 
   const handleContinueClick = () => {
@@ -63,6 +92,10 @@ const ChooseLearnLanguage: React.FC = () => {
     }
   };
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="chooselanguage_selector">
       <div className="chooselanguageselector__left">
@@ -70,7 +103,10 @@ const ChooseLearnLanguage: React.FC = () => {
           titleText="Choose the Language to Learn"
           descriptionText="Select your target language to continue learning."
         />
-        <BackButton className="chooselanguge_back" onClick={() => navigate("/login")} />
+        <BackButton
+          className="chooselanguge_back"
+          onClick={() => navigate("/login")}
+        />
       </div>
       <div className="chooselanguageselector__right">
         <div className="lang-div">
@@ -86,7 +122,10 @@ const ChooseLearnLanguage: React.FC = () => {
                 ? languages.map((language) => (
                   <li
                     key={language.id}
-                    className={`language-item ${selectedTranslationId === language.id ? "selected" : ""}`}
+                    className={`language-item ${selectedTranslationId === language.id
+                        ? "selected"
+                        : ""
+                      }`}
                     onClick={() => handleTranslationLanguageClick(language)}
                   >
                     <img
@@ -114,6 +153,29 @@ const ChooseLearnLanguage: React.FC = () => {
           </div>
         </div>
       </div>
+      <Dialog
+        open={isModalOpen}
+        onClose={handleCloseModal}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <div className="language_dialoqtop">
+          <DialogTitle id="alert-dialog-title">
+            Pay attention
+          </DialogTitle>
+          <IconButton className='iconbutton' onClick={handleCloseModal}>
+            <Close />
+          </IconButton>
+        </div>
+        <DialogContent>
+          <DialogContentText id="modal_message">
+            {modalMessage}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

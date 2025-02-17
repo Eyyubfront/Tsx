@@ -13,15 +13,13 @@ axiosInstance.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
-}, (error) => {
-  return Promise.reject(error);
 });
 
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    const navigate = useNavigate(); 
+
 
 
     if (error.response.status === 401 && !originalRequest._retry) {
@@ -30,8 +28,7 @@ axiosInstance.interceptors.response.use(
       const refreshToken = localStorage.getItem('refreshToken');
       if (!refreshToken) {
         store.dispatch(logout()); 
-        navigate('/login'); 
-        return Promise.reject(error);                                                                                                                                   
+        useNavigate()('/login');                                                                                                                                 
       }
 
       try {
@@ -46,12 +43,11 @@ axiosInstance.interceptors.response.use(
         return axiosInstance(originalRequest);
       } catch (err) {
         store.dispatch(logout()); 
-        navigate('/login'); 
-        return Promise.reject(err);
+        useNavigate()('/login'); 
       }
     }
 
-    return Promise.reject(error);
+    throw error;
   }
 );
 

@@ -60,8 +60,7 @@ export const register = createAsyncThunk(
       return { ...response.data, userId };
 
     } catch (error: any) {
-      const errorMessage = error.response?.data?.errors?.[0] || error.message || 'Unknown error occurred';
-      return rejectWithValue(errorMessage);
+      return rejectWithValue(" Alredy email ");
     }
   }
 );

@@ -1,4 +1,4 @@
-import 'swiper/css';
+import 'swiper/swiper-bundle.css';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import "./VocabularyBuilder.scss";
@@ -41,7 +41,6 @@ const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
                     <Swiper
                         className={`swipers ${className}`}
                         spaceBetween={10}
-                        pagination={{ clickable: true }}
                         loop
                         slidesPerView="auto"
                         breakpoints={{

@@ -5,10 +5,11 @@ import TableComponent from '../../../../components/TableComponents/TableComponen
 import { MdDeleteOutline } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import Savedicon from "../../../../assets/images/home/Bookmark.svg";
-import { Button, TableBody, TableRow, TableCell, Typography, TextField } from '@mui/material';
+import { Button, TableBody, TableRow, TableCell, Typography, TextField} from '@mui/material';
 import "./LearingNow.scss"
 import { selecetwordText } from '../../../../store/actions/learingActions/learingwordsActions';
 import NotSavedicon from "../../../../assets/images/home/nosaved.svg";
+
 interface LearnSearchProps {
     searchTerm?: string;
 }
@@ -16,6 +17,8 @@ interface LearnSearchProps {
 const LearningNow = ({ searchTerm = "", showAll = false }: LearnSearchProps & { showAll?: boolean }) => {
     const dispatch = useAppDispatch();
     const items = useAppSelector((state) => state.learningNow.items.nowitems);
+ 
+    
     const [editText, setEditText] = useState<{ id: number; source: string; translation: string } | null>(null);
 
     useEffect(() => {
@@ -27,7 +30,7 @@ const LearningNow = ({ searchTerm = "", showAll = false }: LearnSearchProps & { 
             dispatch(selecetwordText(item.id));
         }
     };
-    
+
     const handleRemoveText = (id: number) => {
         dispatch(removeText(id));
     };
@@ -61,6 +64,9 @@ const LearningNow = ({ searchTerm = "", showAll = false }: LearnSearchProps & { 
                     {filteredItems?.length ?
                         filteredItems?.map(({ id, source, translation }) => (
                             <TableRow className='table_aligns' key={id}>
+                                {/* {error && <div>
+                                    {error}
+                                </div>} */}
                                 <TableCell sx={{ borderBottom: "none" }}>
                                     <Typography>{`${source} - ${translation}`}</Typography>
                                 </TableCell>
@@ -113,6 +119,7 @@ const LearningNow = ({ searchTerm = "", showAll = false }: LearnSearchProps & { 
                     </div>
                 )}
             </TableComponent>
+    
         </div>
     );
 };

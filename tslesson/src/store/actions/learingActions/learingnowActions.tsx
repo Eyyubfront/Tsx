@@ -36,7 +36,7 @@ export const learingnowsaveText = createAsyncThunk('learningNow/saveText', async
         
         return response.data;
     } catch (error) {
-        return thunkAPI.rejectWithValue(error);
+        return thunkAPI.rejectWithValue("User vocabulary already exists")
     }
 });
 

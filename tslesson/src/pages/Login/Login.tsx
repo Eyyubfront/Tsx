@@ -11,7 +11,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import "./Login.scss";
 import UseFormInput from '../../components/PrimaryInput/UseFormInput';
-import { RootState, useAppDispatch, useAppSelector } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { login, register } from '../../store/actions/authActions';
 import { Link, useNavigate } from 'react-router-dom';
 import { setVeryuse } from '../../store/slice/authSlice';
@@ -29,7 +29,9 @@ const schema = Yup.object().shape({
 
 const Login = () => {
   const dispatch = useAppDispatch();
-  const { loading, error } = useAppSelector((state: RootState) => state.Auth);
+  const { loading, error } = useAppSelector((state) => state.Auth);
+  console.log(error);
+
 
   const [signUp, setSignUp] = useState(false);
   const [iseye, setIseye] = useState(false);
@@ -80,7 +82,7 @@ const Login = () => {
         });
     }
   };
- 
+
   return (
     <div style={{ display: "flex" }} className='all_login'>
       <div className="sign_left">
@@ -115,8 +117,17 @@ const Login = () => {
                   </Link>
                 </div>
               )}
+              {/* {
+                signUp ? (
+                  error !== null ? (
+                    <p className='signup__error'>{error}</p>
+                  ) : null
+                ) : null
+              } */}
+          
             </div>
-            
+
+
             {signUp ? (
               <>
                 <Check onCheck={(checked: boolean) => setIsChecked(checked)} />
@@ -136,9 +147,9 @@ const Login = () => {
                 <Toogle isOn={isOn} handleToggle={handleToggle} />
               </>
             )}
-            
 
-            
+
+
             <div className="link_container">
               <Paragrafy fontfamily="Inter,sans-serif" fontsize="14px" fontWeight="300" text={signUp ? "Already have an account? " : "Don't have an account? "} />
               <CustomLink fontfamily="Inter,sans-serif" onChange={handleLink} element={signUp} />

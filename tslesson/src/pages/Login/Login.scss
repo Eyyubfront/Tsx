@@ -37,7 +37,10 @@
           width: 100% ;
         }
       }
-      
+      .signup__error{
+        color: red;
+        text-align: left;
+      }
       .forgot-password-container {
         display: flex;
         justify-content: flex-end; 
@@ -127,7 +130,7 @@
     
         padding: 16px ;
         .sign_right{
-          width: 100%;
+          width: 60%;
         }
     }
 }

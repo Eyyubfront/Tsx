@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { createUserLanguage, fetchLanguages } from "../actions/languageActions/languageActions";
+import { createUserLanguage, fetchLanguages, removeLanguage } from "../actions/languageActions/languageActions";
 import { Language } from "../../types/Types";
 
 interface LanguageState {
@@ -19,6 +19,7 @@ const initialState: LanguageState = {
   selectedSourceLanguageId: null,
   loading: false,
   error: null,
+  
   userLanguageCreated: false,
 };
 
@@ -63,6 +64,19 @@ const languageSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
         state.userLanguageCreated = false;
+      })
+      .addCase(removeLanguage.pending, (state) => {
+        state.loading = true;
+        state.error = null
+      })
+      .addCase(removeLanguage.fulfilled, (state, action) => {
+        state.loading = true;
+        state.languages = state.languages.filter((item) => item.id !== action.payload)
+      })
+      .addCase(removeLanguage.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string
+
       });
   },
 });

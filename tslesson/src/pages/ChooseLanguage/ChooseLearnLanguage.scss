@@ -12,6 +12,7 @@
 
     .chooselanguge_back {
       margin-top: 20px;
+      background-color: white;
     }
   }
 
@@ -68,6 +69,23 @@
     }
 
   }
+}
+
+.language_dialoqtop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #F4F2FC;
+}
+
+.modal_message {
+  font-family: DM Sans;
+font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0%;
+  text-align: center;
+color: black;
 }
 
 @media (max-width: 600px) {

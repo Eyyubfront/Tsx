@@ -19,8 +19,10 @@ export const passwordChecksave = createAsyncThunk(
             );
   
             return response.data;
+
         } catch (error) {
-            return rejectWithValue(error);
+            return rejectWithValue("Incorrect password");
+            
         }
     }
 );

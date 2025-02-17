@@ -34,7 +34,7 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
 
     const defaultSourceLanguage = selectedLanguage?.sourceLanguage || '';
     const defaultTranslationLanguage = selectedLanguage?.translationLanguage || '';
-
+    const error = useAppSelector((state) => state.learningNow.error);
     const methods = useForm({
         defaultValues: {
             wordone: '',
@@ -61,7 +61,7 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
                 isLearningNow: isSaved
             };
             dispatch(learingnowsaveText(newItem));
-            setIsSaved(false); 
+            setIsSaved(false);
         } else {
             console.error("userId not available.");
         }
@@ -71,7 +71,7 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
         if (!isSaved) {
             setIsSaved(true);
         } else {
-            setIsSaved(false); 
+            setIsSaved(false);
         }
     };
 
@@ -79,23 +79,23 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
     return (
         <Dialog className='dialoq' open={show} onClose={onClose} maxWidth="sm" fullWidth>
             <DialogTitle className='dialoqtitte_tops'>
-                <span className='tittledialoq'>New Word</span>
+                {error ? "Pay attention" : <span className='tittledialoq'>New Word</span>}
                 <IconButton className='iconbutton' onClick={onClose}>
                     <Close />
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-                <FormProvider {...methods}>
+                {error ? <p>{error}</p> : <FormProvider {...methods}>
                     <form>
                         <div className="text__input">
-                      <div className="sourcetop">
-                      <label className='modals_labelsource' htmlFor="">{defaultSourceLanguage}</label>
-                      <UseFormModalInput className='newwords_input' type='select' name="wordone" label={defaultSourceLanguage || "Source Language"}/>
-                      </div>
-                   <div className="translationbutom">
-                   <label className='modals_labeltranslation' htmlFor="">{defaultTranslationLanguage}</label>
-                   <UseFormModalInput  className='newwords_input' type='select' name="wordtwo" label={defaultTranslationLanguage|| "Translation Language"} />
-                   </div>
+                            <div className="sourcetop">
+                                <label className='modals_labelsource' htmlFor="">{defaultSourceLanguage}</label>
+                                <UseFormModalInput className='newwords_input' type='select' name="wordone" label={defaultSourceLanguage || "Source Language"} />
+                            </div>
+                            <div className="translationbutom">
+                                <label className='modals_labeltranslation' htmlFor="">{defaultTranslationLanguage}</label>
+                                <UseFormModalInput className='newwords_input' type='select' name="wordtwo" label={defaultTranslationLanguage || "Translation Language"} />
+                            </div>
                         </div>
                         <div className="text_saved">
                             <Link to="/">
@@ -110,15 +110,15 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
                             </div>
                         </div>
                     </form>
-                </FormProvider>
+                </FormProvider>}
             </DialogContent>
-            <DialogActions>
+            {error ? null : <DialogActions>
                 <PrimaryButton
                     label='Save Word'
                     onClick={handleSave}
                     disabled={!formState.isValid}
                 />
-            </DialogActions>
+            </DialogActions>}
         </Dialog>
     );
 };

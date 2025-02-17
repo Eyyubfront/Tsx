@@ -9,6 +9,10 @@ import "./SelecetLanguage.scss";
 const SelectLanguage = () => {
     const dispatch = useAppDispatch();
     const { texts, selectedLanguageId ,loading} = useAppSelector((state) => state.LanguagetextData);  
+   console.log(texts);
+   console.log(selectedLanguageId);
+
+   
     useEffect(() => {
         dispatch(getTexts());
     }, [dispatch]);
