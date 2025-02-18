@@ -1,9 +1,19 @@
-import { useState, MouseEvent } from 'react';
-import { Menu, MenuItem, ListItemText } from '@mui/material';
+import { useState, useEffect, MouseEvent } from 'react';
+import { Menu, MenuItem } from '@mui/material';
 import "./NotifactionComponents.scss";
+import { useAppDispatch, useAppSelector } from '../../store';
+import { notificationallsdata } from '../../store/actions/quizActions/quizActions';
+import fire from "../../assets/images/header/fire_1f525 1.svg"
 
 const NotifactionComponents = () => {
+    const dispatch = useAppDispatch();
+    const { notifications } = useAppSelector((state) => state.quizslice);
+
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+    useEffect(() => {
+        dispatch(notificationallsdata());
+    }, [dispatch]);
 
     const handleClick = (event: MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -12,14 +22,6 @@ const NotifactionComponents = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
- 
-    const notifications = [
-        { id: 1, text: "New Category Added" },
-        { id: 2, text: "Let’s start learning now" },
-        { id: 3, text: "New Category Added" },
-        { id: 4, text: "Let’s start learning now" }
-    ];
 
     return (
         <div className="header_notifaciton">
@@ -43,7 +45,16 @@ const NotifactionComponents = () => {
 
                 {notifications.map(notification => (
                     <MenuItem key={notification.id} className='listhead' onClick={handleClose}>
-                        <ListItemText primary={notification.text} />
+                        <div className='message_box'>
+                            <div className="mesageebox__top">
+                            <div className='message_tittle'>{notification.title} </div>
+                                <img src={fire} alt="" />
+                            </div>
+                        
+                            <div>{notification.body}- </div>
+                            <div>{notification.createdOn} </div>
+                        </div>
+
                     </MenuItem>
                 ))}
             </Menu>

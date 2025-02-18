@@ -24,7 +24,6 @@ import LexiconCards from "../pages/Home/Homesections/LexiconCards/LexiconCards";
 import LexionLayout from "../layout/LexionLayout/LexionLayout";
 
 
-
 const Routing = () => {
   return (
     <Routes>
@@ -43,6 +42,7 @@ const Routing = () => {
         </Route>
 
       </Route>
+    
 
       <Route element={<ProtectedRouting />}>
         <Route path="/" element={<Home />} />

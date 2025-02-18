@@ -5,15 +5,17 @@ import { passwordChecksave } from '../actions/passwordsettingsActions/passwordse
 
 
 interface ForgotPasswordState {
-    isLoading: boolean;
-    error: string | null;
-    success: boolean;
-  }
+  isLoading: boolean;
+  error: string | null;
+  success: boolean;
+  isModalopen: boolean;
+}
 
 const initialState: ForgotPasswordState = {
   isLoading: false,
-  error: null ,
+  error: null,
   success: false,
+  isModalopen: false
 };
 
 const PasswordSettingsSlice = createSlice({
@@ -25,6 +27,9 @@ const PasswordSettingsSlice = createSlice({
       state.error = null;
       state.success = false;
     },
+    CloseModalsopen: (state) => {
+      state.isModalopen = !state.isModalopen
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -33,14 +38,15 @@ const PasswordSettingsSlice = createSlice({
       })
       .addCase(passwordChecksave.fulfilled, (state) => {
         state.isLoading = false;
-        state.success = true; 
+        state.success = true;
       })
       .addCase(passwordChecksave.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload as string; 
+        state.isModalopen = true;
+        state.error = action.payload as string;
       });
   },
 });
 
-export const { resetState } = PasswordSettingsSlice.actions;
+export const { resetState, CloseModalsopen } = PasswordSettingsSlice.actions;
 export default PasswordSettingsSlice.reducer;

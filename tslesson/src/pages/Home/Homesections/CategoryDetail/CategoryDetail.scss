@@ -12,6 +12,9 @@
             flex-direction: column;
             gap: 16px;
             height: 100%;
+            .category_left{
+                background-color: white;
+            }
 
             .category_vocablary {
                 cursor: pointer;

@@ -5,7 +5,7 @@ import FavroiteBorder from "../../assets/images/home/UnHeart.svg";
 import Savedicon from "../../assets/images/home/Bookmark.svg";
 import NotSavedicon from "../../assets/images/home/nosaved.svg";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { fetchQuizData, quizSaveData } from "../../store/actions/quizActions/quizActions";
+import { fetchQuizData, quizcountReport, quizSaveData } from "../../store/actions/quizActions/quizActions";
 import { useEffect, useState } from "react";
 import { Dialog, DialogTitle, DialogContent, IconButton } from '@mui/material';
 import { Close } from '@mui/icons-material';
@@ -20,6 +20,8 @@ const QuizModal = () => {
     const dispatch = useAppDispatch();
     const isQuizModalOpen = useAppSelector((state) => state.LanguagetextData.isOpen);
     const { quizData } = useAppSelector((state) => state.quizslice);
+    console.log(quizData);
+    
     console.log(quizData?.id);
     const methods = useForm();
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -38,6 +40,10 @@ const QuizModal = () => {
     }, [dispatch, isQuizModalOpen]);
 
     const handleAnswerClick = (answer: string, isCorrect: boolean) => {
+        console.log("ans",answer);
+        console.log("isco",isCorrect);
+        console.log(quizData?.id);
+        
         setSelectedAnswer(answer);
         setIsCorrect(isCorrect);
     };
@@ -45,6 +51,9 @@ const QuizModal = () => {
     const handleSubmit = () => {
         if (isCorrect) {
             setAnswerMessage("Correct!");
+            dispatch(quizcountReport(Number(quizData?.id)));
+            
+            
         } else {
             setAnswerMessage("Incorrect");
             setLives((prevLives) => prevLives - 1);

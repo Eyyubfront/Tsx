@@ -27,6 +27,7 @@ const Header = () => {
   const handleQuizClick = () => {
     dispatch(openQuizModal());
   };
+  
 
   return (
     <div className='header'>

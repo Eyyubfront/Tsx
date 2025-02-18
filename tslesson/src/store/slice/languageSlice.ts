@@ -10,6 +10,8 @@ interface LanguageState {
   userLanguageCreated: boolean;
   selectedTranslationId: number | null;
   selectedSourceLanguageId: number | null;
+  languageOpen:boolean;
+  languagetooglOpen:boolean
 }
 
 const initialState: LanguageState = {
@@ -19,7 +21,8 @@ const initialState: LanguageState = {
   selectedSourceLanguageId: null,
   loading: false,
   error: null,
-  
+  languageOpen:false,
+  languagetooglOpen:false,
   userLanguageCreated: false,
 };
 
@@ -35,6 +38,12 @@ const languageSlice = createSlice({
     },
     setTranslationLanguageId(state, action: PayloadAction<number>) {
       state.selectedTranslationId = action.payload;
+    },
+    LanguageClose(state) {
+      state.languageOpen = !state.languageOpen;
+    },
+    LanguageToogleClose(state) {
+      state.languagetooglOpen = !state.languagetooglOpen;
     },
   },
   extraReducers: (builder) => {
@@ -64,6 +73,7 @@ const languageSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
         state.userLanguageCreated = false;
+        state.languageOpen=true
       })
       .addCase(removeLanguage.pending, (state) => {
         state.loading = true;
@@ -75,11 +85,13 @@ const languageSlice = createSlice({
       })
       .addCase(removeLanguage.rejected, (state, action) => {
         state.loading = false;
+        state.languageOpen = true;
+        state.languagetooglOpen = true;
         state.error = action.payload as string
 
       });
   },
 });
 
-export const { selectLanguage, setSourceLanguageId, setTranslationLanguageId } = languageSlice.actions;
+export const { selectLanguage,LanguageToogleClose,LanguageClose, setSourceLanguageId, setTranslationLanguageId } = languageSlice.actions;
 export default languageSlice.reducer;

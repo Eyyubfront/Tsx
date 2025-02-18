@@ -41,3 +41,37 @@ export const fetchQuizData = createAsyncThunk(
   );
 
 
+  export const quizcountReport = createAsyncThunk(
+    "homelanguage/quizcountReport",
+    async (correctAnswerCount: number, { rejectWithValue }) => {
+      try {
+        const response = await axiosInstance.post(`/Quiz/CreateReport?correctAnswerCount=${correctAnswerCount}`);
+
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error);
+      }
+    }
+  );
+
+
+
+  
+export const notificationallsdata = createAsyncThunk(
+  "home/notificationallsdata",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(
+        "/UserNotification/GetAllByUserId"
+      );
+   
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue("Failed to fetch category data");
+    }
+  }
+);
+
+
+
+

@@ -3,8 +3,7 @@ import Savedicon from "../../../assets/images/home/Bookmark.svg";
 import NotSavedicon from "../../../assets/images/home/nosaved.svg";
 import { Link } from 'react-router-dom';
 import PrimaryButton from '../../PrimaryButton/PrimaryButton';
-import { Dialog, DialogTitle, DialogContent, DialogActions, IconButton } from '@mui/material';
-import { Close } from '@mui/icons-material';
+import {  DialogContent, DialogActions } from '@mui/material';
 import "./NewWordModal.scss";
 import { learingnowsaveText } from '../../../store/actions/learingActions/learingnowActions';
 import { useAppDispatch, useAppSelector } from '../../../store';
@@ -13,6 +12,9 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import UseFormModalInput from '../../PrimaryInput/UseFormModalInput';
+import { CloseModalNow } from '../../../store/slice/LearingNowSlice';
+import AlertDialog from '../../AlertDialog/AlertDialog';
+
 
 interface NewWordModalProps {
     show: boolean;
@@ -35,6 +37,11 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
     const defaultSourceLanguage = selectedLanguage?.sourceLanguage || '';
     const defaultTranslationLanguage = selectedLanguage?.translationLanguage || '';
     const error = useAppSelector((state) => state.learningNow.error);
+    console.log("egu", error);
+
+    const isOpenNow = useAppSelector((state) => state.learningNow.isOpenNow);
+    console.log("ismodalss", isOpenNow);
+
     const methods = useForm({
         defaultValues: {
             wordone: '',
@@ -65,7 +72,8 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
         } else {
             console.error("userId not available.");
         }
-        onClose();
+    
+
     };
     const handleSavedIconClick = () => {
         if (!isSaved) {
@@ -74,52 +82,61 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
             setIsSaved(false);
         }
     };
-
+    const handleCloseTextModal = () => {
+        dispatch(CloseModalNow());
+    };
 
     return (
-        <Dialog className='dialoq' open={show} onClose={onClose} maxWidth="sm" fullWidth>
-            <DialogTitle className='dialoqtitte_tops'>
-                {error ? "Pay attention" : <span className='tittledialoq'>New Word</span>}
-                <IconButton className='iconbutton' onClick={onClose}>
-                    <Close />
-                </IconButton>
-            </DialogTitle>
-            <DialogContent>
-                {error ? <p>{error}</p> : <FormProvider {...methods}>
-                    <form>
-                        <div className="text__input">
-                            <div className="sourcetop">
-                                <label className='modals_labelsource' htmlFor="">{defaultSourceLanguage}</label>
-                                <UseFormModalInput className='newwords_input' type='select' name="wordone" label={defaultSourceLanguage || "Source Language"} />
+        <>
+            <AlertDialog open={show} onClose={onClose} title='New Word '>
+            <DialogContent className='dialogcontent'>
+                    <FormProvider  {...methods}>
+                        <form>
+                            <div className="text__input">
+                                <div className="sourcetop">
+                                    <label className='modals_labelsource' htmlFor="">{defaultSourceLanguage}</label>
+                                    <UseFormModalInput className='newwords_input' type='select' name="wordone" label={defaultSourceLanguage || "Source Language"} />
+                                </div>
+                                <div className="translationbutom">
+                                    <label className='modals_labeltranslation' htmlFor="">{defaultTranslationLanguage}</label>
+                                    <UseFormModalInput className='newwords_input' type='select' name="wordtwo" label={defaultTranslationLanguage || "Translation Language"} />
+                                </div>
                             </div>
-                            <div className="translationbutom">
-                                <label className='modals_labeltranslation' htmlFor="">{defaultTranslationLanguage}</label>
-                                <UseFormModalInput className='newwords_input' type='select' name="wordtwo" label={defaultTranslationLanguage || "Translation Language"} />
+                            <div className="text_saved">
+                                <Link to="/">
+                                    <Paragrafy text='Add to Learning now ' />
+                                </Link>
+                                <div className='saved_modalnow'>
+                                    <img
+                                        src={isSaved ? Savedicon : NotSavedicon}
+                                        onClick={handleSavedIconClick}
+                                        alt="Save Icon"
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        <div className="text_saved">
-                            <Link to="/">
-                                <Paragrafy text='Add to Learning now ' />
-                            </Link>
-                            <div>
-                                <img
-                                    src={isSaved ? Savedicon : NotSavedicon}
-                                    onClick={handleSavedIconClick}
-                                    alt="Save Icon"
-                                />
-                            </div>
-                        </div>
-                    </form>
-                </FormProvider>}
-            </DialogContent>
-            {error ? null : <DialogActions>
-                <PrimaryButton
-                    label='Save Word'
-                    onClick={handleSave}
-                    disabled={!formState.isValid}
-                />
-            </DialogActions>}
-        </Dialog>
+                        </form>
+                    </FormProvider>
+                </DialogContent>
+                <DialogActions>
+                    <PrimaryButton
+                        label='Save Word'
+                        onClick={handleSave}
+                        disabled={!formState.isValid}
+                    />
+                </DialogActions>
+
+            </AlertDialog>
+            {
+                error && 
+                 <AlertDialog
+                 className='newword_errormodal'
+                 open={isOpenNow}
+                 onClose={handleCloseTextModal}
+                 error={error}
+                 title="Pay attention"
+               />
+            }
+        </>
     );
 };
 

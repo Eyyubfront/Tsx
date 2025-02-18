@@ -73,7 +73,7 @@ const CategoryDetail: React.FC = () => {
             <Header />
             <div className="category_container">
                 <div className="categorydetail_left">
-                    <BackButton onClick={() => navigate("/")} />
+                    <BackButton className='category_left' onClick={() => navigate("/")} />
                     <div className="category_vocabcard">
                         <VocabularyBuilder className='category_vocablary' />
                     </div>

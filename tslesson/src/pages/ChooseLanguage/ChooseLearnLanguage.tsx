@@ -23,14 +23,7 @@ import {
 import {
   Language,
 } from "../../types/Types";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import { IconButton } from "@mui/material";
-import { Close } from "@mui/icons-material";
-
+import AlertDialog from "../../components/AlertDialog/AlertDialog";
 const ChooseLearnLanguage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -123,8 +116,8 @@ const ChooseLearnLanguage: React.FC = () => {
                   <li
                     key={language.id}
                     className={`language-item ${selectedTranslationId === language.id
-                        ? "selected"
-                        : ""
+                      ? "selected"
+                      : ""
                       }`}
                     onClick={() => handleTranslationLanguageClick(language)}
                   >
@@ -153,29 +146,12 @@ const ChooseLearnLanguage: React.FC = () => {
           </div>
         </div>
       </div>
-      <Dialog
+      <AlertDialog
         open={isModalOpen}
         onClose={handleCloseModal}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <div className="language_dialoqtop">
-          <DialogTitle id="alert-dialog-title">
-            Pay attention
-          </DialogTitle>
-          <IconButton className='iconbutton' onClick={handleCloseModal}>
-            <Close />
-          </IconButton>
-        </div>
-        <DialogContent>
-          <DialogContentText id="modal_message">
-            {modalMessage}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-
-        </DialogActions>
-      </Dialog>
+        error={modalMessage}
+        title="Pay attention"
+      />
     </div>
   );
 };

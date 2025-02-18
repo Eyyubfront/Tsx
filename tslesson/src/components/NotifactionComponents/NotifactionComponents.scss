@@ -13,22 +13,45 @@
     }
 }
 
-.dialog-title{
+.dialog-title {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 5px;
 }
 
-.listhead{
+.listhead {
     display: flex;
     flex-direction: column;
-    align-items: baseline ;
+    align-items: baseline;
+
 }
-.MuiList-padding{
+
+.MuiList-padding {
     background-color: #F9F8FD;
-    width:100%;
+    width: 100%;
     height: 100%;
     margin-top: 30px;
 }
 
+.message_box {
+    background-color: #F3F0FD;
+    border: 1px solid #F3F0FD;
+    border-radius: 12px;
+    padding: 15px;
+
+    .mesageebox__top {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+
+        .message_tittle {
+            font-family: Inter;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 20px;
+            letter-spacing: 0%;
+
+        }
+    }
+}

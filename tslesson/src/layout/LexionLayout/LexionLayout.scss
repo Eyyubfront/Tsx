@@ -2,52 +2,57 @@
     height: 100vh;
     padding: 10px;
 
+    .back_components {
+        .settingsbackicon{
+            background-color: white;
+        }
+    }
 
-        .lexion_container {
-            display: flex;
-            align-items: flex-start;
-            gap: 32px;
+    .lexion_container {
+        display: flex;
+        align-items: flex-start;
+        gap: 32px;
 
-            .layout_lexionprops {
-                width: 20%;
-                height: max-content;
+        .layout_lexionprops {
+            width: 20%;
+            height: max-content;
 
-                .lexicon_card {
-                    display: flex;
-                    flex-direction: column;
-                }
-            }
-
-            .lexionslayout_cards {
+            .lexicon_card {
                 display: flex;
                 flex-direction: column;
-                width: 100%;
-                align-items: center;
-
-                .lexionslayout_search {
-                    width: 100%;
-                    position: relative;
-
-                    .search_icons {
-                        position: absolute;
-                        top: 50px;
-                        left: 25px;
-                        z-index: 999999;
-                    }
-
-                    .css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input {
-                        padding: 16.5px 52px;
-                        border: 1px solid #D8DADC;
-                        background-color: #F9F8FD;
-                        border-radius: 10px;
-                    }
-                }
-
-                .lexionlayout_secioncomponnet {
-                    width: 100%;
-                }
             }
         }
+
+        .lexionslayout_cards {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            align-items: center;
+
+            .lexionslayout_search {
+                width: 100%;
+                position: relative;
+
+                .search_icons {
+                    position: absolute;
+                    top: 50px;
+                    left: 25px;
+                    z-index: 999999;
+                }
+
+                .css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input {
+                    padding: 16.5px 52px;
+                    border: 1px solid #D8DADC;
+                    background-color: #F9F8FD;
+                    border-radius: 10px;
+                }
+            }
+
+            .lexionlayout_secioncomponnet {
+                width: 100%;
+            }
+        }
+    }
 
 
     .homepage_quiz {
@@ -87,7 +92,7 @@
 
                     .lexion1,
                     .lexion2 {
-                        height: 100% ;
+                        height: 100%;
                     }
                 }
             }
@@ -129,9 +134,10 @@
             border-radius: 16px;
             cursor: pointer;
             margin-top: 20px;
-            .quiz_center{
+
+            .quiz_center {
                 padding: 10px;
-              }
+            }
 
         }
     }
