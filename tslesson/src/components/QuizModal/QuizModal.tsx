@@ -169,7 +169,7 @@ const QuizModal = () => {
                                 type="submit"
                                 label="Next"
                                 onClick={handleSubmit}
-                                disabled={selectedAnswer === null}  // Sadece selectedAnswer null değilse aktif olur
+                                disabled={selectedAnswer === null|| !isAnswerChecked}  
                             />
                         </div>
                     )}

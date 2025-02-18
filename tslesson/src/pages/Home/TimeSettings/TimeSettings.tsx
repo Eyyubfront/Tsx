@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -9,8 +9,9 @@ import UseFormTimeInput from "../../../components/PrimaryInput/UseFormTimeInput"
 import TimeOptions from "../../../components/TimeOptions/TimeOptions";
 import PrimaryButton from "../../../components/PrimaryButton/PrimaryButton";
 import { useAppDispatch, useAppSelector } from "../../../store";
-import "./TimeSettings.scss"
-import { Skeleton } from "@mui/material";
+import { Skeleton, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import "./TimeSettings.scss";
+import AlertDialog from "../../../components/AlertDialog/AlertDialog";
 
 const schema = yup.object().shape({
   startTime: yup.string().required("Start time is required"),
@@ -20,8 +21,6 @@ const schema = yup.object().shape({
 
 const TimeSettings = () => {
   const dispatch = useAppDispatch();
-
-
   const methods = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -34,12 +33,13 @@ const TimeSettings = () => {
   const { loading } = useAppSelector((state) => state.time);
   const { handleSubmit, formState: { errors }, watch, setValue } = methods;
 
+  const [openDialog, setOpenDialog] = useState(false); 
+
   const timeOptions = [
     { label: "15 min", id: 1 },
     { label: "30 min", id: 2 },
     { label: "1 hour", id: 3 },
   ];
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,11 +58,13 @@ const TimeSettings = () => {
       const utcStartTime = moment(`${targetDate} ${data.startTime}`).utc().toISOString();
       const utcEndTime = moment(`${targetDate} ${data.endTime}`).utc().toISOString();
 
-      dispatch(updateTime({
+      await dispatch(updateTime({
         intervalId: data.intervalId,
         startTime: utcStartTime,
         endTime: utcEndTime,
       }));
+
+      setOpenDialog(true);
     } catch (error) {
       console.error(error);
     }
@@ -70,6 +72,10 @@ const TimeSettings = () => {
 
   const handleOptionSelect = (id: number) => {
     setValue("intervalId", id);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false); // Dialog'u kapat
   };
 
   return (
@@ -99,7 +105,6 @@ const TimeSettings = () => {
                     />
                   </div>
                   <div className="right-box">
-
                     <PrimaryButton type="submit" disabled={loading} label="Save" />
                   </div>
                 </div>
@@ -108,13 +113,19 @@ const TimeSettings = () => {
           </div>
         </div>
       }
-
+    
+          <AlertDialog
+          className='newword_errormodal'
+          open={openDialog}
+          onClose={handleCloseDialog}
+          title="Pay attention"
+      ><p className="update_meesage">Time range successfully updated!</p>
+      </AlertDialog>
     </>
   );
 };
 
 export default TimeSettings;
-
 
 
 
