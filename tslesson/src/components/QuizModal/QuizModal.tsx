@@ -1,5 +1,5 @@
 import { useForm, FormProvider } from "react-hook-form";
-import { Box, Typography, TextField } from "@mui/material";
+import { Box, Typography, TextField, Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
 import Favorite from "../../assets/images/home/Heart_01.svg";
 import FavroiteBorder from "../../assets/images/home/UnHeart.svg";
 import Savedicon from "../../assets/images/home/Bookmark.svg";
@@ -7,22 +7,20 @@ import NotSavedicon from "../../assets/images/home/nosaved.svg";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { fetchQuizData, quizcountReport, quizSaveData } from "../../store/actions/quizActions/quizActions";
 import { useEffect, useState } from "react";
-import { Dialog, DialogTitle, DialogContent, IconButton } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import Paragrafy from "../Paragrafy/Paragrafy";
-import "./QuizModal.scss"
 import { closeQuizModal } from "../../store/slice/LanguageHomeSlice";
 import Smile from "../../assets/images/home/Smile.svg";
 import BadSmile from "../../assets/images/home/BadSmile.svg";
+import "./QuizModal.scss";
 
 const QuizModal = () => {
+
+
     const dispatch = useAppDispatch();
     const isQuizModalOpen = useAppSelector((state) => state.LanguagetextData.isOpen);
     const { quizData } = useAppSelector((state) => state.quizslice);
-    console.log(quizData);
-    
-    console.log(quizData?.id);
     const methods = useForm();
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
@@ -30,62 +28,82 @@ const QuizModal = () => {
     const [answerMessage, setAnswerMessage] = useState<string>("");
     const [isSaved, setIsSaved] = useState(false);
     const [answeredQuestions, setAnsweredQuestions] = useState<number[]>([]);
+    const [showGameOver, setShowGameOver] = useState(false);
+    const [isAnswerChecked, setIsAnswerChecked] = useState(false);
 
     useEffect(() => {
         if (isQuizModalOpen) {
             dispatch(fetchQuizData([0]));
             setLives(3);
+            setAnsweredQuestions([]);
             setAnswerMessage("");
+            setIsAnswerChecked(false);
+            setSelectedAnswer(null);
         }
     }, [dispatch, isQuizModalOpen]);
 
+    useEffect(() => {
+        if (lives <= 0) {
+            setShowGameOver(true);
+        }
+    }, [lives]);
+
     const handleAnswerClick = (answer: string, isCorrect: boolean) => {
-        console.log("ans",answer);
-        console.log("isco",isCorrect);
-        console.log(quizData?.id);
-        
-        setSelectedAnswer(answer);
-        setIsCorrect(isCorrect);
+        if (!isAnswerChecked) {
+            setSelectedAnswer(answer);
+            setIsCorrect(isCorrect);
+            setAnswerMessage(isCorrect ? "Correct!" : "Incorrect");
+            console.log(selectedAnswer, isAnswerChecked);
+
+            if (!isCorrect) {
+                setLives((prevLives) => prevLives - 1);
+            }
+
+            setIsAnswerChecked(true);
+           
+            setTimeout(() => {
+                setAnswerMessage("");
+                setSelectedAnswer(null);
+                setIsAnswerChecked(false);
+            }, 3000);
+        }
     };
+
 
     const handleSubmit = () => {
         if (isCorrect) {
-            setAnswerMessage("Correct!");
             dispatch(quizcountReport(Number(quizData?.id)));
-            
-            
-        } else {
-            setAnswerMessage("Incorrect");
-            setLives((prevLives) => prevLives - 1);
         }
-        setTimeout(() => {
 
-            if (!!quizData) {
+        if (lives <= 0) {
+
+            setAnswerMessage("Game Over!");
+            setShowGameOver(true);
+            setSelectedAnswer(null);
+        } else {
+            if (quizData) {
                 dispatch(fetchQuizData([...answeredQuestions, quizData.id]));
                 setAnsweredQuestions((prev) => [...prev, quizData.id]);
-                
             }
-            else {
-                setAnswerMessage("Game lkk!");
-                console.log(1)
-                handleClose()
-            }
-        }, 3000);
+            setAnswerMessage("");
+            setSelectedAnswer(null);
+            setIsAnswerChecked(false);
+        }
+    };
 
-        setIsSaved(false);
-
-        setTimeout(() => {
-            if (lives - 1 <= 0) {
-                setAnswerMessage("Game Over!");
-            } else {
-                setAnswerMessage("");
-                setSelectedAnswer(null);
-            }
-        }, 3000);
+    const handleRestart = () => {
+        setLives(3);
+        setShowGameOver(false);
+        setAnsweredQuestions([]);
+        dispatch(fetchQuizData([0]));
+        setSelectedAnswer(null);
+        setIsAnswerChecked(false);
+        setAnswerMessage("");
     };
 
     const handleClose = () => {
         dispatch(closeQuizModal());
+        setShowGameOver(false);
     };
 
 
@@ -143,17 +161,19 @@ const QuizModal = () => {
                                     </div>
                                 ))}
                         </div>
+                    </div>
 
-                    </div>
-                    {answerMessage ? null : <div className="button_quiznext">
-                        <PrimaryButton
-                            type="submit"
-                            label="Next"
-                            onClick={handleSubmit}
-                            disabled={selectedAnswer === null}
-                        />
-                    </div>
-                    }
+                    {answerMessage ? null : (
+                        <div className="button_quiznext">
+                            <PrimaryButton
+                                type="submit"
+                                label="Next"
+                                onClick={handleSubmit}
+                                disabled={selectedAnswer === null}  // Sadece selectedAnswer null değilse aktif olur
+                            />
+                        </div>
+                    )}
+
                     <Typography variant="body2" sx={{ mt: 2, textAlign: "center" }}>
                         {answerMessage && isCorrect && quizData?.id ? (
                             <div className="save__words">
@@ -163,31 +183,39 @@ const QuizModal = () => {
                                 <div onClick={toggleSave}>
                                     <img className="icons_savequiz" src={isSaved ? Savedicon : NotSavedicon} />
                                 </div>
-
                             </div>
                         ) : null}
-
                     </Typography>
+
                     <div className={`feeadback_bottom `}>
                         {answerMessage && <div className={`feedback_container ${isCorrect ? "correct" : "incorrect"}`}>
-                            {answerMessage && (
-                                <div  >
-                                    <img src={isCorrect ? Smile : BadSmile} />
-                                </div>
-                            )}
+                            <div>
+                                <img src={isCorrect ? Smile : BadSmile} />
+                            </div>
                             <div className="feedback_bottomright">
                                 <div className="feedback_tittle">
                                     {answerMessage}
                                 </div>
-                                {
-                                    answerMessage && <div className="feedback_text">
-                                        <Paragrafy text="Friend" />
-                                    </div>
-                                }
+                                {answerMessage && <div className="feedback_text">
+                                    <Paragrafy text="Friend" />
+                                </div>}
                             </div>
                         </div>}
-                    
                     </div>
+
+                    {showGameOver && (
+                        <Dialog open={showGameOver}>
+                            <DialogTitle>Game Over</DialogTitle>
+                            <DialogContent>
+                                <Typography variant="body1">You have lost all your lives!</Typography>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+                                    <PrimaryButton type="submit" label="Close" onClick={handleClose} />
+                                    <PrimaryButton type="submit" label="Restart" onClick={handleRestart} />
+                                </Box>
+                            </DialogContent>
+                        </Dialog>
+                    )}
+
                 </FormProvider>
             </DialogContent>
         </Dialog>

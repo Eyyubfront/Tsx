@@ -23,6 +23,25 @@ const NotifactionComponents = () => {
         setAnchorEl(null);
     };
 
+    
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString);
+
+      
+        const formattedDate = date.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+        });
+
+        const formattedTime = date.toLocaleTimeString('en-GB', {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        return { formattedDate, formattedTime };
+    };
+
     return (
         <div className="header_notifaciton">
             <div onClick={handleClick} className="header_rinings">
@@ -43,20 +62,23 @@ const NotifactionComponents = () => {
                     </svg>
                 </div>
 
-                {notifications.map(notification => (
-                    <MenuItem key={notification.id} className='listhead' onClick={handleClose}>
-                        <div className='message_box'>
-                            <div className="mesageebox__top">
-                            <div className='message_tittle'>{notification.title} </div>
-                                <img src={fire} alt="" />
+                {notifications.map(notification => {
+                    const { formattedDate, formattedTime } = formatDate(notification.createdOn);
+                    return (
+                        <MenuItem key={notification.id} className='listhead' onClick={handleClose}>
+                                 <div>{formattedDate}</div>
+                            <div className='message_box'>
+                                <div className="mesageebox__top">
+                                    <div className='message_tittle'>{notification.title} </div>
+                                    <img src={fire} alt="" />
+                                </div>
+                                <div>{notification.body} </div>
+                           
+                                <div>{formattedTime}</div>
                             </div>
-                        
-                            <div>{notification.body}- </div>
-                            <div>{notification.createdOn} </div>
-                        </div>
-
-                    </MenuItem>
-                ))}
+                        </MenuItem>
+                    );
+                })}
             </Menu>
         </div>
     );

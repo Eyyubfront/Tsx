@@ -6,7 +6,7 @@ interface CustomButtonProps {
   label: string;
   onClick?: MouseEventHandler<HTMLButtonElement>; 
   type?: "button" | "submit" | "reset";
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 const PrimaryButton: FC<CustomButtonProps> = ({ label, onClick, type = "button", disabled }) => {
