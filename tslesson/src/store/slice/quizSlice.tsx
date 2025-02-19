@@ -11,9 +11,11 @@ interface QuizData {
   id: number;
   question: string;
   answers: Answer;
+  success:boolean;
+  data:any
 }
 
-interface Notification {
+ export interface Notification {
   id: number;
   title: string;
   body: string
@@ -26,6 +28,7 @@ interface HomeState {
   quizData: QuizData | null;
   loading: boolean;
   error: string | null;
+
   notifications:Notification[]
 }
 
@@ -85,9 +88,9 @@ const homeSlice = createSlice({
       state.loading = true;
       state.error = null; 
   })
-  .addCase(quizcountReport.fulfilled, (state, action) => {
+  .addCase(quizcountReport.fulfilled, (state) => {
       state.loading = false;
-      state.quizData = action.payload ;
+
   })
   .addCase(quizcountReport.rejected, (state, action) => {
       state.loading = false; 

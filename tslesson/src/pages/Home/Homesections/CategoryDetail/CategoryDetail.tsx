@@ -14,6 +14,7 @@ import BackButton from '../../../../components/BackButton/BackButton';
 import Search from '../../../../assets/images/home/Search_Magnifying_Glass.svg';
 import Paragrafy from '../../../../components/Paragrafy/Paragrafy';
 import QuizModal from '../../../../components/QuizModal/QuizModal';
+import { openQuizModal } from '../../../../store/slice/LanguageHomeSlice';
 
 export interface CategoryItem {
     id: number;
@@ -67,7 +68,10 @@ const CategoryDetail: React.FC = () => {
         item.source.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.translation.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
+  const handleQuizClick = () => {
+        dispatch(openQuizModal());
+      };
+    
     return (
         <div className="category-detail">
             <Header />
@@ -99,7 +103,7 @@ const CategoryDetail: React.FC = () => {
                         </div>
                         <TableComponent title="">
                             <TableBody>
-                                {filteredItems?.map((item: CategoryItem) => (
+                                {filteredItems?.length ? filteredItems?.map((item: CategoryItem) => (
                                     <TableRow className='table_aligns' key={item.id}>
                                         <TableCell sx={{ borderBottom: "none" }}>
                                             <Typography>{`${item.source} - ${item.translation}`}</Typography>
@@ -107,7 +111,7 @@ const CategoryDetail: React.FC = () => {
                                         <TableCell className='table_cards'>
                                             <Button
                                                 variant="outlined"
-                                                style={{borderColor:"transparent"}}
+                                                style={{ borderColor: "transparent" }}
                                                 onClick={() => handleSaveClick(item)}
                                                 className="save-button"
                                             >
@@ -115,15 +119,14 @@ const CategoryDetail: React.FC = () => {
                                             </Button>
                                         </TableCell>
                                     </TableRow>
-                                ))}
+                                )) : <div className='data_undifendsbox'>NO DATA FOUND</div>}
                             </TableBody>
                         </TableComponent>
                     </div>
                 }
             </div>
-
-            <div className="homepage_quiz">
-                <Link style={{ textDecoration: "none", color: 'black' }} to="">
+            <div  className="homepage_quiz">
+                <Link onClick={handleQuizClick} style={{ textDecoration: "none", color: 'black' }} to="">
                     <Paragrafy className='quiz_center' fontsize='24px' fontfamily='DM Serif Display' text='Let’s start quiz' />
                 </Link>
             </div>

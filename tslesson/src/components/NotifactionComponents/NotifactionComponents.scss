@@ -11,6 +11,7 @@
         cursor: pointer;
         align-items: center;
     }
+   
 }
 
 .dialog-title {
@@ -20,12 +21,7 @@
     padding: 5px;
 }
 
-.listhead {
-    display: flex;
-    flex-direction: column;
-    align-items: baseline;
 
-}
 
 .MuiList-padding {
     background-color: #F9F8FD;
@@ -54,4 +50,15 @@
 
         }
     }
+}
+
+.form_datetop{
+    color: rebeccapurple;
+    text-align: left;
+}
+.css-1rju2q6-MuiButtonBase-root-MuiMenuItem-root{
+    align-items: baseline !important;
+    display: flex;
+    flex-direction: column;
+   
 }

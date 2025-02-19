@@ -51,12 +51,15 @@ const LearnTime = () => {
   }, [selectedSourceLanguage, selectedTranslationLanguage]);
 
   const onSubmit = async (data: SubmitTimePreferencesPayload) => {
-  
-  
+
+
     try {
       const targetDate = moment().format("YYYY-MM-DD");
-      const utcStartTime = moment(`${targetDate} ${data.startTime}`).utc().toISOString();
-      const utcEndTime = moment(`${targetDate} ${data.endTime}`).utc().toISOString();
+      const utcStartTime = moment(`${targetDate} ${data.startTime}`).add(4,"hours").toISOString();
+      const utcEndTime = moment(`${targetDate} ${data.endTime}`).add(4,"hours").toISOString();
+      console.log(targetDate);
+      console.log(utcStartTime);
+      console.log(utcEndTime);
 
       await dispatch(submitTimePreferences({
         intervalId: data.intervalId,
@@ -66,7 +69,7 @@ const LearnTime = () => {
         navigate("/login");
         localStorage.removeItem('token');
         localStorage.removeItem('refreshToken');
-      });
+      });''
     } catch (error) {
       console.error(error);
     }

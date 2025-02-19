@@ -13,7 +13,7 @@ export interface IWordsitem extends WordsItem {
     isMastered?: boolean
 }
 
-export const wordfetchTexts = createAsyncThunk('learningNow/wordfetchTexts', async ({ page, pageSize }: { page: number; pageSize: number }, thunkAPI) => {
+export const wordfetchTexts = createAsyncThunk('learingWords/wordfetchTexts', async ({ page, pageSize }: { page: number; pageSize: number }, thunkAPI) => {
     try {
         const response = await axiosInstance.get(`/UserVocabulary/GetPaginatedByUserId?page=${page}&pageSize=${pageSize}`);
         return response.data.data;
@@ -49,16 +49,18 @@ export const selecetwordText = createAsyncThunk(
 );
 
 
-export const removeText = createAsyncThunk('learningNow/removeText', async ({ id }: { id: number }, thunkAPI) => {
+export const removeText = createAsyncThunk('learingWords/removeText', async ({ id }: { id: number }, thunkAPI) => {
     try {
         await axiosInstance.delete(`/UserVocabulary/Delete/${id}`);
         thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
+        thunkAPI.dispatch(fetchTexts({ page: 1, pageSize: 10 }));
+        thunkAPI.dispatch(lexioncountfetch());
     } catch (error) {
         return thunkAPI.rejectWithValue(error);
     }
 });
 
-export const updateText = createAsyncThunk('learningNow/updateText', async ({ id, source, translation }: { id: number; source: string; translation: string }, thunkAPI) => {
+export const updateText = createAsyncThunk('learingWords/updateText', async ({ id, source, translation }: { id: number; source: string; translation: string }, thunkAPI) => {
     try {
         const response = await axiosInstance.put("/Update", {
             id,

@@ -43,10 +43,10 @@ export const fetchQuizData = createAsyncThunk(
 
   export const quizcountReport = createAsyncThunk(
     "homelanguage/quizcountReport",
-    async (correctAnswerCount: number, { rejectWithValue }) => {
+    async (correctAnswerCount: number, { rejectWithValue,dispatch }) => {
       try {
         const response = await axiosInstance.post(`/Quiz/CreateReport?correctAnswerCount=${correctAnswerCount}`);
-
+        dispatch(notificationallsdata()); 
         return response.data;
       } catch (error) {
         return rejectWithValue(error);

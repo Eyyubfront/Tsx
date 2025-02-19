@@ -1,11 +1,11 @@
 import { useForm, FormProvider } from "react-hook-form";
-import { Box, Typography, TextField, Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
+import { Box, Typography, TextField, Dialog, DialogTitle, DialogContent, IconButton, Button } from "@mui/material";
 import Favorite from "../../assets/images/home/Heart_01.svg";
 import FavroiteBorder from "../../assets/images/home/UnHeart.svg";
 import Savedicon from "../../assets/images/home/Bookmark.svg";
 import NotSavedicon from "../../assets/images/home/nosaved.svg";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { fetchQuizData, quizcountReport, quizSaveData } from "../../store/actions/quizActions/quizActions";
+import { fetchQuizData, notificationallsdata, quizcountReport, quizSaveData } from "../../store/actions/quizActions/quizActions";
 import { useEffect, useState } from "react";
 import { Close } from '@mui/icons-material';
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
@@ -17,6 +17,7 @@ import "./QuizModal.scss";
 
 const QuizModal = () => {
 
+    const learignowdata  = useAppSelector((state) => state.learningNow.items.nowitems);
 
     const dispatch = useAppDispatch();
     const isQuizModalOpen = useAppSelector((state) => state.LanguagetextData.isOpen);
@@ -27,68 +28,69 @@ const QuizModal = () => {
     const [lives, setLives] = useState(3);
     const [answerMessage, setAnswerMessage] = useState<string>("");
     const [isSaved, setIsSaved] = useState(false);
-    const [answeredQuestions, setAnsweredQuestions] = useState<number[]>([]);
+    const [answeredQuestions, setAnsweredQuestions] = useState<number[]>([0]);
     const [showGameOver, setShowGameOver] = useState(false);
-    const [isAnswerChecked, setIsAnswerChecked] = useState(false);
+    const [correctAnsewrscount, setCorrectAnsewrsCount] = useState(0);
+    const [isNodata, setDatadialog] = useState(false);
+    const [learingdata, setLearingData] = useState(false);
+
 
     useEffect(() => {
         if (isQuizModalOpen) {
-            dispatch(fetchQuizData([0]));
+            dispatch(fetchQuizData(answeredQuestions));
             setLives(3);
-            setAnsweredQuestions([]);
             setAnswerMessage("");
-            setIsAnswerChecked(false);
+            setSelectedAnswer(null);
+            setDatadialog(false);
+        }
+        if (learignowdata.length === 0) {
+            setLearingData(false)
+        }
+    }, [isQuizModalOpen, learignowdata]);
+
+    useEffect ( () => {
+        if (lives == 0) {
+            setAnswerMessage("Game Over!");
+            setShowGameOver(true);
             setSelectedAnswer(null);
         }
-    }, [dispatch, isQuizModalOpen]);
-
-    useEffect(() => {
-        if (lives <= 0) {
-            setShowGameOver(true);
+        if (quizData?.id == null) {
+          
+            setDatadialog(true)
         }
-    }, [lives]);
+
+
+    }, [lives, correctAnsewrscount, quizData]);
+
+    
+
+
 
     const handleAnswerClick = (answer: string, isCorrect: boolean) => {
-        if (!isAnswerChecked) {
-            setSelectedAnswer(answer);
-            setIsCorrect(isCorrect);
-            setAnswerMessage(isCorrect ? "Correct!" : "Incorrect");
-            console.log(selectedAnswer, isAnswerChecked);
-
-            if (!isCorrect) {
-                setLives((prevLives) => prevLives - 1);
-            }
-
-            setIsAnswerChecked(true);
-           
-            setTimeout(() => {
-                setAnswerMessage("");
-                setSelectedAnswer(null);
-                setIsAnswerChecked(false);
-            }, 3000);
+        setSelectedAnswer(answer);
+        setIsCorrect(isCorrect);
+        setAnswerMessage(isCorrect ? "Correct!" : "Incorrect");
+        if (isCorrect) {
+            setCorrectAnsewrsCount((prevLives) => prevLives + 1);
+        } else {
+            setLives((prevLives) => prevLives - 1);
         }
+
+        setTimeout(() => {
+            setAnswerMessage("");
+            setSelectedAnswer(null);
+        }, 3000);
     };
 
 
     const handleSubmit = () => {
         if (isCorrect) {
-            dispatch(quizcountReport(Number(quizData?.id)));
+            dispatch(quizcountReport(correctAnsewrscount));
         }
-
-        if (lives <= 0) {
-
-            setAnswerMessage("Game Over!");
-            setShowGameOver(true);
-            setSelectedAnswer(null);
-        } else {
-            if (quizData) {
-                dispatch(fetchQuizData([...answeredQuestions, quizData.id]));
-                setAnsweredQuestions((prev) => [...prev, quizData.id]);
-            }
-            setAnswerMessage("");
-            setSelectedAnswer(null);
-            setIsAnswerChecked(false);
-        }
+        dispatch(fetchQuizData([...answeredQuestions, Number(quizData?.id)]));
+        setAnsweredQuestions((prev) => [...prev, Number(quizData?.id)]);
+        setAnswerMessage("");
+        setSelectedAnswer(null);
     };
 
     const handleRestart = () => {
@@ -97,15 +99,22 @@ const QuizModal = () => {
         setAnsweredQuestions([]);
         dispatch(fetchQuizData([0]));
         setSelectedAnswer(null);
-        setIsAnswerChecked(false);
+
         setAnswerMessage("");
     };
 
     const handleClose = () => {
         dispatch(closeQuizModal());
         setShowGameOver(false);
+   
     };
-
+    const handleCloseDialog = () => {
+        dispatch(closeQuizModal());
+        setDatadialog(false);
+    };
+    const handleCloseLearing = () => {
+        setLearingData(false);
+    };
 
     const toggleSave = () => {
         setIsSaved(!isSaved);
@@ -169,7 +178,6 @@ const QuizModal = () => {
                                 type="submit"
                                 label="Next"
                                 onClick={handleSubmit}
-                                disabled={selectedAnswer === null|| !isAnswerChecked}  
                             />
                         </div>
                     )}
@@ -205,16 +213,51 @@ const QuizModal = () => {
 
                     {showGameOver && (
                         <Dialog open={showGameOver}>
-                            <DialogTitle>Game Over</DialogTitle>
+                            <DialogTitle className="finished_top">Finished</DialogTitle>
                             <DialogContent>
-                                <Typography variant="body1">You have lost all your lives!</Typography>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-                                    <PrimaryButton type="submit" label="Close" onClick={handleClose} />
-                                    <PrimaryButton type="submit" label="Restart" onClick={handleRestart} />
+                                <Typography className="mistake_tittle" variant="body1">You did 3mistakes</Typography>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2, gap: "5px" }}>
+
+                                    <div onClick={handleClose} className="Finish">
+                                        Finish
+                                    </div>
+
+                                    <div onClick={handleRestart} className="Restart">
+                                        Restart
+                                    </div>
                                 </Box>
                             </DialogContent>
                         </Dialog>
                     )}
+
+
+                    {isNodata && <Dialog open={isNodata} onClose={handleCloseDialog}>
+                        <DialogContent className="correct_box">
+                            <DialogTitle className="finished_top">Quiz Finished</DialogTitle>
+                            <Typography className="mistake_tittle" variant="body1">You got {correctAnsewrscount} correct answer (s). </Typography>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2, gap: "5px" }}>
+
+                                <div onClick={handleCloseDialog} className="Finishtruetext">
+                                    Finish
+                                </div>
+                            </Box>
+                        </DialogContent>
+                    </Dialog>}
+
+                    {
+                        learingdata && <Dialog open={learingdata} onClose={handleCloseLearing}>
+                            <DialogContent className="correct_box">
+                                <DialogTitle className="finished_top">Quiz Finished</DialogTitle>
+                                <Typography className="mistake_tittle" variant="body1">You got {correctAnsewrscount} correct answer (s). </Typography>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2, gap: "5px" }}>
+
+                                  <div>
+                                    aaa
+                                  </div>
+                                </Box>
+                            </DialogContent>
+                        </Dialog>
+                    }
 
                 </FormProvider>
             </DialogContent>
@@ -223,3 +266,6 @@ const QuizModal = () => {
 };
 
 export default QuizModal;
+
+
+// burda artiq birsey varki learingnow datasi olmadikda yoxluram ve finish dialogu quizdata null oldukda gelmelidir ve birde cixib girdikde eledikde modalda data yadda qalmagi ve saved qalmagi problemdir 
