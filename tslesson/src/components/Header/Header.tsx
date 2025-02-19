@@ -1,4 +1,8 @@
-import { Link } from 'react-router-dom';
+
+import { useState } from 'react';
+import {  DialogContent, Typography } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { closeDialog, openDialog, openQuizModal } from '../../store/slice/LanguageHomeSlice';
 import Paragrafy from '../../components/Paragrafy/Paragrafy';
 import "./Header.scss";
 import BurgerMenu from './HeaderBurger/Burgermenu/Burgermenu';
@@ -6,38 +10,55 @@ import SelecetLanguage from '../SelecetLanguage/SelecetLanguage';
 import NotifactionComponents from '../NotifactionComponents/NotifactionComponents';
 import Add from '../../assets/images/header/Add.svg';
 import NewWordModal from './NewWordModal/NewWordModal';
-import { useState } from 'react';
-import { useAppDispatch } from '../../store';
-import { openQuizModal } from '../../store/slice/LanguageHomeSlice';
+import { Link } from 'react-router-dom';
+import AlertDialog from '../AlertDialog/AlertDialog';
 
 
 const Header = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const handleCloseModal = () => {
-    setShowModal(false);
+
+
+
+  const items = useAppSelector((state) => state.learningNow.items.nowitems);
+  const dispatch = useAppDispatch();
+  const isDialogOpen = useAppSelector((state) => state.LanguagetextData.isDialogOpen);
+
+  const handleQuizClick = () => {
+    if (!items || items.length === 0) {
+
+      dispatch(openDialog());
+    } else {
+
+      dispatch(openQuizModal());
+    }
+  };
+
+  const handleCloseLearingDialog = () => {
+    dispatch(closeDialog());
   };
 
   const handleOpenModal = () => {
     setShowModal(true);
   };
-  const dispatch = useAppDispatch();
 
-
-  const handleQuizClick = () => {
-    dispatch(openQuizModal());
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
-  
 
   return (
-    <div className='header'>
+    <div className="header">
       <div className="header_left">
         <SelecetLanguage />
       </div>
-      <div onClick={handleQuizClick} className="header_center">
-        <Link  style={{ textDecoration: "none", color: 'black',cursor:"pointer" }} to="">
-          <Paragrafy className='quiz_center' fontsize='24px' fontfamily='DM Serif Display' text='Let’s start quiz' />
-        </Link>
+      <div className="header_center">
+        <div onClick={handleQuizClick}
+          className="header_center">
+          <Link style={{ textDecoration: "none", color: 'black', cursor: "pointer" }} to="">
+            <Paragrafy className='quiz_center' fontsize='24px' fontfamily='DM Serif Display' text='Let’s start quiz' />
+          </Link>
+        </div>
+
       </div>
       <div className="header_right">
         <Link to="/settingspage">
@@ -58,6 +79,15 @@ const Header = () => {
         <BurgerMenu />
       </div>
       <NewWordModal show={showModal} onClose={handleCloseModal} />
+      <AlertDialog
+        open={isDialogOpen} onClose={handleCloseLearingDialog}
+        title="No Data Available">
+        <DialogContent>
+          <Typography>
+            You need to have some words saved in the "Learning Now" section to start the quiz.
+          </Typography>
+        </DialogContent>
+      </AlertDialog>
     </div>
   );
 };

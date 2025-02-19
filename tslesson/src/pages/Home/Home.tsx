@@ -6,8 +6,8 @@ import LexiconCards from './Homesections/LexiconCards/LexiconCards';
 import VocabularyBuilder from './Homesections/VocabularyBuilder/VocabularyBuilder';
 import LearningNow from './Homesections/LearingNow/LearingNow';
 import LatestWords from './Homesections/LatestWords/LatestWords';
-import { useAppDispatch } from "../../store";
-import { openQuizModal } from "../../store/slice/LanguageHomeSlice";
+import { RootState, useAppDispatch, useAppSelector } from "../../store";
+import { openDialog, openQuizModal } from "../../store/slice/LanguageHomeSlice";
 import QuizModal from "../../components/QuizModal/QuizModal";
 
 
@@ -15,11 +15,13 @@ import QuizModal from "../../components/QuizModal/QuizModal";
 
 const Home = () => {
     const dispatch = useAppDispatch();
-
-    const handleQuizClick = () => {
-        dispatch(openQuizModal());
-        console.log("aaa");
-
+    const items = useAppSelector((state:RootState) => state.learningNow.items.nowitems); 
+    const handleHomeQuizClick = () => {
+        if (!items || items.length === 0) {
+            dispatch(openDialog()); 
+        } else {
+            dispatch(openQuizModal());
+        }
     };
 
     return (
@@ -42,7 +44,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="homepage_quiz">
-                    <Link onClick={handleQuizClick} style={{ textDecoration: "none", color: 'black' }} to="">
+                    <Link onClick={handleHomeQuizClick} style={{ textDecoration: "none", color: 'black' }} to="">
                         <Paragrafy className='quiz_center' fontsize='24px' fontfamily='DM Serif Display' text='Let’s start quiz' />
                     </Link>
                 </div>

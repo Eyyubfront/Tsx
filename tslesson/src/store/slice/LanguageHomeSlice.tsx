@@ -1,4 +1,4 @@
-import {  createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { getTexts, selecetlangaugesave } from "../actions/languagehome/languagehome";
 
 interface TextItem {
@@ -16,6 +16,7 @@ interface TextState {
     loading: boolean;
     error: string | null;
     isOpen?: boolean;
+    isDialogOpen: boolean, // Yeni vəziyyət
 }
 
 const initialState: TextState = {
@@ -25,6 +26,7 @@ const initialState: TextState = {
     loading: false,
     error: null,
     isOpen: false,
+    isDialogOpen: false, // Yeni vəziyyət
 };
 
 const LanguageHomeSlice = createSlice({
@@ -36,10 +38,17 @@ const LanguageHomeSlice = createSlice({
         },
         openQuizModal: (state) => {
             state.isOpen = true;
-          },
-          closeQuizModal: (state) => {
+        },
+        closeQuizModal: (state) => {
             state.isOpen = false;
-          },
+        },
+        openDialog: (state) => {
+            state.isDialogOpen = true;
+        },
+
+        closeDialog: (state) => { // Dialogu bağlayan action
+            state.isDialogOpen = false;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -58,20 +67,21 @@ const LanguageHomeSlice = createSlice({
             })
             .addCase(selecetlangaugesave.pending, (state) => {
                 state.loading = true;
-                state.error = null; 
+                state.error = null;
                 console.log("pending")
             })
             .addCase(selecetlangaugesave.fulfilled, (state) => {
                 state.loading = false;
-                
+
             })
             .addCase(selecetlangaugesave.rejected, (state, action) => {
-                state.loading = false; 
-                state.error = action.payload as string; 
+                state.loading = false;
+                state.error = action.payload as string;
 
             });
     },
 });
 
-export const { setSelectedLanguage,openQuizModal,closeQuizModal } = LanguageHomeSlice.actions;
+export const { setSelectedLanguage, openQuizModal, closeQuizModal, openDialog, closeDialog } = LanguageHomeSlice.actions;
+
 export default LanguageHomeSlice.reducer;

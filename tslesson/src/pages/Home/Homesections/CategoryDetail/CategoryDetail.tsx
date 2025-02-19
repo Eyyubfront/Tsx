@@ -14,7 +14,7 @@ import BackButton from '../../../../components/BackButton/BackButton';
 import Search from '../../../../assets/images/home/Search_Magnifying_Glass.svg';
 import Paragrafy from '../../../../components/Paragrafy/Paragrafy';
 import QuizModal from '../../../../components/QuizModal/QuizModal';
-import { openQuizModal } from '../../../../store/slice/LanguageHomeSlice';
+import { openDialog, openQuizModal } from '../../../../store/slice/LanguageHomeSlice';
 
 export interface CategoryItem {
     id: number;
@@ -68,9 +68,14 @@ const CategoryDetail: React.FC = () => {
         item.source.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.translation.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  const handleQuizClick = () => {
-        dispatch(openQuizModal());
-      };
+    const items = useAppSelector((state) => state.learningNow.items.nowitems);
+    const handleHomeQuizClick = () => {
+        if (!items || items.length === 0) {
+            dispatch(openDialog());
+        } else {
+            dispatch(openQuizModal());
+        }
+    };
     
     return (
         <div className="category-detail">
@@ -126,7 +131,7 @@ const CategoryDetail: React.FC = () => {
                 }
             </div>
             <div  className="homepage_quiz">
-                <Link onClick={handleQuizClick} style={{ textDecoration: "none", color: 'black' }} to="">
+                <Link onClick={handleHomeQuizClick} style={{ textDecoration: "none", color: 'black' }} to="">
                     <Paragrafy className='quiz_center' fontsize='24px' fontfamily='DM Serif Display' text='Let’s start quiz' />
                 </Link>
             </div>

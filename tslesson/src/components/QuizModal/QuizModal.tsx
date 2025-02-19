@@ -1,11 +1,11 @@
 import { useForm, FormProvider } from "react-hook-form";
-import { Box, Typography, TextField, Dialog, DialogTitle, DialogContent, IconButton, Button } from "@mui/material";
+import { Box, Typography, TextField, Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
 import Favorite from "../../assets/images/home/Heart_01.svg";
 import FavroiteBorder from "../../assets/images/home/UnHeart.svg";
 import Savedicon from "../../assets/images/home/Bookmark.svg";
 import NotSavedicon from "../../assets/images/home/nosaved.svg";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { fetchQuizData, notificationallsdata, quizcountReport, quizSaveData } from "../../store/actions/quizActions/quizActions";
+import { fetchQuizData, quizSaveData, quizcountReport } from "../../store/actions/quizActions/quizActions";
 import { useEffect, useState } from "react";
 import { Close } from '@mui/icons-material';
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
@@ -32,7 +32,7 @@ const QuizModal = () => {
     const [showGameOver, setShowGameOver] = useState(false);
     const [correctAnsewrscount, setCorrectAnsewrsCount] = useState(0);
     const [isNodata, setDatadialog] = useState(false);
-    const [learingdata, setLearingData] = useState(false);
+   
 
 
     useEffect(() => {
@@ -41,22 +41,24 @@ const QuizModal = () => {
             setLives(3);
             setAnswerMessage("");
             setSelectedAnswer(null);
+            setIsSaved(false);
             setDatadialog(false);
         }
-        if (learignowdata.length === 0) {
-            setLearingData(false)
-        }
+       
     }, [isQuizModalOpen, learignowdata]);
 
     useEffect ( () => {
-        if (lives == 0) {
+        if (lives === 0) {
             setAnswerMessage("Game Over!");
             setShowGameOver(true);
             setSelectedAnswer(null);
+            setDatadialog(quizData?.id == null); 
         }
         if (quizData?.id == null) {
           
             setDatadialog(true)
+        }else{
+            setDatadialog(false) 
         }
 
 
@@ -112,11 +114,10 @@ const QuizModal = () => {
         dispatch(closeQuizModal());
         setDatadialog(false);
     };
-    const handleCloseLearing = () => {
-        setLearingData(false);
-    };
+  
 
     const toggleSave = () => {
+        setDatadialog(false)
         setIsSaved(!isSaved);
         if (!isSaved && quizData?.id) {
             dispatch(quizSaveData(quizData?.id));
@@ -244,20 +245,6 @@ const QuizModal = () => {
                         </DialogContent>
                     </Dialog>}
 
-                    {
-                        learingdata && <Dialog open={learingdata} onClose={handleCloseLearing}>
-                            <DialogContent className="correct_box">
-                                <DialogTitle className="finished_top">Quiz Finished</DialogTitle>
-                                <Typography className="mistake_tittle" variant="body1">You got {correctAnsewrscount} correct answer (s). </Typography>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2, gap: "5px" }}>
-
-                                  <div>
-                                    aaa
-                                  </div>
-                                </Box>
-                            </DialogContent>
-                        </Dialog>
-                    }
 
                 </FormProvider>
             </DialogContent>
@@ -268,4 +255,4 @@ const QuizModal = () => {
 export default QuizModal;
 
 
-// burda artiq birsey varki learingnow datasi olmadikda yoxluram ve finish dialogu quizdata null oldukda gelmelidir ve birde cixib girdikde eledikde modalda data yadda qalmagi ve saved qalmagi problemdir 
+//  finish dialogu quizdata null oldukda gelmelidir ve birde cixib girdikde eledikde modalda data yadda qalmagi ve saved qalmagi problemdir 
