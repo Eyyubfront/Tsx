@@ -1,14 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { wordfetchTexts, saveText, removeText, updateText } from '../actions/learingActions/learingwordsActions';
+import { wordfetchTexts, saveText, removeText, updateText, selecetwordText } from '../actions/learingActions/learingwordsActions';
 
 
 interface wordsitems {
     id: number;
-    userId: string;
     source?: string;
     translation?: string;
-    sourceLanguageId?: number;
-    translationLanguageId?: number;
     isLearningNow: boolean
 }
 
@@ -53,27 +50,23 @@ const LatestWordsSlice = createSlice({
                 state.error = action.error.message || 'Failed to fetch texts';
             })
    
-            .addCase(saveText.fulfilled, (state, action) => {
+            .addCase(saveText.fulfilled, (state) => {
                 state.status = 'succeeded';
-         
-                state.items.items.push(action.payload);
-           
             })
-     
-            .addCase(removeText.fulfilled, (state, action) => {
-                state.status = 'succeeded';
-             
-                state.items.items = state.items.items.filter(item => item.id !== action.payload); 
           
+            .addCase(selecetwordText.fulfilled, (state) => {
+                state.status = 'succeeded';
+     
+            })
+            .addCase(selecetwordText.rejected, (state) => {
+                state.status = 'failed';
+            })
+            .addCase(removeText.fulfilled, (state) => {
+                state.status = 'succeeded';    
             })
 
-            .addCase(updateText.fulfilled, (state, action) => {
+            .addCase(updateText.fulfilled, (state) => {
                 state.status = 'succeeded';
-      
-                const updatedIndex = state.items.items.findIndex(item => item.id === action.payload.id);
-                if (updatedIndex !== -1) {
-                    state.items.items[updatedIndex] = action.payload;
-                }
             });
     },
 });

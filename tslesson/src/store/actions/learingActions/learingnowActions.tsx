@@ -1,60 +1,70 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../axiosInstance';
+import { lexioncountfetch } from '../lexioncountActions/lexioncountActions';
+import { wordfetchTexts } from './learingwordsActions';
+
 
 export interface TextItem {
-    id: number;
-    userId: string;
+    id: number|null;
     source?: string;
     translation?: string;
-    sourceLanguageId?: number;
-    translationLanguageId?: number;
-    isLearningNow: boolean;
+    isLearningNow?: boolean;
 }
 
-export const fetchTexts = createAsyncThunk('learningNow/fetchTexts', async (userId: string, thunkAPI) => {
+export interface ITextItem extends TextItem {
+    isMastered?: boolean
+}
+
+export const fetchTexts = createAsyncThunk('learningNow/fetchTexts', async ({ page, pageSize }: { page: number; pageSize: number }, thunkAPI) => {
     try {
-        const response = await axiosInstance.get(`/UserVocabulary/GetAllLearningByUserId?userId=${userId}`);
-        console.log("datafetch",response.data.data);
-        return response.data.data; 
+   
+        const response = await axiosInstance.get(`/UserVocabulary/GetPaginatedLearningByUserId?page=${page}&pageSize=${pageSize}`);
+        return response.data.data;  
     } catch (error) {
         return thunkAPI.rejectWithValue(error);
     }
 });
 
-export const saveText = createAsyncThunk('learningNow/saveText', async (item: TextItem, thunkAPI) => {
+export const learingnowsaveText = createAsyncThunk('learningNow/saveText', async (item: TextItem, thunkAPI) => {
     try {
         const response = await axiosInstance.post('/UserVocabulary/Create', item);
-        thunkAPI.dispatch(fetchTexts(item.userId)); 
-        console.log("savetext",response.data);
-        return response.data;
+    
+        thunkAPI.dispatch(fetchTexts({ page: 1, pageSize: 10 })); 
+        thunkAPI.dispatch(lexioncountfetch()); 
+    
+        thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
         
-    } catch (err) {
-        return thunkAPI.rejectWithValue(err);
+        return response.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue("User vocabulary already exists")
     }
 });
-
 
 export const removeText = createAsyncThunk('learningNow/removeText', async (id: number, thunkAPI) => {
     try {
         await axiosInstance.delete(`/UserVocabulary/Delete/${id}`);
-    } catch (err) {
-        return thunkAPI.rejectWithValue(err);
+        
+
+        thunkAPI.dispatch(fetchTexts({ page: 1, pageSize: 10 })); 
+        
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error);
     }
 });
 
-
-export const updateText = createAsyncThunk('learningNow/updateText', async ({ id, source, translation, userId }: { id: number; source: string; translation: string; userId: string }, thunkAPI) => {
+export const updateText = createAsyncThunk('learningNow/updateText', async ({ id, source, translation }: { id: number; source: string; translation: string }, thunkAPI) => {
     try {
-        const response = await axiosInstance.put("/Update", {
+        const response = await axiosInstance.put("/UserVocabulary/Update", {
             id,
             source,
             translation
         });
+        
 
-        thunkAPI.dispatch(fetchTexts(userId));
-
-        return { ...response.data }; 
-    } catch (err) {
-        return thunkAPI.rejectWithValue(err);
+        thunkAPI.dispatch(fetchTexts({ page: 1, pageSize: 10 })); 
+        
+        return response.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error);
     }
 });

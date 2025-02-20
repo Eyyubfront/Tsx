@@ -1,16 +1,25 @@
-import { useSelector } from 'react-redux';
-import { Navigate, Outlet } from 'react-router-dom';
-import { RootState } from '../store';
+
+import {  Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { RootState, useAppSelector } from '../store';
+import { useEffect } from 'react';
 
 const PublicRouting = () => {
-  const user = useSelector((state: RootState) => state.Auth.isAuth);
+  const user = useAppSelector((state: RootState) => state.Auth.isAuth);
+
+  let location = useLocation();
+  let navigate = useNavigate();
 
 
-  if (!user ) {
-    return  <Outlet /> ;
+  useEffect(() => {
+    if (user === true) {
+      navigate(location.state || "/")
+    }
+  }, [user])
+
+  if (user === false) {
+    return <Outlet />;
   }
-
-  return <Navigate to="/" /> ;
+  return null;
 };
 
 export default PublicRouting;

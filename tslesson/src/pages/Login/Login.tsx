@@ -11,7 +11,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import "./Login.scss";
 import UseFormInput from '../../components/PrimaryInput/UseFormInput';
-import { RootState, useAppDispatch, useAppSelector } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { login, register } from '../../store/actions/authActions';
 import { Link, useNavigate } from 'react-router-dom';
 import { setVeryuse } from '../../store/slice/authSlice';
@@ -26,13 +26,17 @@ const schema = Yup.object().shape({
     .matches(/(?=.*[A-Z])/, "Password must contain at least one uppercase letter.")
     .required("Password is required."),
 });
+
 const Login = () => {
   const dispatch = useAppDispatch();
-  const { loading } = useAppSelector((state: RootState) => state.Auth);
+  const { loading, error } = useAppSelector((state) => state.Auth);
+  console.log(error);
+
 
   const [signUp, setSignUp] = useState(false);
   const [iseye, setIseye] = useState(false);
   const [isOn, setIsOn] = useState(false);
+  const [isChecked, setIsChecked] = useState<boolean>(false);
   const navigate = useNavigate();
   const methods = useForm({
     resolver: yupResolver(schema),
@@ -56,7 +60,7 @@ const Login = () => {
 
   const onSubmit = (data: { email: string, password: string }) => {
     if (signUp) {
-      dispatch(setVeryuse(true))
+      dispatch(setVeryuse(true));
       dispatch(register(data))
         .unwrap()
         .then(() => {
@@ -64,7 +68,7 @@ const Login = () => {
           navigate("/verifyemailpage");
         })
         .catch(err => {
-          console.error("Error:", err);
+          console.error("Registration error:", err);
         });
     } else {
       dispatch(login(data))
@@ -89,19 +93,13 @@ const Login = () => {
       </div>
       <div className='sign_right'>
         <FormProvider {...methods}>
-          <Heading
-            fontsize="48px"
-            text={signUp ? "Create account" : "Sign in"}
-            className="login_heading"
-          />
+          <div className='login_headingtittle'>
+            <Heading text={signUp ? "Create account" : "Sign in"} className="login_heading" />
+          </div>
           <Paragrafy fontsize="16px" fontfamily="DM Sans, sans-serif" text={"Now your finances are in one place and always under control"} />
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="email-container">
-              <UseFormInput
-                name='email'
-                label='Email address'
-                type='email'
-              />
+              <UseFormInput name='email' label='Email address' type='email' />
             </div>
             <div className="password-container">
               <UseFormInput
@@ -119,20 +117,39 @@ const Login = () => {
                   </Link>
                 </div>
               )}
+              {/* {
+                signUp ? (
+                  error !== null ? (
+                    <p className='signup__error'>{error}</p>
+                  ) : null
+                ) : null
+              } */}
+          
             </div>
 
 
             {signUp ? (
               <>
-                <Check />
-                <PrimaryButton label={"Create account"} type="submit" disabled={!formState.isValid || loading} />
+                <Check onCheck={(checked: boolean) => setIsChecked(checked)} />
+                <PrimaryButton
+                  label={"Create account"}
+                  type="submit"
+                  disabled={!formState.isValid || loading || !isChecked}
+                />
               </>
             ) : (
               <>
-                <PrimaryButton disabled={!formState.isValid || loading} label={"Sign in"} type="submit" />
+                <PrimaryButton
+                  disabled={!formState.isValid || loading}
+                  label={"Sign in"}
+                  type="submit"
+                />
                 <Toogle isOn={isOn} handleToggle={handleToggle} />
               </>
             )}
+
+
+
             <div className="link_container">
               <Paragrafy fontfamily="Inter,sans-serif" fontsize="14px" fontWeight="300" text={signUp ? "Already have an account? " : "Don't have an account? "} />
               <CustomLink fontfamily="Inter,sans-serif" onChange={handleLink} element={signUp} />

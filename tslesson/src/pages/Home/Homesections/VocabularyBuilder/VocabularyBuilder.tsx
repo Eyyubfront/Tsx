@@ -1,61 +1,90 @@
-import 'swiper/css'; 
-import { Pagination } from 'swiper/modules'; 
+import 'swiper/swiper-bundle.css';
+import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import  VocabularyTwo  from "../../../../assets/images/vocablary/vocablarytwo.svg";
-import  VocabularyOne  from "../../../../assets/images/vocablary/vocablaryone.svg";
-import  VocabularyThree  from  "../../../../assets/images/vocablary/vocablarythree.svg";
-import  VocabularyFive  from "../../../../assets/images/vocablary/vocablarythfive.svg"; 
-import  VocabularyFour  from "../../../../assets/images/vocablary/vocablaryfoor.svg"; 
 import "./VocabularyBuilder.scss";
-
-const vocabularyItems = [
-    { id: 0, count: "3 of 25", title: "Vegetables", svg: VocabularyTwo  },
-    { id: 1, count: "3 of 25", title: "Travel", svg: VocabularyOne },
-    { id: 2, count: "3 of 25", title: "Fruits", svg: VocabularyThree  },
-    { id: 3, count: "3 of 25", title: "Weather", svg: VocabularyFive },
-    { id: 4, count: "3 of 25", title: "Camping", svg: VocabularyFour }
-];
+import { useAppDispatch, useAppSelector } from '../../../../store';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Skeleton } from '@mui/material';
+import { categoryfetch } from '../../../../store/actions/categoryActions/categoryActions';
 
 interface VocabularyBuilderProps {
     className?: string;
 }
 
 const VocabularyBuilder: React.FC<VocabularyBuilderProps> = ({ className }) => {
+    const navigate = useNavigate();
+    const categories = useAppSelector((state) => state.category.categories);
+    const status = useAppSelector((state) => state.category.status);
+    const dispatch = useAppDispatch();
+
+    const [clickedCardId, setClickedCardId] = useState<number | null>(null);
+
+
+    const handleCategoryClick = async (categoryId: number) => {
+        try {
+            setClickedCardId(categoryId);
+            navigate(`/category/${categoryId}`);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    useEffect(() => {
+        dispatch(categoryfetch())
+
+    }, [dispatch]);
+
     return (
-        <div className="vocablary-builder">
-            <Swiper
-                className={`swipers ${className}`}
-                spaceBetween={10}
-                pagination={{ clickable: true }} 
-                loop
-                breakpoints={{
-                    320: {
-                        slidesPerView: 1.3, 
-                    },
-                    600: {
-                        slidesPerView: 2.5, 
-                    },
-                    1024: {
-                        slidesPerView: 3.3, 
-                    }
-                }}  
-                modules={[Pagination]}  
-            >
-                {vocabularyItems.map(item => (
-                    <SwiperSlide className='swiper_slide' key={item.id}>
-                        <div className="vocablary_card">
-                            <div className="vocablary_left">
-                                <h3 className='vocablary_tittlename'>{item.title}</h3>
-                                <p>{item.count}</p>
-                            </div>
-                            <div className="vocablary_right">
-                               <img src={item.svg} alt="" /> 
-                            </div>
-                        </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-        </div>
+        <>
+            {
+                status === "loading" ? <Skeleton style={{ height: "121px" }} /> : <div className="vocablary-builder">
+                    <Swiper
+                        className={`swipers ${className}`}
+                        spaceBetween={10}
+                        loop
+                        slidesPerView="auto"
+                        breakpoints={{
+                            320: {
+                                slidesPerView: 4,
+                            },
+                            600: {
+                                slidesPerView: 2.5,
+                            },
+                            1024: {
+                                slidesPerView: 3.3,
+                            }
+                        }}
+                        modules={[Pagination]}
+                    >
+                        {categories.map(item => (
+                            <SwiperSlide
+                                className='swiper_slide'
+                                key={item.id}
+                                onClick={() => handleCategoryClick(item.id)}
+                            >
+                                <div className={`vocablary_card ${clickedCardId === item.id ? 'clicked' : ''}`}>
+                                    <div className="vocablary_left">
+                                        <h3 className='vocablary_tittlename'>{item.name}</h3>
+                                        <div className="vocablaryleft_butom">
+                                            <p>Mastered</p>
+                                            <p>{item.masteredCount}</p>
+                                            <p>of</p>
+                                            <p>{item.vocabularyCount}</p>
+                                        </div>
+                                    </div>
+                                    <div className="vocablary_right">
+                                        <img
+                                            src={`data:image/png;base64,${item.image}`}
+                                            className="item-flag"
+                                        />
+                                    </div>
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                </div>
+            }
+        </>
     );
 }
 

@@ -1,0 +1,37 @@
+.language_settings {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    gap: 36px;
+
+    .languagesetings__top {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        background-color: #F9F8FD;
+        border: 1px solid #F9F8FD;
+        border-radius: 8px;
+        width: 100%;
+
+        padding: 6px;
+    }
+
+}
+
+label[data-shrink=false]+.MuiInputBase-formControl .css-w76bbz-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+    border-radius: 10px;
+    border: 1px solid #D8DADC;
+}
+
+.css-w76bbz-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-w76bbz-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-w76bbz-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+    border-radius: 10px;
+    border: 1px solid #D8DADC;
+}
+
+.delet_language {
+    color: red;
+    width: 16;
+    height: 18;
+}

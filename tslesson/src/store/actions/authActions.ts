@@ -1,4 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
+import axiosInstance from './axiosInstance';
 import axios from 'axios';
 
 
@@ -28,20 +30,18 @@ export const login = createAsyncThunk(
   'auth/login',
   async (request: LoginRequest, { rejectWithValue }) => {
     try {
-      const response = await axios.post<AuthResponse>(
-        'https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/Login',
+      const response = await axiosInstance.post<AuthResponse>(
+        '/Login',
         request
       );
       const userId = response.data.data.userId;
      
-      
-
       localStorage.setItem('token', response.data.data.accessToken);
       localStorage.setItem('refreshToken', response.data.data.refreshToken);
       localStorage.setItem('userId', response.data.data.userId);
       return { ...response.data, userId };
     } catch (error) {
-      return rejectWithValue('Error');
+      return rejectWithValue(error);
     }
   }
 );
@@ -51,38 +51,53 @@ export const register = createAsyncThunk(
   async (request: RegisterRequest, { rejectWithValue }) => {
     try {
       const response = await axios.post<AuthResponse>(
-        'https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/Register',
+        'https://learn-language-api.azurewebsites.net/api/Register',
         request
       );
-
-
+      
       const userId = response.data.data.userId;
 
       return { ...response.data, userId };
 
-    } catch (error) {
-      return rejectWithValue('Error');
+    } catch (error: any) {
+      return rejectWithValue(" Alredy email ");
     }
   }
 );
+
 
 export const refreshToken = createAsyncThunk(
   'auth/refreshToken',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.post<AuthResponse>(
-        'https://language-learn-axe5epeugbbqepez.uksouth-01.azurewebsites.net/api/RefreshToken',
+      const response = await axiosInstance.post<AuthResponse>(
+        '/RefreshToken',
         {
           refreshToken: localStorage.getItem("refreshToken")
         }
-      );
-      localStorage.setItem('token', response.data.data.accessToken);
-      console.log(response.data);
       
+      );
+      console.log("refresh", localStorage.getItem("refreshToken"));
+      
+      localStorage.setItem('token', response.data.data.accessToken);   
       localStorage.setItem('refreshToken', response.data.data.refreshToken);
       return response.data;
     } catch (error) {
-      return rejectWithValue('Error refreshing token');
+      return rejectWithValue(error);
+    }
+  }
+);
+
+
+export const deleteUser = createAsyncThunk(
+  'auth/deleteUser',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.delete('/DeleteUser');
+      return response.data;
+    } catch (error) {
+  
+      return rejectWithValue(error);
     }
   }
 );

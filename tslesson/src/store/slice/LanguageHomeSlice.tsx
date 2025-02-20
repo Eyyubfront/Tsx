@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getTexts } from "../actions/languagehome/languagehome";
+import { getTexts, selecetlangaugesave } from "../actions/languagehome/languagehome";
 
 interface TextItem {
     text: string;
@@ -15,7 +15,8 @@ interface TextState {
     selectedLanguageId: number | null;
     loading: boolean;
     error: string | null;
- 
+    isOpen?: boolean;
+    isDialogOpen: boolean, // Yeni vəziyyət
 }
 
 const initialState: TextState = {
@@ -24,7 +25,8 @@ const initialState: TextState = {
     selectedLanguageId: null,
     loading: false,
     error: null,
-
+    isOpen: false,
+    isDialogOpen: false, // Yeni vəziyyət
 };
 
 const LanguageHomeSlice = createSlice({
@@ -34,6 +36,19 @@ const LanguageHomeSlice = createSlice({
         setSelectedLanguage(state, action) {
             state.selectedLanguageId = action.payload;
         },
+        openQuizModal: (state) => {
+            state.isOpen = true;
+        },
+        closeQuizModal: (state) => {
+            state.isOpen = false;
+        },
+        openDialog: (state) => {
+            state.isDialogOpen = true;
+        },
+
+        closeDialog: (state) => { // Dialogu bağlayan action
+            state.isDialogOpen = false;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -41,7 +56,7 @@ const LanguageHomeSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(getTexts.fulfilled, (state, action: any) => {
+            .addCase(getTexts.fulfilled, (state, action) => {
                 state.loading = false;
                 state.texts = action.payload;
                 state.defaultText = action.payload.find((t: { isDefault: boolean }) => t.isDefault);
@@ -50,9 +65,23 @@ const LanguageHomeSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload as string;
             })
-          
+            .addCase(selecetlangaugesave.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+                console.log("pending")
+            })
+            .addCase(selecetlangaugesave.fulfilled, (state) => {
+                state.loading = false;
+
+            })
+            .addCase(selecetlangaugesave.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+
+            });
     },
 });
 
-export const { setSelectedLanguage } = LanguageHomeSlice.actions;
+export const { setSelectedLanguage, openQuizModal, closeQuizModal, openDialog, closeDialog } = LanguageHomeSlice.actions;
+
 export default LanguageHomeSlice.reducer;

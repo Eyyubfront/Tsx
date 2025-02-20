@@ -7,6 +7,7 @@
     display: none ;
 }
     .header_left {
+
         .selects {
             width: 250px;
             height: 56px;
@@ -72,11 +73,17 @@
             }
         }
     }
+.header_burgermenu{
+    display: none;
+}
 }
 
 @media (max-width:600px) {
     .header{
         flex-direction: row-reverse ;
+        .header_burgermenu{
+            display: block;
+        }
         .headers_burger{
             display: block;
             width: 42px;
@@ -107,7 +114,9 @@
   }
   @media (min-width:601px ) and (max-width:1200px) {
     .header{
-
+.headers_burger{
+    display: none;
+}
         .header_center{
             display: none;
            }
@@ -115,9 +124,4 @@
             gap: 5px;
            }
     }
-  }
-  @media (min-width:1201px) and (max-width:1305px) {
-    .header_center{
-        display: none;
-       }
   }

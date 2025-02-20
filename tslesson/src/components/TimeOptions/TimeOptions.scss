@@ -1,0 +1,64 @@
+.pa-group {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    gap: 16px;
+
+    .time_group {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+
+    .time-option {
+      
+        height: 52px;
+        padding: 12px 24px 12px 24px;
+        border-radius: 44px;
+        border: 1px solid #F9F8FD;
+        font-family: Inter;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 20px;
+        letter-spacing: 0%;
+            width: 105px;
+
+        &.selectedtime {
+            background-color: #DCD3F8;
+          
+
+        }
+
+        cursor: pointer;
+        background-color: #F9F8FD;
+    }
+
+    .erormesage {
+        color: red;
+
+    }
+
+}
+
+@media (max-width: 600px) {
+    .pa-group {
+        flex-direction: column;
+        align-items: baseline;
+
+        .time-option {
+            width: 100%;
+        }
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1200px) {
+    .pa-group {
+        flex-direction: column;
+        align-items: baseline;
+
+        .time-option {
+            width: 100%;
+        }
+    }
+}

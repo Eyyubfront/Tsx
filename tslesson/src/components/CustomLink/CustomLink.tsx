@@ -23,7 +23,7 @@ const CustomLink: FC<LinkProps> = ({ element, fontfamily, onChange }) => {
         className="signlink"
         onClick={handleClick} 
       >
-        <Paragrafy text={element ? "Sign in" : "Sign up"} fontWeight="bold" />
+        <Paragrafy text={element ? "Sign in" : "Sign up"} fontWeight='600' />
       </a>
     </div>
   );

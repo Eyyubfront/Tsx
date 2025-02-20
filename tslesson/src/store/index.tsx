@@ -9,6 +9,12 @@ import LanguageHomedata from './slice/LanguageHomeSlice';
 import timeReducer from './slice/timeSlice';
 import forgotPasswordReducer from "./slice/forgotPasswordSlice";
 import passwordResetReducer from "./slice/passwordResetSlice";
+import categoryReducer from "./slice/CategroySlice";
+import lexionReducer from "./slice/LexionSlice";
+import PasswordcheckSettingsReducer from "./slice/PasswordSettingsSlice";
+import UserVocabularyReducer from "./slice/userVocabularySlice";
+import MasteredReducers from "./slice/masteredSlice";
+import QuizReducer from "./slice/quizSlice";
 const store = configureStore({
     reducer: {
         learningNow: learningNowReducer,
@@ -17,9 +23,15 @@ const store = configureStore({
         language: languageReducer,
         emailVerification: emailVerificationReducer,
         LanguagetextData: LanguageHomedata,
-        time:timeReducer,
+        time: timeReducer,
         forgotPassword: forgotPasswordReducer,
-        passwordReset:passwordResetReducer
+        passwordReset: passwordResetReducer,
+        category: categoryReducer,
+        lexioncard: lexionReducer,
+        passwordchecksettings: PasswordcheckSettingsReducer,
+        userVocabulary: UserVocabularyReducer,
+        mastered: MasteredReducers,
+        quizslice: QuizReducer,
 
     },
 

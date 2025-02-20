@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { login, register, refreshToken } from '../actions/authActions';
+import { createSlice } from '@reduxjs/toolkit';
+import { login, register, refreshToken, deleteUser } from '../actions/authActions';
 import { sendForgotPasswordEmail } from '../actions/forgotPasswordActions/forgotPasswordActions';
 
 interface AuthState {
@@ -8,7 +8,7 @@ interface AuthState {
   accessToken: string | null;
   loading: boolean;
   error: string | null;
-  isAuth: boolean;
+  isAuth: boolean | null;
   success: boolean;
   veriyuse: Boolean
 }
@@ -20,7 +20,7 @@ const initialState: AuthState = {
   loading: false,
   error: null,
   success: false,
-  isAuth: false,
+  isAuth: null,
   veriyuse: false
 };
 
@@ -60,6 +60,24 @@ const authSlice = createSlice({
         state.error = action.payload as string;
         state.isAuth = false;
       })
+      .addCase(deleteUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteUser.fulfilled, (state) => {
+        state.loading = false;
+        state.isAuth = false;
+        state.accessToken = null;
+        state.refreshToken = null;
+        state.userId = null;
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('userId');
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
       .addCase(register.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -67,6 +85,7 @@ const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.loading = false;
         state.userId = action.payload.userId;
+        state.isAuth = false;
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;
@@ -101,9 +120,9 @@ const authSlice = createSlice({
       })
       .addCase(
         sendForgotPasswordEmail.rejected,
-        (state, action: PayloadAction<string | undefined>) => {
+        (state, action) => {
           state.loading = false;
-          state.error = action.payload || "An error occurred.";
+          state.error = action.payload as string;
         }
       );
   },
