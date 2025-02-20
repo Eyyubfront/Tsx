@@ -17,7 +17,6 @@ import "./QuizModal.scss";
 
 const QuizModal = () => {
 
-    const learignowdata  = useAppSelector((state) => state.learningNow.items.nowitems);
 
     const dispatch = useAppDispatch();
     const isQuizModalOpen = useAppSelector((state) => state.LanguagetextData.isOpen);
@@ -32,7 +31,8 @@ const QuizModal = () => {
     const [showGameOver, setShowGameOver] = useState(false);
     const [correctAnsewrscount, setCorrectAnsewrsCount] = useState(0);
     const [isNodata, setDatadialog] = useState(false);
-   
+
+    
 
 
     useEffect(() => {
@@ -44,27 +44,23 @@ const QuizModal = () => {
             setIsSaved(false);
             setDatadialog(false);
         }
-       
-    }, [isQuizModalOpen, learignowdata]);
 
-    useEffect ( () => {
+    }, [isQuizModalOpen]);
+
+    useEffect(() => {
         if (lives === 0) {
             setAnswerMessage("Game Over!");
             setShowGameOver(true);
             setSelectedAnswer(null);
-            setDatadialog(quizData?.id == null); 
+
         }
-        if (quizData?.id == null) {
-          
-            setDatadialog(true)
-        }else{
-            setDatadialog(false) 
-        }
+
+
 
 
     }, [lives, correctAnsewrscount, quizData]);
 
-    
+
 
 
 
@@ -82,6 +78,7 @@ const QuizModal = () => {
             setAnswerMessage("");
             setSelectedAnswer(null);
         }, 3000);
+
     };
 
 
@@ -89,10 +86,14 @@ const QuizModal = () => {
         if (isCorrect) {
             dispatch(quizcountReport(correctAnsewrscount));
         }
-        dispatch(fetchQuizData([...answeredQuestions, Number(quizData?.id)]));
-        setAnsweredQuestions((prev) => [...prev, Number(quizData?.id)]);
+        if (quizData?.id) {
+
+            dispatch(fetchQuizData([...answeredQuestions, Number(quizData?.id)]));
+            setAnsweredQuestions((prev) => [...prev, Number(quizData?.id)]);
+        }
         setAnswerMessage("");
         setSelectedAnswer(null);
+      
     };
 
     const handleRestart = () => {
@@ -107,23 +108,32 @@ const QuizModal = () => {
 
     const handleClose = () => {
         dispatch(closeQuizModal());
+        setAnsweredQuestions([0])
         setShowGameOver(false);
-   
+
     };
     const handleCloseDialog = () => {
         dispatch(closeQuizModal());
         setDatadialog(false);
     };
-  
 
-    const toggleSave = () => {
-        setDatadialog(false)
+
+    const toggleSave = async () => {
+
         setIsSaved(!isSaved);
         if (!isSaved && quizData?.id) {
-            dispatch(quizSaveData(quizData?.id));
+            await dispatch(quizSaveData(quizData?.id));
+            const response = await dispatch(fetchQuizData([0])).unwrap();
+            if (response===null) {
+
+                setDatadialog(true)
+            } else {
+                setDatadialog(false)
+            }
         }
     };
 
+console.log('isNodata', isNodata )
     return (
         <Dialog open={isQuizModalOpen ?? false} className='dialoq' maxWidth="sm" fullWidth>
             <DialogTitle className='dialoqtitte_tops'>
@@ -253,6 +263,3 @@ const QuizModal = () => {
 };
 
 export default QuizModal;
-
-
-//  finish dialogu quizdata null oldukda gelmelidir ve birde cixib girdikde eledikde modalda data yadda qalmagi ve saved qalmagi problemdir 

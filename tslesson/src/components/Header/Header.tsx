@@ -81,10 +81,10 @@ const Header = () => {
       <NewWordModal show={showModal} onClose={handleCloseModal} />
       <AlertDialog
         open={isDialogOpen} onClose={handleCloseLearingDialog}
-        title="No Data Available">
+        title="Notice ">
         <DialogContent>
-          <Typography>
-            You need to have some words saved in the "Learning Now" section to start the quiz.
+          <Typography sx={{textAlign:"center",color:"red"}}>
+          There are no learning words available to start the quiz
           </Typography>
         </DialogContent>
       </AlertDialog>

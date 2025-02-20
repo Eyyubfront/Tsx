@@ -28,7 +28,7 @@ export const fetchQuizData = createAsyncThunk(
     async (id: number, { rejectWithValue, dispatch }) => {
       try {
         const response = await axiosInstance.post(`/UserVocabulary/SetMastered/${id}`);
-        dispatch(fetchQuizData([0])); 
+        // await dispatch(fetchQuizData([0])); 
         dispatch(lexioncountfetch()); 
         dispatch(getAllMastered()); 
         dispatch(fetchTexts({ page: 1, pageSize: 10 })); 

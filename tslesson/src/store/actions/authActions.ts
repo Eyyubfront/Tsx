@@ -75,7 +75,10 @@ export const refreshToken = createAsyncThunk(
         {
           refreshToken: localStorage.getItem("refreshToken")
         }
+      
       );
+      console.log("refresh", localStorage.getItem("refreshToken"));
+      
       localStorage.setItem('token', response.data.data.accessToken);   
       localStorage.setItem('refreshToken', response.data.data.refreshToken);
       return response.data;
