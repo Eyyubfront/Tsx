@@ -32,7 +32,7 @@ const QuizModal = () => {
     const [correctAnsewrscount, setCorrectAnsewrsCount] = useState(0);
     const [isNodata, setDatadialog] = useState(false);
 
-    
+
 
 
     useEffect(() => {
@@ -75,6 +75,7 @@ const QuizModal = () => {
         }
 
         setTimeout(() => {
+            setIsSaved(false);
             setAnswerMessage("");
             setSelectedAnswer(null);
         }, 3000);
@@ -82,18 +83,21 @@ const QuizModal = () => {
     };
 
 
-    const handleSubmit = () => {
-        if (isCorrect) {
-            dispatch(quizcountReport(correctAnsewrscount));
-        }
+    const handleSubmit = async () => {
         if (quizData?.id) {
 
-            dispatch(fetchQuizData([...answeredQuestions, Number(quizData?.id)]));
+            const response = await dispatch(fetchQuizData([...answeredQuestions, Number(quizData?.id)])).unwrap();
+            if (response === null) {
+                setDatadialog(true)
+                dispatch(quizcountReport(correctAnsewrscount));
+            } else {
+                setDatadialog(false)
+            }
             setAnsweredQuestions((prev) => [...prev, Number(quizData?.id)]);
         }
         setAnswerMessage("");
         setSelectedAnswer(null);
-      
+
     };
 
     const handleRestart = () => {
@@ -110,6 +114,7 @@ const QuizModal = () => {
         dispatch(closeQuizModal());
         setAnsweredQuestions([0])
         setShowGameOver(false);
+        setCorrectAnsewrsCount(0)
 
     };
     const handleCloseDialog = () => {
@@ -119,21 +124,20 @@ const QuizModal = () => {
 
 
     const toggleSave = async () => {
-
         setIsSaved(!isSaved);
         if (!isSaved && quizData?.id) {
             await dispatch(quizSaveData(quizData?.id));
             const response = await dispatch(fetchQuizData([0])).unwrap();
-            if (response===null) {
-
+            if (response === null) {
                 setDatadialog(true)
+                dispatch(quizcountReport(correctAnsewrscount));
             } else {
                 setDatadialog(false)
             }
         }
     };
 
-console.log('isNodata', isNodata )
+
     return (
         <Dialog open={isQuizModalOpen ?? false} className='dialoq' maxWidth="sm" fullWidth>
             <DialogTitle className='dialoqtitte_tops'>
@@ -215,9 +219,9 @@ console.log('isNodata', isNodata )
                                 <div className="feedback_tittle">
                                     {answerMessage}
                                 </div>
-                                {answerMessage && <div className="feedback_text">
-                                    <Paragrafy text="Friend" />
-                                </div>}
+                                {/* {answerMessage && <div className="feedback_text">
+                                    <Paragrafy text={selectedAnswer} />
+                                </div>} */}
                             </div>
                         </div>}
                     </div>

@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {  DialogContent, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { closeDialog, openDialog, openQuizModal } from '../../store/slice/LanguageHomeSlice';
@@ -33,6 +33,7 @@ const Header = () => {
       dispatch(openQuizModal());
     }
   };
+
 
   const handleCloseLearingDialog = () => {
     dispatch(closeDialog());

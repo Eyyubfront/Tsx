@@ -1,18 +1,21 @@
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, useEffect } from 'react';
 import { Menu, MenuItem } from '@mui/material';
 import "./NotifactionComponents.scss";
-import {  useAppSelector } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 
 import fire from "../../assets/images/header/fire_1f525 1.svg"
 import { Notification } from '../../store/slice/quizSlice';
+import { notificationallsdata } from '../../store/actions/quizActions/quizActions';
 
 const NotifactionComponents = () => {
-    
+    const dispatch = useAppDispatch();
     const { notifications } = useAppSelector((state) => state.quizslice);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-   
 
+    useEffect(() => {
+        dispatch(notificationallsdata())
+    }, [])
     const handleClick = (event: MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -57,7 +60,7 @@ const NotifactionComponents = () => {
             </div>
             <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
                 <div className="dialog-title">
-                    <span>Notifications</span>
+                    <span className='notifiation_topname'>Notifications</span>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7 12.0005L11.9497 16.9502L22.5572 6.34375M2.0498 12.0508L6.99955 17.0005M17.606 6.39404L12.3027 11.6973" stroke="#1D1730" strokeOpacity="0.7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
