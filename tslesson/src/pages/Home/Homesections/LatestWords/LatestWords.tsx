@@ -25,7 +25,7 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps & { 
     const location = useLocation();
 
     useEffect(() => {
-        dispatch(wordfetchTexts({ page: 1, pageSize: showAll ? 1000 : 10 }));
+        dispatch(wordfetchTexts({ page: 1, pageSize: showAll ? 20 : 10 }));
     }, [dispatch, showAll]);
 
     const handleSaveText = (item: WordsItem) => {

@@ -32,7 +32,7 @@ const QuizModal = () => {
     const [correctAnsewrscount, setCorrectAnsewrsCount] = useState(0);
     const [isNodata, setDatadialog] = useState(false);
 
-
+    const [isAnswered, setIsAnswered] = useState(false)
 
 
     useEffect(() => {
@@ -63,11 +63,14 @@ const QuizModal = () => {
 
 
 
-
     const handleAnswerClick = (answer: string, isCorrect: boolean) => {
+        if (isAnswered) return; 
+
         setSelectedAnswer(answer);
         setIsCorrect(isCorrect);
         setAnswerMessage(isCorrect ? "Correct!" : "Incorrect");
+        setIsAnswered(true);
+
         if (isCorrect) {
             setCorrectAnsewrsCount((prevLives) => prevLives + 1);
         } else {
@@ -79,25 +82,22 @@ const QuizModal = () => {
             setAnswerMessage("");
             setSelectedAnswer(null);
         }, 3000);
-
     };
-
 
     const handleSubmit = async () => {
         if (quizData?.id) {
-
             const response = await dispatch(fetchQuizData([...answeredQuestions, Number(quizData?.id)])).unwrap();
             if (response === null) {
-                setDatadialog(true)
+                setDatadialog(true);
                 dispatch(quizcountReport(correctAnsewrscount));
             } else {
-                setDatadialog(false)
+                setDatadialog(false);
             }
             setAnsweredQuestions((prev) => [...prev, Number(quizData?.id)]);
         }
         setAnswerMessage("");
         setSelectedAnswer(null);
-
+        setIsAnswered(false); 
     };
 
     const handleRestart = () => {
@@ -106,10 +106,9 @@ const QuizModal = () => {
         setAnsweredQuestions([]);
         dispatch(fetchQuizData([0]));
         setSelectedAnswer(null);
-
         setAnswerMessage("");
+        setIsAnswered(false); 
     };
-
     const handleClose = () => {
         dispatch(closeQuizModal());
         setAnsweredQuestions([0])
@@ -169,22 +168,24 @@ const QuizModal = () => {
                                 value={selectedAnswer || ""}
                                 fullWidth
                                 disabled
-                                sx={{ mt: 2 }}
+                                sx={{ mt: 2, color: "red" }}
                             />
                         </div>
-
                         <div className="ansewrs__alls">
                             {quizData?.answers &&
                                 Object.keys(quizData.answers).map((key) => (
                                     <div
                                         key={key}
-                                        className="answers_box"
+                                        className={`answers_box ${isAnswered ? 'disabled' : ''}`}
                                         onClick={() => handleAnswerClick(key, quizData.answers[key])}
+                                        style={{ pointerEvents: isAnswered ? 'none' : 'auto' }} 
                                     >
                                         {key}
                                     </div>
                                 ))}
                         </div>
+
+
                     </div>
 
                     {answerMessage ? null : (

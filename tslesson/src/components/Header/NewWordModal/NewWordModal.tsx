@@ -23,7 +23,9 @@ interface NewWordModalProps {
 
 const schema = Yup.object().shape({
     wordone: Yup.string().required("Source word is required"),
-    wordtwo: Yup.string().required("Translation word is required"),
+    wordtwo: Yup.string()
+        .required("Translation word is required")
+        .notOneOf([Yup.ref('wordone')], 'Source and Translation words must be different'),
 });
 
 const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
@@ -37,11 +39,9 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
     const defaultSourceLanguage = selectedLanguage?.sourceLanguage || '';
     const defaultTranslationLanguage = selectedLanguage?.translationLanguage || '';
     const error = useAppSelector((state) => state.learningNow.error);
-    console.log("egu", error);
-
+  
     const isOpenNow = useAppSelector((state) => state.learningNow.isOpenNow);
-    console.log("ismodalss", isOpenNow);
-
+    
     const methods = useForm({
         defaultValues: {
             wordone: '',
@@ -69,12 +69,12 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
             };
             dispatch(learingnowsaveText(newItem));
             setIsSaved(false);
+            methods.reset({ wordone: '', wordtwo: '' });
         } else {
             console.error("userId not available.");
         }
-    
-
     };
+    
     const handleSavedIconClick = () => {
         if (!isSaved) {
             setIsSaved(true);
