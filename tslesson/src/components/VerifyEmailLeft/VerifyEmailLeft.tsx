@@ -1,6 +1,6 @@
 import star from "../../assets/images/verify/star.png";
 import "./VerifyEmailLeft.scss";
-import BackIcon from "../BacIcon/BackIcon";
+import BackIcon from "../BackButton/BackButton";
 
 interface VerifyProps{
   titleText:string,
