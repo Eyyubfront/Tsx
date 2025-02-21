@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login, register, refreshToken, deleteUser } from '../actions/authActions';
+import { login, register, refreshToken, deleteUser, excelfilefetch, addformFile } from '../actions/authActions';
 import { sendForgotPasswordEmail } from '../actions/forgotPasswordActions/forgotPasswordActions';
 
 interface AuthState {
@@ -10,7 +10,8 @@ interface AuthState {
   error: string | null;
   isAuth: boolean | null;
   success: boolean;
-  veriyuse: Boolean
+  veriyuse: boolean;
+  full: boolean
 }
 
 const initialState: AuthState = {
@@ -21,7 +22,8 @@ const initialState: AuthState = {
   error: null,
   success: false,
   isAuth: null,
-  veriyuse: false
+  veriyuse: false,
+  full: false
 };
 
 const authSlice = createSlice({
@@ -60,6 +62,42 @@ const authSlice = createSlice({
         state.error = action.payload as string;
         state.isAuth = false;
       })
+      .addCase(excelfilefetch.pending, (state, action:any) => {
+        state.loading = true;
+        state.full = action.payload
+      })
+      .addCase(excelfilefetch.fulfilled, (state) => {
+        state.loading = false;
+
+      })
+      .addCase(excelfilefetch.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+
+
+
+
+      .addCase(addformFile.pending, (state) => {
+        state.loading = true; 
+      })
+      .addCase(addformFile.fulfilled, (state) => {
+        state.loading = false;
+
+      })
+      .addCase(addformFile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+
+
+
+
+
+
+
+
+      
       .addCase(deleteUser.pending, (state) => {
         state.loading = true;
         state.error = null;

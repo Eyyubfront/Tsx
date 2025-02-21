@@ -1,6 +1,6 @@
 
-import { useEffect, useState } from 'react';
-import {  DialogContent, Typography } from '@mui/material';
+import { useState } from 'react';
+import { DialogContent, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { closeDialog, openDialog, openQuizModal } from '../../store/slice/LanguageHomeSlice';
 import Paragrafy from '../../components/Paragrafy/Paragrafy';
@@ -12,15 +12,14 @@ import Add from '../../assets/images/header/Add.svg';
 import NewWordModal from './NewWordModal/NewWordModal';
 import { Link } from 'react-router-dom';
 import AlertDialog from '../AlertDialog/AlertDialog';
+import { excelfilefetch } from '../../store/actions/authActions';
 
 
 const Header = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
-
-
-
   const items = useAppSelector((state) => state.learningNow.items.nowitems);
+  const { loading, error } = useAppSelector((state) => state.Auth);
   const dispatch = useAppDispatch();
   const isDialogOpen = useAppSelector((state) => state.LanguagetextData.isDialogOpen);
 
@@ -46,12 +45,33 @@ const Header = () => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
+``
+  const handleDownload = async () => {
+    const resultAction = await dispatch(excelfilefetch());
+
+    if (excelfilefetch.fulfilled.match(resultAction)) {
+      const blob = resultAction.payload;
+      const url = window.URL.createObjectURL(new Blob([blob]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'download-template.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+  };
+
+
 
   return (
     <div className="header">
       <div className="header_left">
         <SelecetLanguage />
       </div>
+      <button onClick={handleDownload} disabled={loading}>
+        {loading ? 'loading...' : 'Dowland File '}
+      </button>
+      {error && <span style={{ color: 'red' }}>{error}</span>}
       <div className="header_center">
         <div onClick={handleQuizClick}
           className="header_center">
@@ -84,8 +104,8 @@ const Header = () => {
         open={isDialogOpen} onClose={handleCloseLearingDialog}
         title="Notice ">
         <DialogContent>
-          <Typography sx={{textAlign:"center",color:"red"}}>
-          There are no learning words available to start the quiz
+          <Typography sx={{ textAlign: "center", color: "red" }}>
+            There are no learning words available to start the quiz
           </Typography>
         </DialogContent>
       </AlertDialog>

@@ -1,6 +1,6 @@
 import { Container } from "@mui/material";
 import "./LearnLayout.scss";
-import BackIcon from "../../components/BacIcon/BackIcon";
+import BackIcon from "../../components/BackButton/BackButton";
 import VerifyEmailLeft from "../../components/VerifyEmailLeft/VerifyEmailLeft";
 import { useNavigate } from "react-router-dom";
 

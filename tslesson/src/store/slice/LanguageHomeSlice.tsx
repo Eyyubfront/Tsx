@@ -16,7 +16,7 @@ interface TextState {
     loading: boolean;
     error: string | null;
     isOpen?: boolean;
-    isDialogOpen: boolean, // Yeni vəziyyət
+    isDialogOpen: boolean, 
 }
 
 const initialState: TextState = {
@@ -26,7 +26,7 @@ const initialState: TextState = {
     loading: false,
     error: null,
     isOpen: false,
-    isDialogOpen: false, // Yeni vəziyyət
+    isDialogOpen: false, 
 };
 
 const LanguageHomeSlice = createSlice({
@@ -46,7 +46,7 @@ const LanguageHomeSlice = createSlice({
             state.isDialogOpen = true;
         },
 
-        closeDialog: (state) => { // Dialogu bağlayan action
+        closeDialog: (state) => { 
             state.isDialogOpen = false;
         },
     },

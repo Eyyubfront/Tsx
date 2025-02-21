@@ -32,6 +32,7 @@
     "resolver": "^0.1.12",
     "sass": "^1.82.0",
     "swiper": "^11.2.1",
+    "xlsx": "^0.18.5",
     "yup": "^1.6.1"
   },
   "devDependencies": {

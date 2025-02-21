@@ -9,7 +9,7 @@ import UseFormTimeInput from "../../../components/PrimaryInput/UseFormTimeInput"
 import TimeOptions from "../../../components/TimeOptions/TimeOptions";
 import PrimaryButton from "../../../components/PrimaryButton/PrimaryButton";
 import { useAppDispatch, useAppSelector } from "../../../store";
-import { Skeleton, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import "./TimeSettings.scss";
 import AlertDialog from "../../../components/AlertDialog/AlertDialog";
 

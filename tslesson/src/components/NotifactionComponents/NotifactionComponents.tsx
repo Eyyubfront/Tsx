@@ -2,7 +2,6 @@ import { useState, MouseEvent, useEffect } from 'react';
 import { Menu, MenuItem } from '@mui/material';
 import "./NotifactionComponents.scss";
 import { useAppDispatch, useAppSelector } from '../../store';
-
 import fire from "../../assets/images/header/fire_1f525 1.svg"
 import { Notification } from '../../store/slice/quizSlice';
 import { notificationallsdata } from '../../store/actions/quizActions/quizActions';

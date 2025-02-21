@@ -9,6 +9,7 @@ import LatestWords from './Homesections/LatestWords/LatestWords';
 import { RootState, useAppDispatch, useAppSelector } from "../../store";
 import { openDialog, openQuizModal } from "../../store/slice/LanguageHomeSlice";
 import QuizModal from "../../components/QuizModal/QuizModal";
+import FileInput from "../FileInput";
 
 
 
@@ -48,6 +49,10 @@ const Home = () => {
                         <Paragrafy className='quiz_center' fontsize='24px' fontfamily='DM Serif Display' text='Let’s start quiz' />
                     </Link>
                 </div>
+
+<FileInput/>
+
+
                 <QuizModal />
             </div>
         </div>
