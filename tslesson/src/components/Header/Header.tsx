@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { DialogContent, Typography } from '@mui/material';
+import { Box, Dialog, DialogContent, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { closeDialog, openDialog, openQuizModal } from '../../store/slice/LanguageHomeSlice';
 import Paragrafy from '../../components/Paragrafy/Paragrafy';
@@ -9,15 +9,18 @@ import BurgerMenu from './HeaderBurger/Burgermenu/Burgermenu';
 import SelecetLanguage from '../SelecetLanguage/SelecetLanguage';
 import NotifactionComponents from '../NotifactionComponents/NotifactionComponents';
 import Add from '../../assets/images/header/Add.svg';
+import exceldowland from '../../assets/images/header/exceldowland.svg';
 import NewWordModal from './NewWordModal/NewWordModal';
 import { Link } from 'react-router-dom';
 import AlertDialog from '../AlertDialog/AlertDialog';
 import { excelfilefetch } from '../../store/actions/authActions';
+import Smile from "../../assets/images/home/Smile.svg"
 
 
 const Header = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
-
+  const [showModalExcel, setShowModalExcel] = useState<boolean>(false);
+  const [isDownloaded, setIsDownloaded] = useState(false);
   const items = useAppSelector((state) => state.learningNow.items.nowitems);
   const { loading, error } = useAppSelector((state) => state.Auth);
   const dispatch = useAppDispatch();
@@ -45,8 +48,17 @@ const Header = () => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
-``
+
+  const handleCloseModalExcel = () => {
+    setShowModalExcel(false);
+  };
+
+
   const handleDownload = async () => {
+    if (isDownloaded) return;
+
+    setIsDownloaded(true);
+
     const resultAction = await dispatch(excelfilefetch());
 
     if (excelfilefetch.fulfilled.match(resultAction)) {
@@ -59,7 +71,9 @@ const Header = () => {
       link.click();
       link.remove();
     }
-  };
+
+    setShowModalExcel(true);
+  }
 
 
 
@@ -68,9 +82,7 @@ const Header = () => {
       <div className="header_left">
         <SelecetLanguage />
       </div>
-      <button onClick={handleDownload} disabled={loading}>
-        {loading ? 'loading...' : 'Dowland File '}
-      </button>
+
       {error && <span style={{ color: 'red' }}>{error}</span>}
       <div className="header_center">
         <div onClick={handleQuizClick}
@@ -90,7 +102,30 @@ const Header = () => {
             </svg>
           </div>
         </Link>
+
         <NotifactionComponents />
+        <button className='excel_box' onClick={handleDownload} disabled={loading}>
+          <div>
+            <img src={exceldowland} alt="" />
+          </div>
+          <div className='excel_text'>
+            {loading ? 'loading...' : 'İmport Excel '}
+          </div>
+        </button>
+
+
+        {showModalExcel && (
+          <Dialog style={{ width: "300px", borderRadius: "20px", margin: "auto" }} onClick={handleCloseModalExcel} open={showModalExcel}>
+            <DialogContent className='done_message'>
+              <Box>
+                <img src={Smile} alt="" />
+              </Box>
+              <Typography className="sucsess_excel" variant="body1">Done</Typography>
+            </DialogContent>
+          </Dialog>
+        )}
+
+
         <div className="header_words" onClick={handleOpenModal}>
           <img src={Add} alt="Add New Word" />
           <Paragrafy className='newwordstext' fontWeight="600" fontsize='16px' fontfamily='DM Sans' text=' New Words' />

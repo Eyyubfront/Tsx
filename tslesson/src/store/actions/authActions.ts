@@ -109,7 +109,7 @@ export const excelfilefetch = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
 
-      const response = await axiosInstance.get('/UserVocabularyDownloadTemplate', {
+      const response = await axiosInstance.get('/UserVocabulary/DownloadTemplate', {
         responseType: 'blob'
       });
 
