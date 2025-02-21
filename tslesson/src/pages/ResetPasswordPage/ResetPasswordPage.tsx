@@ -23,7 +23,7 @@ const schema = Yup.object().shape({
     .required("Confirm new password is required."),
 });
 
-const ResetPasswordPage = () => {
+  const ResetPasswordPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -37,6 +37,7 @@ const ResetPasswordPage = () => {
 
   const { handleSubmit, formState } = methods;
   const { isLoading, error, success } = useAppSelector((state: RootState) => state.passwordReset);
+ 
   const { userId } = useAppSelector((state: RootState) => state.Auth);
  
   

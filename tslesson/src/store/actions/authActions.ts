@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import axiosInstance from './axiosInstance';
 import axios from 'axios';
+import { wordfetchTexts } from './learingActions/learingwordsActions';
 
 
 interface LoginRequest {
@@ -35,7 +36,7 @@ export const login = createAsyncThunk(
         request
       );
       const userId = response.data.data.userId;
-     
+
       localStorage.setItem('token', response.data.data.accessToken);
       localStorage.setItem('refreshToken', response.data.data.refreshToken);
       localStorage.setItem('userId', response.data.data.userId);
@@ -54,7 +55,7 @@ export const register = createAsyncThunk(
         'https://learn-language-api.azurewebsites.net/api/Register',
         request
       );
-      
+
       const userId = response.data.data.userId;
 
       return { ...response.data, userId };
@@ -75,11 +76,11 @@ export const refreshToken = createAsyncThunk(
         {
           refreshToken: localStorage.getItem("refreshToken")
         }
-      
+
       );
       console.log("refresh", localStorage.getItem("refreshToken"));
-      
-      localStorage.setItem('token', response.data.data.accessToken);   
+
+      localStorage.setItem('token', response.data.data.accessToken);
       localStorage.setItem('refreshToken', response.data.data.refreshToken);
       return response.data;
     } catch (error) {
@@ -96,8 +97,41 @@ export const deleteUser = createAsyncThunk(
       const response = await axiosInstance.delete('/DeleteUser');
       return response.data;
     } catch (error) {
-  
+
       return rejectWithValue(error);
     }
   }
 );
+
+
+export const excelfilefetch = createAsyncThunk(
+  'home/excelfilefetch',
+  async (_, { rejectWithValue }) => {
+    try {
+
+      const response = await axiosInstance.get('/UserVocabularyDownloadTemplate', {
+        responseType: 'blob'
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      return rejectWithValue("Fayl error dowland");
+    }
+  }
+);
+
+
+
+
+export const addformFile = createAsyncThunk('home/addformFile', async (file: File, thunkAPI) => {
+  try {
+    const formData = new FormData();
+    formData.append("file", file)
+    const response = await axiosInstance.post('/UserVocabulary/AddFromFile', formData);
+    thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue("User vocabulary already exists")
+  }
+});

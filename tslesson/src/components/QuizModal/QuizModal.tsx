@@ -32,7 +32,7 @@ const QuizModal = () => {
     const [correctAnsewrscount, setCorrectAnsewrsCount] = useState(0);
     const [isNodata, setDatadialog] = useState(false);
 
-    
+    const [isAnswered, setIsAnswered] = useState(false)
 
 
     useEffect(() => {
@@ -63,11 +63,14 @@ const QuizModal = () => {
 
 
 
-
     const handleAnswerClick = (answer: string, isCorrect: boolean) => {
+        if (isAnswered) return; 
+
         setSelectedAnswer(answer);
         setIsCorrect(isCorrect);
         setAnswerMessage(isCorrect ? "Correct!" : "Incorrect");
+        setIsAnswered(true);
+
         if (isCorrect) {
             setCorrectAnsewrsCount((prevLives) => prevLives + 1);
         } else {
@@ -75,25 +78,26 @@ const QuizModal = () => {
         }
 
         setTimeout(() => {
+            setIsSaved(false);
             setAnswerMessage("");
             setSelectedAnswer(null);
         }, 3000);
-
     };
 
-
-    const handleSubmit = () => {
-        if (isCorrect) {
-            dispatch(quizcountReport(correctAnsewrscount));
-        }
+    const handleSubmit = async () => {
         if (quizData?.id) {
-
-            dispatch(fetchQuizData([...answeredQuestions, Number(quizData?.id)]));
+            const response = await dispatch(fetchQuizData([...answeredQuestions, Number(quizData?.id)])).unwrap();
+            if (response === null) {
+                setDatadialog(true);
+                dispatch(quizcountReport(correctAnsewrscount));
+            } else {
+                setDatadialog(false);
+            }
             setAnsweredQuestions((prev) => [...prev, Number(quizData?.id)]);
         }
         setAnswerMessage("");
         setSelectedAnswer(null);
-      
+        setIsAnswered(false); 
     };
 
     const handleRestart = () => {
@@ -102,14 +106,14 @@ const QuizModal = () => {
         setAnsweredQuestions([]);
         dispatch(fetchQuizData([0]));
         setSelectedAnswer(null);
-
         setAnswerMessage("");
+        setIsAnswered(false); 
     };
-
     const handleClose = () => {
         dispatch(closeQuizModal());
         setAnsweredQuestions([0])
         setShowGameOver(false);
+        setCorrectAnsewrsCount(0)
 
     };
     const handleCloseDialog = () => {
@@ -119,21 +123,20 @@ const QuizModal = () => {
 
 
     const toggleSave = async () => {
-
         setIsSaved(!isSaved);
         if (!isSaved && quizData?.id) {
             await dispatch(quizSaveData(quizData?.id));
             const response = await dispatch(fetchQuizData([0])).unwrap();
-            if (response===null) {
-
+            if (response === null) {
                 setDatadialog(true)
+                dispatch(quizcountReport(correctAnsewrscount));
             } else {
                 setDatadialog(false)
             }
         }
     };
 
-console.log('isNodata', isNodata )
+
     return (
         <Dialog open={isQuizModalOpen ?? false} className='dialoq' maxWidth="sm" fullWidth>
             <DialogTitle className='dialoqtitte_tops'>
@@ -165,22 +168,24 @@ console.log('isNodata', isNodata )
                                 value={selectedAnswer || ""}
                                 fullWidth
                                 disabled
-                                sx={{ mt: 2 }}
+                                sx={{ mt: 2, color: "red" }}
                             />
                         </div>
-
                         <div className="ansewrs__alls">
                             {quizData?.answers &&
                                 Object.keys(quizData.answers).map((key) => (
                                     <div
                                         key={key}
-                                        className="answers_box"
+                                        className={`answers_box ${isAnswered ? 'disabled' : ''}`}
                                         onClick={() => handleAnswerClick(key, quizData.answers[key])}
+                                        style={{ pointerEvents: isAnswered ? 'none' : 'auto' }} 
                                     >
                                         {key}
                                     </div>
                                 ))}
                         </div>
+
+
                     </div>
 
                     {answerMessage ? null : (
@@ -215,9 +220,9 @@ console.log('isNodata', isNodata )
                                 <div className="feedback_tittle">
                                     {answerMessage}
                                 </div>
-                                {answerMessage && <div className="feedback_text">
-                                    <Paragrafy text="Friend" />
-                                </div>}
+                                {/* {answerMessage && <div className="feedback_text">
+                                    <Paragrafy text={selectedAnswer} />
+                                </div>} */}
                             </div>
                         </div>}
                     </div>

@@ -129,7 +129,7 @@ const ChangedPasswordSettings = () => {
                                 <Alert
                                     icon={<CheckIcon fontSize="inherit" />}
                                     severity="success"
-                                    style={{ display: "flex", alignItems: "center" }}
+                                    style={{ display: "flex", alignItems: "center",position:'fixed' }}
                                 >
                                     Your password has been successfully changed
                                 </Alert>
