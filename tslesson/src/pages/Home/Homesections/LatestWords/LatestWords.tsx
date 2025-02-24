@@ -1,60 +1,54 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
     wordfetchTexts,
-    saveText,
     removeText,
-    updateText as updateTextAction,
     WordsItem,
+    IWordsitem,
+    selecetwordText,
 } from '../../../../store/actions/learingActions/learingwordsActions';
 import { RootState, useAppDispatch, useAppSelector } from '../../../../store/index';
 import TableComponent from '../../../../components/TableComponents/TableComponents';
-import { MdDeleteOutline, MdEdit } from "react-icons/md";
+import { MdDeleteOutline } from "react-icons/md";
 import Savedicon from "../../../../assets/images/home/Bookmark.svg";
-import { Button, TableBody, TableRow, TableCell, Typography, TextField } from '@mui/material';
+import NotSavedicon from "../../../../assets/images/home/nosaved.svg"; 
+import { Button, TableBody, TableRow, TableCell, Typography } from '@mui/material';
+import "./LatestWords.scss"
+import { useLocation } from 'react-router-dom';
 
-const LatestWords = () => {
+interface LearnSearchProps {
+    searchTerm?: string;
+}
+
+const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps & { showAll?: boolean }) => {
     const dispatch = useAppDispatch();
     const items = useAppSelector((state: RootState) => state.latestWords.items.items);
-    console.log(items);
-    
-    const userId = useAppSelector((state) => state.Auth.userId);
-    const [editText, setEditText] = useState<{ id: number; source: string; translation: string; userId: string } | null>(null);
+    const location = useLocation();
 
     useEffect(() => {
-        if (userId) {
-            dispatch(wordfetchTexts(userId));
-        }
-    }, [dispatch, userId]);
-
+        dispatch(wordfetchTexts({ page: 1, pageSize: showAll ? 20 : 10 }));
+    }, [dispatch, showAll]);
+    
     const handleSaveText = (item: WordsItem) => {
-        dispatch(saveText(item));
+        if (item.id !== null) {
+            dispatch(selecetwordText(item.id));
+        }
     };
 
     const handleRemoveText = (id: number) => {
         dispatch(removeText({ id }));
     };
 
-    const handleUpdateText = ({ id, source, translation, userId }: { id: number; source: string; translation: string; userId: string }) => {
-        const updatedItem = { id, source, translation, userId };
-        dispatch(updateTextAction(updatedItem));
-    };
+    const filteredItems = items.filter((item: IWordsitem) =>
+        item.source?.toLowerCase().includes(searchTerm?.toLowerCase()) || item.translation?.toLowerCase().includes(searchTerm?.toLowerCase())
+    );
 
-    const handleEdit = (id: number, source: string, translation: string, userId: string) => {
-        setEditText({ id, source, translation, userId });
-    };
-
-    const handleUpdate = () => {
-        if (editText) {
-            handleUpdateText(editText);
-            setEditText(null);
-        }
-    };
+    const title = location.pathname === '/lexioncards/vocablary' ? 'Vocablary' : 'Latest added words';
 
     return (
         <div>
-            <TableComponent title="Words">
+            <TableComponent title={title}>
                 <TableBody>
-                    {items.map(({ id, userId, source, translation }) => (
+                    {filteredItems?.length ? filteredItems.map(({ id, source, translation }) => (
                         <TableRow className='table_aligns' key={id}>
                             <TableCell sx={{ borderBottom: "none" }}>
                                 <Typography>{`${source} - ${translation}`}</Typography>
@@ -63,49 +57,26 @@ const LatestWords = () => {
                                 <Button
                                     className='table_button'
                                     variant="outlined"
-                                    onClick={() => handleSaveText({ id, userId, source, translation, sourceLanguageId: undefined, translationLanguageId: undefined, isLearningNow: true })}
+                                    onClick={() => handleSaveText({ id, source, translation, isLearningNow: true })}
                                 >
-                                    <img src={Savedicon} alt="Save" />
+                                    <img src={items.some(saved => saved.id === id && saved.isLearningNow) ? Savedicon : NotSavedicon} alt="Save" />
                                 </Button>
                                 <Button
                                     className='table_button'
                                     variant="outlined"
                                     onClick={() => handleRemoveText(id)}
                                 >
-                                    <MdDeleteOutline />
-                                </Button>
-                                <Button
-                                    className='table_button'
-                                    variant="outlined"
-                                    onClick={() => handleEdit(id, source || '', translation || '', userId || '')}
-                                >
-                                    <MdEdit />
+                                    <MdDeleteOutline style={{ color: 'red' }} />
                                 </Button>
                             </TableCell>
                         </TableRow>
-                    ))}
+                    ))
+                        :
+                        <div className='data_undifendsbox'>NO DATA FOUND</div>
+
+                    }
                 </TableBody>
             </TableComponent>
-
-            {editText && (
-                <div style={{ marginTop: '20px' }}>
-                    <TextField
-                        label="Source"
-                        variant="outlined"
-                        value={editText.source}
-                        onChange={(e) => setEditText({ ...editText, source: e.target.value })}
-                        style={{ marginRight: '10px' }}
-                    />
-                    <TextField
-                        label="Translation"
-                        variant="outlined"
-                        value={editText.translation}
-                        onChange={(e) => setEditText({ ...editText, translation: e.target.value })}
-                        style={{ marginRight: '10px' }}
-                    />
-                    <Button variant="contained" onClick={handleUpdate}>Update</Button>
-                </div>
-            )}
         </div>
     );
 };

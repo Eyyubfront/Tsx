@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { login, register, refreshToken } from '../actions/authActions';
+import { createSlice } from '@reduxjs/toolkit';
+import { login, register, refreshToken, deleteUser, excelfilefetch, addformFile, sendIdToken } from '../actions/authActions';
 import { sendForgotPasswordEmail } from '../actions/forgotPasswordActions/forgotPasswordActions';
 
 interface AuthState {
@@ -8,9 +8,12 @@ interface AuthState {
   accessToken: string | null;
   loading: boolean;
   error: string | null;
-  isAuth: boolean;
+  isAuth: boolean | null;
   success: boolean;
-  veriyuse: Boolean
+  veriyuse: boolean;
+  full: boolean;
+  datagoogle:boolean
+
 }
 
 const initialState: AuthState = {
@@ -20,8 +23,10 @@ const initialState: AuthState = {
   loading: false,
   error: null,
   success: false,
-  isAuth: false,
-  veriyuse: false
+  isAuth: null,
+  veriyuse: false,
+  full: false,
+  datagoogle:false
 };
 
 const authSlice = createSlice({
@@ -60,6 +65,67 @@ const authSlice = createSlice({
         state.error = action.payload as string;
         state.isAuth = false;
       })
+      .addCase(excelfilefetch.pending, (state, action:any) => {
+        state.loading = true;
+        state.full = action.payload
+      })
+      .addCase(excelfilefetch.fulfilled, (state) => {
+        state.loading = false;
+
+      })
+      .addCase(excelfilefetch.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(sendIdToken.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(sendIdToken.fulfilled, (state, action:any) => {
+        state.loading = false;
+        state.datagoogle= action.payload
+      })
+      .addCase(sendIdToken.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(addformFile.pending, (state) => {
+        state.loading = true; 
+      })
+      .addCase(addformFile.fulfilled, (state) => {
+        state.loading = false;
+
+      })
+      .addCase(addformFile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+
+
+
+
+
+
+
+
+      
+      .addCase(deleteUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteUser.fulfilled, (state) => {
+        state.loading = false;
+        state.isAuth = false;
+        state.accessToken = null;
+        state.refreshToken = null;
+        state.userId = null;
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('userId');
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
       .addCase(register.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -67,6 +133,7 @@ const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.loading = false;
         state.userId = action.payload.userId;
+        state.isAuth = false;
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;
@@ -101,9 +168,9 @@ const authSlice = createSlice({
       })
       .addCase(
         sendForgotPasswordEmail.rejected,
-        (state, action: PayloadAction<string | undefined>) => {
+        (state, action) => {
           state.loading = false;
-          state.error = action.payload || "An error occurred.";
+          state.error = action.payload as string;
         }
       );
   },

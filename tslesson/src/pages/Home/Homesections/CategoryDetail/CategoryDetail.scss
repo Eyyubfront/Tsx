@@ -1,0 +1,180 @@
+.category-detail {
+    height: 100vh;
+    .category_container {
+        display: flex;
+       align-items: flex-start;
+        padding: 16px;
+        gap: 32px;
+
+        .categorydetail_left {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            height: 100%;
+            .category_left{
+                background-color: white;
+            }
+
+            .category_vocablary {
+                cursor: pointer;
+
+                .swiper-wrapper {
+                    gap: 16px;
+                    display: grid ;
+                    grid-template-columns: 1fr ;
+                    grid-template-rows: auto auto auto auto auto auto auto auto auto auto;
+                    grid-auto-flow: column ;
+                }
+
+                .swiper-slide {
+                    min-width: 100% ;
+                    height: 91px ;
+                }
+            }
+        }
+
+        .categorydetailabout {
+            width: 100%;
+
+            .search_category {
+                position: relative;
+                width: 100%;
+
+                .search_img {
+                    width: 24px;
+                    height: 24px;
+                }
+
+                .search_icons {
+                    position: absolute;
+                    top: 48px;
+                    left: 30px;
+                    z-index: 99999999;
+                }
+
+            }
+            .css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input{
+                padding: 16.5px 52px;
+                border: 1px solid #D8DADC;
+                background-color: #F9F8FD;
+                border-radius: 10px;
+            }
+        }
+    }
+
+    .homepage_quiz {
+        display: none;
+    }
+}
+.css-1btmbba-MuiButtonBase-root-MuiButton-root{
+    border-color: transparent;
+}
+
+@media (max-width:600px)  {
+    .category-detail{
+
+        .category_container{
+            flex-direction: column;
+            align-items: flex-start;
+            .categorydetail_left{
+                width: 100%;
+                .category_vocablary {
+                    cursor: pointer;
+                    .swiper-wrapper {
+                     display: flex;
+                     width: 200px;
+                     .swiper-slide {
+                         width: auto ;
+                         height: 91px ;
+                     }
+                    }
+    
+                }
+            }
+            
+        }
+        .homepage_quiz {
+            display: block;
+            display: block;
+            background-image: url("../../../../assets/images/AuthImages/bacgroundimage/ezzedesign.png");
+            background-size: cover;
+            width: 100%;
+            text-align: center;
+            height: 56px;
+            border-radius: 16px;
+            cursor: pointer;
+            .quiz_center{
+                padding: 10px;
+              }
+        }
+    }
+}
+
+
+@media (min-width:600px) and (max-width:1200px) {
+    .category-detail {
+
+        height: 100vh;
+    
+        .category_container {
+            display: flex;
+           align-items: flex-start;
+            padding: 16px;
+    
+            .categorydetail_left {
+                width: 30%;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                height: 100%;
+    
+                .category_vocablary {
+                    cursor: pointer;
+    
+                    .swiper-wrapper {
+                        gap: 16px;
+                        display: grid ;
+                        grid-template-columns: 1fr ;
+                        grid-template-rows: auto auto auto auto auto auto auto auto auto auto;
+                        grid-auto-flow: column ;
+                        
+                        .swiper-slide {
+                            min-width: max-content;
+                            height: 91px ;
+
+                        }
+                    }
+                }
+            }
+    
+            .categorydetailabout {
+                width: 100%;
+    
+                .search_category {
+                    position: relative;
+                    width: 100%;
+    
+                    .search_img {
+                        width: 24px;
+                        height: 24px;
+                    }
+    
+                    .search_icons {
+                        position: absolute;
+                        top: 48px;
+                        left: 30px;
+                    }
+    
+                }
+                .css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input{
+                    padding: 16.5px 52px;
+                }
+            }
+        }
+    
+        .homepage_quiz {
+            display: none;
+        }
+    }
+}

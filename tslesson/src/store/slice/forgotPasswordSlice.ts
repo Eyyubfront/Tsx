@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { sendForgotPasswordEmail } from "../actions/forgotPasswordActions/forgotPasswordActions";
 
 interface ForgotPasswordState {
@@ -28,13 +28,13 @@ const forgotPasswordSlice = createSlice({
       .addCase(sendForgotPasswordEmail.fulfilled, (state) => {
         state.loading = false;
         state.success = true;
-        
+
       })
       .addCase(
         sendForgotPasswordEmail.rejected,
-        (state, action: PayloadAction<string | undefined>) => {
+        (state, action) => {
           state.loading = false;
-          state.error = action.payload || "An error occurred.";
+          state.error = action.payload as string;
         }
       );
   },

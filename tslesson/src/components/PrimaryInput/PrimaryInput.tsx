@@ -6,13 +6,14 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import { useFormContext } from "react-hook-form";
 
 interface CustomInputProps {
-  type?: "text" | "email" | "password";
+  type?: "text" | "email" | "password"|"select";
   label?: string;
   isEyeicon?: boolean;
   handleEye?: () => void;
   iseye?: boolean;
   name: string;
   errorMessage?: string; 
+  className?: string; 
   maxLength?: number; 
 }
 
@@ -20,6 +21,7 @@ const Input: FC<CustomInputProps> = ({
   type = "text",
   label,
   isEyeicon,
+  className,
   iseye,
   maxLength,
   handleEye,
@@ -38,17 +40,22 @@ const Input: FC<CustomInputProps> = ({
     };
     setIsEmailValid(validateEmail(email));
   }, [email]);
+  const classes = [
+    'input_primary',
+    errors[name] ? 'error' : '',
+    className,
+  ].filter(Boolean).join(' ');
 
   return (
     <div className="input_div">
-      <Paragrafy text={label} />
+      <Paragrafy className="input_titlename" text={label} />
       <div className="input_wrapper">
         <input
           {...register(name)} 
           type={type} 
           maxLength={maxLength} 
           placeholder={label} 
-          className={`input_primary ${errors[name] ? 'error' : ''}`} 
+          className={classes} 
         />
         {isEmailValid && (
           <div style={{ position: "relative" }}>
@@ -68,6 +75,7 @@ const Input: FC<CustomInputProps> = ({
       {errors[name] && (
         <span className="error_message">{String(errors[name]?.message)}</span>
       )}
+   
     </div>
   );
 };

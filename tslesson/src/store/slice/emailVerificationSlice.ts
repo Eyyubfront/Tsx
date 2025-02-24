@@ -9,6 +9,7 @@ interface EmailProps {
   error: string | null;
   resendAllowed: boolean;
   success: boolean;
+  title: string; 
   isResetPassword: boolean;
 }
 
@@ -21,6 +22,7 @@ const initialState: EmailProps = {
   success: false,
   resendAllowed: false,
   isResetPassword: false,
+  title: '', 
 };
 
 const emailVerificationSlice = createSlice({
@@ -33,9 +35,13 @@ const emailVerificationSlice = createSlice({
       state.success = false;
       state.resendAllowed = false;
       state.isResetPassword = false; 
+      state.title = ''; 
     },
     setIsResetPassword: (state, action) => {
       state.isResetPassword = action.payload;
+    },
+    setTitle: (state, action) => { 
+      state.title = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -83,5 +89,5 @@ const emailVerificationSlice = createSlice({
   },
 });
 
-export const { resetState, setIsResetPassword } = emailVerificationSlice.actions;
+export const { resetState, setIsResetPassword, setTitle} = emailVerificationSlice.actions;
 export default emailVerificationSlice.reducer;

@@ -1,13 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchTexts, saveText, removeText, updateText } from '../actions/learingActions/learingnowActions';
+import { fetchTexts, removeText, updateText, learingnowsaveText } from '../actions/learingActions/learingnowActions';
 
 interface items {
     id: number;
-    userId: string;
     source?: string;
     translation?: string;
-    sourceLanguageId?: number;
-    translationLanguageId?: number;
     isLearningNow: boolean
 }
 
@@ -20,6 +17,7 @@ interface LearningNowState {
     items: LearingNow;
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
+    isOpenNow: boolean;
 }
 
 const initialState: LearningNowState = {
@@ -29,6 +27,7 @@ const initialState: LearningNowState = {
     },
     status: 'idle',
     error: null,
+    isOpenNow: false, 
 };
 
 const learningNowSlice = createSlice({
@@ -36,6 +35,9 @@ const learningNowSlice = createSlice({
     initialState,
     reducers: {
         resetState: () => initialState,
+        CloseModalNow: (state) => {
+            state.isOpenNow=!state.isOpenNow
+            }
     },
     extraReducers: (builder) => {
         builder
@@ -45,40 +47,35 @@ const learningNowSlice = createSlice({
             })
             .addCase(fetchTexts.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.items ={
-                    nowitems:action.payload.items,
-                    count:action.payload.count
-                }; 
+                state.items.nowitems = action.payload.items,
+                state.items.count = action.payload.count
+             
             })
             .addCase(fetchTexts.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message || 'Failed to fetch texts';
             })
+
+            .addCase(learingnowsaveText.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.error = action.payload as string
    
-            .addCase(saveText.fulfilled, (state, action) => {
-                state.status = 'succeeded';
-         
-                state.items.nowitems.push(action.payload);
-
             })
-     
-            .addCase(removeText.fulfilled, (state, action) => {
+            .addCase(learingnowsaveText.rejected, (state, action) => {
+                state.error = action.payload as string
+                state.isOpenNow = true; 
+            })
+            .addCase(removeText.fulfilled, (state) => {
                 state.status = 'succeeded';
-             
-                state.items.nowitems = state.items.nowitems.filter(item => item.id !== action.payload); 
-             
+            
             })
 
-            .addCase(updateText.fulfilled, (state, action) => {
+            .addCase(updateText.fulfilled, (state) => {
                 state.status = 'succeeded';
-      
-                const updatedIndex = state.items.nowitems.findIndex(item => item.id === action.payload.id);
-                if (updatedIndex !== -1) {
-                    state.items.nowitems[updatedIndex] = action.payload;
-                }
+   
             });
     },
 });
 
-export const { resetState } = learningNowSlice.actions;
+export const { resetState,CloseModalNow } = learningNowSlice.actions;
 export default learningNowSlice.reducer;
