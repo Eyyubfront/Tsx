@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login, register, refreshToken, deleteUser, excelfilefetch, addformFile } from '../actions/authActions';
+import { login, register, refreshToken, deleteUser, excelfilefetch, addformFile, sendIdToken } from '../actions/authActions';
 import { sendForgotPasswordEmail } from '../actions/forgotPasswordActions/forgotPasswordActions';
 
 interface AuthState {
@@ -11,7 +11,9 @@ interface AuthState {
   isAuth: boolean | null;
   success: boolean;
   veriyuse: boolean;
-  full: boolean
+  full: boolean;
+  datagoogle:boolean
+
 }
 
 const initialState: AuthState = {
@@ -23,7 +25,8 @@ const initialState: AuthState = {
   success: false,
   isAuth: null,
   veriyuse: false,
-  full: false
+  full: false,
+  datagoogle:false
 };
 
 const authSlice = createSlice({
@@ -74,10 +77,17 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-
-
-
-
+      .addCase(sendIdToken.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(sendIdToken.fulfilled, (state, action:any) => {
+        state.loading = false;
+        state.datagoogle= action.payload
+      })
+      .addCase(sendIdToken.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
       .addCase(addformFile.pending, (state) => {
         state.loading = true; 
       })

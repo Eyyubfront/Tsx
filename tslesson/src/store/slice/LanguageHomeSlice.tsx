@@ -17,6 +17,7 @@ interface TextState {
     error: string | null;
     isOpen?: boolean;
     isDialogOpen: boolean, 
+    isDialogOpenMastered: boolean, 
 }
 
 const initialState: TextState = {
@@ -27,6 +28,7 @@ const initialState: TextState = {
     error: null,
     isOpen: false,
     isDialogOpen: false, 
+    isDialogOpenMastered: false, 
 };
 
 const LanguageHomeSlice = createSlice({
@@ -49,6 +51,16 @@ const LanguageHomeSlice = createSlice({
         closeDialog: (state) => { 
             state.isDialogOpen = false;
         },
+
+        openDialogMastered: (state) => {
+            state.isDialogOpenMastered = true;
+        },
+
+        closeDialogMastered: (state) => { 
+            state.isDialogOpenMastered = false;
+        },
+
+
     },
     extraReducers: (builder) => {
         builder
@@ -82,6 +94,6 @@ const LanguageHomeSlice = createSlice({
     },
 });
 
-export const { setSelectedLanguage, openQuizModal, closeQuizModal, openDialog, closeDialog } = LanguageHomeSlice.actions;
+export const { setSelectedLanguage, openQuizModal, closeQuizModal, openDialog, closeDialog,openDialogMastered,closeDialogMastered } = LanguageHomeSlice.actions;
 
 export default LanguageHomeSlice.reducer;

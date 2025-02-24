@@ -27,7 +27,7 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps & { 
     useEffect(() => {
         dispatch(wordfetchTexts({ page: 1, pageSize: showAll ? 20 : 10 }));
     }, [dispatch, showAll]);
-
+    
     const handleSaveText = (item: WordsItem) => {
         if (item.id !== null) {
             dispatch(selecetwordText(item.id));

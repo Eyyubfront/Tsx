@@ -63,6 +63,7 @@ const LatestWordsSlice = createSlice({
             })
             .addCase(removeText.fulfilled, (state) => {
                 state.status = 'succeeded';    
+                
             })
 
             .addCase(updateText.fulfilled, (state) => {
