@@ -135,3 +135,20 @@ export const addformFile = createAsyncThunk('home/addformFile', async (file: Fil
     return thunkAPI.rejectWithValue("User vocabulary already exists")
   }
 });
+
+
+export const sendIdToken = createAsyncThunk(
+  'auth/sendIdToken',  
+  async (idToken: string, { rejectWithValue }) => {
+    try {
+  
+      const response = await axiosInstance.post(
+        '/GoogleAuth',
+         {idToken} 
+      );
+      return { data: response.data, idToken }; 
+    } catch (error) {
+      return rejectWithValue('Bir hata oluştu');
+    }
+  }
+);

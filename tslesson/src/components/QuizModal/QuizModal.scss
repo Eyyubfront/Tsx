@@ -62,7 +62,12 @@
         align-items: center;
         margin-bottom: 10px;
 
+        transition: opacity 0.3s ease;
+        pointer-events: auto;
+
+
         .answers_box {
+
             cursor: pointer;
             border: 1px solid #F3F0FD;
             background-color: #F3F0FD;
@@ -71,17 +76,53 @@
             text-align: center;
             height: 44px;
             padding: 9px;
+            font-size: 16px;
+            font-weight: 500;
+            font-family: Inter, "sans-serif";
         }
+
+        .correct-answer {
+            background-color: white;
+            color: black;
+            border: 1px solid green;
+        }
+
+        .wrong-answer {
+            background-color: red;
+            transform: 1s;
+            color: white;
+            border: 1px solid red;
+        }
+
+
     }
+
+    .answers-closed {
+        filter: blur(3px);
+        -webkit-filter: blur(3px);
+
+        height: 83px;
+        pointer-events: none;
+        border: 2px solid #7D62D1;
+        border-radius: 12px;
+        background: ghostwhite;
+        color: black;
+    }
+
+
 }
-.ansewrs__alls{
-    .answers_box{
-        &:active{
-            background-color:  #7D62D1;
+
+
+.ansewrs__alls {
+    .answers_box {
+
+        &:active {
+            background-color: #7D62D1;
             color: white;
         }
     }
 }
+
 .feeadback_bottom {
 
     gap: 10px;
@@ -173,19 +214,20 @@
     }
 
 }
+
 .answers_box.disabled {
-    
-    background-color: #d3d3d3; 
-    color: #888; 
-    cursor: not-allowed; 
+
+    background-color: #d3d3d3;
+    color: #888;
+    cursor: not-allowed;
     opacity: 0.6;
 }
 
 
-.Finish{
+.Finish {
     background-color: white;
     color: #7D62D1;
-    font-family: Inter,"sans-serif";
+    font-family: Inter, "sans-serif";
     font-size: 16px;
     border: 1px solid #7D62D1;
     border-radius: 12px;
@@ -195,10 +237,11 @@
     text-align: center;
     cursor: pointer;
 }
-.Restart{
+
+.Restart {
     background-color: #7D62D1;
     color: white;
-    font-family: Inter,"sans-serif";
+    font-family: Inter, "sans-serif";
     font-size: 16px;
     height: 50px;
     border: 2px solid #7D62D1;
@@ -209,10 +252,11 @@
     text-align: center;
     cursor: pointer;
 }
-.Finishtruetext{
+
+.Finishtruetext {
     background-color: #7D62D1;
     color: white;
-    font-family: Inter,"sans-serif";
+    font-family: Inter, "sans-serif";
     font-size: 16px;
     height: 50px;
     border: 2px solid white;
@@ -222,15 +266,18 @@
     width: 100%;
     text-align: center;
     cursor: pointer;
- 
+
 }
-.correct_box{
+
+.correct_box {
     background-color: white;
 }
-.mistake_tittle{
+
+.mistake_tittle {
     text-align: center;
 }
-.finished_top{
+
+.finished_top {
     font-weight: bold !important;
-    font-family: Inter,"sans-serif";
+    font-family: Inter, "sans-serif";
 }

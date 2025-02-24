@@ -2,32 +2,29 @@ import { useForm, FormProvider } from "react-hook-form";
 import { Box, Typography, TextField, Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
 import Favorite from "../../assets/images/home/Heart_01.svg";
 import FavroiteBorder from "../../assets/images/home/UnHeart.svg";
-import Savedicon from "../../assets/images/home/Bookmark.svg";
-import NotSavedicon from "../../assets/images/home/nosaved.svg";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { fetchQuizData, quizSaveData, quizcountReport } from "../../store/actions/quizActions/quizActions";
+import { fetchQuizData, quizcountReport } from "../../store/actions/quizActions/quizActions";
 import { useEffect, useState } from "react";
 import { Close } from '@mui/icons-material';
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import Paragrafy from "../Paragrafy/Paragrafy";
-import { closeQuizModal } from "../../store/slice/LanguageHomeSlice";
+import { closeDialogMastered } from "../../store/slice/LanguageHomeSlice";
 
-import "./QuizModal.scss";
 
-const QuizModal = () => {
+const MasteredModal = () => {
 
 
     const dispatch = useAppDispatch();
-    const isQuizModalOpen = useAppSelector((state) => state.LanguagetextData.isOpen);
-    console.log("ssswqqqq",isQuizModalOpen);
+    const isMastereddialog = useAppSelector((state) => state.LanguagetextData.isDialogOpenMastered);
+    console.log("sssssss",isMastereddialog);
     
     const { quizData } = useAppSelector((state) => state.quizslice);
     const methods = useForm();
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
     const [lives, setLives] = useState(3);
-    const [answerMessage, setAnswerMessage] = useState<string>("");
-    const [isSaved, setIsSaved] = useState(true);
+  
+
     const [answeredQuestions, setAnsweredQuestions] = useState<number[]>([0]);
     const [showGameOver, setShowGameOver] = useState(false);
     const [correctAnsewrscount, setCorrectAnsewrsCount] = useState(0);
@@ -37,25 +34,27 @@ const QuizModal = () => {
 
 
     useEffect(() => {
-        if (isQuizModalOpen) {
-            dispatch(fetchQuizData({ excludeIds: answeredQuestions, isMastered: false }));
+        if (isMastereddialog) {
+            dispatch(fetchQuizData({ excludeIds: answeredQuestions, isMastered: true }));
             setLives(3);
-            setAnswerMessage("");
+          
             setSelectedAnswer(null);
             setIsAnswered(false);
             setIsCorrect(null);
             setShowGameOver(false);
             setIsAnswersOpen(false);
             setCorrectAnsewrsCount(0);
-            setIsSaved(false);
+      
+            
             setAnsweredQuestions([0]);
         }
-    }, [isQuizModalOpen]);
+    }, [isMastereddialog]);
 
 
     useEffect(() => {
         if (lives === 0) {
-            setAnswerMessage("Game Over!");
+       
+            
             setShowGameOver(true);
             setSelectedAnswer(null);
 
@@ -74,7 +73,8 @@ const QuizModal = () => {
 
         setSelectedAnswer(answer);
         setIsCorrect(isCorrect);
-        setAnswerMessage(isCorrect ? "Correct!" : "Wrong!");
+      
+        
         setIsAnswered(true);
 
         if (isCorrect) {
@@ -89,7 +89,7 @@ const QuizModal = () => {
         if (quizData?.id) {
             const response = await dispatch(fetchQuizData({
                 excludeIds: [...answeredQuestions, Number(quizData?.id)],
-                isMastered: false
+                isMastered: true
             })).unwrap();
 
             if (response === null) {
@@ -101,10 +101,9 @@ const QuizModal = () => {
             setAnsweredQuestions((prev) => [...prev, Number(quizData?.id)]);
         }
 
-        setAnswerMessage("");
+ 
         setSelectedAnswer(null);
         setIsAnswered(false);
-        setIsSaved(false);
         setIsAnswersOpen(false);
     };
 
@@ -112,58 +111,36 @@ const QuizModal = () => {
         setLives(3);
         setShowGameOver(false);
         setAnsweredQuestions([]);
-        dispatch(fetchQuizData({ excludeIds: answeredQuestions, isMastered: false })).unwrap();
+        dispatch(fetchQuizData({ excludeIds: answeredQuestions, isMastered: true })).unwrap();
 
         setSelectedAnswer(null);
-        setAnswerMessage("");
+
         setIsAnswered(false);
     };
     const handleClose = () => {
-        dispatch(closeQuizModal());
+        dispatch(closeDialogMastered());
         setAnsweredQuestions([0])
         setShowGameOver(false);
         setCorrectAnsewrsCount(0)
 
     };
     const handleCloseDialog = () => {
-        dispatch(closeQuizModal());
+        dispatch(closeDialogMastered());
         setDatadialog(false);
     };
 
 
-    const [isAnswersOpen, setIsAnswersOpen] = useState(false); // Answers açma durumu
+    const [isAnswersOpen, setIsAnswersOpen] = useState(false); 
 
     const handleAnswersToggle = () => {
-        setIsAnswersOpen(!isAnswersOpen); // Checkbox tıklanınca açılma/kapama
+        setIsAnswersOpen(!isAnswersOpen); 
     };
 
-    const toggleSave = async () => {
-        setIsSaved(!isSaved);
-
-        if (!isSaved && quizData?.id) {
-            await dispatch(quizSaveData(quizData?.id));
-
-
-            const response = await dispatch(fetchQuizData({ excludeIds: answeredQuestions, isMastered: false })).unwrap();
-
-            setIsSaved(false);
-
-            if (response === null) {
-                setDatadialog(true);
-                dispatch(quizcountReport(correctAnsewrscount));
-            } else {
-                setDatadialog(false);
-            }
-        }
-
-
-        setSelectedAnswer(null);
-        setIsAnswered(false);
-    };
+  
 
 
     return (
-        <Dialog open={isQuizModalOpen ?? false} className='dialoq' maxWidth="sm" fullWidth>
+        <Dialog open={isMastereddialog ?? false} className='dialoq' maxWidth="sm" fullWidth>
             <DialogTitle className='dialoqtitte_tops'>
                 <span className='tittledialoq'>Quiz</span>
                 <IconButton className='iconbutton' onClick={handleClose}>
@@ -228,18 +205,6 @@ const QuizModal = () => {
                     </div>
 
 
-                    <Typography variant="body2" sx={{ mt: 2, textAlign: "center" }}>
-                        {answerMessage && isCorrect && quizData?.id ? (
-                            <div className="save__words">
-                                <div className="savewords__tittle">
-                                    <Paragrafy className="master_wordstittle" text="Add to Master words" />
-                                </div>
-                                <div onClick={toggleSave}>
-                                    <img className="icons_savequiz" src={isSaved ? Savedicon : NotSavedicon} />
-                                </div>
-                            </div>
-                        ) : null}
-                    </Typography>
 
 
                     {quizData?.id ? (
@@ -287,12 +252,10 @@ const QuizModal = () => {
                             </Box>
                         </DialogContent>
                     </Dialog>}
-
-
                 </FormProvider>
             </DialogContent>
         </Dialog>
     );
 };
 
-export default QuizModal;
+export default MasteredModal;

@@ -6,20 +6,21 @@ import { fetchTexts } from "../learingActions/learingnowActions";
 import { wordfetchTexts } from "../learingActions/learingwordsActions";
 
 export const fetchQuizData = createAsyncThunk(
-    "home/fetchQuizData",
-    async (excludeIds: number[], { rejectWithValue }) => {
-      const idsGenerate = excludeIds.map(id => `excludeIds=${id}`).join("&")
+  "home/fetchQuizData",
+  async (params: { excludeIds: number[], isMastered: boolean }, { rejectWithValue }) => {
+      const { excludeIds, isMastered } = params;
+      const idsGenerate = excludeIds.map(id => `excludeIds=${id}`).join("&");
       try {
-        const response = await axiosInstance.get(
-          `/Quiz/GetQuestion?${idsGenerate}`
-        );
-       
-        return response.data.data;
+          const response = await axiosInstance.get(
+              `/Quiz/GetQuestion?${idsGenerate}&isMastered=${isMastered}`
+          );
+          return response.data.data;
       } catch (error) {
-        return rejectWithValue("Failed to fetch category data");
+          return rejectWithValue("Failed to fetch category data");
       }
-    }
-  );
+  }
+);
+
 
 
 
