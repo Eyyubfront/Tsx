@@ -146,7 +146,7 @@ export const sendIdToken = createAsyncThunk(
         '/GoogleAuth',
          {idToken} 
       );
-      return { data: response.data, idToken }; 
+      return  response.data.data; 
     } catch (error) {
       return rejectWithValue('Bir hata oluştu');
     }

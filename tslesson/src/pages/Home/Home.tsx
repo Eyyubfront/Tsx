@@ -14,12 +14,15 @@ import FileInput from "../FileInput";
 
 
 
+
 const Home = () => {
     const dispatch = useAppDispatch();
-    const items = useAppSelector((state:RootState) => state.learningNow.items.nowitems); 
+
+
+    const items = useAppSelector((state: RootState) => state.learningNow.items.nowitems);
     const handleHomeQuizClick = () => {
         if (!items || items.length === 0) {
-            dispatch(openDialog()); 
+            dispatch(openDialog());
         } else {
             dispatch(openQuizModal());
         }
@@ -50,7 +53,7 @@ const Home = () => {
                     </Link>
                 </div>
 
-<FileInput/>
+                <FileInput />
 
 
                 <QuizModal />

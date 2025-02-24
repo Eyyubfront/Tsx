@@ -29,9 +29,9 @@ const schema = Yup.object().shape({
 
 const Login = () => {
   const dispatch = useAppDispatch();
-  const { loading, error } = useAppSelector((state) => state.Auth);
-  console.log(error);
 
+  const { loading } = useAppSelector((state) => state.Auth);
+ 
 
   const [signUp, setSignUp] = useState(false);
   const [iseye, setIseye] = useState(false);
@@ -64,35 +64,39 @@ const Login = () => {
       dispatch(register(data))
         .unwrap()
         .then(() => {
-          console.log("Sign Up successful, switching to Sign In...");
           navigate("/verifyemailpage");
         })
-        .catch(err => {
-          console.error("Registration error:", err);
-        });
+      
     } else {
       dispatch(login(data))
         .unwrap()
         .then(() => {
-          console.log("Login successful, navigating to Home...");
           navigate('/');
         })
-        .catch(err => {
-          console.error("Login error:", err);
-        });
     }
   };
-
   const handleGoogleLogin = (response: any) => {
-    // Google login başarılıysa
     if (response.error) {
-      console.error("Google login error:", response.error);
       return;
     }
-
-    const idToken = response.tokenId; // Dinamik olarak alınan token
-    dispatch(sendIdToken(idToken));  // Backend'e idToken'ı gönder
+  
+    const idToken = response.credential;  
+    if (!idToken) {
+      return;
+    }
+    dispatch(sendIdToken(idToken))
+      .unwrap()
+      .then((data:any) => {
+        const { accessToken, refreshToken, userId } = data;
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('userId', userId);
+        window.location.href = '/';
+      })
   };
+  
+  
+  
   return (
     <div style={{ display: "flex" }} className='all_login'>
       <div className="sign_left">
@@ -127,14 +131,6 @@ const Login = () => {
                   </Link>
                 </div>
               )}
-              {/* {
-                signUp ? (
-                  error !== null ? (
-                    <p className='signup__error'>{error}</p>
-                  ) : null
-                ) : null
-              } */}
-
             </div>
 
 
@@ -167,7 +163,6 @@ const Login = () => {
             <GoogleOAuthProvider clientId="944563868453-u7ajud98vhsk8s25e9rql1er8akaogcj.apps.googleusercontent.com">
               <GoogleLogin
                 onSuccess={handleGoogleLogin}
-             
                 useOneTap
               />
             </GoogleOAuthProvider>
