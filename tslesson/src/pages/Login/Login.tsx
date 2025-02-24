@@ -12,7 +12,7 @@ import * as Yup from 'yup';
 import "./Login.scss";
 import UseFormInput from '../../components/PrimaryInput/UseFormInput';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { login, register } from '../../store/actions/authActions';
+import { login, register, sendIdToken } from '../../store/actions/authActions';
 import { Link, useNavigate } from 'react-router-dom';
 import { setVeryuse } from '../../store/slice/authSlice';
 
@@ -81,6 +81,12 @@ const Login = () => {
           console.error("Login error:", err);
         });
     }
+  };
+
+
+  const handlegooglogin = async () => {
+  const  idToken="944563868453-u7ajud98vhsk8s25e9rql1er8akaogcj.apps.googleusercontent.com";
+  dispatch(sendIdToken(idToken))
   };
 
   return (
@@ -154,6 +160,7 @@ const Login = () => {
               <Paragrafy fontfamily="Inter,sans-serif" fontsize="14px" fontWeight="300" text={signUp ? "Already have an account? " : "Don't have an account? "} />
               <CustomLink fontfamily="Inter,sans-serif" onChange={handleLink} element={signUp} />
             </div>
+            <button onClick={handlegooglogin}>google</button>
           </form>
         </FormProvider>
       </div>
