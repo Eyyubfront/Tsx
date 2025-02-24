@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from '../../store';
 import { login, register, sendIdToken } from '../../store/actions/authActions';
 import { Link, useNavigate } from 'react-router-dom';
 import { setVeryuse } from '../../store/slice/authSlice';
-
+import { GoogleOAuthProvider,GoogleLogin } from '@react-oauth/google';
 const schema = Yup.object().shape({
   email: Yup.string()
     .email("Email is not valid.")
@@ -83,12 +83,16 @@ const Login = () => {
     }
   };
 
+  const handleGoogleLogin = (response: any) => {
+    // Google login başarılıysa
+    if (response.error) {
+      console.error("Google login error:", response.error);
+      return;
+    }
 
-  const handlegooglogin = async () => {
-  const  idToken="944563868453-u7ajud98vhsk8s25e9rql1er8akaogcj.apps.googleusercontent.com";
-  dispatch(sendIdToken(idToken))
+    const idToken = response.tokenId; // Dinamik olarak alınan token
+    dispatch(sendIdToken(idToken));  // Backend'e idToken'ı gönder
   };
-
   return (
     <div style={{ display: "flex" }} className='all_login'>
       <div className="sign_left">
@@ -130,7 +134,7 @@ const Login = () => {
                   ) : null
                 ) : null
               } */}
-          
+
             </div>
 
 
@@ -160,7 +164,13 @@ const Login = () => {
               <Paragrafy fontfamily="Inter,sans-serif" fontsize="14px" fontWeight="300" text={signUp ? "Already have an account? " : "Don't have an account? "} />
               <CustomLink fontfamily="Inter,sans-serif" onChange={handleLink} element={signUp} />
             </div>
-            <button onClick={handlegooglogin}>google</button>
+            <GoogleOAuthProvider clientId="944563868453-u7ajud98vhsk8s25e9rql1er8akaogcj.apps.googleusercontent.com">
+              <GoogleLogin
+                onSuccess={handleGoogleLogin}
+             
+                useOneTap
+              />
+            </GoogleOAuthProvider>
           </form>
         </FormProvider>
       </div>
