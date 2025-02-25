@@ -47,9 +47,9 @@ const SelectLanguage = () => {
                     >
                         {texts?.map((language: LanguageHomes) => (
                             <MenuItem key={language.id} value={language.id}>
-                                {defaultText?.isSwapped
-                                    ? `${language.sourceLanguage} - ${language.translationLanguage} `
-                                    : `${language.translationLanguage} - ${language.sourceLanguage}`}
+                                {defaultText?.isSwapped  
+                                    ? `${language.translationLanguage} - ${language.sourceLanguage} `
+                                    : `${language.sourceLanguage} - ${language.translationLanguage}`}
                             </MenuItem>
                         ))}
                     </Select>
