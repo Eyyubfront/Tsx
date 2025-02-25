@@ -55,12 +55,16 @@ const Header = () => {
 
 
   const handleDownload = async () => {
-    if (isDownloaded) return;
 
+    if (localStorage.getItem('isDownloaded')) {
+      return; 
+    }
+  
     setIsDownloaded(true);
-
+  
+ 
     const resultAction = await dispatch(excelfilefetch());
-
+  
     if (excelfilefetch.fulfilled.match(resultAction)) {
       const blob = resultAction.payload;
       const url = window.URL.createObjectURL(new Blob([blob]));
@@ -70,13 +74,15 @@ const Header = () => {
       document.body.appendChild(link);
       link.click();
       link.remove();
+  
+      localStorage.setItem('isDownloaded', 'true');
     }
-
+  
     setTimeout(() => {
       setShowModalExcel(true);
     }, 1000);
-  }
-
+  };
+  
 
 
   return (

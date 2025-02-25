@@ -50,6 +50,8 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
         dispatch(closeDialogMastered())
     }
 
+ 
+
     return (
         <div>
             <MasteredModal />
@@ -59,12 +61,12 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
                     {filteredItems?.length ? filteredItems.map((item) => (
                         <TableRow className='table_aligns' key={item.id}>
                             <TableCell sx={{ borderBottom: "none" }}>
-                                <Typography>{`${item.source} - ${item.translation}`}</Typography>
-                            </TableCell>
                             {defaultText?.isSwapped
                                 ? <Typography>{`${item.source} - ${item.translation}`}</Typography>
                                 : <Typography>{`${item.translation} - ${item.source}`}</Typography>
                             }
+                            </TableCell>
+                         
                             <TableCell className='table_cards'>
                                 <Button
                                     className='table_button'
