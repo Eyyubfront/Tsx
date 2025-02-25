@@ -91,7 +91,7 @@ const Login = () => {
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
         localStorage.setItem('userId', userId);
-        window.location.href = '/';
+        window.location.href = '/languageselector';
       })
   };
   
