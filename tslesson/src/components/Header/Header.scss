@@ -1,0 +1,211 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+
+    .headers_burger {
+        display: none;
+    }
+
+    .header_left {
+
+        .selects {
+            width: 250px;
+            height: 56px;
+            padding: 5px;
+            gap: 10px;
+            border-radius: 10px;
+
+
+        }
+    }
+
+    .header_center {
+        background-image: url("../../assets/images/AuthImages/bacgroundimage/ezzedesign.png");
+        background-size: cover;
+        width: 360px;
+        height: 56px;
+        border-radius: 16px;
+        cursor: pointer;
+
+        .quiz_center {
+            text-align: center;
+            margin-top: 10px;
+
+        }
+    }
+
+    .header_right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        .excel_box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background-color: #F9F8FD;
+            border: 1px solid #F9F8FD;
+            border-radius: 10px;
+            width: 150px;
+            height: 60px;
+            padding: 3px;
+
+            .excel_text {
+                color: #8B6DE8;
+                font-family: DM Sans;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 20px;
+                letter-spacing: 0%;
+                text-align: center;
+
+            }
+        }
+
+        .header_setting {
+            width: 56px;
+            height: 52px;
+            padding: 10px;
+            gap: 10px;
+            border-radius: 48px;
+            background-color: #F9F8FD;
+            display: flex;
+            justify-content: center;
+            cursor: pointer;
+            align-items: center;
+        }
+
+
+
+        .header_words {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            justify-content: center;
+            color: aliceblue;
+            width: 175px;
+            height: 56px;
+            padding: 17px;
+            gap: 10px;
+            border-radius: 10px;
+            background-color: #8B6DE8;
+            cursor: pointer;
+
+            .words_count,
+            .newwordstext {
+                font-weight: bold;
+                color: #FFFFFF;
+
+
+            }
+        }
+    }
+
+    .header_burgermenu {
+        display: none;
+    }
+}
+
+.done_message {
+    background-color: #E6FDED;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    height: 50px;
+    border-radius: 20px;
+    width: 236px;
+    color: white;
+}
+
+.sucsess_excel {
+    font-family: Inter;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 27.5px;
+    letter-spacing: 0%;
+
+    color: #35F56F;
+}
+
+@media (max-width:600px) {
+    .header {
+        flex-direction: row-reverse;
+
+        .header_burgermenu {
+            display: block;
+        }
+
+        .headers_burger {
+            display: block;
+            width: 42px;
+            height: 42px;
+            border-radius: 42px;
+            background-color: #F9F8FD;
+        }
+
+        .header_left {
+            display: none;
+        }
+
+        .header_center {
+            display: none;
+        }
+
+        .header_right {
+
+            .excel_box {
+                width: 56px;
+                height: 52px;
+                padding: 10px;
+                gap: 10px;
+                border-radius: 48px;
+                background-color: #F9F8FD;
+                display: flex;
+                justify-content: center;
+                cursor: pointer;
+                align-items: center;
+
+                .excel_text {
+                    display: none;
+
+                }
+            }
+
+            .header_setting {
+                display: none;
+            }
+
+            .header_words {
+                width: 42px;
+                height: 42px;
+                border-radius: 42px;
+
+                .newwordstext {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width:601px) and (max-width:1200px) {
+    .header {
+        .headers_burger {
+            display: none;
+        }
+
+        .header_center {
+            display: none;
+        }
+
+        .header_right {
+            gap: 5px;
+        }
+    }
+}
+
+@media (min-width:651px) and (max-width:675px) {}

@@ -1,0 +1,145 @@
+.learntime {
+  padding: 10px;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  gap: 30px;
+
+  .learntime_left {
+    width: 100%;
+    height: 100%;
+    display: flex;
+
+    .learnback {
+      margin-top: 20px;
+    }
+  }
+
+  .learntime_right {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    gap: 35px;
+    width: 50%;
+    position: relative;
+
+    .formslearntime {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 42px;
+
+      .box {
+        display: flex;
+        flex-direction: column;
+        gap: 42px;
+
+        .left-box {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+
+          .timeparagraf {
+            font-family: Inter;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 20px;
+            text-align: left;
+            text-underline-position: from-font;
+            text-decoration-skip-ink: none;
+
+          }
+
+          .time-inputs {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+          }
+        }
+      }
+    }
+
+  }
+}
+
+@media (max-width: 600px) {
+  .learntime {
+    flex-direction: column;
+    align-items: baseline;
+
+    justify-content: space-between;
+
+
+
+    .learntime_left {
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .learntime_right {
+
+      width: 100%;
+
+
+      .formslearntime {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 42px;
+
+        .box {
+
+          .left-box {
+
+            .time-inputs {
+              flex-direction: column;
+            }
+          }
+        }
+
+      }
+
+    }
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1200px) {
+  .learntime {
+    flex-direction: column;
+    align-items: baseline;
+    height: max-content;
+    justify-content: center;
+
+    .learntime_left {
+      flex-direction: column;
+      gap: 30px;
+
+    }
+
+    .learntime_right {
+
+      width: 100%;
+
+
+      .formslearntime {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 42px;
+
+        .box {
+
+          .left-box {
+
+            .time-inputs {
+              flex-direction: column;
+            }
+
+          }
+        }
+
+      }
+
+    }
+  }
+}
