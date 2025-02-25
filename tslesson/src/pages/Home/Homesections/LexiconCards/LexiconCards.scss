@@ -1,0 +1,151 @@
+.lexicon_cardsall {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 48px;
+    height: 170px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 32px;
+    background-image: url("../../../../assets/images/AuthImages/bacgroundimage/ezzedesign.png");
+    background-position: center;
+
+    .lexicon_card {
+
+        gap: 20px;
+        padding: 10px;
+        width: 100%;
+        display: flex;
+
+        .lexion1 {
+            padding: 10px 12px;
+            border-radius: 20px;
+            border: 1px solid #D1C2FF00;
+            background-color: #F9F8FD;
+            width: 100%;
+            height: 156px;
+        }
+
+        .lexion2 {
+            padding: 10px 12px;
+            border-radius: 20px;
+            border: 1px solid #D1C2FF00;
+            background-color: #F9F8FD;
+            height: 156px;
+            width: 100%;
+        }
+
+        .lexion3 {
+            padding: 10px 12px;
+            border-radius: 20px;
+            border: 1px solid #D1C2FF00;
+            background-color: #F9F8FD;
+            width: 100%;
+            height: 156px;
+        }
+
+
+        .links_lexion {
+            text-decoration: none;
+
+            .lexioncard_about {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 100%;
+
+                .about_bottomlexion {
+                    font-family: DM Sans;
+                    font-size: 16px;
+                    font-weight: 400;
+                    line-height: 20px;
+                    text-align: left;
+                    text-underline-position: from-font;
+                    text-decoration-skip-ink: none;
+                    color: #1D1730CC;
+                }
+
+
+                .about_toplexion {
+                    color: #8B6DE8;
+                    font-family: DM Serif Display;
+                    font-size: 42px;
+                    font-weight: 400;
+                    line-height: 54.6px;
+                    letter-spacing: -0.01em;
+                    text-align: left;
+                    text-underline-position: from-font;
+                    text-decoration-skip-ink: none;
+
+                }
+            }
+        }
+
+
+    }
+}
+
+
+
+@media (max-width: 600px) {
+    .lexicon_cardsall {
+        height: max-content;
+        overflow: hidden;
+    }
+
+    .lexicon_cardsall>.lexicon_card {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        gap: 20px;
+        padding: 10px;
+    }
+
+    .lexicon_cardsall>.lexicon_card .lexion3 {
+        grid-column: 2 / 3;
+        grid-row: 1 / 3;
+    }
+
+    .lexicon_cardsall>.lexicon_card .lexion1 .lexioncard_about,
+    .lexicon_cardsall>.lexicon_card .lexion2 .lexioncard_about {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .lexicon_cardsall>.lexicon_card {
+        width: 100%;
+        height: 100%;
+        .lexion1,
+        .lexion2 {
+            height: max-content ;
+        }
+        .lexion3 {
+            height: 100% ;
+            width: 100% ;
+        }
+        .lexions_count {
+            font-size: 36px;
+        }
+
+        .lexions_title {
+            font-size: 14px;
+        }
+        
+    }
+
+    .lexicon_cardsall>.lexicon_card .lexion3 .lexioncard_about {
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+        gap: 12px;
+ 
+    }
+
+
+
+}

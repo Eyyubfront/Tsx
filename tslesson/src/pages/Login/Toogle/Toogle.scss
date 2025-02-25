@@ -1,0 +1,33 @@
+.signin_check {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  opacity: 1;
+  .signs_toggle {
+    cursor: pointer;
+    .togle_icons{
+      color: #8b6de8;
+      font-size: 38px;
+    }
+    .togle_iconsof {
+      color: #c0aee4;
+      font-size: 38px;
+ 
+    }
+  }
+  .signin_checkaccsestext {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  @media (max-width: 600px) {
+    .signin_check {
+      width: 100%;
+
+      .signin_checkaccsestext {
+        width: 100%;
+      }
+    }
+  }
+}
