@@ -3,7 +3,6 @@ import * as XLSX from 'xlsx';
 import { addformFile } from '../../store/actions/authActions';
 import { useAppDispatch } from '../../store';
 import "./FailInput.scss"
-import PrimaryButton from '../../components/PrimaryButton/PrimaryButton';
 const FileInput: React.FC = () => {
     const [file, setFile] = useState<File | null>(null);
     const [data, setData] = useState<Array<Record<string, unknown>> | null>(null);

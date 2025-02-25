@@ -3,7 +3,6 @@ import Header from '../../components/Header/Header';
 import { Link } from 'react-router-dom';
 import Paragrafy from '../../components/Paragrafy/Paragrafy';
 import LexiconCards from './Homesections/LexiconCards/LexiconCards';
-import VocabularyBuilder from './Homesections/VocabularyBuilder/VocabularyBuilder';
 import LearningNow from './Homesections/LearingNow/LearingNow';
 import LatestWords from './Homesections/LatestWords/LatestWords';
 import { RootState, useAppDispatch, useAppSelector } from "../../store";
