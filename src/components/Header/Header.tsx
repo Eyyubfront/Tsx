@@ -111,7 +111,7 @@ const Header = () => {
             <img src={exceldowland} alt="" />
           </div>
           <div className='excel_text'>
-            {loading ? 'loading...' : 'Dowland Template '}
+            {loading ? 'loading...' : 'Download Template '}
           </div>
         </button>
 

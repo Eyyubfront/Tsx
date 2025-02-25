@@ -38,3 +38,23 @@ export const selecetlangaugesave = createAsyncThunk(
       }
     }
   );
+
+
+
+
+
+
+
+  export const languageswap = createAsyncThunk(
+    "homelanguage/languageswap",
+    async (id: number, { rejectWithValue, dispatch }) => {
+      try {
+        const response = await axiosInstance.post(`/UserLanguage/Swap/${id}`);
+        dispatch(getTexts());    
+        return response.data.data;
+      } catch (error) {
+        return rejectWithValue(error);
+      }
+    }
+  );
+

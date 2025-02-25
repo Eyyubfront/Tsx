@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../store/index";
 import SidePanel from "../../layout/SidePanel/SidePanel";
 import BackButton from "../../components/BackButton/BackButton";
 import { MuiOtpInput } from 'mui-one-time-password-input';
-
+import "./VerifyEmailPage.scss"
 const VerifyEmailPage = () => {
   const [counter, setCounter] = useState(30 * 6);
   const [canResend, setCanResend] = useState(false);

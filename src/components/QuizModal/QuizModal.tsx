@@ -11,11 +11,11 @@ import { Close } from '@mui/icons-material';
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import Paragrafy from "../Paragrafy/Paragrafy";
 import { closeQuizModal } from "../../store/slice/LanguageHomeSlice";
-
 import "./QuizModal.scss";
+import { RxEyeOpen } from "react-icons/rx";
+import { FaRegEyeSlash } from "react-icons/fa";
 
 const QuizModal = () => {
-
 
     const dispatch = useAppDispatch();
     const isQuizModalOpen = useAppSelector((state) => state.LanguagetextData.isOpen);
@@ -129,10 +129,10 @@ const QuizModal = () => {
     };
 
 
-    const [isAnswersOpen, setIsAnswersOpen] = useState(false); 
+    const [isAnswersOpen, setIsAnswersOpen] = useState(false);
 
     const handleAnswersToggle = () => {
-        setIsAnswersOpen(!isAnswersOpen); 
+        setIsAnswersOpen(!isAnswersOpen);
     };
 
     const toggleSave = async () => {
@@ -197,13 +197,11 @@ const QuizModal = () => {
                         </div>
 
                         <div>
-                            <input
-                                type="checkbox"
-                                checked={isAnswersOpen}
-                                onChange={handleAnswersToggle}
-                            />
+                            <div style={{ cursor: "pointer" }} onClick={handleAnswersToggle}>
+                                {isAnswersOpen ? <RxEyeOpen /> : <FaRegEyeSlash />}
+                            </div>
                             <div className={`ansewrs__alls ${!isAnswersOpen ? "answers-closed" : ""}`}>
-                            {quizData?.answers &&
+                                {quizData?.answers &&
                                     Object.keys(quizData.answers).map((key) => (
                                         <div
                                             key={key}
@@ -214,9 +212,9 @@ const QuizModal = () => {
                                             onClick={() => handleAnswerClick(key, quizData.answers[key])}
                                             style={{ pointerEvents: isAnswersOpen && !isAnswered ? 'auto' : 'none' }}
                                         >
-                                       
-                                           {key}
-                                     
+
+                                            {key}
+
                                         </div>
                                     ))}
                             </div>

@@ -3,7 +3,7 @@ import Savedicon from "../../../assets/images/home/Bookmark.svg";
 import NotSavedicon from "../../../assets/images/home/nosaved.svg";
 import { Link } from 'react-router-dom';
 import PrimaryButton from '../../PrimaryButton/PrimaryButton';
-import {  DialogContent, DialogActions } from '@mui/material';
+import { DialogContent, DialogActions } from '@mui/material';
 import "./NewWordModal.scss";
 import { learingnowsaveText } from '../../../store/actions/learingActions/learingnowActions';
 import { useAppDispatch, useAppSelector } from '../../../store';
@@ -35,13 +35,13 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
     const userId = useAppSelector((state) => state.Auth.userId);
     const dispatch = useAppDispatch();
     const selectedLanguage = texts.find((text) => text.id === selectedLanguageId);
-
+    const { defaultText } = useAppSelector((state) => state.LanguagetextData);
     const defaultSourceLanguage = selectedLanguage?.sourceLanguage || '';
     const defaultTranslationLanguage = selectedLanguage?.translationLanguage || '';
     const error = useAppSelector((state) => state.learningNow.error);
-  
+
     const isOpenNow = useAppSelector((state) => state.learningNow.isOpenNow);
-    
+
     const methods = useForm({
         defaultValues: {
             wordone: '',
@@ -74,7 +74,7 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
             console.error("userId not available.");
         }
     };
-    
+
     const handleSavedIconClick = () => {
         if (!isSaved) {
             setIsSaved(true);
@@ -89,16 +89,16 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
     return (
         <>
             <AlertDialog open={show} onClose={onClose} title='New Word '>
-            <DialogContent className='dialogcontent'>
+                <DialogContent className='dialogcontent'>
                     <FormProvider  {...methods}>
                         <form>
                             <div className="text__input">
                                 <div className="sourcetop">
-                                    <label className='modals_labelsource' htmlFor="">{defaultSourceLanguage}</label>
+                                    <label className='modals_labelsource' htmlFor="">{defaultText?.isSwapped ? defaultSourceLanguage : defaultTranslationLanguage}</label>
                                     <UseFormModalInput className='newwords_input' type='select' name="wordone" label={defaultSourceLanguage || "Source Language"} />
                                 </div>
                                 <div className="translationbutom">
-                                    <label className='modals_labeltranslation' htmlFor="">{defaultTranslationLanguage}</label>
+                                    <label className='modals_labeltranslation' htmlFor="">{defaultText?.isSwapped ? defaultTranslationLanguage : defaultSourceLanguage}</label>
                                     <UseFormModalInput className='newwords_input' type='select' name="wordtwo" label={defaultTranslationLanguage || "Translation Language"} />
                                 </div>
                             </div>
@@ -127,14 +127,14 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
 
             </AlertDialog>
             {
-                error && 
-                 <AlertDialog
-                 className='newword_errormodal'
-                 open={isOpenNow}
-                 onClose={handleCloseTextModal}
-                 error={error}
-                 title="Pay attention"
-               />
+                error &&
+                <AlertDialog
+                    className='newword_errormodal'
+                    open={isOpenNow}
+                    onClose={handleCloseTextModal}
+                    error={error}
+                    title="Pay attention"
+                />
             }
         </>
     );

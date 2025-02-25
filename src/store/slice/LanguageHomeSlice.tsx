@@ -7,6 +7,8 @@ interface TextItem {
     sourceLanguage: string;
     translationLanguage: string;
     isDefault: boolean;
+    isSwapped?: boolean;
+
 }
 
 interface TextState {
@@ -71,7 +73,7 @@ const LanguageHomeSlice = createSlice({
             .addCase(getTexts.fulfilled, (state, action) => {
                 state.loading = false;
                 state.texts = action.payload;
-                state.defaultText = action.payload.find((t: { isDefault: boolean }) => t.isDefault);
+                state.defaultText = action.payload.find((t: { isSelected: boolean }) => t.isSelected);
             })
             .addCase(getTexts.rejected, (state, action) => {
                 state.loading = false;
@@ -94,6 +96,6 @@ const LanguageHomeSlice = createSlice({
     },
 });
 
-export const { setSelectedLanguage, openQuizModal, closeQuizModal, openDialog, closeDialog,openDialogMastered,closeDialogMastered } = LanguageHomeSlice.actions;
+export const { setSelectedLanguage,openQuizModal, closeQuizModal, openDialog, closeDialog,openDialogMastered,closeDialogMastered } = LanguageHomeSlice.actions;
 
 export default LanguageHomeSlice.reducer;

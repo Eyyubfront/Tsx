@@ -9,21 +9,21 @@ import { Close } from '@mui/icons-material';
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import Paragrafy from "../Paragrafy/Paragrafy";
 import { closeDialogMastered } from "../../store/slice/LanguageHomeSlice";
-
+import { RxEyeOpen } from "react-icons/rx";
+import { FaRegEyeSlash } from "react-icons/fa";
 
 const MasteredModal = () => {
 
 
     const dispatch = useAppDispatch();
     const isMastereddialog = useAppSelector((state) => state.LanguagetextData.isDialogOpenMastered);
-    console.log("sssssss",isMastereddialog);
-    
+
     const { quizData } = useAppSelector((state) => state.quizslice);
     const methods = useForm();
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
     const [lives, setLives] = useState(3);
-  
+
 
     const [answeredQuestions, setAnsweredQuestions] = useState<number[]>([0]);
     const [showGameOver, setShowGameOver] = useState(false);
@@ -32,20 +32,19 @@ const MasteredModal = () => {
 
     const [isAnswered, setIsAnswered] = useState(false)
 
-
     useEffect(() => {
         if (isMastereddialog) {
             dispatch(fetchQuizData({ excludeIds: answeredQuestions, isMastered: true }));
             setLives(3);
-          
+
             setSelectedAnswer(null);
             setIsAnswered(false);
             setIsCorrect(null);
             setShowGameOver(false);
             setIsAnswersOpen(false);
             setCorrectAnsewrsCount(0);
-      
-            
+
+
             setAnsweredQuestions([0]);
         }
     }, [isMastereddialog]);
@@ -53,8 +52,8 @@ const MasteredModal = () => {
 
     useEffect(() => {
         if (lives === 0) {
-       
-            
+
+
             setShowGameOver(true);
             setSelectedAnswer(null);
 
@@ -73,8 +72,8 @@ const MasteredModal = () => {
 
         setSelectedAnswer(answer);
         setIsCorrect(isCorrect);
-      
-        
+
+
         setIsAnswered(true);
 
         if (isCorrect) {
@@ -101,7 +100,7 @@ const MasteredModal = () => {
             setAnsweredQuestions((prev) => [...prev, Number(quizData?.id)]);
         }
 
- 
+
         setSelectedAnswer(null);
         setIsAnswered(false);
         setIsAnswersOpen(false);
@@ -130,13 +129,13 @@ const MasteredModal = () => {
     };
 
 
-    const [isAnswersOpen, setIsAnswersOpen] = useState(false); 
+    const [isAnswersOpen, setIsAnswersOpen] = useState(false);
 
     const handleAnswersToggle = () => {
-        setIsAnswersOpen(!isAnswersOpen); 
+        setIsAnswersOpen(!isAnswersOpen);
     };
 
-  
+
 
 
     return (
@@ -175,13 +174,11 @@ const MasteredModal = () => {
                         </div>
 
                         <div>
-                            <input
-                                type="checkbox"
-                                checked={isAnswersOpen}
-                                onChange={handleAnswersToggle}
-                            />
+                            <div style={{ cursor: "pointer" }} onClick={handleAnswersToggle}>
+                                {isAnswersOpen ? <RxEyeOpen /> : <FaRegEyeSlash />}
+                            </div>
                             <div className={`ansewrs__alls ${!isAnswersOpen ? "answers-closed" : ""}`}>
-                            {quizData?.answers &&
+                                {quizData?.answers &&
                                     Object.keys(quizData.answers).map((key) => (
                                         <div
                                             key={key}
@@ -192,9 +189,9 @@ const MasteredModal = () => {
                                             onClick={() => handleAnswerClick(key, quizData.answers[key])}
                                             style={{ pointerEvents: isAnswersOpen && !isAnswered ? 'auto' : 'none' }}
                                         >
-                                       
-                                           {key}
-                                     
+
+                                            {key}
+
                                         </div>
                                     ))}
                             </div>

@@ -25,6 +25,7 @@ interface LearnSearchProps {
 const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => {
     const dispatch = useAppDispatch();
     const items = useAppSelector((state: RootState) => state.latestWords.items.items);
+    const { defaultText } = useAppSelector((state) => state.LanguagetextData);
     const [editText, setEditText] = useState<{ id: number; source: string; translation: string; } | null>(null);
     const location = useLocation();
 
@@ -70,9 +71,12 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
                 <TableBody>
                     {filteredItems?.length ? filteredItems.map(({ id, source, translation }) => (
                         <TableRow className='table_aligns' key={id}>
-                            <TableCell sx={{ borderBottom: "none" }}>
-                                <Typography>{`${source} - ${translation}`}</Typography>
-                            </TableCell>
+                          <TableCell sx={{ borderBottom: "none" }}>
+                                    {defaultText?.isSwapped
+                                        ? <Typography>{`${source} - ${translation}`}</Typography>
+                                        : <Typography>{`${translation} - ${source}`}</Typography>
+                                    }
+                                </TableCell>
                             <TableCell className='table_cards'>
                                 <Button
                                     className='table_button'

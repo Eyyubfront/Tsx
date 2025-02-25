@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { fetchTexts , TextItem, ITextItem } from '../../../../store/actions/learingActions/learingnowActions';
+import { fetchTexts, TextItem, ITextItem } from '../../../../store/actions/learingActions/learingnowActions';
 import { useAppDispatch, useAppSelector } from '../../../../store/index';
 import TableComponent from '../../../../components/TableComponents/TableComponents';
 import Savedicon from "../../../../assets/images/home/Bookmark.svg";
@@ -15,6 +15,7 @@ interface LearnSearchProps {
 const LearningNow = ({ searchTerm = "", showAll = false }: LearnSearchProps & { showAll?: boolean }) => {
     const dispatch = useAppDispatch();
     const items = useAppSelector((state) => state.learningNow.items.nowitems);
+    const { defaultText } = useAppSelector((state) => state.LanguagetextData);
     useEffect(() => {
         dispatch(fetchTexts({ page: 1, pageSize: showAll ? 1000 : 10 }));
     }, [dispatch]);
@@ -25,7 +26,7 @@ const LearningNow = ({ searchTerm = "", showAll = false }: LearnSearchProps & { 
         }
     };
 
-    
+
 
     const filteredItems = items.filter((item: ITextItem) =>
         item.source?.toLowerCase().includes(searchTerm?.toLowerCase()) || item.translation?.toLowerCase().includes(searchTerm?.toLowerCase())
@@ -42,7 +43,10 @@ const LearningNow = ({ searchTerm = "", showAll = false }: LearnSearchProps & { 
                             <TableRow className='table_aligns' key={id}>
 
                                 <TableCell sx={{ borderBottom: "none" }}>
-                                    <Typography>{`${source} - ${translation}`}</Typography>
+                                    {defaultText?.isSwapped
+                                        ? <Typography>{`${source} - ${translation}`}</Typography>
+                                        : <Typography>{`${translation} - ${source}`}</Typography>
+                                    }
                                 </TableCell>
                                 <TableCell className='table_cards'>
                                     <Button
@@ -59,7 +63,7 @@ const LearningNow = ({ searchTerm = "", showAll = false }: LearnSearchProps & { 
                         <div className='data_undifendsbox'>NO DATA FOUND</div>
                     }
                 </TableBody>
-            
+
             </TableComponent>
         </div>
     );

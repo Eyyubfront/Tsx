@@ -4,7 +4,7 @@ import { FaCircleCheck } from "react-icons/fa6";
 import { RxEyeOpen } from "react-icons/rx";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { useFormContext } from "react-hook-form";
-
+import "./PrimaryInput.scss"
 interface CustomInputProps {
   type?: "text" | "email" | "password"|"select";
   label?: string;

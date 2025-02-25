@@ -20,8 +20,7 @@ interface LearnSearchProps {
 const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
     const dispatch = useAppDispatch();
     const mastereds = useAppSelector((state) => state.mastered.mastereds);
-    console.log(mastereds);
-    
+    const { defaultText } = useAppSelector((state) => state.LanguagetextData);
     const [showGameOver, setShowGameOver] = useState(false);
     useEffect(() => {
         dispatch(getAllMastered());
@@ -62,6 +61,10 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
                             <TableCell sx={{ borderBottom: "none" }}>
                                 <Typography>{`${item.source} - ${item.translation}`}</Typography>
                             </TableCell>
+                            {defaultText?.isSwapped
+                                ? <Typography>{`${item.source} - ${item.translation}`}</Typography>
+                                : <Typography>{`${item.translation} - ${item.source}`}</Typography>
+                            }
                             <TableCell className='table_cards'>
                                 <Button
                                     className='table_button'
@@ -95,7 +98,7 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
                 >
                     <DialogContent>
                         <Typography className="error_data">
-                        There are no mastered words available to start the quiz
+                            There are no mastered words available to start the quiz
                         </Typography>
                     </DialogContent>
                 </AlertDialog>
