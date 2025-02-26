@@ -10,12 +10,12 @@ import { MdDeleteOutline } from "react-icons/md";
 import AlertDialog from "../../components/AlertDialog/AlertDialog";
 import { LanguageClose, LanguageToogleClose } from "../../store/slice/languageSlice";
 import { useEffect } from "react";
+import { getTexts } from "../../store/actions/languagehome/languagehome";
 
 const Languagesettings = () => {
   const dispatch = useAppDispatch();
-  const { texts, loading,defaultText } = useAppSelector((state) => state.LanguagetextData);
+  const { texts, loading, defaultText } = useAppSelector((state) => state.LanguagetextData);
   const { languageOpen, error } = useAppSelector((state) => state.language);
-
 
   const handleCloseModal = () => {
     dispatch(LanguageClose());
@@ -27,15 +27,12 @@ const Languagesettings = () => {
 
   const handleRemoveText = (id: number) => {
     dispatch(removeLanguage(id));
-
   };
 
   useEffect(() => {
-    if (error && languageOpen) {
-      dispatch(LanguageToogleClose());
-    }
-  }, [dispatch, error, languageOpen]);
-
+    dispatch(getTexts())
+  }, [])
+  
 
   return (
     <>

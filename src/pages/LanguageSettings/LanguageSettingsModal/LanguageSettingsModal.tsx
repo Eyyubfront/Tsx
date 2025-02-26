@@ -33,6 +33,7 @@ const LanguageSettingsModal: React.FC<NewWordModalProps> = () => {
             translationLanguageId: Number(targetLanguage),
         };
         dispatch(createUserLanguage(newItem));
+        handleCloseModal()
     };
 
     const handleCloseModal = () => {

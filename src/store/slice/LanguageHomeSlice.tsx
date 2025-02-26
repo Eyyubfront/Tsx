@@ -74,10 +74,8 @@ const LanguageHomeSlice = createSlice({
                 state.error = null;
             })
             .addCase(getTexts.fulfilled, (state, action) => {
-                state.loading = false;
-         
+                state.loading = false;         
                 state.texts = action.payload;
-                state.datasetselected = state.datasetselected.push(action.payload);
                 state.defaultText = action.payload.find((t: { isSelected: boolean }) => t.isSelected);
             })
             .addCase(getTexts.rejected, (state, action) => {
