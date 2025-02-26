@@ -13,6 +13,7 @@ import UseFormTimeInput from "../../components/PrimaryInput/UseFormTimeInput";
 import SidePanel from "../../layout/SidePanel/SidePanel";
 import BackButton from "../../components/BackButton/BackButton";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
+import { intervalfetch } from "../../store/actions/passwordsettingsActions/passwordsettingsActions";
 
 const schema = yup.object().shape({
   startTime: yup.string().required("Start time is required"),
@@ -33,13 +34,13 @@ const LearnTime = () => {
   });
 
   const { loading } = useAppSelector((state) => state.time);
+  const { intervals } = useAppSelector((state) => state.passwordchecksettings);
   const { handleSubmit, formState: { errors }, watch } = methods;
 
-  const timeOptions = [
-    { label: "15 min", id: 1 },
-    { label: "30 min", id: 2 },
-    { label: "1 hour", id: 3 },
-  ];
+   useEffect(() => {
+        dispatch(intervalfetch());
+    }, [dispatch]);
+
 
   const selectedSourceLanguage = useAppSelector((state) => state.language.selectedSourceLanguageId);
   const selectedTranslationLanguage = useAppSelector((state) => state.language.selectedTranslationId);
@@ -100,7 +101,7 @@ const LearnTime = () => {
                 </div>
                 <Paragrafy text="Select Time Interval" className="timeparagraf" />
                 <TimeOptions
-                  timeOptions={timeOptions}
+                  timeOptions={intervals}
                   selectedOption={watch("intervalId")}
                   onOptionSelect={handleOptionSelect}
                   errorMessage={errors.intervalId?.message}

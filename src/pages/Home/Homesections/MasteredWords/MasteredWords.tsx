@@ -1,7 +1,7 @@
 import { Button, TableBody, TableRow, TableCell, Typography, DialogContent } from "@mui/material";
 import TableComponent from "../../../../components/TableComponents/TableComponents";
 import { useAppDispatch, useAppSelector } from "../../../../store";
-import { getAllMastered, IMasteredProps, MasteredPropsUse } from "../../../../store/actions/masteredActions/masteredActions";
+import { getAllMastered, MasteredPropsUse } from "../../../../store/actions/masteredActions/masteredActions";
 import { useEffect, useState } from "react";
 import Savedicon from "../../../../assets/images/home/Bookmark.svg";
 import NotSavedicon from "../../../../assets/images/home/nosaved.svg";
@@ -32,7 +32,7 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
         dispatch(quizSaveData(item.id));
     };
 
-    const filteredItems = mastereds.filter((item: IMasteredProps) =>
+    const filteredItems = mastereds.filter((item: MasteredPropsUse) =>
         item.source?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.translation?.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -50,7 +50,9 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
         dispatch(closeDialogMastered())
     }
 
- 
+
+
+
 
     return (
         <div>
@@ -61,19 +63,26 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
                     {filteredItems?.length ? filteredItems.map((item) => (
                         <TableRow className='table_aligns' key={item.id}>
                             <TableCell sx={{ borderBottom: "none" }}>
-                            {defaultText?.isSwapped
-                                ? <Typography>{`${item.source} - ${item.translation}`}</Typography>
-                                : <Typography>{`${item.translation} - ${item.source}`}</Typography>
-                            }
+                                {defaultText?.isSwapped
+                                    ? <Typography>{`${item.translation} - ${item.source}`}</Typography>
+                                    : <Typography>{`${item.source} - ${item.translation}`}</Typography>
+                                }
                             </TableCell>
-                         
+
                             <TableCell className='table_cards'>
                                 <Button
                                     className='table_button'
                                     variant="outlined"
                                     onClick={() => handlePlusClick(item)}
                                 >
-                                    <img src={mastereds.some(saved => saved.id === item.id && item.isLearningNow) ? Savedicon : NotSavedicon} alt="" />
+                                    <img
+                                        src={
+                                            mastereds.some(saved => saved.id === item.id && item.isLearningNow)
+                                                ? Savedicon
+                                                
+                                                    : NotSavedicon
+                                        }
+                                    />
                                 </Button>
 
                             </TableCell>

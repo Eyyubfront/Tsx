@@ -16,7 +16,8 @@ import { Button, TableBody, TableRow, TableCell, Typography, TextField } from '@
 import "./LatestWords.scss"
 import { useLocation } from 'react-router-dom';
 import FileInput from '../../../FailInput/FileInput';
-import e from "../../../../assets/images/home/UnHeart.svg";
+import e from "../../../../assets/images/home/Savedmastered.svg";
+
 interface LearnSearchProps {
     searchTerm?: string;
     showAll?: boolean;
@@ -25,10 +26,11 @@ interface LearnSearchProps {
 const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => {
     const dispatch = useAppDispatch();
     const items = useAppSelector((state: RootState) => state.latestWords.items.items);
+    const { quizData } = useAppSelector((state) => state.quizslice);
     const { defaultText } = useAppSelector((state) => state.LanguagetextData);
     const [editText, setEditText] = useState<{ id: number; source: string; translation: string; } | null>(null);
     const location = useLocation();
-    const mastereds = useAppSelector((state) => state.mastered.mastereds);
+
     useEffect(() => {
         dispatch(wordfetchTexts({ page: 1, pageSize: showAll ? 1000 : 10 }));
     }, [dispatch, showAll]);
@@ -63,9 +65,7 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
     );
 
     const title = location.pathname === '/lexioncards/vocablary' ? 'Vocablary' : 'Latest added words';
-    const isMastered = (itemId: number) => {
-        return mastereds.some((masteredItem) => masteredItem.id === itemId);
-    };
+
     return (
         <div>
             <TableComponent title={title}>
@@ -75,8 +75,8 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
                         <TableRow className='table_aligns' key={id}>
                             <TableCell sx={{ borderBottom: "none" }}>
                                 {defaultText?.isSwapped
-                                    ? <Typography>{`${source} - ${translation}`}</Typography>
-                                    : <Typography>{`${translation} - ${source}`}</Typography>
+                                    ? <Typography>{`${translation} - ${source}`}</Typography>
+                                    : <Typography>{`${source} - ${translation}`}</Typography>
                                 }
                             </TableCell>
                             <TableCell className='table_cards'>
@@ -86,15 +86,13 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
                                     onClick={() => handleSaveText({ id, source, translation, isLearningNow: true })}
                                 >
                                     <img
-                                       src={
-                                        isMastered(id) 
-                                            ? e  
-                                            : mastereds.some(saved => saved.id === id && saved.isLearningNow) 
-                                                ? Savedicon 
-                                                : NotSavedicon
-                                    }
-                                    
-
+                                        src={
+                                            items.some(saved => saved.id === id && saved.isLearningNow)
+                                                ? Savedicon
+                                                : items.map((item) => item.isMastered)
+                                                    ? e
+                                                    : NotSavedicon
+                                        }
                                         alt=""
                                     />
                                 </Button>

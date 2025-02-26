@@ -28,8 +28,8 @@ export const fetchQuizData = createAsyncThunk(
     "homelanguage/selecetid",
     async (id: number, { rejectWithValue, dispatch }) => {
       try {
-        const response = await axiosInstance.post(`/UserVocabulary/SetMastered/${id}`);
-        // await dispatch(fetchQuizData([0])); 
+        const response = await axiosInstance.post(`/UserVocabulary/SetMastered/${id}?addToLearning=true`);
+  
         dispatch(lexioncountfetch()); 
         dispatch(getAllMastered()); 
         dispatch(fetchTexts({ page: 1, pageSize: 10 })); 

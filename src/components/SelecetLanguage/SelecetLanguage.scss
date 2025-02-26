@@ -1,12 +1,27 @@
 .selecetlanguages {
-    width: 100%;
-    padding: 17px 12px 17px 12px;
- border-radius: 24px;
- background-color: #F9F8FD;
-.formselecet{
-    width: 100%;
-    border-radius: 10px;
+    width: 200px;
+    padding: 15px;
+    border-radius: 20px;
     background-color: #F9F8FD;
-    border: 1px solid #F9F8FD;
-}
+    cursor: pointer;
+    height: 56px;
+
+    .selecets_box {
+        display: flex;
+        gap: 40px;
+        text-align: center;
+        font-family: Inter;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22.5px;
+        letter-spacing: 0%;
+        padding: 0px 18px;
+    }
+
+    .formselecet {
+        width: 100%;
+        border-radius: 10px;
+        background-color: #F9F8FD;
+        border: 1px solid #F9F8FD;
+    }
 }

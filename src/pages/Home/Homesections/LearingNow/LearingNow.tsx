@@ -44,8 +44,8 @@ const LearningNow = ({ searchTerm = "", showAll = false }: LearnSearchProps & { 
 
                                 <TableCell sx={{ borderBottom: "none" }}>
                                     {defaultText?.isSwapped
-                                        ? <Typography>{`${source} - ${translation}`}</Typography>
-                                        : <Typography>{`${translation} - ${source}`}</Typography>
+                                        ? <Typography>{`${translation} - ${source}`}</Typography>
+                                        :<Typography>{`${source} - ${translation}`}</Typography>
                                     }
                                 </TableCell>
                                 <TableCell className='table_cards'>

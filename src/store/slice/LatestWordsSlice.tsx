@@ -6,7 +6,8 @@ interface wordsitems {
     id: number;
     source?: string;
     translation?: string;
-    isLearningNow: boolean
+    isLearningNow: boolean;
+    isMastered: boolean;
 }
 
 export interface LearingWords {

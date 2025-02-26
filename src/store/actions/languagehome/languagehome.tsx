@@ -8,15 +8,24 @@ import { lexioncountfetch } from "../lexioncountActions/lexioncountActions";
 
 
 
-export const getTexts = createAsyncThunk('learningNow/getTexts', async (_,thunkAPI) => {
+export const getTexts = createAsyncThunk('homepage/getTexts', async (_,thunkAPI) => {
     try {
-        const response = await axiosInstance.get(`/UserLanguage/GetAllByUserId`);
-   
+        const response = await axiosInstance.get(`/UserLanguage/GetAllByUserId`); 
         return response.data.data;
-        
     } catch (error) {
         return thunkAPI.rejectWithValue(error);
     }
+});
+
+export const getInitialLanguage = createAsyncThunk('homepage/getInitialLanguage', async (_,thunkAPI) => {
+  try {
+      const response = await axiosInstance.get(`/UserLanguage/GetSelected`); 
+      
+      return response.data.data;
+      
+  } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+  }
 });
 
 export const selecetlangaugesave = createAsyncThunk(
@@ -50,7 +59,7 @@ export const selecetlangaugesave = createAsyncThunk(
     async (id: number, { rejectWithValue, dispatch }) => {
       try {
         const response = await axiosInstance.post(`/UserLanguage/Swap/${id}`);
-        dispatch(getTexts());    
+        dispatch(getInitialLanguage());    
         return response.data.data;
       } catch (error) {
         return rejectWithValue(error);

@@ -26,3 +26,15 @@ export const passwordChecksave = createAsyncThunk(
         }
     }
 );
+
+
+
+export const intervalfetch = createAsyncThunk('settings/intervalfetch', async (_, thunkAPI) => {
+    try {
+   
+        const response = await axiosInstance.get(`/Interval/GetAll`);
+        return response.data.data;  
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error);
+    }
+});

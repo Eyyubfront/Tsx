@@ -12,7 +12,8 @@ interface QuizData {
   question: string;
   answers: Answer;
   success:boolean;
-  data:any
+  data:any;
+
 }
 
  export interface Notification {

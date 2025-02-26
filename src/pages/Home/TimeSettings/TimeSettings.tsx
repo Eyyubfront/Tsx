@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "../../../store";
 import { Skeleton } from "@mui/material";
 import "./TimeSettings.scss";
 import AlertDialog from "../../../components/AlertDialog/AlertDialog";
+import { intervalfetch } from "../../../store/actions/passwordsettingsActions/passwordsettingsActions";
 
 const schema = yup.object().shape({
   startTime: yup.string().required("Start time is required"),
@@ -32,15 +33,13 @@ const TimeSettings = () => {
 
   const { loading } = useAppSelector((state) => state.time);
   const { handleSubmit, formState: { errors }, watch, setValue } = methods;
-
+  const { intervals } = useAppSelector((state) => state.passwordchecksettings);
   const [openDialog, setOpenDialog] = useState(false); 
 
-  const timeOptions = [
-    { label: "15 min", id: 1 },
-    { label: "30 min", id: 2 },
-    { label: "1 hour", id: 3 },
-  ];
-
+   useEffect(() => {
+         dispatch(intervalfetch());
+     }, [dispatch]);
+ 
   useEffect(() => {
     const fetchData = async () => {
       const result = await dispatch(getTime()).unwrap();
@@ -98,7 +97,7 @@ const TimeSettings = () => {
                     </div>
                     <Paragrafy text="Select Time Range" className="timeparagraf" />
                     <TimeOptions
-                      timeOptions={timeOptions}
+                      timeOptions={intervals}
                       selectedOption={watch("intervalId")}
                       onOptionSelect={handleOptionSelect}
                       errorMessage={errors.intervalId?.message}

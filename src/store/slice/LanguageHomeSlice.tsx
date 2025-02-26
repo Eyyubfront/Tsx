@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getTexts, selecetlangaugesave } from "../actions/languagehome/languagehome";
+import { getInitialLanguage, getTexts, selecetlangaugesave } from "../actions/languagehome/languagehome";
 
 interface TextItem {
     text: string;
@@ -18,8 +18,9 @@ interface TextState {
     loading: boolean;
     error: string | null;
     isOpen?: boolean;
-    isDialogOpen: boolean, 
-    isDialogOpenMastered: boolean, 
+    isDialogOpen: boolean,
+    isDialogOpenMastered: boolean,
+    datasetselected: any
 }
 
 const initialState: TextState = {
@@ -29,8 +30,9 @@ const initialState: TextState = {
     loading: false,
     error: null,
     isOpen: false,
-    isDialogOpen: false, 
-    isDialogOpenMastered: false, 
+    isDialogOpen: false,
+    isDialogOpenMastered: false,
+    datasetselected: {}
 };
 
 const LanguageHomeSlice = createSlice({
@@ -39,6 +41,7 @@ const LanguageHomeSlice = createSlice({
     reducers: {
         setSelectedLanguage(state, action) {
             state.selectedLanguageId = action.payload;
+            
         },
         openQuizModal: (state) => {
             state.isOpen = true;
@@ -50,7 +53,7 @@ const LanguageHomeSlice = createSlice({
             state.isDialogOpen = true;
         },
 
-        closeDialog: (state) => { 
+        closeDialog: (state) => {
             state.isDialogOpen = false;
         },
 
@@ -58,7 +61,7 @@ const LanguageHomeSlice = createSlice({
             state.isDialogOpenMastered = true;
         },
 
-        closeDialogMastered: (state) => { 
+        closeDialogMastered: (state) => {
             state.isDialogOpenMastered = false;
         },
 
@@ -72,7 +75,9 @@ const LanguageHomeSlice = createSlice({
             })
             .addCase(getTexts.fulfilled, (state, action) => {
                 state.loading = false;
+         
                 state.texts = action.payload;
+                state.datasetselected = state.datasetselected.push(action.payload);
                 state.defaultText = action.payload.find((t: { isSelected: boolean }) => t.isSelected);
             })
             .addCase(getTexts.rejected, (state, action) => {
@@ -92,10 +97,24 @@ const LanguageHomeSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload as string;
 
-            });
+            })
+            .addCase(getInitialLanguage.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getInitialLanguage.fulfilled, (state, action) => {
+                state.loading = false;
+                state.datasetselected = action.payload; 
+                state.defaultText = action.payload; 
+           
+            })
+            .addCase(getInitialLanguage.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
     },
 });
 
-export const { setSelectedLanguage,openQuizModal, closeQuizModal, openDialog, closeDialog,openDialogMastered,closeDialogMastered } = LanguageHomeSlice.actions;
+export const { setSelectedLanguage, openQuizModal, closeQuizModal, openDialog, closeDialog, openDialogMastered, closeDialogMastered } = LanguageHomeSlice.actions;
 
 export default LanguageHomeSlice.reducer;

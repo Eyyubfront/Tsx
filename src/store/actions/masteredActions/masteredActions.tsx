@@ -7,12 +7,10 @@ export interface MasteredPropsUse {
     source: string;
     translation: string;
     isLearningNow: boolean;
-  
-}
-
-export interface IMasteredProps extends MasteredPropsUse {
     isMastered?: boolean
 }
+
+
 
 export const getAllMastered = createAsyncThunk('alltext/getAllMastered', async (_, thunkAPI) => {
     try {

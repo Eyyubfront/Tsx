@@ -7,16 +7,14 @@ import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import LanguageSettingsModal from "./LanguageSettingsModal/LanguageSettingsModal";
 import { removeLanguage } from "../../store/actions/languageActions/languageActions";
 import { MdDeleteOutline } from "react-icons/md";
-
 import AlertDialog from "../../components/AlertDialog/AlertDialog";
 import { LanguageClose, LanguageToogleClose } from "../../store/slice/languageSlice";
 import { useEffect } from "react";
 
 const Languagesettings = () => {
   const dispatch = useAppDispatch();
-  const { texts, loading } = useAppSelector((state) => state.LanguagetextData);
+  const { texts, loading,defaultText } = useAppSelector((state) => state.LanguagetextData);
   const { languageOpen, error } = useAppSelector((state) => state.language);
-
 
 
   const handleCloseModal = () => {
@@ -25,7 +23,6 @@ const Languagesettings = () => {
   const handleCloseSettingsModal = () => {
     dispatch(LanguageToogleClose());
   };
-
 
 
   const handleRemoveText = (id: number) => {
@@ -50,7 +47,9 @@ const Languagesettings = () => {
             {texts?.map((language: LanguageHomes) => (
               <div key={language.id} style={{ display: "flex", alignItems: "center", marginBottom: "5px", justifyContent: "space-between" }}>
                 <MenuItem value={language.id} style={{ marginRight: "10px" }}>
-                  {language.sourceLanguage} - {language.translationLanguage}
+                {defaultText?.isSwapped
+                    ? `${language.translationLanguage} - ${language.sourceLanguage} `
+                    : `${language.sourceLanguage} - ${language.translationLanguage}`}
                 </MenuItem>
                 <Button onClick={() => handleRemoveText(language.id ?? 0)}>
                   <MdDeleteOutline className="delet_language" />
@@ -58,11 +57,9 @@ const Languagesettings = () => {
               </div>
             ))}
           </div>
-
           <div onClick={handleCloseSettingsModal} className="languagesetings__bottom">
             <PrimaryButton disabled={loading} label="+ New Languages" />
           </div>
-
           <LanguageSettingsModal onClose={handleCloseSettingsModal} />
         </div>
       )}

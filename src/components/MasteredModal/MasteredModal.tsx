@@ -172,7 +172,6 @@ const MasteredModal = () => {
                                 sx={{ mt: 2, color: "red" }}
                             />
                         </div>
-
                         <div>
                             <div style={{ cursor: "pointer" }} onClick={handleAnswersToggle}>
                                 {isAnswersOpen ? <RxEyeOpen /> : <FaRegEyeSlash />}

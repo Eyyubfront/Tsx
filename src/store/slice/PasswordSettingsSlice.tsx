@@ -1,21 +1,20 @@
-
 import { createSlice } from '@reduxjs/toolkit';
-
-import { passwordChecksave } from '../actions/passwordsettingsActions/passwordsettingsActions';
-
+import { intervalfetch, passwordChecksave } from '../actions/passwordsettingsActions/passwordsettingsActions';
 
 interface ForgotPasswordState {
   isLoading: boolean;
   error: string | null;
   success: boolean;
   isModalopen: boolean;
+  intervals:Array<{id:number,name:string,minutes:number}>
 }
 
 const initialState: ForgotPasswordState = {
   isLoading: false,
   error: null,
   success: false,
-  isModalopen: false
+  isModalopen: false,    
+  intervals:[]
 };
 
 const PasswordSettingsSlice = createSlice({
@@ -28,8 +27,8 @@ const PasswordSettingsSlice = createSlice({
       state.success = false;
     },
     CloseModalsopen: (state) => {
-      state.isModalopen = !state.isModalopen
-    }
+      state.isModalopen = !state.isModalopen;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -41,6 +40,19 @@ const PasswordSettingsSlice = createSlice({
         state.success = true;
       })
       .addCase(passwordChecksave.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isModalopen = true;
+        state.error = action.payload as string;
+      })
+      .addCase(intervalfetch.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(intervalfetch.fulfilled, (state,action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.intervals = action.payload;
+      })
+      .addCase(intervalfetch.rejected, (state, action) => {
         state.isLoading = false;
         state.isModalopen = true;
         state.error = action.payload as string;

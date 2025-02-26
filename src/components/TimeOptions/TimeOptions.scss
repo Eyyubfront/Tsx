@@ -7,9 +7,9 @@
     .time_group {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
         gap: 16px;
     }
-
 
     .time-option {
       
@@ -22,7 +22,7 @@
         font-size: 16px;
         line-height: 20px;
         letter-spacing: 0%;
-            width: 105px;
+            width: 125px;
 
         &.selectedtime {
             background-color: #8B6DE8;

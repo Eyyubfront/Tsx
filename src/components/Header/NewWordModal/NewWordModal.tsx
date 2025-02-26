@@ -31,13 +31,13 @@ const schema = Yup.object().shape({
 const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const selectedLanguageId = useAppSelector((state) => state.LanguagetextData.selectedLanguageId);
-    const texts = useAppSelector((state) => state.LanguagetextData.texts);
+    const {texts,datasetselected} = useAppSelector((state) => state.LanguagetextData);
     const userId = useAppSelector((state) => state.Auth.userId);
     const dispatch = useAppDispatch();
-    const selectedLanguage = texts.find((text) => text.id === selectedLanguageId);
+    // const selectedLanguage = datasetselected.find((text) => text.id === selectedLanguageId);
     const { defaultText } = useAppSelector((state) => state.LanguagetextData);
-    const defaultSourceLanguage = selectedLanguage?.sourceLanguage || '';
-    const defaultTranslationLanguage = selectedLanguage?.translationLanguage || '';
+    const defaultSourceLanguage = datasetselected?.sourceLanguage || '';
+    const defaultTranslationLanguage = datasetselected?.translationLanguage || '';
     const error = useAppSelector((state) => state.learningNow.error);
 
     const isOpenNow = useAppSelector((state) => state.learningNow.isOpenNow);
@@ -53,10 +53,10 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
     const { formState } = methods;
 
     useEffect(() => {
-        if (selectedLanguage) {
+        if (datasetselected) {
             methods.reset({ wordone: '', wordtwo: '' });
         }
-    }, [selectedLanguage, show]);
+    }, [datasetselected, show]);
 
     const handleSave = () => {
         const { wordone, wordtwo } = methods.getValues();
@@ -94,11 +94,11 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
                         <form>
                             <div className="text__input">
                                 <div className="sourcetop">
-                                    <label className='modals_labelsource' htmlFor="">{defaultText?.isSwapped ? defaultSourceLanguage : defaultTranslationLanguage}</label>
+                                    <label className='modals_labelsource' htmlFor="">{defaultText?.isSwapped ? defaultTranslationLanguage : defaultSourceLanguage}</label>
                                     <UseFormModalInput className='newwords_input' type='select' name="wordone" label={defaultSourceLanguage || "Source Language"} />
                                 </div>
                                 <div className="translationbutom">
-                                    <label className='modals_labeltranslation' htmlFor="">{defaultText?.isSwapped ? defaultTranslationLanguage : defaultSourceLanguage}</label>
+                                    <label className='modals_labeltranslation' htmlFor="">{defaultText?.isSwapped ? defaultSourceLanguage : defaultTranslationLanguage}</label>
                                     <UseFormModalInput className='newwords_input' type='select' name="wordtwo" label={defaultTranslationLanguage || "Translation Language"} />
                                 </div>
                             </div>

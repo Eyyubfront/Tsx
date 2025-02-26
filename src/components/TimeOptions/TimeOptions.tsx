@@ -2,8 +2,9 @@ import React from 'react';
 import "./TimeOptions.scss"
 
 interface TimeOption {
-  label: string;
-  id: number;
+  id: number;        
+  name: string;      
+  minutes: number;   
 }
 
 interface TimeOptionsProps {
@@ -24,8 +25,8 @@ const TimeOptions: React.FC<TimeOptionsProps> = ({ timeOptions, selectedOption, 
           className={`time-option ${selectedOption === option.id ? "selectedtime" : ""}`}  
           onClick={() => onOptionSelect(option.id)} 
         >
-          {option.label}
-        </p>
+          <p>{option.name}</p>
+        </p>  
       </div>
       ))}
      </div>

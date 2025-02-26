@@ -56,33 +56,26 @@ const Header = () => {
 
   const handleDownload = async () => {
 
-    if (localStorage.getItem('isDownloaded')) {
-      return; 
-    }
-  
+
     setIsDownloaded(true);
-  
- 
+
     const resultAction = await dispatch(excelfilefetch());
-  
+
     if (excelfilefetch.fulfilled.match(resultAction)) {
-      const blob = resultAction.payload;
-      const url = window.URL.createObjectURL(new Blob([blob]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'download-template.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-  
-      localStorage.setItem('isDownloaded', 'true');
+        const blob = resultAction.payload;
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'download-template.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
     }
-  
+
     setTimeout(() => {
-      setShowModalExcel(true);
+        setShowModalExcel(true);
     }, 1000);
-  };
-  
+};
 
 
   return (
