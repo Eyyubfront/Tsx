@@ -17,6 +17,7 @@ import "./LatestWords.scss"
 import { useLocation } from 'react-router-dom';
 import FileInput from '../../../FailInput/FileInput';
 import e from "../../../../assets/images/home/Savedmastered.svg";
+import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 
 interface LearnSearchProps {
     searchTerm?: string;
@@ -35,6 +36,12 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
         dispatch(wordfetchTexts({ page: 1, pageSize: showAll ? 1000 : 10 }));
     }, [dispatch, showAll]);
 
+    const speak = (text: string) => {
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.speak(utterance);
+    };
+
     const handleSaveText = (item: WordsItem) => {
         if (item.id !== null) {
             dispatch(selecetwordText(item.id));
@@ -44,6 +51,7 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
     const handleRemoveText = (id: number) => {
         dispatch(removeText({ id }));
     };
+
     const handleUpdateText = ({ id, source, translation }: { id: number; source: string; translation: string }) => {
         const updatedItem = { id, source, translation };
         dispatch(updateTextAction(updatedItem));
@@ -110,12 +118,19 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
                                 >
                                     <MdDeleteOutline style={{ color: 'red' }} />
                                 </Button>
+                                <Button
+                                    className='table_button'
+                                    variant="outlined"
+                                    onClick={() => speak(translation || '')} 
+                                >
+                                    <Typography><KeyboardVoiceIcon /></Typography>
+                                </Button>
+
                             </TableCell>
                         </TableRow>
                     ))
                         :
                         <div className='data_undifendsbox'>NO DATA FOUND</div>
-
                     }
                 </TableBody>
                 {editText && (

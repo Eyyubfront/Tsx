@@ -32,3 +32,10 @@ gap: 6px;
         cursor: pointer;
     }
 }
+
+@media (max-width:600px) {
+    .top_file{
+        justify-content: flex-start;
+        gap:10px;
+    }
+}
