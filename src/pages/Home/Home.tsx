@@ -28,12 +28,11 @@ const Home = () => {
             <div className="homepage">
                 <div className="homepage_center">
                     <LexiconCards />
-                    {/* <VocabularyBuilder className="customvocabularyclass" /> */}
+           
                 </div>
 
                 <div className="homepage_bottom">
                     <div className="homepage_left">
-                        {/* <VocabularyBuilder className="vocablarpasscomponents" /> */}
                         <LearningNow />
 
                     </div>

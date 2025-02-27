@@ -31,10 +31,9 @@ const schema = Yup.object().shape({
 const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const selectedLanguageId = useAppSelector((state) => state.LanguagetextData.selectedLanguageId);
-    const {texts,datasetselected} = useAppSelector((state) => state.LanguagetextData);
+    const { datasetselected } = useAppSelector((state) => state.LanguagetextData);
     const userId = useAppSelector((state) => state.Auth.userId);
     const dispatch = useAppDispatch();
-    // const selectedLanguage = datasetselected.find((text) => text.id === selectedLanguageId);
     const { defaultText } = useAppSelector((state) => state.LanguagetextData);
     const defaultSourceLanguage = datasetselected?.sourceLanguage || '';
     const defaultTranslationLanguage = datasetselected?.translationLanguage || '';

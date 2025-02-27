@@ -20,7 +20,6 @@ import Smile from "../../assets/images/home/Smile.svg"
 const Header = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showModalExcel, setShowModalExcel] = useState<boolean>(false);
-  const [isDownloaded, setIsDownloaded] = useState(false);
   const items = useAppSelector((state) => state.learningNow.items.nowitems);
   const { loading, error } = useAppSelector((state) => state.Auth);
   const dispatch = useAppDispatch();
@@ -57,7 +56,6 @@ const Header = () => {
   const handleDownload = async () => {
 
 
-    setIsDownloaded(true);
 
     const resultAction = await dispatch(excelfilefetch());
 

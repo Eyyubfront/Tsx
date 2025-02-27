@@ -33,12 +33,12 @@ const LanguageSelector: React.FC = () => {
   }, [dispatch, languages]);
 
   const handleLanguageClick = (language: Language) => {
-    setToggleSelectedId(language.id);  
+    setToggleSelectedId(language.id);
     dispatch(setSourceLanguageId(language.id));
   };
 
   const handleContinueClick = () => {
-    if (toggleSelectedId !== 0 ) {
+    if (toggleSelectedId !== 0) {
       navigate("/chooselearnlanguage");
     } else {
       console.warn('Noo language.');
@@ -68,21 +68,20 @@ const LanguageSelector: React.FC = () => {
             <ul className="language-list">
               {languages.length > 0
                 ? languages.map((language) => (
-                    <li
-                      key={language.id}
-                      className={`language-item ${
-                        toggleSelectedId === language.id ? "selected" : ""
+                  <li
+                    key={language.id}
+                    className={`language-item ${toggleSelectedId === language.id ? "selected" : ""
                       }`}
-                      onClick={() => handleLanguageClick(language)}
-                    >
-                      <img
-                        src={`data:image/png;base64,${language.image}`}
-                        alt={`${language.name} flag`}
-                        className="language-flag"
-                      />
-                      <p>{language.name}</p>
-                    </li>
-                  ))
+                    onClick={() => handleLanguageClick(language)}
+                  >
+                    <img
+                      src={`data:image/png;base64,${language.image}`}
+                      alt={`${language.name} flag`}
+                      className="language-flag"
+                    />
+                    <p>{language.name}</p>
+                  </li>
+                ))
                 : !loading && !error && (
                   <p className="no-languages-message">
                     No languages available at the moment.
@@ -94,7 +93,7 @@ const LanguageSelector: React.FC = () => {
             <PrimaryButton
               onClick={handleContinueClick}
               label="Continue"
-              disabled={toggleSelectedId === 0} 
+              disabled={toggleSelectedId === 0}
             />
           </div>
         </div>

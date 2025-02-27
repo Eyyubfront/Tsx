@@ -28,7 +28,6 @@ interface LearnSearchProps {
 const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => {
     const dispatch = useAppDispatch();
     const items = useAppSelector((state: RootState) => state.latestWords.items.items);
-    const { quizData } = useAppSelector((state) => state.quizslice);
     const { defaultText } = useAppSelector((state) => state.LanguagetextData);
     const [editText, setEditText] = useState<{ id: number; source: string; translation: string; } | null>(null);
     const location = useLocation();
