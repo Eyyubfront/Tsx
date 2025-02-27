@@ -22,7 +22,7 @@ const LanguageSelector: React.FC = () => {
     if (!isConfirmed) {
       navigate("/verifyemailpage");
     }
-  }, [isConfirmed, navigate]);
+  }, [isConfirmed]);
 
   useEffect(() => {
     if (languages.length === 0) {
@@ -38,8 +38,7 @@ const LanguageSelector: React.FC = () => {
   };
 
   const handleContinueClick = () => {
-    if (toggleSelectedId !== 0) {
-      console.log('Navigating to /chooselearnlanguage');
+    if (toggleSelectedId !== 0 ) {
       navigate("/chooselearnlanguage");
     } else {
       console.warn('Noo language.');

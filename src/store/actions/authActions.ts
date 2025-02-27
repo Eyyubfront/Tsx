@@ -162,7 +162,7 @@ export const changeVisibility = createAsyncThunk(
   async (_, thunkAPI) => {
       try {
           const response = await axiosInstance.post(
-              '/ChangeQuizVisibility'
+              '/ChangeQuizVisibility'  
           );
           return response.data; 
       } catch (error) {
@@ -170,5 +170,19 @@ export const changeVisibility = createAsyncThunk(
       }
   }
 );
+
+
+export const getuserSettings = createAsyncThunk('home/getuserSettings', async (_, thunkAPI) => {
+  try {
+    const response = await axiosInstance.get(`/GetUserSettings`);
+
+    return response.data.data;
+
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+
 
 

@@ -69,6 +69,7 @@ const ChooseLearnLanguage: React.FC = () => {
   };
 
   const handleContinueClick = () => {
+    console.log(userId, selectedTranslationId)
     if (userId && selectedTranslationId !== 0) {
       dispatch(
         createUserLanguage({
@@ -77,6 +78,9 @@ const ChooseLearnLanguage: React.FC = () => {
         })
       )
         .unwrap()
+        .then(()=>{
+          navigate("/learntime")
+        })
         .catch((err) => {
           console.error("Error creating user language", err);
         });

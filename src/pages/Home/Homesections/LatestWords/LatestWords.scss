@@ -4,3 +4,24 @@
     align-items: center;
     justify-content: center;
 }
+
+.css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input{
+   
+    border-radius: 17px !important;
+}
+
+
+.editdialog_buttom{
+    margin-top: 10px;
+    justify-content: center;
+    width: 100% !important;
+    display: flex;
+    .buton_edithandle{
+        color: #8B6DE8;
+        width: 50%;
+    }
+}
+.css-1xp5r68-MuiFormControl-root-MuiTextField-root{
+    width: 97%;
+   
+}

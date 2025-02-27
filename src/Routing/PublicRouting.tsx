@@ -14,7 +14,7 @@ const PublicRouting = () => {
     if (user === true) {
       navigate(location.state || "/")
     }
-  }, [user])
+  }, [user,location.state,navigate])
 
   if (user === false) {
     return <Outlet />;

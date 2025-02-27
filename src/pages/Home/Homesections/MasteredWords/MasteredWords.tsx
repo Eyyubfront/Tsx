@@ -12,6 +12,7 @@ import MasteredModal from "../../../../components/MasteredModal/MasteredModal";
 import { Link } from "react-router-dom";
 import Paragrafy from "../../../../components/Paragrafy/Paragrafy";
 import AlertDialog from "../../../../components/AlertDialog/AlertDialog";
+import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 
 interface LearnSearchProps {
     searchTerm: string;
@@ -26,7 +27,10 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
         dispatch(getAllMastered());
     }, [dispatch]);
 
-
+    const speak = (text: string) => {
+        const utterance = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.speak(utterance);
+    };
     const handlePlusClick = (item: MasteredPropsUse) => {
 
         dispatch(quizSaveData(item.id));
@@ -77,13 +81,20 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
                                 >
                                     <img
                                         src={
-                                            mastereds.some(saved => saved.id === item.id && item.isLearningNow)
-                                                ? Savedicon
-                                                
+                                          mastereds.some(saved => saved.id === item.id && saved.isMastered)
+                                                    ? Savedicon
                                                     : NotSavedicon
                                         }
                                     />
                                 </Button>
+                                <Button
+                                    className='table_button'
+                                    variant="outlined"
+                                    onClick={() => speak(item.translation || '')} 
+                                >
+                                    <Typography><KeyboardVoiceIcon /></Typography>
+                                </Button>
+
                             </TableCell>
                         </TableRow>
                     ))

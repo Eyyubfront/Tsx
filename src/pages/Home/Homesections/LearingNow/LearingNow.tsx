@@ -2,12 +2,13 @@ import { useEffect } from 'react';
 import { fetchTexts, TextItem, ITextItem } from '../../../../store/actions/learingActions/learingnowActions';
 import { useAppDispatch, useAppSelector } from '../../../../store/index';
 import TableComponent from '../../../../components/TableComponents/TableComponents';
-import Savedicon from "../../../../assets/images/home/Bookmark.svg";
+// import Savedicon from "../../../../assets/images/home/Bookmark.svg";
 import { Button, TableBody, TableRow, TableCell, Typography } from '@mui/material';
 import "./LearingNow.scss"
 import { selecetwordText } from '../../../../store/actions/learingActions/learingwordsActions';
 import NotSavedicon from "../../../../assets/images/home/nosaved.svg";
-
+import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
+import e from "../../../../assets/images/home/Savedmastered.svg";
 interface LearnSearchProps {
     searchTerm?: string;
 }
@@ -24,6 +25,12 @@ const LearningNow = ({ searchTerm = "", showAll = false }: LearnSearchProps & { 
         if (item.id !== null) {
             dispatch(selecetwordText(item.id));
         }
+    };
+
+     const speak = (text: string) => {
+        
+        const utterance = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.speak(utterance);
     };
 
 
@@ -45,7 +52,7 @@ const LearningNow = ({ searchTerm = "", showAll = false }: LearnSearchProps & { 
                                 <TableCell sx={{ borderBottom: "none" }}>
                                     {defaultText?.isSwapped
                                         ? <Typography>{`${translation} - ${source}`}</Typography>
-                                        :<Typography>{`${source} - ${translation}`}</Typography>
+                                        : <Typography>{`${source} - ${translation}`}</Typography>
                                     }
                                 </TableCell>
                                 <TableCell className='table_cards'>
@@ -54,7 +61,14 @@ const LearningNow = ({ searchTerm = "", showAll = false }: LearnSearchProps & { 
                                         variant="outlined"
                                         onClick={() => handleSaveText({ id, source, translation, isLearningNow: true })}
                                     >
-                                        <img src={items.some(saved => saved.id === id && saved.isLearningNow) ? Savedicon : NotSavedicon} alt="Save" />
+                                        <img src={items.some(saved => saved.id === id && saved.isLearningNow) ? e : NotSavedicon} alt="Save" />
+                                    </Button>
+                                    <Button
+                                        className='table_button'
+                                        variant="outlined"
+                                        onClick={() => speak(translation || '')} 
+                                    >
+                                        <Typography><KeyboardVoiceIcon /></Typography>
                                     </Button>
                                 </TableCell>
                             </TableRow>

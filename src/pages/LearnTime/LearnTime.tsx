@@ -67,10 +67,8 @@ const LearnTime = () => {
         startTime: utcStartTime,
         endTime: utcEndTime,
       })).unwrap().then(() => {
-        navigate("/login");
-        localStorage.removeItem('token');
-        localStorage.removeItem('refreshToken');
-      });''
+        navigate("/");
+      });
     } catch (error) {
       console.error(error);
     }

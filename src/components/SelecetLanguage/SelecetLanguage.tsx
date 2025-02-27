@@ -28,7 +28,7 @@ const SelectLanguage = () => {
         }} className='selecetlanguages'>
 
             <div className='selecets_box'>
-                <p> {defaultText?.isSwapped
+                <p className='ee'> {defaultText?.isSwapped
                     ? `${datasetselected.translationLanguage} - ${datasetselected.sourceLanguage} `
                     : `${datasetselected.sourceLanguage} - ${datasetselected.translationLanguage}`}</p>
             </div>

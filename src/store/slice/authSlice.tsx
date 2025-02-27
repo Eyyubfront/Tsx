@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login, register, refreshToken, deleteUser, excelfilefetch, addformFile, sendIdToken } from '../actions/authActions';
+import { login, register, refreshToken, deleteUser, excelfilefetch, addformFile, sendIdToken, changeVisibility, getuserSettings } from '../actions/authActions';
 import { sendForgotPasswordEmail } from '../actions/forgotPasswordActions/forgotPasswordActions';
 
 interface AuthState {
@@ -12,7 +12,9 @@ interface AuthState {
   success: boolean;
   veriyuse: boolean;
   full: boolean;
-  datagoogle:boolean
+  datagoogle: boolean;
+  quizHidden: boolean;
+  notificationDisabled: boolean;
 
 }
 
@@ -26,7 +28,9 @@ const initialState: AuthState = {
   isAuth: null,
   veriyuse: false,
   full: false,
-  datagoogle:false
+  datagoogle: false,
+  quizHidden: false,
+  notificationDisabled: false
 };
 
 const authSlice = createSlice({
@@ -65,7 +69,7 @@ const authSlice = createSlice({
         state.error = action.payload as string;
         state.isAuth = false;
       })
-      .addCase(excelfilefetch.pending, (state, action:any) => {
+      .addCase(excelfilefetch.pending, (state, action: any) => {
         state.loading = true;
         state.full = action.payload
       })
@@ -80,16 +84,19 @@ const authSlice = createSlice({
       .addCase(sendIdToken.pending, (state) => {
         state.loading = true;
       })
-      .addCase(sendIdToken.fulfilled, (state, action:any) => {
+      .addCase(sendIdToken.fulfilled, (state, action: any) => {
         state.loading = false;
-        state.datagoogle= action.payload
+        state.datagoogle = action.payload
+        state.userId = action.payload.userId;
+        state.veriyuse = true;
       })
       .addCase(sendIdToken.rejected, (state, action) => {
         state.loading = false;
+        state.veriyuse = false;
         state.error = action.payload as string;
       })
       .addCase(addformFile.pending, (state) => {
-        state.loading = true; 
+        state.loading = true;
       })
       .addCase(addformFile.fulfilled, (state) => {
         state.loading = false;
@@ -102,12 +109,41 @@ const authSlice = createSlice({
 
 
 
+      .addCase(getuserSettings.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getuserSettings.fulfilled, (state, action) => {
+        state.loading = false;
+        state.quizHidden = action.payload.quizHidden;
+        state.notificationDisabled = action.payload.notificationDisabled;
+      })
+      .addCase(getuserSettings.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+
+
+      .addCase(changeVisibility.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(changeVisibility.fulfilled, (state) => {
+        state.loading = false;
+        state.success=true
+      })
+      .addCase(changeVisibility.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
 
 
 
 
 
-      
+
+
+
+
+
       .addCase(deleteUser.pending, (state) => {
         state.loading = true;
         state.error = null;

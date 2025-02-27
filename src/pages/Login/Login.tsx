@@ -91,7 +91,8 @@ const Login = () => {
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
         localStorage.setItem('userId', userId);
-        window.location.href = '/languageselector';
+       
+        navigate("/languageselector")
       })
   };
   
@@ -160,14 +161,16 @@ const Login = () => {
               <Paragrafy fontfamily="Inter,sans-serif" fontsize="14px" fontWeight="300" text={signUp ? "Already have an account? " : "Don't have an account? "} />
               <CustomLink fontfamily="Inter,sans-serif" onChange={handleLink} element={signUp} />
             </div>
-            <GoogleOAuthProvider clientId="944563868453-u7ajud98vhsk8s25e9rql1er8akaogcj.apps.googleusercontent.com">
+          </form>
+        </FormProvider>
+         <div className='google_box'>
+         <GoogleOAuthProvider clientId="944563868453-u7ajud98vhsk8s25e9rql1er8akaogcj.apps.googleusercontent.com">
               <GoogleLogin
                 onSuccess={handleGoogleLogin}
                 useOneTap
               />
             </GoogleOAuthProvider>
-          </form>
-        </FormProvider>
+         </div>
       </div>
     </div>
   );

@@ -84,7 +84,10 @@ const MasteredModal = () => {
     };
 
     const handleSubmit = async () => {
+        if (selectedAnswer === null) {
 
+            return;
+        }
         if (quizData?.id) {
             const response = await dispatch(fetchQuizData({
                 excludeIds: [...answeredQuestions, Number(quizData?.id)],
@@ -174,7 +177,7 @@ const MasteredModal = () => {
                         </div>
                         <div>
                             <div style={{ cursor: "pointer" }} onClick={handleAnswersToggle}>
-                                {isAnswersOpen ? <RxEyeOpen /> : <FaRegEyeSlash />}
+                                {isAnswersOpen ? <RxEyeOpen style={{ color: "rgba(157, 10, 187, 0.685)" }} /> : <FaRegEyeSlash style={{ color: "rgba(157, 10, 187, 0.685)" }} />}
                             </div>
                             <div className={`ansewrs__alls ${!isAnswersOpen ? "answers-closed" : ""}`}>
                                 {quizData?.answers &&
@@ -209,6 +212,7 @@ const MasteredModal = () => {
                                 type="submit"
                                 label="Next"
                                 onClick={handleSubmit}
+                                disabled={selectedAnswer === null}
                             />
                         </div>
                     ) : null}
