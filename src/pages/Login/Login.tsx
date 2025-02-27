@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from '../../store';
 import { login, register, sendIdToken } from '../../store/actions/authActions';
 import { Link, useNavigate } from 'react-router-dom';
 import { setVeryuse } from '../../store/slice/authSlice';
-import { GoogleOAuthProvider,GoogleLogin } from '@react-oauth/google';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 const schema = Yup.object().shape({
   email: Yup.string()
     .email("Email is not valid.")
@@ -31,7 +31,7 @@ const Login = () => {
   const dispatch = useAppDispatch();
 
   const { loading } = useAppSelector((state) => state.Auth);
- 
+
 
   const [signUp, setSignUp] = useState(false);
   const [iseye, setIseye] = useState(false);
@@ -66,7 +66,7 @@ const Login = () => {
         .then(() => {
           navigate("/verifyemailpage");
         })
-      
+
     } else {
       dispatch(login(data))
         .unwrap()
@@ -79,25 +79,25 @@ const Login = () => {
     if (response.error) {
       return;
     }
-  
-    const idToken = response.credential;  
+
+    const idToken = response.credential;
     if (!idToken) {
       return;
     }
     dispatch(sendIdToken(idToken))
       .unwrap()
-      .then((data:any) => {
+      .then((data: any) => {
         const { accessToken, refreshToken, userId } = data;
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
         localStorage.setItem('userId', userId);
-       
+
         navigate("/languageselector")
       })
   };
-  
-  
-  
+
+
+
   return (
     <div style={{ display: "flex" }} className='all_login'>
       <div className="sign_left">
@@ -161,14 +161,14 @@ const Login = () => {
             </div>
           </form>
         </FormProvider>
-         <div className='google_box'>
-         <GoogleOAuthProvider clientId="944563868453-u7ajud98vhsk8s25e9rql1er8akaogcj.apps.googleusercontent.com">
-              <GoogleLogin
-                onSuccess={handleGoogleLogin}
-                useOneTap
-              />
-            </GoogleOAuthProvider>
-         </div>
+        <div className='google_box'>
+          <GoogleOAuthProvider clientId="944563868453-u7ajud98vhsk8s25e9rql1er8akaogcj.apps.googleusercontent.com">
+            <GoogleLogin
+              onSuccess={handleGoogleLogin}
+              useOneTap
+            />
+          </GoogleOAuthProvider>
+        </div>
       </div>
     </div>
   );
