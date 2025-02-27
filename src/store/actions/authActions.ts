@@ -152,3 +152,23 @@ export const sendIdToken = createAsyncThunk(
     }
   }
 );
+
+
+
+
+
+export const changeVisibility = createAsyncThunk(
+  'auth/changeVisibility',
+  async (_, thunkAPI) => {
+      try {
+          const response = await axiosInstance.post(
+              '/ChangeQuizVisibility'
+          );
+          return response.data; 
+      } catch (error) {
+          return thunkAPI.rejectWithValue(error);
+      }
+  }
+);
+
+

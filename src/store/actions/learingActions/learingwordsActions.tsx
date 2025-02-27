@@ -62,7 +62,7 @@ export const removeText = createAsyncThunk('learingWords/removeText', async ({ i
 
 export const updateText = createAsyncThunk('learingWords/updateText', async ({ id, source, translation }: { id: number; source: string; translation: string }, thunkAPI) => {
     try {
-        const response = await axiosInstance.put("/Update", {
+        const response = await axiosInstance.put("/UserVocabulary/Update", {
             id,
             source,
             translation

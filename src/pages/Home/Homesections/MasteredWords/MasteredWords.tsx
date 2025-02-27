@@ -84,7 +84,6 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
                                         }
                                     />
                                 </Button>
-
                             </TableCell>
                         </TableRow>
                     ))
