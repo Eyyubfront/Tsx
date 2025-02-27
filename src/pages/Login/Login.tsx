@@ -162,7 +162,7 @@ const Login = () => {
           </form>
         </FormProvider>
         <div className='google_box'>
-          <GoogleOAuthProvider clientId="944563868453-u7ajud98vhsk8s25e9rql1er8akaogcj.apps.googleusercontent.com">
+          <GoogleOAuthProvider clientId="944563868453-mb3uug3galqqr6o1etoh53nbc814067g.apps.googleusercontent.com">
             <GoogleLogin
               onSuccess={handleGoogleLogin}
               useOneTap
