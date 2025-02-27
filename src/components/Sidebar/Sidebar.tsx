@@ -13,6 +13,7 @@ const cards = [
     { name: "Timing", link: "timesettings" },
     { name: "Password", link: "passwordchecksettings" },
     { name: "Terms and Conditions", link: "terms-and-conditions" },
+    { name: "Configurate", link: "configurate" },
 ];
 
 const accountManagement = [

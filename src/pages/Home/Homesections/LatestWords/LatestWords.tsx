@@ -81,12 +81,14 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
 
     const title = location.pathname === '/lexioncards/vocablary' ? 'Vocablary' : 'Latest added words';
 
+    
+    console.log(    filteredItems    )
     return (
         <div>
             <TableComponent title={title}>
                 <FileInput />
                 <TableBody>
-                    {filteredItems?.length ? filteredItems.map(({ id, source, translation }) => (
+                    {filteredItems?.length ? filteredItems.map(({ id, source, translation, isMastered, isLearningNow }) => (
                         <TableRow className='table_aligns' key={id}>
                             <TableCell sx={{ borderBottom: "none" }}>
                                 {defaultText?.isSwapped
@@ -101,14 +103,11 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
                                     onClick={() => handleSaveText({ id, source, translation, isLearningNow: true })}
                                 >
                                     <img
-                                        src={
-                                            items.some(saved => saved.id === id && saved.isLearningNow)
-                                                ? e
-                                                : items.some(item => item.isMastered)
-                                                    ?  Savedicon
-                                                    : NotSavedicon
-                                        }
-                                    
+                                     src={
+                                        isLearningNow? e : isMastered
+                                                ? Savedicon
+                                                : NotSavedicon
+                                    }
                                     />
                                 </Button>
                                 <Button

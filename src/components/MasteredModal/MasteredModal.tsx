@@ -13,11 +13,9 @@ import { RxEyeOpen } from "react-icons/rx";
 import { FaRegEyeSlash } from "react-icons/fa";
 
 const MasteredModal = () => {
-
-
     const dispatch = useAppDispatch();
     const isMastereddialog = useAppSelector((state) => state.LanguagetextData.isDialogOpenMastered);
-
+    const { quizHidden } = useAppSelector((state) => state.Auth);
     const { quizData } = useAppSelector((state) => state.quizslice);
     const methods = useForm();
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -36,18 +34,17 @@ const MasteredModal = () => {
         if (isMastereddialog) {
             dispatch(fetchQuizData({ excludeIds: answeredQuestions, isMastered: true }));
             setLives(3);
-
             setSelectedAnswer(null);
             setIsAnswered(false);
             setIsCorrect(null);
             setShowGameOver(false);
-            setIsAnswersOpen(false);
             setCorrectAnsewrsCount(0);
-
-
             setAnsweredQuestions([0]);
         }
-    }, [isMastereddialog]);
+        else if (quizHidden == false) {
+            setIsAnswersOpen(true);
+        }
+    }, [isMastereddialog, quizHidden]);
 
 
     useEffect(() => {
@@ -106,7 +103,9 @@ const MasteredModal = () => {
 
         setSelectedAnswer(null);
         setIsAnswered(false);
-        setIsAnswersOpen(false);
+        if (quizHidden == false) {
+            setIsAnswersOpen(true);
+        }
     };
 
     const handleRestart = () => {
@@ -136,6 +135,9 @@ const MasteredModal = () => {
 
     const handleAnswersToggle = () => {
         setIsAnswersOpen(!isAnswersOpen);
+        if (quizHidden == false) {
+            setIsAnswersOpen(true);
+        }
     };
 
 
@@ -191,7 +193,6 @@ const MasteredModal = () => {
                                             onClick={() => handleAnswerClick(key, quizData.answers[key])}
                                             style={{ pointerEvents: isAnswersOpen && !isAnswered ? 'auto' : 'none' }}
                                         >
-
                                             {key}
 
                                         </div>
@@ -202,9 +203,6 @@ const MasteredModal = () => {
 
 
                     </div>
-
-
-
 
                     {quizData?.id ? (
                         <div className="button_quiznext">

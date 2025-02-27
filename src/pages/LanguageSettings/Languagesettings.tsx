@@ -27,7 +27,7 @@ const Languagesettings = () => {
 
   const handleRemoveText = (id: number) => {
     dispatch(removeLanguage(id));
-    
+ 
   };
 
   useEffect(() => {

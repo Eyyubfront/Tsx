@@ -14,7 +14,7 @@ const VerifyEmailPage = () => {
   const [counter, setCounter] = useState(30 * 6);
   const [canResend, setCanResend] = useState(false);
   const [otp, setOtp] = useState('');
-  const [isOtpIncorrect, setIsOtpIncorrect] = useState(false); 
+  const [isOtpIncorrect, setIsOtpIncorrect] = useState(false);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -40,6 +40,11 @@ const VerifyEmailPage = () => {
       setCanResend(true);
     }
   }, [counter]);
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+  };
 
   const handleResend = () => {
     if (userId) {
@@ -93,7 +98,7 @@ const VerifyEmailPage = () => {
                 <Paragrafy className="verify_aboutmail" text="We’ve sent an activation code to your email" />
                 <div className={`otp-input`}>
                   <MuiOtpInput
-                    className={isOtpIncorrect ? "input-error" : ""} 
+                    className={isOtpIncorrect ? "input-error" : ""}
                     value={otp}
                     onChange={setOtp}
                   />
@@ -104,7 +109,7 @@ const VerifyEmailPage = () => {
                       Send code again
                     </p>
                   ) : (
-                    <p>Send code again in {counter} seconds</p>
+                    <p>Send code again in  {formatTime(counter)}seconds</p>
                   )}
                 </div>
                 <PrimaryButton disabled={otp.length < 4 || isLoading} type="submit" label="Verify Code" />

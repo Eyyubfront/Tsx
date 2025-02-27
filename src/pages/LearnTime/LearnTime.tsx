@@ -14,6 +14,7 @@ import SidePanel from "../../layout/SidePanel/SidePanel";
 import BackButton from "../../components/BackButton/BackButton";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import { intervalfetch } from "../../store/actions/passwordsettingsActions/passwordsettingsActions";
+import { setisAuth } from "../../store/slice/authSlice";
 
 const schema = yup.object().shape({
   startTime: yup.string().required("Start time is required"),
@@ -37,9 +38,9 @@ const LearnTime = () => {
   const { intervals } = useAppSelector((state) => state.passwordchecksettings);
   const { handleSubmit, formState: { errors }, watch } = methods;
 
-   useEffect(() => {
-        dispatch(intervalfetch());
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(intervalfetch());
+  }, [dispatch]);
 
 
   const selectedSourceLanguage = useAppSelector((state) => state.language.selectedSourceLanguageId);
@@ -56,8 +57,8 @@ const LearnTime = () => {
 
     try {
       const targetDate = moment().format("YYYY-MM-DD");
-      const utcStartTime = moment(`${targetDate} ${data.startTime}`).add(4,"hours").toISOString();
-      const utcEndTime = moment(`${targetDate} ${data.endTime}`).add(4,"hours").toISOString();
+      const utcStartTime = moment(`${targetDate} ${data.startTime}`).add(4, "hours").toISOString();
+      const utcEndTime = moment(`${targetDate} ${data.endTime}`).add(4, "hours").toISOString();
       console.log(targetDate);
       console.log(utcStartTime);
       console.log(utcEndTime);
@@ -67,6 +68,7 @@ const LearnTime = () => {
         startTime: utcStartTime,
         endTime: utcEndTime,
       })).unwrap().then(() => {
+        dispatch(setisAuth())
         navigate("/");
       });
     } catch (error) {

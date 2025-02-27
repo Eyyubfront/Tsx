@@ -15,7 +15,6 @@ interface AuthState {
   datagoogle: boolean;
   quizHidden: boolean;
   notificationDisabled: boolean;
-
 }
 
 const initialState: AuthState = {
@@ -29,7 +28,7 @@ const initialState: AuthState = {
   veriyuse: false,
   full: false,
   datagoogle: false,
-  quizHidden: false,
+  quizHidden: JSON.parse(localStorage.getItem("quizHidden")|| "false"),
   notificationDisabled: false
 };
 
@@ -47,8 +46,14 @@ const authSlice = createSlice({
     },
     setVeryuse(state, action) {
       state.veriyuse = action.payload
+    },
+    setisAuth(state) {
+      state.isAuth =true
+    },
+    toggleQuizHidden(state){
+      state.quizHidden =!state.quizHidden
+      localStorage.setItem("quizHidden",JSON.stringify(state.quizHidden))
     }
-
   },
   extraReducers: (builder) => {
     builder
@@ -106,9 +111,6 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-
-
-
       .addCase(getuserSettings.pending, (state) => {
         state.loading = true;
       })
@@ -121,8 +123,6 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-
-
       .addCase(changeVisibility.pending, (state) => {
         state.loading = true;
       })
@@ -134,16 +134,6 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-
-
-
-
-
-
-
-
-
-
       .addCase(deleteUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -212,5 +202,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, setVeryuse } = authSlice.actions;
+export const { logout,toggleQuizHidden, setVeryuse,setisAuth } = authSlice.actions;
 export default authSlice.reducer;

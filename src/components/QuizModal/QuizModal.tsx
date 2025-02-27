@@ -21,6 +21,8 @@ const QuizModal = () => {
     const isQuizModalOpen = useAppSelector((state) => state.LanguagetextData.isOpen);
     const { quizData } = useAppSelector((state) => state.quizslice);
     const methods = useForm();
+    const { quizHidden } = useAppSelector((state) => state.Auth);
+
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
     const [lives, setLives] = useState(3);
@@ -43,12 +45,14 @@ const QuizModal = () => {
             setIsAnswered(false);
             setIsCorrect(null);
             setShowGameOver(false);
-            setIsAnswersOpen(false);
             setCorrectAnsewrsCount(0);
             setIsSaved(false);
             setAnsweredQuestions([0]);
         }
-    }, [isQuizModalOpen]);
+        else if (quizHidden == false) {
+            setIsAnswersOpen(true);
+        }
+    }, [isQuizModalOpen, quizHidden]);
 
 
     useEffect(() => {
@@ -84,7 +88,7 @@ const QuizModal = () => {
 
     const handleSubmit = async () => {
         if (selectedAnswer === null) {
-   
+
             return;
         }
         if (quizData?.id) {
@@ -106,7 +110,9 @@ const QuizModal = () => {
         setSelectedAnswer(null);
         setIsAnswered(false);
         setIsSaved(false);
-        setIsAnswersOpen(false);
+        if (quizHidden == false) {
+            setIsAnswersOpen(true);
+        }
     };
 
     const handleRestart = () => {
@@ -160,7 +166,10 @@ const QuizModal = () => {
 
         setSelectedAnswer(null);
         setIsAnswered(false);
-        setIsAnswersOpen(false);
+
+        if (quizHidden == false) {
+            setIsAnswersOpen(true);
+        }
     };
 
 
@@ -201,7 +210,7 @@ const QuizModal = () => {
 
                         <div>
                             <div style={{ cursor: "pointer" }} onClick={handleAnswersToggle}>
-                                {isAnswersOpen ?   <RxEyeOpen style={{ color: "rgba(157, 10, 187, 0.685)" }} />:   <FaRegEyeSlash style={{ color: "rgba(157, 10, 187, 0.685)" }} />}
+                                {isAnswersOpen ? <RxEyeOpen style={{ color: "rgba(157, 10, 187, 0.685)" }} /> : <FaRegEyeSlash style={{ color: "rgba(157, 10, 187, 0.685)" }} />}
                             </div>
                             <div className={`ansewrs__alls ${!isAnswersOpen ? "answers-closed" : ""}`}>
                                 {quizData?.answers &&
