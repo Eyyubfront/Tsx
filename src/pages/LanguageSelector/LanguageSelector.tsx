@@ -7,12 +7,12 @@ import SidePanel from "../../layout/SidePanel/SidePanel";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import BackButton from "../../components/BackButton/BackButton";
 import { setSourceLanguageId } from "../../store/slice/languageSlice";
-import { Language } from "../../types/Types";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
 const LanguageSelector: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [toggleSelectedId, setToggleSelectedId] = useState<number>(0);
+  const [selectedLanguage, setSelectedLanguage] = useState<number>(0);
   const languages = useAppSelector((state) => state.language.languages);
   const loading = useAppSelector((state) => state.language.loading);
   const error = useAppSelector((state) => state.language.error);
@@ -32,22 +32,22 @@ const LanguageSelector: React.FC = () => {
     }
   }, [dispatch, languages]);
 
-  const handleLanguageClick = (language: Language) => {
-    setToggleSelectedId(language.id);
-    dispatch(setSourceLanguageId(language.id));
+  const handleLanguageChange = (event: SelectChangeEvent<number>) => {
+    const selectedId = event.target.value as number;
+    setSelectedLanguage(selectedId);
+    dispatch(setSourceLanguageId(selectedId));
   };
 
   const handleContinueClick = () => {
-    if (toggleSelectedId !== 0) {
+    if (selectedLanguage !== 0) {
       navigate("/chooselearnlanguage");
     } else {
-      console.warn('Noo language.');
+      console.warn("No language selected.");
     }
   };
 
   return (
     <div className="language_selector">
-
       <div className="languageselector__left">
         <SidePanel
           titleText="Choose native language"
@@ -65,35 +65,34 @@ const LanguageSelector: React.FC = () => {
               </p>
             )}
 
-            <ul className="language-list">
-              {languages.length > 0
-                ? languages.map((language) => (
-                  <li
-                    key={language.id}
-                    className={`language-item ${toggleSelectedId === language.id ? "selected" : ""
-                      }`}
-                    onClick={() => handleLanguageClick(language)}
-                  >
-                    <img
-                      src={`data:image/png;base64,${language.image}`}
-                      alt={`${language.name} flag`}
-                      className="language-flag"
-                    />
-                    <p>{language.name}</p>
-                  </li>
-                ))
-                : !loading && !error && (
-                  <p className="no-languages-message">
-                    No languages available at the moment.
-                  </p>
-                )}
-            </ul>
+            <FormControl fullWidth variant="outlined" style={{ marginTop: "15px" }}>
+              <InputLabel id="language-selector-label">Native Language</InputLabel>
+              <Select
+                labelId="language-selector-label"
+                value={selectedLanguage}
+                onChange={handleLanguageChange}
+                label="Native Language"
+              >
+                {languages?.map((language) => (
+                  <MenuItem key={language.id} value={language.id}>
+                    <div className="languageselect_settingscard">
+                      <img
+                        src={`data:image/png;base64,${language.image}`}
+                        alt={`${language.name} flag`}
+                        className="language-flag"
+                      />
+                      {language.name}
+                    </div>
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
           <div className="check-lang">
             <PrimaryButton
               onClick={handleContinueClick}
               label="Continue"
-              disabled={toggleSelectedId === 0}
+              disabled={selectedLanguage === 0}
             />
           </div>
         </div>

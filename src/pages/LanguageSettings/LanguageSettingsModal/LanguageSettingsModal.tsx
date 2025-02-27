@@ -43,7 +43,6 @@ const LanguageSettingsModal: React.FC<NewWordModalProps> = () => {
     return (
         <>
 
-        
             <AlertDialog
                 open={languagetooglOpen}
                 onClose={handleCloseModal}
