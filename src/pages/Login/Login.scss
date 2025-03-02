@@ -5,6 +5,17 @@
     height: 100vh;
     .google_box{
       width: 100%;
+      border: 1px solid #D8DADC  ;
+      border-radius: 10px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      .img_google{
+        width: 20px;
+        height: 20px;
+      }
     }
      .sign_left {
       width: 100% ;

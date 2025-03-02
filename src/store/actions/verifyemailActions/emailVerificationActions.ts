@@ -5,7 +5,7 @@ export const confirmEmail = createAsyncThunk(
   "emailVerification/confirmEmail",
   async ({ code, userId }: { code: string; userId: string }, { rejectWithValue }) => {
     try {
-      const response = await axios.post("https://learn-language-api.azurewebsites.net/api/ConfirmEmail", { code, userId });
+      const response = await axios.post("http://learn-language-app.runasp.net/api/ConfirmEmail", { code, userId });
       localStorage.setItem('token', response.data.data.accessToken);
       localStorage.setItem('refreshToken', response.data.data.refreshToken);
       localStorage.setItem('userId', response.data.data.userId);
@@ -21,7 +21,7 @@ export const resendConfirmationToken = createAsyncThunk(
   "emailVerification/resendConfirmationToken",
   async (userId: string, { rejectWithValue }) => {
     try {
-      const response = await axios.post("https://learn-language-api.azurewebsites.net/api/ResendEmailConfirmationCode", { userId });
+      const response = await axios.post("http://learn-language-app.runasp.net/api/ResendEmailConfirmationCode", { userId });
       return response.data;
     } catch (error) {
       return rejectWithValue(error);
@@ -34,7 +34,7 @@ export const confirmPasswordResetCode = createAsyncThunk(
   "emailVerification/ConfirmPasswordResetCode",
   async ({ code, userId }: { code: string; userId: string }, { rejectWithValue }) => {
     try {
-      const response = await axios.post("https://learn-language-api.azurewebsites.net/api/ConfirmPasswordResetCode", { code, userId });
+      const response = await axios.post("http://learn-language-app.runasp.net/api/ConfirmPasswordResetCode", { code, userId });
       return response.data;
     } catch (error) {
       return rejectWithValue(error);

@@ -3,7 +3,7 @@ import { logout } from "../slice/authSlice";
 import store from "../index";
 
 const axiosInstance = axios.create({
-  baseURL: "https://learn-language-api.azurewebsites.net/api",
+  baseURL: "http://learn-language-app.runasp.net/api",
 });
 
 axiosInstance.interceptors.request.use((config) => {
@@ -24,7 +24,7 @@ axiosInstance.interceptors.response.use(
 
       if (originalRequest._retry) {
 
-        localStorage.clear();
+       
         store.dispatch(logout());
         return Promise.reject(error);
       }
@@ -57,7 +57,7 @@ axiosInstance.interceptors.response.use(
         localStorage.setItem("refreshToken", newRefreshToken);
 
          if (error.response.status == 401 ){
-          localStorage.clear();
+         
           store.dispatch(logout());
         }
         axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
@@ -65,8 +65,6 @@ axiosInstance.interceptors.response.use(
 
         return axiosInstance(originalRequest);
       } catch (err) {
-
-       
         return Promise.reject(err);
       }
     }
@@ -77,12 +75,3 @@ axiosInstance.interceptors.response.use(
 
 
 export default axiosInstance;
-
-
-
-
-
-
-
-
-

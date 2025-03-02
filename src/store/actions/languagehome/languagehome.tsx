@@ -2,9 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../axiosInstance";
 import { fetchTexts } from "../learingActions/learingnowActions";
 import { wordfetchTexts } from "../learingActions/learingwordsActions";
-import { categoryfetch } from "../categoryActions/categoryActions";
 import { lexioncountfetch } from "../lexioncountActions/lexioncountActions";
-
 
 
 
@@ -20,6 +18,7 @@ export const getTexts = createAsyncThunk('homepage/getTexts', async (_,thunkAPI)
 export const getInitialLanguage = createAsyncThunk('homepage/getInitialLanguage', async (_,thunkAPI) => {
   try {
       const response = await axiosInstance.get(`/UserLanguage/GetSelected`); 
+      console.log("get",response.data.data);
       
       return response.data.data;
       
@@ -33,14 +32,14 @@ export const selecetlangaugesave = createAsyncThunk(
     async (id: number, { rejectWithValue, dispatch }) => {
       try {
         const response = await axiosInstance.post(`/UserLanguage/SetSelected/${id}`);
-        
+        console.log("ggggggg",response.data);
         
         dispatch(getTexts()); 
-        dispatch(categoryfetch()); 
+
         dispatch(lexioncountfetch()); 
         dispatch(fetchTexts({ page: 1, pageSize: 10 })); 
         dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
-     
+        await   dispatch(getInitialLanguage()); 
         return response.data?.data;
       } catch (error) {
         return rejectWithValue(error);

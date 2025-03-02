@@ -17,6 +17,7 @@ const ChooseLearnLanguage: React.FC = () => {
   const languages = useAppSelector((state) => state.language.languages);
   const selectedSourceLanguageId = useAppSelector((state) => state.language.selectedSourceLanguageId);
   const userId = useAppSelector((state) => state.Auth.userId);
+
   const loading = useAppSelector((state) => state.language.loading);
   const error = useAppSelector((state) => state.language.error);
   const userLanguageCreated = useAppSelector((state) => state.language.userLanguageCreated);
@@ -34,6 +35,7 @@ const ChooseLearnLanguage: React.FC = () => {
   useEffect(() => {
     if (userLanguageCreated) {
       navigate("/learntime");
+      console.log('User Language Created:', userLanguageCreated);
     }
   }, [userLanguageCreated, navigate]);
 
@@ -49,6 +51,9 @@ const ChooseLearnLanguage: React.FC = () => {
   };
 
   const handleContinueClick = () => {
+
+    console.log("Selected Translation ID: ", selectedTranslationId);
+    console.log("User ID: ", userId);
     if (userId && selectedTranslationId !== 0) {
       dispatch(createUserLanguage({
         sourceLanguageId: selectedSourceLanguageId!,
@@ -90,7 +95,7 @@ const ChooseLearnLanguage: React.FC = () => {
             )}
 
             <FormControl fullWidth variant="outlined" style={{ marginTop: "15px" }}>
-              <InputLabel id="translation-language-label"> Translation Language</InputLabel>
+              <InputLabel id="translation-language-label">Translation Language</InputLabel>
               <Select
                 labelId="translation-language-label"
                 value={selectedTranslationId}
@@ -102,7 +107,7 @@ const ChooseLearnLanguage: React.FC = () => {
                     <MenuItem key={language.id} value={language.id}>
                       <div className="languageselect_settingscard">
                         <img
-                          src={`data:image/png;base64,${language.image}  `}
+                          src={`data:image/png;base64,${language.image}`}
                           alt={`${language.name} flag`}
                           className="language-flag"
                         />
