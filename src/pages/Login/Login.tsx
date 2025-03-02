@@ -12,7 +12,7 @@ import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { login, register, sendIdToken } from '../../store/actions/authActions';
 import { Link, useNavigate } from 'react-router-dom';
-import { setVeryuse, setisAuth } from '../../store/slice/authSlice';
+import { setVeryuse } from '../../store/slice/authSlice';
 import { auth, provider, signInWithPopup } from './Firebase';
 import UseFormInput from '../../components/PrimaryInput/UseFormInput';
 import googleimg from '../../assets/images/home/Google__G__logo.svg.png';
@@ -76,19 +76,16 @@ const Login = () => {
 
   const handleGoogleLogin = async () => {
     try {
-      Rmail()
+  
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       const idToken = await user.getIdToken(true); 
-      console.log("Refreshed ID Token: ", idToken);
-
+    
       dispatch(sendIdToken(idToken))
         .unwrap()
         .then((data) => {
           const { accessToken, refreshToken, userId } = data;
-console.log("data",data);
-          localStorage.setItem('ramil', "salam");
-          console.log('ramil', "salam");
+
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
      
@@ -103,11 +100,6 @@ console.log("data",data);
     }
   };
 
-
-  const Rmail=()=>{
-    localStorage.setItem('ramil', "salam");
-    console.log('ramil', "salam");
-  }
 
 
 
