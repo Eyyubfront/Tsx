@@ -18,6 +18,7 @@ const Languagesettings = () => {
 
   const handleCloseModal = () => {
     dispatch(LanguageClose());
+
   };
 
   const handleCloseSettingsModal = () => {
@@ -28,16 +29,17 @@ const Languagesettings = () => {
     localStorage.setItem('selectedLanguageId', id.toString());
 
     try {
-        await dispatch(selecetlangaugesave(id)).unwrap();
-        await dispatch(getInitialLanguage()).unwrap();  
-        await dispatch(getTexts()).unwrap();  
+      await dispatch(selecetlangaugesave(id)).unwrap();
+      await dispatch(getInitialLanguage()).unwrap();
+      await dispatch(getTexts()).unwrap();
     } catch (error) {
-        console.error('Error:', error);
+      console.error('Error:', error);
     }
-};
+  };
 
   const handleRemoveText = (id: number) => {
     dispatch(removeLanguage(id));
+
   };
 
   useEffect(() => {
@@ -67,7 +69,7 @@ const Languagesettings = () => {
           <div onClick={handleCloseSettingsModal} className="languagesetings__bottom">
             <PrimaryButton disabled={loading} label="+ New Languages" />
           </div>
-          <LanguageSettingsModal onClose={handleCloseSettingsModal} />
+          {!error && <LanguageSettingsModal onClose={handleCloseSettingsModal} />}
         </div>
       )}
       {error && (

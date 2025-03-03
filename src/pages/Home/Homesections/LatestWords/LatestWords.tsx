@@ -81,8 +81,8 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
 
     const title = location.pathname === '/lexioncards/vocablary' ? 'Vocablary' : 'Latest added words';
 
-    
-    console.log(    filteredItems    )
+
+    console.log(filteredItems)
     return (
         <div>
             <TableComponent title={title}>
@@ -103,11 +103,11 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
                                     onClick={() => handleSaveText({ id, source, translation, isLearningNow: true })}
                                 >
                                     <img
-                                     src={
-                                        isLearningNow? e : isMastered
+                                        src={
+                                            isLearningNow ? e : isMastered
                                                 ? Savedicon
                                                 : NotSavedicon
-                                    }
+                                        }
                                     />
                                 </Button>
                                 <Button
@@ -148,34 +148,34 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
                     >
                         <DialogContent>
                             {editText && (
-                                <div style={{width:"100%",padding:'10px',gap:"10px",display:"flex",justifyContent:'center' ,flexDirection:'column'}}>
-                                  <div>
+                                <div style={{ width: "100%", padding: '10px', gap: "10px", display: "flex", justifyContent: 'center', flexDirection: 'column' }}>
                                     <div>
-                                        <p>Source word</p>
+                                        <div>
+                                            <p>Source word</p>
+                                        </div>
+                                        <TextField
+                                            className='edit_input'
+                                            value={defaultText?.isSwapped ? editText.translation : editText.source}
+                                            onChange={(e) => setEditText({ ...editText, source: e.target.value })}
+                                            style={{ marginRight: '10px', border: "1px solid black", borderRadius: "16px" }}
+                                        />
                                     </div>
-                                  <TextField
-                                     className='edit_input'
-                                        value={editText.source}
-                                        onChange={(e) => setEditText({ ...editText, source: e.target.value })}
-                                        style={{ marginRight: '10px',border:"1px solid black",borderRadius:"16px" }}
-                                    />
-                                  </div>
-                                  <div>
-                                  <p>Translation word</p>
-                                  <TextField
-                                        variant="outlined"
-                                             className='edit_input'
-                                        value={editText.translation}
-                                        onChange={(e) => setEditText({ ...editText, translation: e.target.value })}
-                                        style={{ marginRight: '10px',border:"1px solid black",borderRadius:"16px" }}
-                                    />
-                                  </div>
+                                    <div>
+                                        <p>Translation word</p>
+                                        <TextField
+                                            variant="outlined"
+                                            className='edit_input'
+                                            value={defaultText?.isSwapped ? editText.source : editText.translation}
+                                            onChange={(e) => setEditText({ ...editText, translation: e.target.value })}
+                                            style={{ marginRight: '10px', border: "1px solid black", borderRadius: "16px" }}
+                                        />
+                                    </div>
                                 </div>
                             )}
-                              <div className='editdialog_buttom'>
-                              <Button className='buton_edithandle'  onClick={handleEditDialogClose}>Cansel</Button>
-                              <Button  className='buton_edithandle' onClick={handleUpdate}>Update</Button>
-                              </div>
+                            <div className='editdialog_buttom'>
+                                <Button className='buton_edithandle' onClick={handleEditDialogClose}>Cansel</Button>
+                                <Button className='buton_edithandle' onClick={handleUpdate}>Update</Button>
+                            </div>
                         </DialogContent>
                     </AlertDialog>
                 }
