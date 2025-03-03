@@ -119,14 +119,14 @@ const authSlice = createSlice({
 
         const quizHiddenFromBackend = action.payload.quizHidden;
 
-        // Əgər localStorage-da yoxdursa, backend-dən gələn dəyəri yazırıq
+       
         const savedQuizHidden = localStorage.getItem("quizHidden");
 
         if (savedQuizHidden === null) {
           state.quizHidden = quizHiddenFromBackend;
           localStorage.setItem("quizHidden", JSON.stringify(quizHiddenFromBackend));
         } else {
-          // Əgər localStorage-da varsa, onu götür
+   
           state.quizHidden = JSON.parse(savedQuizHidden);
         }
 
