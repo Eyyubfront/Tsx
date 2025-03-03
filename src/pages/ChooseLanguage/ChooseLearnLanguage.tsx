@@ -8,7 +8,6 @@ import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import BackButton from "../../components/BackButton/BackButton";
 import { setTranslationLanguageId } from "../../store/slice/languageSlice";
 import AlertDialog from "../../components/AlertDialog/AlertDialog";
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
 const ChooseLearnLanguage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -39,19 +38,17 @@ const ChooseLearnLanguage: React.FC = () => {
     }
   }, [userLanguageCreated, navigate]);
 
-  const handleTranslationLanguageChange = (event: SelectChangeEvent<number>) => {
-    const languageId = event.target.value as number;
-    if (languageId === selectedSourceLanguageId) {
+  const handleTranslationLanguageClick = (id: number) => {
+    if (id === selectedSourceLanguageId) {
       setModalMessage("Source language and translation language cannot be the same.");
       setIsModalOpen(true);
       return;
     }
-    setSelectedTranslationId(languageId);
-    dispatch(setTranslationLanguageId(languageId));
+    setSelectedTranslationId(id);
+    dispatch(setTranslationLanguageId(id));
   };
 
   const handleContinueClick = () => {
-
     console.log("Selected Translation ID: ", selectedTranslationId);
     console.log("User ID: ", userId);
     if (userId && selectedTranslationId !== 0) {
@@ -94,32 +91,26 @@ const ChooseLearnLanguage: React.FC = () => {
               </p>
             )}
 
-            <FormControl fullWidth variant="outlined" style={{ marginTop: "15px" }}>
-              <InputLabel id="translation-language-label">Translation Language</InputLabel>
-              <Select
-                labelId="translation-language-label"
-                value={selectedTranslationId}
-                onChange={handleTranslationLanguageChange}
-                label="Translation Language"
-              >
-                {languages.length > 0 ? (
-                  languages.map((language) => (
-                    <MenuItem key={language.id} value={language.id}>
-                      <div className="languageselect_settingscard">
-                        <img
-                          src={`data:image/png;base64,${language.image}`}
-                          alt={`${language.name} flag`}
-                          className="language-flag"
-                        />
-                        {language.name}
-                      </div>
-                    </MenuItem>
-                  ))
-                ) : (
-                  <MenuItem disabled>No languages available</MenuItem>
-                )}
-              </Select>
-            </FormControl>
+            <div className="language-list">
+              {languages.length > 0 ? (
+                languages.map((language) => (
+                  <div
+                    key={language.id}
+                    className={`language-item ${selectedTranslationId === language.id ? "selected" : ""}`}
+                    onClick={() => handleTranslationLanguageClick(language.id)}
+                  >
+                    <img
+                      src={`data:image/png;base64,${language.image}`}
+                      alt={`${language.name} flag`}
+                      className="language-flag"
+                    />
+                    <span>{language.name}</span>
+                  </div>
+                ))
+              ) : (
+                <div>No languages available</div>
+              )}
+            </div>
           </div>
 
           <div className="check-lang">

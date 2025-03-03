@@ -41,8 +41,11 @@
         .language-list {
           display: flex;
           flex-direction: column;
-          width: 100%;
-          gap: 10px;
+          gap: 15px;
+          max-height: 400px;
+          overflow-y: auto;
+          padding: 10px 0;
+
 
           .language-item {
             display: flex;
@@ -80,12 +83,12 @@
 
 .modal_message {
   font-family: DM Sans;
-font-weight: bold;
+  font-weight: bold;
   font-size: 16px;
   line-height: 20px;
   letter-spacing: 0%;
   text-align: center;
-color: black;
+  color: black;
 }
 
 @media (max-width: 600px) {
@@ -102,6 +105,11 @@ color: black;
 
     .chooselanguageselector__right {
       width: 100%;
+      .lang-div{
+        .language-list{
+          overflow: hidden !important;
+        }
+      }
     }
   }
 

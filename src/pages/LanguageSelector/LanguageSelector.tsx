@@ -7,7 +7,6 @@ import SidePanel from "../../layout/SidePanel/SidePanel";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import BackButton from "../../components/BackButton/BackButton";
 import { setSourceLanguageId } from "../../store/slice/languageSlice";
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
 const LanguageSelector: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -32,10 +31,9 @@ const LanguageSelector: React.FC = () => {
     }
   }, [dispatch, languages]);
 
-  const handleLanguageChange = (event: SelectChangeEvent<number>) => {
-    const selectedId = event.target.value as number;
-    setSelectedLanguage(selectedId);
-    dispatch(setSourceLanguageId(selectedId));
+  const handleLanguageClick = (id: number) => {
+    setSelectedLanguage(id);
+    dispatch(setSourceLanguageId(id));
   };
 
   const handleContinueClick = () => {
@@ -65,28 +63,22 @@ const LanguageSelector: React.FC = () => {
               </p>
             )}
 
-            <FormControl fullWidth variant="outlined" style={{ marginTop: "15px" }}>
-              <InputLabel id="language-selector-label">Native Language</InputLabel>
-              <Select
-                labelId="language-selector-label"
-                value={selectedLanguage}
-                onChange={handleLanguageChange}
-                label="Native Language"
-              >
-                {languages?.map((language) => (
-                  <MenuItem key={language.id} value={language.id}>
-                    <div className="languageselect_settingscard">
-                      <img
-                        src={`data:image/png;base64,${language.image}`}
-                        alt={`${language.name} flag`}
-                        className="language-flag"
-                      />
-                      {language.name}
-                    </div>
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            <div className="language-list">
+              {languages?.map((language) => (
+                <div
+                  key={language.id}
+                  className={`language-item ${selectedLanguage === language.id ? "selected" : ""}`}
+                  onClick={() => handleLanguageClick(language.id)}
+                >
+                  <img
+                    src={`data:image/png;base64,${language.image}`}
+                    alt={`${language.name} flag`}
+                    className="language-flag"
+                  />
+                  <span>{language.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="check-lang">
             <PrimaryButton

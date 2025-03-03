@@ -22,12 +22,14 @@ interface NewWordModalProps {
 }
 
 const schema = Yup.object().shape({
-    wordone: Yup.string().required("Source word is required"),
+    wordone: Yup.string()
+        .required("Source word is required")
+        .max(50, 'Maximum 50 characters allowed'),
     wordtwo: Yup.string()
         .required("Translation word is required")
-        .notOneOf([Yup.ref('wordone')], 'Source and Translation words must be different'),
+        .notOneOf([Yup.ref('wordone')], 'Source and Translation words must be different')
+        .max(50, 'Maximum 50 characters allowed'),
 });
-
 const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const selectedLanguageId = useAppSelector((state) => state.LanguagetextData.selectedLanguageId);
