@@ -73,33 +73,37 @@ const Login = () => {
         })
     }
   };
-
   const handleGoogleLogin = async () => {
     try {
-  
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      const idToken = await user.getIdToken(true); 
-    
+      const idToken = await user.getIdToken(true);
+  
       dispatch(sendIdToken(idToken))
         .unwrap()
         .then((data) => {
-          const { accessToken, refreshToken, userId } = data;
-
+          const { accessToken, refreshToken, userId, hasLanguage, hasNotificationSetting } = data;
+  
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
-     
+  
           dispatch(setUserId(userId));
-          localStorage.setItem('userId', userId);
-          navigate("/languageselector");
-        })
-       
+          localStorage.setItem('userId', userId)
+
+          if (hasLanguage && hasNotificationSetting) {
+            navigate("/home");
+          }else if(hasLanguage && !hasNotificationSetting){
+            navigate("/learntime");
+          }
+          else {
+            navigate("/languageselector");
+          }
+        });
+  
     } catch (error) {
       console.error("Google login error: ", error);
-    
     }
   };
-
 
 
 
@@ -164,10 +168,10 @@ const Login = () => {
               <CustomLink fontfamily="Inter,sans-serif" onChange={handleLink} element={signUp} />
             </div>
           </form>
-        <div onClick={handleGoogleLogin} className='google_box'>
-          <img className='img_google' src={googleimg} alt="" />
-          Google Account
-        </div>
+          <div onClick={handleGoogleLogin} className='google_box'>
+            <img className='img_google' src={googleimg} alt="" />
+            Google Account
+          </div>
         </FormProvider>
 
 
