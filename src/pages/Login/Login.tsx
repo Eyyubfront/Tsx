@@ -9,13 +9,15 @@ import Toogle from './Toogle/Toogle';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import "./Login.scss";
-import UseFormInput from '../../components/PrimaryInput/UseFormInput';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { login, register, sendIdToken } from '../../store/actions/authActions';
 import { Link, useNavigate } from 'react-router-dom';
 import { setVeryuse } from '../../store/slice/authSlice';
-import { GoogleOAuthProvider,GoogleLogin } from '@react-oauth/google';
+import { auth, provider, signInWithPopup } from './Firebase';
+import UseFormInput from '../../components/PrimaryInput/UseFormInput';
+import googleimg from '../../assets/images/home/Google__G__logo.svg.png';
+import "./Login.scss"
+import { setUserId } from '../../store/slice/timeSlice';
 const schema = Yup.object().shape({
   email: Yup.string()
     .email("Email is not valid.")
@@ -29,14 +31,11 @@ const schema = Yup.object().shape({
 
 const Login = () => {
   const dispatch = useAppDispatch();
-
   const { loading } = useAppSelector((state) => state.Auth);
- 
-
   const [signUp, setSignUp] = useState(false);
   const [iseye, setIseye] = useState(false);
   const [isOn, setIsOn] = useState(false);
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
   const methods = useForm({
     resolver: yupResolver(schema),
@@ -66,7 +65,6 @@ const Login = () => {
         .then(() => {
           navigate("/verifyemailpage");
         })
-      
     } else {
       dispatch(login(data))
         .unwrap()
@@ -75,29 +73,36 @@ const Login = () => {
         })
     }
   };
-  const handleGoogleLogin = (response: any) => {
-    if (response.error) {
-      return;
-    }
+
+  const handleGoogleLogin = async () => {
+    try {
   
-    const idToken = response.credential;  
-    if (!idToken) {
-      return;
-    }
-    dispatch(sendIdToken(idToken))
-      .unwrap()
-      .then((data:any) => {
-        const { accessToken, refreshToken, userId } = data;
-        localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
-        localStorage.setItem('userId', userId);
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      const idToken = await user.getIdToken(true); 
+    
+      dispatch(sendIdToken(idToken))
+        .unwrap()
+        .then((data) => {
+          const { accessToken, refreshToken, userId } = data;
+
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
+     
+          dispatch(setUserId(userId));
+          localStorage.setItem('userId', userId);
+          navigate("/languageselector");
+        })
        
-        navigate("/languageselector")
-      })
+    } catch (error) {
+      console.error("Google login error: ", error);
+    
+    }
   };
-  
-  
-  
+
+
+
+
   return (
     <div style={{ display: "flex" }} className='all_login'>
       <div className="sign_left">
@@ -134,10 +139,9 @@ const Login = () => {
               )}
             </div>
 
-
             {signUp ? (
               <>
-                <Check onCheck={(checked: boolean) => setIsChecked(checked)} />
+                <Check onCheck={(checked) => setIsChecked(checked)} />
                 <PrimaryButton
                   label={"Create account"}
                   type="submit"
@@ -155,22 +159,18 @@ const Login = () => {
               </>
             )}
 
-
-
             <div className="link_container">
               <Paragrafy fontfamily="Inter,sans-serif" fontsize="14px" fontWeight="300" text={signUp ? "Already have an account? " : "Don't have an account? "} />
               <CustomLink fontfamily="Inter,sans-serif" onChange={handleLink} element={signUp} />
             </div>
           </form>
+        <div onClick={handleGoogleLogin} className='google_box'>
+          <img className='img_google' src={googleimg} alt="" />
+          Google Account
+        </div>
         </FormProvider>
-         <div className='google_box'>
-         <GoogleOAuthProvider clientId="944563868453-u7ajud98vhsk8s25e9rql1er8akaogcj.apps.googleusercontent.com">
-              <GoogleLogin
-                onSuccess={handleGoogleLogin}
-                useOneTap
-              />
-            </GoogleOAuthProvider>
-         </div>
+
+
       </div>
     </div>
   );

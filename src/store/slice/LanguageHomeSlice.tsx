@@ -42,6 +42,11 @@ const LanguageHomeSlice = createSlice({
         setSelectedLanguage(state, action) {
             state.selectedLanguageId = action.payload;
             
+            // localStorage.setItem('selectedLanguageId', action.payload.toString());
+        },
+        setDataselec(state, action) {
+            state.datasetselected = action.payload;
+           
         },
         openQuizModal: (state) => {
             state.isOpen = true;
@@ -74,7 +79,7 @@ const LanguageHomeSlice = createSlice({
                 state.error = null;
             })
             .addCase(getTexts.fulfilled, (state, action) => {
-                state.loading = false;         
+                state.loading = false;
                 state.texts = action.payload;
                 state.defaultText = action.payload.find((t: { isSelected: boolean }) => t.isSelected);
             })
@@ -87,9 +92,10 @@ const LanguageHomeSlice = createSlice({
                 state.error = null;
                 console.log("pending")
             })
-            .addCase(selecetlangaugesave.fulfilled, (state) => {
+            .addCase(selecetlangaugesave.fulfilled, (state,action) => {
                 state.loading = false;
-
+                console.log("tetxs",action.payload);
+                state.texts = action.payload
             })
             .addCase(selecetlangaugesave.rejected, (state, action) => {
                 state.loading = false;
@@ -102,9 +108,8 @@ const LanguageHomeSlice = createSlice({
             })
             .addCase(getInitialLanguage.fulfilled, (state, action) => {
                 state.loading = false;
-                state.datasetselected = action.payload; 
-                state.defaultText = action.payload; 
-           
+                state.datasetselected = action.payload;
+                state.defaultText = action.payload;
             })
             .addCase(getInitialLanguage.rejected, (state, action) => {
                 state.loading = false;
@@ -113,6 +118,6 @@ const LanguageHomeSlice = createSlice({
     },
 });
 
-export const { setSelectedLanguage, openQuizModal, closeQuizModal, openDialog, closeDialog, openDialogMastered, closeDialogMastered } = LanguageHomeSlice.actions;
+export const { setSelectedLanguage,setDataselec, openQuizModal, closeQuizModal, openDialog, closeDialog, openDialogMastered, closeDialogMastered } = LanguageHomeSlice.actions;
 
 export default LanguageHomeSlice.reducer;

@@ -71,7 +71,7 @@ const languageSlice = createSlice({
       })
       .addCase(createUserLanguage.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action?.payload as string;
         state.userLanguageCreated = false;
         state.languageOpen=true
       })
@@ -87,7 +87,7 @@ const languageSlice = createSlice({
         state.loading = false;
         state.languageOpen = true;
         state.languagetooglOpen = true;
-        state.error = action.payload as string
+        state.error = action?.payload as string;
 
       });
   },

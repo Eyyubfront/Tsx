@@ -18,6 +18,7 @@ const FileInput: React.FC = () => {
         setFile(selectedFile);
 
         const reader = new FileReader();
+        console.log(data);
 
         reader.onload = (event) => {
             const arrayBuffer = event.target?.result;
@@ -48,34 +49,11 @@ const FileInput: React.FC = () => {
 
     return (
         <div>
-        <div className="top_file">
-        <input className='file__input' type="file" onChange={handleFileUpload} />
-        <button className='submit_inputdata' onClick={handleUpdateForm}>Submit</button>
-        </div>
-         
-            {data && data.length > 0 && (
-                <div>
-                    <h2>Imported Data:</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                {Object.keys(data[0]).map((header) => (
-                                    <th key={header}>{header}</th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data.map((row, idx) => (
-                                <tr key={idx}>
-                                    {Object.values(row).map((cell, cellIdx) => (
-                                        <td key={cellIdx}>{cell != null ? String(cell) : ''}</td>
-                                    ))}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            )}
+            <div className="top_file">
+                <input className='file__input' type="file" onChange={handleFileUpload} />
+                <button className='submit_inputdata' onClick={handleUpdateForm}>Submit</button>
+
+            </div>
         </div>
     );
 };

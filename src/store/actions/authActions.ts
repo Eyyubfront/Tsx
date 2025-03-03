@@ -78,8 +78,6 @@ export const refreshToken = createAsyncThunk(
         }
 
       );
-      console.log("refresh", localStorage.getItem("refreshToken"));
-
       localStorage.setItem('token', response.data.data.accessToken);
       localStorage.setItem('refreshToken', response.data.data.refreshToken);
       return response.data;
@@ -141,9 +139,8 @@ export const sendIdToken = createAsyncThunk(
   'auth/sendIdToken',  
   async (idToken: string, { rejectWithValue }) => {
     try {
-  
       const response = await axiosInstance.post(
-        '/GoogleAuth',
+        '/GoogleAuthWeb',
          {idToken} 
       );
       return  response.data.data; 

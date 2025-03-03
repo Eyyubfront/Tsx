@@ -43,8 +43,9 @@ export const createUserLanguage = createAsyncThunk(
       thunkAPI.dispatch(fetchLanguages())
       thunkAPI.dispatch(getTexts())
       return response.data;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue( "User language pair already exists");
+    } catch (err: any) {
+
+      return thunkAPI.rejectWithValue(err.response?.data?.message || 'Failed to create language');
     }
   }
 );

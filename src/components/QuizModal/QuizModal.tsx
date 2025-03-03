@@ -60,16 +60,15 @@ const QuizModal = () => {
             setAnswerMessage("Game Over!");
             setShowGameOver(true);
             setSelectedAnswer(null);
-
         }
+    }, [lives]);
 
 
-
-
-    }, [lives, correctAnsewrscount, quizData]);
-
-
-
+    const speak = (text: string) => {
+        const utterance = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.speak(utterance);
+    };
+    
 
     const handleAnswerClick = (answer: string, isCorrect: boolean) => {
         if (isAnswered) return;
@@ -80,11 +79,26 @@ const QuizModal = () => {
         setIsAnswered(true);
 
         if (isCorrect) {
+          
             setCorrectAnsewrsCount((prevCount) => prevCount + 1);
+            const correctAnswerKey = quizData?.answers ? Object.keys(quizData.answers).find(key => quizData.answers[key] === true) : null;
+
+        
+            if (correctAnswerKey) {
+                speak(correctAnswerKey); 
+            }
+            
         } else {
+            const correctAnswerKey = quizData?.answers ? Object.keys(quizData.answers).find(key => quizData.answers[key] === true) : null;
+
+
+            if (correctAnswerKey) {
+                speak(`${correctAnswerKey}`); 
+            }
+
             setLives((prevLives) => prevLives - 1);
         }
-    };
+    }
 
     const handleSubmit = async () => {
         if (selectedAnswer === null) {
@@ -224,8 +238,15 @@ const QuizModal = () => {
                                             onClick={() => handleAnswerClick(key, quizData.answers[key])}
                                             style={{ pointerEvents: isAnswersOpen && !isAnswered ? 'auto' : 'none' }}
                                         >
-
                                             {key}
+                                            {isAnswered && key === selectedAnswer && isCorrect && (
+                                                <div onClick={() => {
+                                                    const answerText =String(quizData.answers[key]) ;
+                                                    speak(answerText);
+                                                }}>
+                                                </div>
+                                            )}
+
 
                                         </div>
                                     ))}

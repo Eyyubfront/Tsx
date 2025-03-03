@@ -16,8 +16,6 @@ import SettingsLayout from "../layout/SettingsLayout/SettingsLayout";
 import Languagesettings from "../pages/LanguageSettings/Languagesettings";
 import TimeSettings from "../pages/Home/TimeSettings/TimeSettings";
 import ChangedPasswordSettings from "../pages/ChangedPasswordSettings/ChangedPasswordSettings";
-import VocabularyBuilder from "../pages/Home/Homesections/VocabularyBuilder/VocabularyBuilder";
-import CategoryDetail from "../pages/Home/Homesections/CategoryDetail/CategoryDetail";
 import LearningNow from "../pages/Home/Homesections/LearingNow/LearingNow";
 import LatestWords from "../pages/Home/Homesections/LatestWords/LatestWords";
 import LexiconCards from "../pages/Home/Homesections/LexiconCards/LexiconCards";
@@ -47,8 +45,7 @@ const Routing = () => {
 
       <Route element={<ProtectedRouting />}>
         <Route path="/" element={<Home />} />
-        <Route path="/category" element={<VocabularyBuilder />} />  
-        <Route path="/category/:categoryId" element={<CategoryDetail />} />
+
         <Route path="/lexioncards" element={<LexiconCards />} />  
         <Route path="/lexioncards/:id" element={<LexionLayout />} />
         <Route path="settingspage" element={<SettingsLayout />}>

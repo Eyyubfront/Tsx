@@ -79,3 +79,11 @@ height: max-content;
         }
     }
 }
+
+@media (max-width:600px) and (max-width:1200px) {
+    .sidebar_box {
+     
+        min-width: 305px !important;
+   
+    }    
+}

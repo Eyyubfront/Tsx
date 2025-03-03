@@ -9,7 +9,6 @@ import LanguageHomedata from './slice/LanguageHomeSlice';
 import timeReducer from './slice/timeSlice';
 import forgotPasswordReducer from "./slice/forgotPasswordSlice";
 import passwordResetReducer from "./slice/passwordResetSlice";
-import categoryReducer from "./slice/CategroySlice";
 import lexionReducer from "./slice/LexionSlice";
 import PasswordcheckSettingsReducer from "./slice/PasswordSettingsSlice";
 import UserVocabularyReducer from "./slice/userVocabularySlice";
@@ -26,7 +25,6 @@ const store = configureStore({
         time: timeReducer,
         forgotPassword: forgotPasswordReducer,
         passwordReset: passwordResetReducer,
-        category: categoryReducer,
         lexioncard: lexionReducer,
         passwordchecksettings: PasswordcheckSettingsReducer,
         userVocabulary: UserVocabularyReducer,
