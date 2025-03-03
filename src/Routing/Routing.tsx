@@ -21,6 +21,7 @@ import LatestWords from "../pages/Home/Homesections/LatestWords/LatestWords";
 import LexiconCards from "../pages/Home/Homesections/LexiconCards/LexiconCards";
 import LexionLayout from "../layout/LexionLayout/LexionLayout";
 import Configurate from "../pages/Configurate/Configurate";
+import Conditions from "../pages/Conditions/Conditions";
 
 
 const Routing = () => {
@@ -53,6 +54,7 @@ const Routing = () => {
           <Route path="timesettings" element={<TimeSettings />} />
           <Route path="passwordchecksettings" element={<ChangedPasswordSettings />} />
           <Route path="configurate" element={<Configurate />} />
+          <Route path="terms-and-conditions" element={<Conditions />} />
         </Route>
           <Route path="/learingnow" element={<LearningNow />} />
           <Route path="/vocablarypage" element={<LatestWords />} />

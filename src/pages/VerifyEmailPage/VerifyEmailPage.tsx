@@ -49,7 +49,7 @@ const VerifyEmailPage = () => {
   const handleResend = () => {
     if (userId) {
       dispatch(resendConfirmationToken(userId));
-      setCounter(30);
+      setCounter(30 * 2);
       setCanResend(false);
     } else {
       console.error("User ID not found.");
