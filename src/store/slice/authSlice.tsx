@@ -13,7 +13,7 @@ interface AuthState {
   veriyuse: boolean;
   full: boolean;
   datagoogle: boolean;
-  quizHidden: boolean;
+  quizHidden: boolean |null ; 
   notificationDisabled: boolean;
 }
 
@@ -28,7 +28,7 @@ const initialState: AuthState = {
   veriyuse: false,
   full: false,
   datagoogle: false,
-  quizHidden: JSON.parse(localStorage.getItem("quizHidden")|| "false"),
+  quizHidden: null ,
   notificationDisabled: false
 };
 
@@ -48,11 +48,11 @@ const authSlice = createSlice({
       state.veriyuse = action.payload
     },
     setisAuth(state) {
-      state.isAuth =true
+      state.isAuth = true
     },
-    toggleQuizHidden(state){
-      state.quizHidden =!state.quizHidden
-      localStorage.setItem("quizHidden",JSON.stringify(state.quizHidden))
+    toggleQuizHidden(state) {
+      state.quizHidden = !state.quizHidden
+      localStorage.setItem("quizHidden", JSON.stringify(state.quizHidden))
     }
   },
   extraReducers: (builder) => {
@@ -116,7 +116,20 @@ const authSlice = createSlice({
       })
       .addCase(getuserSettings.fulfilled, (state, action) => {
         state.loading = false;
-        state.quizHidden = action.payload.quizHidden;
+
+        const quizHiddenFromBackend = action.payload.quizHidden;
+
+        // Əgər localStorage-da yoxdursa, backend-dən gələn dəyəri yazırıq
+        const savedQuizHidden = localStorage.getItem("quizHidden");
+
+        if (savedQuizHidden === null) {
+          state.quizHidden = quizHiddenFromBackend;
+          localStorage.setItem("quizHidden", JSON.stringify(quizHiddenFromBackend));
+        } else {
+          // Əgər localStorage-da varsa, onu götür
+          state.quizHidden = JSON.parse(savedQuizHidden);
+        }
+
         state.notificationDisabled = action.payload.notificationDisabled;
       })
       .addCase(getuserSettings.rejected, (state, action) => {
@@ -128,8 +141,8 @@ const authSlice = createSlice({
       })
       .addCase(changeVisibility.fulfilled, (state) => {
         state.loading = false;
-        state.success=true
- 
+        state.success = true
+
       })
       .addCase(changeVisibility.rejected, (state, action) => {
         state.loading = false;
@@ -203,5 +216,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout,toggleQuizHidden, setVeryuse,setisAuth } = authSlice.actions;
+export const { logout, toggleQuizHidden, setVeryuse, setisAuth } = authSlice.actions;
 export default authSlice.reducer;
