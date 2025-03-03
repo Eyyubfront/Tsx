@@ -1,5 +1,5 @@
 import { useForm, FormProvider } from "react-hook-form";
-import { Box, Typography, TextField, Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
+import { Box, Typography, TextField, Dialog, DialogTitle, DialogContent, IconButton, Button } from "@mui/material";
 import Favorite from "../../assets/images/home/Heart_01.svg";
 import FavroiteBorder from "../../assets/images/home/UnHeart.svg";
 import Savedicon from "../../assets/images/home/Bookmark.svg";
@@ -14,7 +14,7 @@ import { closeQuizModal } from "../../store/slice/LanguageHomeSlice";
 import "./QuizModal.scss";
 import { RxEyeOpen } from "react-icons/rx";
 import { FaRegEyeSlash } from "react-icons/fa";
-
+import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 const QuizModal = () => {
 
     const dispatch = useAppDispatch();
@@ -60,19 +60,14 @@ const QuizModal = () => {
             setAnswerMessage("Game Over!");
             setShowGameOver(true);
             setSelectedAnswer(null);
-
         }
-
-
-
-
-    }, [lives, correctAnsewrscount, quizData]);
+    }, [lives]);
 
 
 
 
     const handleAnswerClick = (answer: string, isCorrect: boolean) => {
-        if (isAnswered) return;
+        if (!quizData) return;
 
         setSelectedAnswer(answer);
         setIsCorrect(isCorrect);
@@ -81,8 +76,16 @@ const QuizModal = () => {
 
         if (isCorrect) {
             setCorrectAnsewrsCount((prevCount) => prevCount + 1);
+            speak(answer);
         } else {
-            setLives((prevLives) => prevLives - 1);
+            setLives(prevLives => prevLives - 1);
+            const correctAnswer = quizData?.answers
+                ? Object.entries(quizData.answers).find(([, value]) => value)?.[0]
+                : undefined;
+
+            if (correctAnswer) {
+                speak(correctAnswer);
+            }
         }
     };
 
@@ -142,6 +145,11 @@ const QuizModal = () => {
 
     const handleAnswersToggle = () => {
         setIsAnswersOpen(!isAnswersOpen);
+    };
+    const speak = (text: string) => {
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.speak(utterance);
     };
 
     const toggleSave = async () => {
@@ -226,7 +234,20 @@ const QuizModal = () => {
                                         >
 
                                             {key}
+                                            {isAnswered && (
+                                                (key === selectedAnswer && isCorrect) || (quizData.answers[key] && key !== selectedAnswer)
+                                            ) && (
+                                                    <Button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            speak(key);
+                                                        }}
+                                                       
 
+                                                    >
+                                                        <KeyboardVoiceIcon />
+                                                    </Button>
+                                                )}
                                         </div>
                                     ))}
                             </div>

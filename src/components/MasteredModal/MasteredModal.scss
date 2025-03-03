@@ -1,0 +1,10 @@
+.css-1588512-MuiButtonBase-root-MuiButton-root {
+    cursor: pointer;
+    pointer-events: auto !important;
+
+
+    &[disabled] {
+        pointer-events: auto;
+        opacity: 1;
+    }
+}

@@ -1,5 +1,5 @@
 import { useForm, FormProvider } from "react-hook-form";
-import { Box, Typography, TextField, Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
+import { Box, Typography, TextField, Dialog, DialogTitle, DialogContent, IconButton, Button } from "@mui/material";
 import Favorite from "../../assets/images/home/Heart_01.svg";
 import FavroiteBorder from "../../assets/images/home/UnHeart.svg";
 import { useAppDispatch, useAppSelector } from "../../store";
@@ -11,7 +11,8 @@ import Paragrafy from "../Paragrafy/Paragrafy";
 import { closeDialogMastered } from "../../store/slice/LanguageHomeSlice";
 import { RxEyeOpen } from "react-icons/rx";
 import { FaRegEyeSlash } from "react-icons/fa";
-
+import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
+import "./MasteredModal.scss"
 const MasteredModal = () => {
     const dispatch = useAppDispatch();
     const isMastereddialog = useAppSelector((state) => state.LanguagetextData.isDialogOpenMastered);
@@ -49,20 +50,17 @@ const MasteredModal = () => {
 
     useEffect(() => {
         if (lives === 0) {
-
-
             setShowGameOver(true);
             setSelectedAnswer(null);
-
         }
+    }, [lives]);
 
 
+    const speak = (text: string) => {
 
-
-    }, [lives, correctAnsewrscount, quizData]);
-
-
-
+        const utterance = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.speak(utterance);
+    };
 
     const handleAnswerClick = (answer: string, isCorrect: boolean) => {
         if (isAnswered) return;
@@ -75,9 +73,19 @@ const MasteredModal = () => {
 
         if (isCorrect) {
             setCorrectAnsewrsCount((prevCount) => prevCount + 1);
+            speak(answer);
         } else {
-            setLives((prevLives) => prevLives - 1);
+            setLives(prevLives => prevLives - 1);
+            const correctAnswer = quizData?.answers
+                ? Object.entries(quizData.answers).find(([, value]) => value)?.[0]
+                : undefined;
+
+
+            if (correctAnswer) {
+                speak(correctAnswer);
+            }
         }
+
     };
 
     const handleSubmit = async () => {
@@ -194,6 +202,20 @@ const MasteredModal = () => {
                                             style={{ pointerEvents: isAnswersOpen && !isAnswered ? 'auto' : 'none' }}
                                         >
                                             {key}
+                                            {isAnswered && (
+                                                (key === selectedAnswer && isCorrect) || (quizData.answers[key] && key !== selectedAnswer)
+                                            ) && (
+                                                    <Button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            speak(key);
+                                                        }}
+                                                        
+
+                                                    >
+                                                        <KeyboardVoiceIcon />
+                                                    </Button>
+                                                )}
 
                                         </div>
                                     ))}
