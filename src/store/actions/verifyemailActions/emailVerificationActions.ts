@@ -9,6 +9,7 @@ export const confirmEmail = createAsyncThunk(
       localStorage.setItem('token', response.data.data.accessToken);
       localStorage.setItem('refreshToken', response.data.data.refreshToken);
       localStorage.setItem('userId', response.data.data.userId);
+      
       return response.data;
     } catch (error: any) {
       const errorMessage = error.response?.data?.errors?.[0] || error.response?.data?.message || "Failed to confirm email.";

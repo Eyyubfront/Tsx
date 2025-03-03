@@ -11,7 +11,7 @@ import BackButton from "../../components/BackButton/BackButton";
 import { MuiOtpInput } from 'mui-one-time-password-input';
 import "./VerifyEmailPage.scss"
 const VerifyEmailPage = () => {
-  const [counter, setCounter] = useState(30 * 6);
+  const [counter, setCounter] = useState(30 * 2);
   const [canResend, setCanResend] = useState(false);
   const [otp, setOtp] = useState('');
   const [isOtpIncorrect, setIsOtpIncorrect] = useState(false);
