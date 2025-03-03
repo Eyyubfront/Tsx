@@ -91,7 +91,7 @@ const Login = () => {
           localStorage.setItem('userId', userId)
 
           if (hasLanguage && hasNotificationSetting) {
-            navigate("/home");
+            navigate("/");
           }else if(hasLanguage && !hasNotificationSetting){
             navigate("/learntime");
           }
