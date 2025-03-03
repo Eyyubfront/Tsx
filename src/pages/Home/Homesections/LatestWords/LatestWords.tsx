@@ -9,7 +9,7 @@ import {
 } from '../../../../store/actions/learingActions/learingwordsActions';
 import { RootState, useAppDispatch, useAppSelector } from '../../../../store/index';
 import TableComponent from '../../../../components/TableComponents/TableComponents';
-import { MdDeleteOutline, MdEdit } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 import Savedicon from "../../../../assets/images/home/Bookmark.svg";
 import NotSavedicon from "../../../../assets/images/home/nosaved.svg";
 import { Button, TableBody, TableRow, TableCell, Typography, TextField, DialogContent } from '@mui/material';
@@ -19,6 +19,7 @@ import FileInput from '../../../FailInput/FileInput';
 import e from "../../../../assets/images/home/Savedmastered.svg";
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import AlertDialog from '../../../../components/AlertDialog/AlertDialog';
+import Trash from "../../../../assets/images/home/Trash_Full.svg"
 
 interface LearnSearchProps {
     searchTerm?: string;
@@ -115,14 +116,15 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
                                     variant="outlined"
                                     onClick={() => handleEdit(id, source || '', translation || '')}
                                 >
-                                    <MdEdit />
+                                    <MdEdit style={{fontSize:"20px"}} />
                                 </Button>
                                 <Button
                                     className='table_button'
                                     variant="outlined"
                                     onClick={() => handleRemoveText(id)}
                                 >
-                                    <MdDeleteOutline style={{ color: 'red' }} />
+                                  
+                                    <img src={Trash} alt="" />
                                 </Button>
                                 <Button
                                     className='table_button'

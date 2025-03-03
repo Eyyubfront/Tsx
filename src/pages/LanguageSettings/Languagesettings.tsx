@@ -5,11 +5,11 @@ import "./Languagesettings.scss";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import LanguageSettingsModal from "./LanguageSettingsModal/LanguageSettingsModal";
 import { removeLanguage } from "../../store/actions/languageActions/languageActions";
-import { MdDeleteOutline } from "react-icons/md";
 import AlertDialog from "../../components/AlertDialog/AlertDialog";
 import { LanguageClose, LanguageToogleClose } from "../../store/slice/languageSlice";
 import { useEffect } from "react";
 import { getInitialLanguage, getTexts, selecetlangaugesave } from "../../store/actions/languagehome/languagehome";
+import Trash from "../../assets/images/home/Trash_Full.svg"
 
 const Languagesettings = () => {
   const dispatch = useAppDispatch();
@@ -54,14 +54,15 @@ const Languagesettings = () => {
         <div className="language_settings">
           <div className="languagesetings__top">
             {texts?.map((language: LanguageHomes) => (
-              <div key={language.id} style={{ display: "flex", alignItems: "center", marginBottom: "5px", justifyContent: "space-between" }}>
-                <MenuItem value={language.id} onClick={() => handleSelectLanguage(Number(language.id))} style={{ marginRight: "10px" }}>
+              <div className="language_setingsboxed" key={language.id} style={{ display: "flex", alignItems: "center", marginBottom: "5px", justifyContent: "space-between" }}>
+                <MenuItem  value={language.id} onClick={() => handleSelectLanguage(Number(language.id))} style={{ marginRight: "10px" }}>
                   {defaultText?.isSwapped
                     ? `${language.translationLanguage} - ${language.sourceLanguage}`
                     : `${language.sourceLanguage} - ${language.translationLanguage}`}
                 </MenuItem>
                 <Button onClick={() => handleRemoveText(language.id ?? 0)}>
-                  <MdDeleteOutline className="delet_language" />
+                
+                  <img className="delet_language" src={Trash} alt="" />
                 </Button>
               </div>
             ))}

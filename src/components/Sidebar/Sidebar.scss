@@ -28,7 +28,7 @@ height: max-content;
             font-family: Inter;
             font-size: 18px;
             font-weight: 360;
-            margin-left: 34px;
+            margin-left: 20px;
             padding: 5px 0;
             cursor: pointer;
         }
@@ -67,16 +67,26 @@ height: max-content;
         display: block;
         background-color: white;
         border: 1px solid white;
+.sidebar_topcontainer{
 
-        .sidebar_toplinks,
-        .sidebar_botomnames {
-            background-color: #F9F8FD;
-            border: 1px solid #F9F8FD;
-            background-color: #F9F8FD;
-            height: 44px;
-            border-radius: 10px;
-            padding: 10px;
-        }
+    .sidebar_toplinks,
+    .sidebar_botomnames {
+        background-color: #F9F8FD;
+        border: 1px solid #F9F8FD;
+        background-color: #F9F8FD;
+        height: 44px;
+        border-radius: 10px;
+        padding: 10px;
+    }
+       .sidebar_botomnames {
+        font-family: Inter;
+        font-size: 18px;
+        font-weight: 360;
+        margin-left: 3px;
+        padding: 9px 26px;
+        cursor: pointer;
+    }
+}
     }
 }
 

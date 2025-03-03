@@ -11,7 +11,7 @@
         cursor: pointer;
         align-items: center;
     }
-   
+
 }
 
 .dialog-title {
@@ -19,9 +19,17 @@
     align-items: center;
     justify-content: space-between;
     padding: 5px;
-    .notifiation_topname{
-        font-weight: bold;
+    gap: 5px;
+
+    .notifiation_topname {
+       
         font-size: 22px;
+        font-family: DM Serif Display;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 25px;
+        letter-spacing: 0%;
+
     }
 }
 
@@ -56,16 +64,17 @@
     }
 }
 
-.form_datetop{
-   font-family: Inter,sans-serif;
+.form_datetop {
+    font-family: Inter, sans-serif;
     text-align: left;
     margin-left: 4px;
 
     font-size: 17px;
 }
-.css-1rju2q6-MuiButtonBase-root-MuiMenuItem-root{
+
+.css-1rju2q6-MuiButtonBase-root-MuiMenuItem-root {
     align-items: baseline !important;
     display: flex;
     flex-direction: column;
-   
+
 }
