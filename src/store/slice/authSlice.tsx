@@ -128,6 +128,7 @@ const authSlice = createSlice({
       .addCase(changeVisibility.fulfilled, (state) => {
         state.loading = false;
         state.success=true
+ 
       })
       .addCase(changeVisibility.rejected, (state, action) => {
         state.loading = false;

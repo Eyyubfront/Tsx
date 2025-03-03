@@ -7,6 +7,7 @@ import "./Configurate.scss"
 const Configurate = () => {
     const dispatch = useAppDispatch();
     const { quizHidden } = useAppSelector((state) => state.Auth);
+console.log(quizHidden);
 
     const handleToggle = () => {
         dispatch(toggleQuizHidden()); 
