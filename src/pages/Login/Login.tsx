@@ -78,7 +78,7 @@ const Login = () => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       const idToken = await user.getIdToken(true);
-  
+
       dispatch(sendIdToken(idToken))
         .unwrap()
         .then((data) => {
@@ -86,20 +86,20 @@ const Login = () => {
 
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
-  
+
           dispatch(setUserId(userId));
           localStorage.setItem('userId', userId)
 
           if (hasLanguage && hasNotificationSetting) {
-            navigate("/");
-          }else if(hasLanguage && !hasNotificationSetting){
+            window.location.pathname = "/";
+          } else if (hasLanguage && !hasNotificationSetting) {
             navigate("/learntime");
           }
           else {
             navigate("/languageselector");
           }
         });
-  
+
     } catch (error) {
       console.error("Google login error: ", error);
     }
