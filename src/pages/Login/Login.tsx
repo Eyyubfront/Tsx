@@ -83,7 +83,9 @@ const Login = () => {
         .unwrap()
         .then((data) => {
           const { accessToken, refreshToken, userId, hasLanguage, hasNotificationSetting } = data;
-  
+console.log("hasLanguage",hasLanguage);
+console.log("hasNotificationSetting",hasNotificationSetting);
+
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
   
