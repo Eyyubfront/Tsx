@@ -7,7 +7,7 @@ import "./Configurate.scss"
 const Configurate = () => {
     const dispatch = useAppDispatch();
     const { quizHidden } = useAppSelector((state) => state.Auth);
-
+console.log(quizHidden);
 
     const handleToggle = () => {
         dispatch(toggleQuizHidden()); 
@@ -15,12 +15,12 @@ const Configurate = () => {
 
     return (
         <div className="configurate">
-         <p className="configurate__tittle">   Hide answers on quiz </p>
+         <p className="configurate__tittle">Hide answers on quiz </p>
             <div className="signs_toggle" onClick={handleToggle}>
                 {quizHidden ? (
-                    <MdToggleOff className="togle_iconsof" />
-                ) : (
                     <MdToggleOn className="togle_icons" />
+                ) : (
+                    <MdToggleOff className="togle_iconsof" />
                 )}
             </div>
         </div>
