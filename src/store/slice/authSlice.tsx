@@ -91,6 +91,7 @@ const authSlice = createSlice({
       })
       .addCase(sendIdToken.fulfilled, (state, action: any) => {
         state.loading = false;
+        state.isAuth = true;
         state.userId = action.payload.userId;
         state.veriyuse = true;
       })

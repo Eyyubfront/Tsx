@@ -7,7 +7,6 @@ import "./SelecetLanguage.scss";
 const SelectLanguage = () => {
     const dispatch = useAppDispatch();
     const { texts, selectedLanguageId, defaultText, datasetselected } = useAppSelector((state) => state.LanguagetextData);
-    console.log("dataselec", datasetselected);
 
     useEffect(() => {
         dispatch(getInitialLanguage());
