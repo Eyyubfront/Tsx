@@ -242,7 +242,7 @@ const QuizModal = () => {
                                                             e.stopPropagation();
                                                             speak(key);
                                                         }}
-                                                       
+
 
                                                     >
                                                         <KeyboardVoiceIcon />

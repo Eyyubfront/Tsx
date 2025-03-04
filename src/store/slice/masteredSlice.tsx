@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { getAllMastered, MasteredPropsUse } from "../actions/masteredActions/masteredActions";
+import { getAllMastered, masteredisfetch, MasteredPropsUse } from "../actions/masteredActions/masteredActions";
+import {  storycreatgptcreat } from "../actions/authActions";
 
 interface MasteredProps{
     mastereds: MasteredPropsUse[],
@@ -36,6 +37,31 @@ const categorySlice = createSlice({
                 state.loading = false;
                 state.error = action.payload as string;
             })
+
+            .addCase(masteredisfetch.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+              })
+              .addCase(masteredisfetch.fulfilled, (state) => {
+                state.loading = false;
+            
+              })
+              .addCase(masteredisfetch.rejected, (state, action) => {
+                state.loading = false;  
+                state.error = action.payload as string;
+              })
+              .addCase(storycreatgptcreat.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+              })
+              .addCase(storycreatgptcreat.fulfilled, (state) => {
+                state.loading = false;
+              
+              })
+              .addCase(storycreatgptcreat.rejected, (state, action) => {
+                state.loading = false;  
+                state.error = action.payload as string;
+              })
           
     },
 });

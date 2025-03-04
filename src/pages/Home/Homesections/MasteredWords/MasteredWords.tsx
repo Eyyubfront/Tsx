@@ -1,7 +1,7 @@
 import { Button, TableBody, TableRow, TableCell, Typography, DialogContent } from "@mui/material";
 import TableComponent from "../../../../components/TableComponents/TableComponents";
 import { useAppDispatch, useAppSelector } from "../../../../store";
-import { getAllMastered, MasteredPropsUse } from "../../../../store/actions/masteredActions/masteredActions";
+import { getAllMastered, masteredisfetch, MasteredPropsUse } from "../../../../store/actions/masteredActions/masteredActions";
 import { useEffect, useState } from "react";
 import Savedicon from "../../../../assets/images/home/Bookmark.svg";
 import NotSavedicon from "../../../../assets/images/home/nosaved.svg";
@@ -13,19 +13,23 @@ import { Link } from "react-router-dom";
 import Paragrafy from "../../../../components/Paragrafy/Paragrafy";
 import AlertDialog from "../../../../components/AlertDialog/AlertDialog";
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
-
+import { storycreatgptcreat } from "../../../../store/actions/authActions";
+import exceldowland from '../../../../assets/images/header/exceldowland.svg';
 interface LearnSearchProps {
     searchTerm: string;
-}     
-
-
-
+}
 
 const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
     const dispatch = useAppDispatch();
     const mastereds = useAppSelector((state) => state.mastered.mastereds);
+
+    console.log(mastereds);
+
     const { defaultText } = useAppSelector((state) => state.LanguagetextData);
     const [showGameOver, setShowGameOver] = useState(false);
+    const [selectedItems, setSelectedItems] = useState<number[]>([]);
+    const [generatestory, setGeneratestory] = useState<string>("");
+    const [selectAll, setSelectAll] = useState(false)
     useEffect(() => {
         dispatch(getAllMastered());
     }, [dispatch]);
@@ -57,19 +61,87 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
         dispatch(closeDialogMastered())
     }
 
+    const handleCheckboxChange = (id: number) => {
+        setSelectedItems((prevSelected) =>
+            prevSelected.includes(id)
+                ? prevSelected.filter((item) => item !== id)
+                : [...prevSelected, id]
+        )
+
+    }
+    const handleexportfile = async () => {
+        if (selectedItems.length === 0) {
+            alert("No items selected");
+            return;
+        }
+
+        await dispatch(masteredisfetch({
+            masteredIds: selectedItems,
+         
+        }));
 
 
+   
+        setSelectedItems([]);
+    }
 
+    const handleSelectAllChange = () => {
+        setSelectAll(!selectAll);
+        if (!selectAll) {
+            const allIds = mastereds.map(item => item.id);
+            setSelectedItems(allIds);
+        } else {
+            setSelectedItems([]);
+        }
+    };
+    const handlestory = async () => {
+        const source = mastereds.map(item => item.source).join("");
+        const translation = mastereds.map(item => item.translation).join("");
 
+        try {
+            const story = await dispatch(storycreatgptcreat({ source, translation })).unwrap();
+            setGeneratestory(story);
+        } catch (error) {
+            console.error("Error creating story:", error);
+
+        }
+    };
     return (
         <div>
             <MasteredModal />
             <TableComponent title="Mastered Words">
+                <div >
+                    <div
+                        className='story_buttoncreat'
 
+                        onClick={() => handlestory}
+                    >
+                        <Typography> Creat Story </Typography>
+                    </div>
+                    <div className="export_text" onClick={handleexportfile}>
+                        <div>
+                            <img src={exceldowland} alt="" />
+                        </div>
+                        <p className="words_tittle">Download Words</p>
+                    </div>
+                </div>
+                <div className="selecet_alls" onClick={handleSelectAllChange}>
+                    <input type="checkbox" />
+                    <div>
+                        Select Alls
+                    </div>
+                </div>
                 <TableBody>
                     {filteredItems?.length ? filteredItems.map((item) => (
                         <TableRow className='table_aligns' key={item.id}>
-                            <TableCell sx={{ borderBottom: "none" }}>
+
+                            <TableCell sx={{ borderBottom: "none", display: "flex", alignItems: "center", gap: "6px" }}>
+                                <div className="check_box" >
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedItems.includes(item.id)}
+                                        onChange={() => handleCheckboxChange(item.id)} />
+                                </div>
                                 {defaultText?.isSwapped
                                     ? <Typography>{`${item.translation} - ${item.source}`}</Typography>
                                     : <Typography>{`${item.source} - ${item.translation}`}</Typography>
@@ -84,16 +156,16 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
                                 >
                                     <img
                                         src={
-                                          mastereds.some(saved => saved.id === item.id && saved.isMastered)
-                                                    ? Savedicon
-                                                    : NotSavedicon
+                                            mastereds.some(saved => saved.id === item.id && saved.isMastered)
+                                                ? Savedicon
+                                                : NotSavedicon
                                         }
                                     />
                                 </Button>
                                 <Button
                                     className='table_button'
                                     variant="outlined"
-                                    onClick={() => speak(item.translation || '')} 
+                                    onClick={() => speak(item.translation || '')}
                                 >
                                     <Typography><KeyboardVoiceIcon /></Typography>
                                 </Button>
@@ -108,12 +180,22 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
             </TableComponent>
 
 
+            {
+                generatestory && (
+                    <div>
+                        <h2>hekaye</h2>
+                        <p>{generatestory}</p>
+                    </div>
+                )
+            }
+
             <div onClick={handleQuizClick}
                 className="masteredquiz_button">
                 <Link style={{ textDecoration: "none", color: 'black', cursor: "pointer" }} to="">
                     <Paragrafy className='quiz_center' fontsize='24px' fontfamily='DM Serif Display' text='Mastered Quiz' />
                 </Link>
             </div>
+
             {showGameOver && (
                 <AlertDialog
                     open={showGameOver}

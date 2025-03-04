@@ -136,14 +136,14 @@ export const addformFile = createAsyncThunk('home/addformFile', async (file: Fil
 
 
 export const sendIdToken = createAsyncThunk(
-  'auth/sendIdToken',  
+  'auth/sendIdToken',
   async (idToken: string, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(
         '/GoogleAuthWeb',
-         {idToken} 
+        { idToken }
       );
-      return  response.data.data; 
+      return response.data.data;
     } catch (error) {
       return rejectWithValue('Bir hata oluştu');
     }
@@ -157,14 +157,14 @@ export const sendIdToken = createAsyncThunk(
 export const changeVisibility = createAsyncThunk(
   'auth/changeVisibility',
   async (_, thunkAPI) => {
-      try {
-          const response = await axiosInstance.post(
-              '/ChangeQuizVisibility'  
-          );
-          return response.data; 
-      } catch (error) {
-          return thunkAPI.rejectWithValue(error);
-      }
+    try {
+      const response = await axiosInstance.post(
+        '/ChangeQuizVisibility'
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
 );
 
@@ -181,5 +181,40 @@ export const getuserSettings = createAsyncThunk('home/getuserSettings', async (_
 });
 
 
+
+
+
+const OPENROUTER_API_KEY = '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';
+const YOUR_SITE_URL = 'https://openrouter.ai/api/v1/chat/completions';
+const YOUR_SITE_NAME = 'Language Project';
+
+export const storycreatgptcreat = createAsyncThunk(
+  'storycreatgpt/storycreatgpt',
+  async ({ source, translation }: { source: string, translation: string }) => {
+    const response = await axios.post(
+      'https://openrouter.ai/api/v1/chat/completions',
+      {
+        model: 'deepseek/deepseek-r1:free',
+        messages: [
+          {
+            role: 'user',
+            content: `Please write me a story from my words: ${source} with translation: ${translation} `
+          }
+        ]
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${OPENROUTER_API_KEY}`,
+          'HTTP-Referer':`${YOUR_SITE_URL}`,
+          'X-Title': `${YOUR_SITE_NAME}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+ 
+    return response.data;
+    
+  }
+);
 
 
