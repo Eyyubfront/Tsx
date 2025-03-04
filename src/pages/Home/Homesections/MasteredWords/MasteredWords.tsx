@@ -58,7 +58,11 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
     }
 
 
-
+    // const handleGenerateStory = async (source: string, translation: string) => {
+    //     const story = await fetchGeneratedStory(source, translation);
+    //     setGeneratedStory(story);  // Hikayeyi state'e kaydet
+    // };
+    
 
 
     return (
