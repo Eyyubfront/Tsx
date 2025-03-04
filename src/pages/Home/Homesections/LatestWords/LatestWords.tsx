@@ -175,7 +175,7 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
                                 </div>
                             )}
                             <div className='editdialog_buttom'>
-                                <Button className='buton_edithandle' onClick={handleEditDialogClose}>Cansel</Button>
+                                <Button className='buton_edithandle' onClick={handleEditDialogClose}>Cancel</Button>
                                 <Button className='buton_edithandle' onClick={handleUpdate}>Update</Button>
                             </div>
                         </DialogContent>

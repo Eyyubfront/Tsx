@@ -29,17 +29,20 @@
 
         }
     }
-    .timesetting-right{
-        .formsettings{
+
+    .timesetting-right {
+        .formsettings {
             display: flex;
             flex-direction: column;
             gap: 42px;
-         .left-box{
-            display: flex;
-            flex-direction: column;
-            gap: 22px;
-         }
-            .timeparagraf{
+
+            .left-box {
+                display: flex;
+                flex-direction: column;
+                gap: 22px;
+            }
+
+            .timeparagraf {
                 font-family: Inter;
                 font-size: 20px;
                 font-weight: 600;
@@ -47,9 +50,10 @@
                 text-align: left;
                 text-underline-position: from-font;
                 text-decoration-skip-ink: none;
-                
+
             }
-            .time-inputs{
+
+            .time-inputs {
                 display: flex;
                 align-items: center;
                 gap: 6px;
@@ -57,12 +61,31 @@
         }
     }
 }
-.update_meesage{
+
+.update_meesage {
     color: green;
     text-align: center;
 }
+
 @media (max-width:600px) {
-    .time_settings{
+    .time_settings {
         width: 100%;
+    }
+}
+
+
+@media (max-width:611px) {
+    .time_settings {
+        .timesetting-right {
+            .formsettings {
+                .time-inputs {
+                    flex-direction: column !important;
+
+                    .use-form-input {
+                        width: 100%;
+                    }
+                }
+            }
+        }
     }
 }

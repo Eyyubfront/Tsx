@@ -204,12 +204,12 @@
         }
 
         .header_right {
-            gap: 5px;
+            gap: 3px;
         }
     }
 }
 
-@media (min-width:601px) and (max-width:683px) {
+@media (min-width:601px) and (max-width:690px) {
 .header{
  
     .header_right{
@@ -222,5 +222,6 @@
             padding: 17px;
         }
     }
+   
 }
 }

@@ -78,33 +78,40 @@ const Login = () => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       const idToken = await user.getIdToken(true);
-
+      
       dispatch(sendIdToken(idToken))
         .unwrap()
         .then((data) => {
           const { accessToken, refreshToken, userId, hasLanguage, hasNotificationSetting } = data;
-
+          console.log('Login data:', data);
+          console.log('hasLanguage:', hasLanguage);
+          console.log('hasNotificationSetting:', hasNotificationSetting);
+      
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
-
+      
           dispatch(setUserId(userId));
-          localStorage.setItem('userId', userId)
-
+          localStorage.setItem('userId', userId);
+      
           if (hasLanguage && hasNotificationSetting) {
-            window.location.pathname = "/";
+            navigate('/');
+            console.log('home geldi');
           } else if (hasLanguage && !hasNotificationSetting) {
-            navigate("/learntime");
-          }
-          else {
-            navigate("/languageselector");
+            navigate('/learntime');
+            console.log('vaxta geldi');
+          } else {
+            console.log('language geldi');
+            setTimeout(() => {
+              navigate('/languageselector');
+              console.log(' languageselector');
+            }, 100); 
           }
         });
-
     } catch (error) {
-      console.error("Google login error: ", error);
+      console.error('Google login error: ', error);
     }
   };
-
+  
 
 
   return (

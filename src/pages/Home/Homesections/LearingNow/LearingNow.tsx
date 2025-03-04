@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { fetchTexts, TextItem, ITextItem } from '../../../../store/actions/learingActions/learingnowActions';
 import { useAppDispatch, useAppSelector } from '../../../../store/index';
 import TableComponent from '../../../../components/TableComponents/TableComponents';
-// import Savedicon from "../../../../assets/images/home/Bookmark.svg";
 import { Button, TableBody, TableRow, TableCell, Typography } from '@mui/material';
 import "./LearingNow.scss"
 import { selecetwordText } from '../../../../store/actions/learingActions/learingwordsActions';

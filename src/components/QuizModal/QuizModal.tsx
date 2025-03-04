@@ -133,7 +133,7 @@ const QuizModal = () => {
         setAnsweredQuestions([0])
         setShowGameOver(false);
         setCorrectAnsewrsCount(0)
-
+        
     };
     const handleCloseDialog = () => {
         dispatch(closeQuizModal());
@@ -242,7 +242,7 @@ const QuizModal = () => {
                                                             e.stopPropagation();
                                                             speak(key);
                                                         }}
-                                                       
+
 
                                                     >
                                                         <KeyboardVoiceIcon />
