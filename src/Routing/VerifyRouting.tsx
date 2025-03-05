@@ -18,7 +18,7 @@ const VerifyRouting = () => {
 
 
 
-    return <Outlet />
+  return <Outlet />
 };
 
 export default VerifyRouting;

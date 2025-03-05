@@ -72,39 +72,45 @@ const Login = () => {
         })
     }
   };
+
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       const idToken = await user.getIdToken(true);
 
-      dispatch(sendIdToken(idToken)).then((data: any) => {
-        if (sendIdToken.fulfilled) {
-          // fulfied artiqdir yoxlamag ucun
-          const { accessToken, refreshToken, userId, hasLanguage, hasNotificationSetting } = data;
+      const actionResult = await dispatch(sendIdToken(idToken));
+      if (sendIdToken.fulfilled.match(actionResult)) {
+        const { accessToken, refreshToken, userId, hasLanguage, hasNotificationSetting } = actionResult.payload;
 
-          localStorage.setItem('accessToken', accessToken);
-          localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('userId', userId);
 
-          localStorage.setItem('userId', userId);
+        if (hasLanguage && hasNotificationSetting) {
+          console.log("1");
 
-          if (hasLanguage && hasNotificationSetting) {
-            console.log('home geldi');
-            navigate('/');
-          } else if (hasLanguage && !hasNotificationSetting) {
-            console.log('vaxta geldi');
-            navigate('/learntime');
-          } else {
-            console.log('language geldi');
-            navigate('/languageselector');
-          }
+          navigate('/');
+          window.location.reload();
+
+
+        } else if (hasLanguage && !hasNotificationSetting) {
+          console.log("2");
+          navigate('/learntime');
+       
+        } else {
+          console.log("3");
+          navigate('/languageselector');
+         
         }
-
-      });
+      } else {
+        console.error('Google login dispatch failed');
+      }
     } catch (error) {
       console.error('Google login error: ', error);
     }
   };
+
 
 
 
@@ -144,7 +150,7 @@ const Login = () => {
               )}
             </div>
 
-         
+
 
             {signUp ? (
               <>

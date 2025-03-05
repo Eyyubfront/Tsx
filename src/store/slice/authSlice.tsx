@@ -16,8 +16,6 @@ interface AuthState {
   quizHidden: boolean |null ; 
   notificationDisabled: boolean;
 
-  hasLanguage: boolean;
-  hasNotificationSetting: boolean;
 }
 
 const initialState: AuthState = {
@@ -30,8 +28,7 @@ const initialState: AuthState = {
   isAuth: null,
   veriyuse: false,
   full: false,
-  hasLanguage: false,
-  hasNotificationSetting: false,
+
   datagoogle: false,
   quizHidden: null ,
   notificationDisabled: false
@@ -98,8 +95,6 @@ const authSlice = createSlice({
         state.loading = false;
         state.isAuth = true;
         state.userId = action.payload.userId;
-        state.hasLanguage = action.payload.hasLanguage;
-        state.hasNotificationSetting = action.payload.hasNotificationSetting;
         state.veriyuse = true;
 
     })

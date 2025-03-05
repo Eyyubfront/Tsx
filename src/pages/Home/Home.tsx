@@ -21,14 +21,14 @@ const Home = () => {
             dispatch(openQuizModal());
         }
     };
-
+   
     return (
         <div className="home_container">
             <Header />
             <div className="homepage">
                 <div className="homepage_center">
                     <LexiconCards />
-           
+
                 </div>
 
                 <div className="homepage_bottom">

@@ -13,13 +13,13 @@ import { MdEdit } from "react-icons/md";
 import Savedicon from "../../../../assets/images/home/Bookmark.svg";
 import NotSavedicon from "../../../../assets/images/home/nosaved.svg";
 import { Button, TableBody, TableRow, TableCell, Typography, TextField, DialogContent } from '@mui/material';
-import "./LatestWords.scss"
+import "./LatestWords.scss";
 import { useLocation } from 'react-router-dom';
 import FileInput from '../../../FailInput/FileInput';
 import e from "../../../../assets/images/home/Savedmastered.svg";
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import AlertDialog from '../../../../components/AlertDialog/AlertDialog';
-import Trash from "../../../../assets/images/home/Trash_Full.svg"
+import Trash from "../../../../assets/images/home/Trash_Full.svg";
 
 interface LearnSearchProps {
     searchTerm?: string;
@@ -31,19 +31,18 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
     const items = useAppSelector((state: RootState) => state.latestWords.items.items);
     const { defaultText } = useAppSelector((state) => state.LanguagetextData);
     const [editText, setEditText] = useState<{ id: number; source: string; translation: string; } | null>(null);
-    const location = useLocation();
     const [open, setOpen] = useState<boolean>(false);
+    const location = useLocation();
+
     useEffect(() => {
         dispatch(wordfetchTexts({ page: 1, pageSize: showAll ? 1000 : 10 }));
     }, [dispatch, showAll]);
 
     const handleEditDialogClose = () => {
-        setOpen(false)
-    }
-
+        setOpen(false);
+    };
 
     const speak = (text: string) => {
-
         const utterance = new SpeechSynthesisUtterance(text);
         window.speechSynthesis.speak(utterance);
     };
@@ -61,12 +60,12 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
     const handleUpdateText = ({ id, source, translation }: { id: number; source: string; translation: string }) => {
         const updatedItem = { id, source, translation };
         dispatch(updateTextAction(updatedItem));
-        handleEditDialogClose()
+        handleEditDialogClose();
     };
 
     const handleEdit = (id: number, source: string, translation: string) => {
         setEditText({ id, source, translation });
-        setOpen(true)
+        setOpen(true);
     };
 
     const handleUpdate = () => {
@@ -76,18 +75,29 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
         }
     };
 
+
+    const handleDeleteAll = () => {
+        items.forEach(item => {
+            dispatch(removeText({ id: item.id }));
+        });
+    };
+
     const filteredItems = items.filter((item: IWordsitem) =>
         item.source?.toLowerCase().includes(searchTerm?.toLowerCase()) || item.translation?.toLowerCase().includes(searchTerm?.toLowerCase())
     );
 
     const title = location.pathname === '/lexioncards/vocablary' ? 'Vocablary' : 'Latest added words';
 
-
-    console.log(filteredItems)
     return (
         <div>
             <TableComponent title={title}>
                 <FileInput />
+             
+                <div onClick={handleDeleteAll}>
+                    <Button variant="outlined" color="error">
+                        Delete All
+                    </Button>
+                </div>
                 <TableBody>
                     {filteredItems?.length ? filteredItems.map(({ id, source, translation, isMastered, isLearningNow }) => (
                         <TableRow className='table_aligns' key={id}>
@@ -123,7 +133,6 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
                                     variant="outlined"
                                     onClick={() => handleRemoveText(id)}
                                 >
-
                                     <img src={Trash} alt="" />
                                 </Button>
                                 <Button
@@ -133,7 +142,6 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
                                 >
                                     <Typography><KeyboardVoiceIcon /></Typography>
                                 </Button>
-
                             </TableCell>
                         </TableRow>
                     ))
