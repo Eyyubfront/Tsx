@@ -17,7 +17,6 @@ import { auth, provider, signInWithPopup } from './Firebase';
 import UseFormInput from '../../components/PrimaryInput/UseFormInput';
 import googleimg from '../../assets/images/home/Google__G__logo.svg.png';
 import "./Login.scss"
-import { setUserId } from '../../store/slice/timeSlice';
 const schema = Yup.object().shape({
   email: Yup.string()
     .email("Email is not valid.")
@@ -78,40 +77,35 @@ const Login = () => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       const idToken = await user.getIdToken(true);
-      
-      dispatch(sendIdToken(idToken))
-        .unwrap()
-        .then((data) => {
+
+      dispatch(sendIdToken(idToken)).then((data: any) => {
+        if (sendIdToken.fulfilled) {
+          // fulfied artiqdir yoxlamag ucun
           const { accessToken, refreshToken, userId, hasLanguage, hasNotificationSetting } = data;
-          console.log('Login data:', data);
-          console.log('hasLanguage:', hasLanguage);
-          console.log('hasNotificationSetting:', hasNotificationSetting);
-      
+
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
-      
-          dispatch(setUserId(userId));
+
           localStorage.setItem('userId', userId);
-      
+
           if (hasLanguage && hasNotificationSetting) {
-            navigate('/');
             console.log('home geldi');
+            navigate('/');
           } else if (hasLanguage && !hasNotificationSetting) {
-            navigate('/learntime');
             console.log('vaxta geldi');
+            navigate('/learntime');
           } else {
             console.log('language geldi');
-            setTimeout(() => {
-              navigate('/languageselector');
-              console.log(' languageselector');
-            }, 100); 
+            navigate('/languageselector');
           }
-        });
+        }
+
+      });
     } catch (error) {
       console.error('Google login error: ', error);
     }
   };
-  
+
 
 
   return (
@@ -149,6 +143,8 @@ const Login = () => {
                 </div>
               )}
             </div>
+
+         
 
             {signUp ? (
               <>

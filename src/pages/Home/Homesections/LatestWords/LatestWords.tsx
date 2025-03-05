@@ -116,14 +116,14 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
                                     variant="outlined"
                                     onClick={() => handleEdit(id, source || '', translation || '')}
                                 >
-                                    <MdEdit style={{fontSize:"20px"}} />
+                                    <MdEdit style={{ fontSize: "20px" }} />
                                 </Button>
                                 <Button
                                     className='table_button'
                                     variant="outlined"
                                     onClick={() => handleRemoveText(id)}
                                 >
-                                  
+
                                     <img src={Trash} alt="" />
                                 </Button>
                                 <Button

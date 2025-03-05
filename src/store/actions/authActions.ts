@@ -182,23 +182,21 @@ export const getuserSettings = createAsyncThunk('home/getuserSettings', async (_
 
 
 
-
-
-const OPENROUTER_API_KEY = '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';
+const OPENROUTER_API_KEY = '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';
 const YOUR_SITE_URL = 'https://openrouter.ai/api/v1/chat/completions';
 const YOUR_SITE_NAME = 'Language Project';
 
 export const storycreatgptcreat = createAsyncThunk(
   'storycreatgpt/storycreatgpt',
-  async ({ source, translation }: { source: string, translation: string }) => {
+  async ({  translation }: {  translation: string }) => {
     const response = await axios.post(
       'https://openrouter.ai/api/v1/chat/completions',
       {
-        model: 'deepseek/deepseek-r1:free',
+        model: 'gpt-3.5-turbo',
         messages: [
           {
             role: 'user',
-            content: `Please write me a story from my words: ${source} with translation: ${translation} `
+           content: `Please write a short, 10-sentence story based on this source text: translation: "${translation} `
           }
         ]
       },
@@ -211,9 +209,9 @@ export const storycreatgptcreat = createAsyncThunk(
         }
       }
     );
- 
-    return response.data;
-    
+
+    return response.data.choices[0].message.content;
+
   }
 );
 

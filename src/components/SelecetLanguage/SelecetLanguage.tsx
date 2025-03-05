@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { getInitialLanguage, languageswap, selecetlangaugesave } from '../../store/actions/languagehome/languagehome';
-import { setSelectedLanguage } from '../../store/slice/LanguageHomeSlice';
+
 import "./SelecetLanguage.scss";
 
 const SelectLanguage = () => {
     const dispatch = useAppDispatch();
-    const { texts, selectedLanguageId, defaultText, datasetselected } = useAppSelector((state) => state.LanguagetextData);
+    const {  selectedLanguageId, defaultText, datasetselected } = useAppSelector((state) => state.LanguagetextData);
+
 
     useEffect(() => {
         dispatch(getInitialLanguage());
@@ -18,9 +19,6 @@ const SelectLanguage = () => {
 
             dispatch(selecetlangaugesave(Number(selectedLanguageId)));
             dispatch(getInitialLanguage());
-
-        } else if (texts.length > 0 && selectedLanguageId === null) {
-            dispatch(setSelectedLanguage(texts[0].id));
         }
     }, [selectedLanguageId]);
 

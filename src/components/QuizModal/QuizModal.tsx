@@ -1,11 +1,11 @@
 import { useForm, FormProvider } from "react-hook-form";
-import { Box, Typography, TextField, Dialog, DialogTitle, DialogContent, IconButton, Button } from "@mui/material";
+import { Box, Typography, TextField, Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
 import Favorite from "../../assets/images/home/Heart_01.svg";
 import FavroiteBorder from "../../assets/images/home/UnHeart.svg";
 import Savedicon from "../../assets/images/home/Bookmark.svg";
 import NotSavedicon from "../../assets/images/home/nosaved.svg";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { fetchQuizData, quizSaveData, quizcountReport } from "../../store/actions/quizActions/quizActions";
+import { QuizSession, fetchQuizData, quizSaveData, quizcountReport } from "../../store/actions/quizActions/quizActions";
 import { useEffect, useState } from "react";
 import { Close } from '@mui/icons-material';
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
@@ -22,7 +22,7 @@ const QuizModal = () => {
     const { quizData } = useAppSelector((state) => state.quizslice);
     const methods = useForm();
     const { quizHidden } = useAppSelector((state) => state.Auth);
-
+    const learingnowdata = useAppSelector((state) => state.learningNow.items.nowitems);
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
     const [lives, setLives] = useState(3);
@@ -64,8 +64,6 @@ const QuizModal = () => {
     }, [lives]);
 
 
-
-
     const handleAnswerClick = (answer: string, isCorrect: boolean) => {
         if (!quizData) return;
 
@@ -91,7 +89,6 @@ const QuizModal = () => {
 
     const handleSubmit = async () => {
         if (selectedAnswer === null) {
-
             return;
         }
         if (quizData?.id) {
@@ -133,10 +130,14 @@ const QuizModal = () => {
         setAnsweredQuestions([0])
         setShowGameOver(false);
         setCorrectAnsewrsCount(0)
-        
+
     };
+
+    const totalQuestions = Math.max(1, learingnowdata?.length ?? answeredQuestions.length);
+
     const handleCloseDialog = () => {
         dispatch(closeQuizModal());
+        dispatch(QuizSession({ correctAnswers: correctAnsewrscount, totalQuestions, remainingHealth: lives, quizDate: new Date().toISOString() }));
         setDatadialog(false);
     };
 
@@ -230,14 +231,15 @@ const QuizModal = () => {
                             ${isAnswered && key === selectedAnswer && isCorrect ? 'correct-answer' : ''} 
                             ${isAnswered && key !== selectedAnswer && quizData.answers[key] ? 'correct-answer' : ''}`}
                                             onClick={() => handleAnswerClick(key, quizData.answers[key])}
-                                            style={{ pointerEvents: isAnswersOpen && !isAnswered ? 'auto' : 'none' }}
+                                            style={{ pointerEvents: isAnswersOpen && !isAnswered ? 'auto' : 'none', display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}
                                         >
 
                                             {key}
                                             {isAnswered && (
                                                 (key === selectedAnswer && isCorrect) || (quizData.answers[key] && key !== selectedAnswer)
                                             ) && (
-                                                    <Button
+                                                    <div
+                                                        className="voicedquiz"
                                                         onClick={(e) => {
                                                             e.stopPropagation();
                                                             speak(key);
@@ -246,7 +248,7 @@ const QuizModal = () => {
 
                                                     >
                                                         <KeyboardVoiceIcon />
-                                                    </Button>
+                                                    </div>
                                                 )}
                                         </div>
                                     ))}

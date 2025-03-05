@@ -1,5 +1,5 @@
 import { useForm, FormProvider } from "react-hook-form";
-import { Box, Typography, TextField, Dialog, DialogTitle, DialogContent, IconButton, Button } from "@mui/material";
+import { Box, Typography, TextField, Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
 import Favorite from "../../assets/images/home/Heart_01.svg";
 import FavroiteBorder from "../../assets/images/home/UnHeart.svg";
 import { useAppDispatch, useAppSelector } from "../../store";
@@ -199,22 +199,24 @@ const MasteredModal = () => {
                             ${isAnswered && key === selectedAnswer && isCorrect ? 'correct-answer' : ''} 
                             ${isAnswered && key !== selectedAnswer && quizData.answers[key] ? 'correct-answer' : ''}`}
                                             onClick={() => handleAnswerClick(key, quizData.answers[key])}
-                                            style={{ pointerEvents: isAnswersOpen && !isAnswered ? 'auto' : 'none' }}
+                                            style={{ pointerEvents: isAnswersOpen && !isAnswered ? 'auto' : 'none', display: "flex", alignItems: "center", justifyContent: "center",gap:"6px" }}
                                         >
                                             {key}
                                             {isAnswered && (
                                                 (key === selectedAnswer && isCorrect) || (quizData.answers[key] && key !== selectedAnswer)
                                             ) && (
-                                                    <Button
+                                                    <div
+                                                    style={{cursor:"pointer"}}
+                                                        className="voicedquiz"
                                                         onClick={(e) => {
                                                             e.stopPropagation();
                                                             speak(key);
                                                         }}
-                                                        
+
 
                                                     >
                                                         <KeyboardVoiceIcon />
-                                                    </Button>
+                                                    </div>
                                                 )}
 
                                         </div>

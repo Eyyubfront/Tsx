@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchQuizData, notificationallsdata, quizcountReport, quizSaveData } from "../actions/quizActions/quizActions";
+import { fetchQuizData, notificationallsdata, quizcountReport, quizSaveData, QuizSession } from "../actions/quizActions/quizActions";
 
 
 
@@ -11,16 +11,26 @@ interface QuizData {
   id: number;
   question: string;
   answers: Answer;
-  success:boolean;
-  data:any;
+  success: boolean;
+  data: any;
 
 }
 
- export interface Notification {
+export interface Notification {
   id: number;
   title: string;
   body: string
-  createdOn:string;
+  createdOn: string;
+}
+
+
+
+export interface ReportProps {
+  correctAnswers: number;
+  totalQuestions: number;
+  remainingHealth: number;
+  quizDate: string
+
 }
 
 
@@ -28,19 +38,24 @@ interface QuizData {
 interface HomeState {
   quizData: QuizData | null;
   loading: boolean;
+  reportData: ReportProps | null;
   error: string | null;
-
-  notifications:Notification[]
+  notifications: Notification[]
 }
 
 
 const initialState: HomeState = {
   quizData: null,
+  reportData: {
+    correctAnswers: 0,
+    totalQuestions: 0,
+    remainingHealth: 0,
+    quizDate: ""
+  },
   loading: false,
   error: null,
-  notifications:[]
+  notifications: []
 };
-
 
 const homeSlice = createSlice({
   name: "quizslice",
@@ -60,7 +75,18 @@ const homeSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-
+      .addCase(QuizSession.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(QuizSession.fulfilled, (state, action: PayloadAction<ReportProps>) => {
+        state.loading = false;
+        state.reportData = action.payload;
+      })
+      .addCase(QuizSession.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
       .addCase(notificationallsdata.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -75,28 +101,28 @@ const homeSlice = createSlice({
       })
       .addCase(quizSaveData.pending, (state) => {
         state.loading = true;
-        state.error = null; 
-    })
-    .addCase(quizSaveData.fulfilled, (state, action) => {
+        state.error = null;
+      })
+      .addCase(quizSaveData.fulfilled, (state, action) => {
         state.loading = false;
-        state.quizData = action.payload ;
-    })
-    .addCase(quizSaveData.rejected, (state, action) => {
-        state.loading = false; 
-        state.error = action.payload as string; 
-    })
-    .addCase(quizcountReport.pending, (state) => {
-      state.loading = true;
-      state.error = null; 
-  })
-  .addCase(quizcountReport.fulfilled, (state) => {
-      state.loading = false;
+        state.quizData = action.payload;
+      })
+      .addCase(quizSaveData.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(quizcountReport.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(quizcountReport.fulfilled, (state) => {
+        state.loading = false;
 
-  })
-  .addCase(quizcountReport.rejected, (state, action) => {
-      state.loading = false; 
-      state.error = action.payload as string; 
-  });;
+      })
+      .addCase(quizcountReport.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });;
   },
 });
 

@@ -55,13 +55,12 @@ const Languagesettings = () => {
           <div className="languagesetings__top">
             {texts?.map((language: LanguageHomes) => (
               <div className="language_setingsboxed" key={language.id} style={{ display: "flex", alignItems: "center", marginBottom: "5px", justifyContent: "space-between" }}>
-                <MenuItem  value={language.id} onClick={() => handleSelectLanguage(Number(language.id))} style={{ marginRight: "10px" }}>
+                <MenuItem value={language.id} onClick={() => handleSelectLanguage(Number(language.id))} style={{ marginRight: "10px" }}>
                   {defaultText?.isSwapped
                     ? `${language.translationLanguage} - ${language.sourceLanguage}`
                     : `${language.sourceLanguage} - ${language.translationLanguage}`}
                 </MenuItem>
                 <Button onClick={() => handleRemoveText(language.id ?? 0)}>
-                
                   <img className="delet_language" src={Trash} alt="" />
                 </Button>
               </div>

@@ -25,6 +25,7 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
 
     const { defaultText } = useAppSelector((state) => state.LanguagetextData);
     const [showGameOver, setShowGameOver] = useState(false);
+    const [textShow, settextShow] = useState(false);
     const [selectedItems, setSelectedItems] = useState<number[]>([]);
     const [generatestory, setGeneratestory] = useState<string>("");
     const [selectAll, setSelectAll] = useState(false)
@@ -33,7 +34,7 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
     }, []);
 
     if (loading) {
-        return <div>Loading...</div>; 
+        return <div>Loading...</div>;
     }
     const speak = (text: string) => {
         const utterance = new SpeechSynthesisUtterance(text);
@@ -62,6 +63,11 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
         dispatch(closeDialogMastered())
     }
 
+    const HandleTextClose = () => {
+        settextShow(false)
+
+    }
+
     const handleCheckboxChange = (id: number) => {
         setSelectedItems((prevSelected) =>
             prevSelected.includes(id)
@@ -85,7 +91,7 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
 
         setSelectedItems([]);
     }
-   
+
 
     const handleSelectAllChange = () => {
         setSelectAll(!selectAll);
@@ -97,24 +103,33 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
         }
     };
     const handlestory = async () => {
-        const source = mastereds.map(item => item.source).join("");
+        if (mastereds.length < 25) {
+            settextShow(true)
+            return;
+        }
+
         const translation = mastereds.map(item => item.translation).join("");
 
         try {
-            const story = await dispatch(storycreatgptcreat({ source, translation })).unwrap();
+            const story = await dispatch(storycreatgptcreat({ translation })).unwrap();
             setGeneratestory(story);
         } catch (error) {
             console.error("Error creating story:", error);
-
         }
-    };
+    }
 
 
     return (
         <div>
             <MasteredModal />
             <TableComponent title="Mastered Words">
-                <div >
+                <div className="mastered_filetop" >
+                    <div className="export_text" onClick={handleexportfile}>
+                        <div>
+                            <img src={exceldowland} alt="" />
+                        </div>
+                        <p className="words_tittle">Download Words</p>
+                    </div>
                     <div
                         className='story_buttoncreat'
 
@@ -122,16 +137,9 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
                     >
                         <Typography> Creat Story </Typography>
                     </div>
-                    <div className="export_text" onClick={handleexportfile}>
-                        <div>
-                            <img src={exceldowland} alt="" />
-                        </div>
-                        <p className="words_tittle">Download Words</p>
-                    </div>
                 </div>
                 <div className="selecet_alls" onClick={handleSelectAllChange}>
-                    <input type="checkbox" />
-                    <div>
+                    <div >
                         Select Alls
                     </div>
                 </div>
@@ -167,6 +175,7 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
                                     />
                                 </Button>
                                 <Button
+                   
                                     className='table_button'
                                     variant="outlined"
                                     onClick={() => speak(item.translation || '')}
@@ -187,12 +196,26 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
             {
                 generatestory && (
                     <div>
-                        <h2>hekaye</h2>
+                        <h2>Story Words</h2>
                         <p>{generatestory}</p>
                     </div>
                 )
             }
+            {
+                textShow &&
+                <AlertDialog
+                    title="Pay attention"
+                    open={textShow}
+                    onClose={HandleTextClose}
+                >
+                    <DialogContent>
+                        <Typography className="error_data">
+                            You need at least 30 mastered words to create a story.
+                        </Typography>
+                    </DialogContent>
+                </AlertDialog>
 
+            }
             <div onClick={handleQuizClick}
                 className="masteredquiz_button">
                 <Link style={{ textDecoration: "none", color: 'black', cursor: "pointer" }} to="">

@@ -3,7 +3,7 @@
     padding: 10px;
 
     .back_components {
-        .settingsbackicon{
+        .settingsbackicon {
             background-color: white;
         }
     }
@@ -64,6 +64,7 @@
     .lexion_layout {
         .lexion_container {
             flex-direction: column;
+            gap: 5px;
 
             .layout_lexionprops {
                 width: 100%;

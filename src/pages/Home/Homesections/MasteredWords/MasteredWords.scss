@@ -28,28 +28,30 @@
     color: red;
 }
 
-.story_buttoncreat {
+.mastered_filetop {
     display: flex;
-    align-items: center;
-    gap: 5px;
-    justify-content: center;
-    color: aliceblue;
-    width: 125px;
-    height: 56px;
-    padding: 17px;
-    gap: 10px;
-    border-radius: 10px;
-    background-color: #8B6DE8;
-    cursor: pointer;
-    position: absolute;
-    right: 30px;
-    top: 10px;
+    justify-content: space-between;
+
+
+    .story_buttoncreat {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        justify-content: center;
+        color: aliceblue;
+        width: 125px;
+        height: 56px;
+        padding: 17px;
+        gap: 10px;
+        border-radius: 10px;
+        background-color: #8B6DE8;
+        cursor: pointer;
+    }
 }
 
+
 .export_text {
-    position: absolute;
-    right: 13%;
-    top: 10px;
+
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -60,7 +62,7 @@
     border-radius: 10px;
     width: 120px;
     height: 60px;
-    padding: 11px;
+    padding: 10px;
 
     .words_tittle {
         color: #8B6DE8;
@@ -77,12 +79,16 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    cursor: pointer;
     margin-top: 10px;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     font-weight: 400;
     font-size: 1rem;
     line-height: 1.5;
     letter-spacing: 0.00938em;
+    &:hover{
+        color: #8B6DE8;
+    }
 }
 
 .css-16139fb-MuiTableCell-root {
@@ -106,29 +112,10 @@
         justify-content: center;
         cursor: pointer;
         align-items: center;
-        right: 26%;
-
         .words_tittle {
             display: none;
         }
     }
 
-    .story_buttoncreat {
-        right: 20px;
-        width: 105px;
-        text-align: center;
-    }
-}
-
-
-@media (min-width:600px) and (max-width:1200px) {
-    .export_text {
-        right: 18%;
-    }
-
-    .story_buttoncreat {
-        right: 20px;
-        width: 105px;
-        text-align: center;
-    }
+    
 }
