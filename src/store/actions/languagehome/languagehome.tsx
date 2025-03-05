@@ -18,8 +18,7 @@ export const getTexts = createAsyncThunk('homepage/getTexts', async (_,thunkAPI)
 export const getInitialLanguage = createAsyncThunk('homepage/getInitialLanguage', async (_,thunkAPI) => {
   try {
       const response = await axiosInstance.get(`/UserLanguage/GetSelected`); 
-      console.log("get",response.data.data);
-      
+     
       return response.data.data;
       
   } catch (error) {
@@ -32,8 +31,7 @@ export const selecetlangaugesave = createAsyncThunk(
     async (id: number, { rejectWithValue, dispatch }) => {
       try {
         const response = await axiosInstance.post(`/UserLanguage/SetSelected/${id}`);
-        console.log("ggggggg",response.data);
-        
+       
         dispatch(getTexts()); 
 
         dispatch(lexioncountfetch()); 

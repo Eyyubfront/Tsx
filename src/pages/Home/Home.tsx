@@ -21,7 +21,7 @@ const Home = () => {
             dispatch(openQuizModal());
         }
     };
-   
+
     return (
         <div className="home_container">
             <Header />

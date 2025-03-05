@@ -15,6 +15,10 @@ import UserVocabularyReducer from "./slice/userVocabularySlice";
 import MasteredReducers from "./slice/masteredSlice";
 import QuizReducer from "./slice/quizSlice";
 const store = configureStore({
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false
+        }),
     reducer: {
         learningNow: learningNowReducer,
         latestWords: latestWordsReducer,

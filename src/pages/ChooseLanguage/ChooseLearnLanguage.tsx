@@ -34,7 +34,7 @@ const ChooseLearnLanguage: React.FC = () => {
   useEffect(() => {
     if (userLanguageCreated) {
       navigate("/learntime");
-      console.log('User Language Created:', userLanguageCreated);
+
     }
   }, [userLanguageCreated, navigate]);
 
@@ -49,8 +49,7 @@ const ChooseLearnLanguage: React.FC = () => {
   };
 
   const handleContinueClick = () => {
-    console.log("Selected Translation ID: ", selectedTranslationId);
-    console.log("User ID: ", userId);
+
     if (userId && selectedTranslationId !== 0) {
       dispatch(createUserLanguage({
         sourceLanguageId: selectedSourceLanguageId!,

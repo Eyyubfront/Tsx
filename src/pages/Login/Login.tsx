@@ -80,7 +80,9 @@ const Login = () => {
       const idToken = await user.getIdToken(true);
 
       const actionResult = await dispatch(sendIdToken(idToken));
-      if (sendIdToken.fulfilled.match(actionResult)) {
+      if (actionResult.payload) {
+
+
         const { accessToken, refreshToken, userId, hasLanguage, hasNotificationSetting } = actionResult.payload;
 
         localStorage.setItem('accessToken', accessToken);
@@ -88,20 +90,21 @@ const Login = () => {
         localStorage.setItem('userId', userId);
 
         if (hasLanguage && hasNotificationSetting) {
-          console.log("1");
+
 
           navigate('/');
           window.location.reload();
 
 
         } else if (hasLanguage && !hasNotificationSetting) {
-          console.log("2");
+
           navigate('/learntime');
-       
+
         } else {
           console.log("3");
+
           navigate('/languageselector');
-         
+
         }
       } else {
         console.error('Google login dispatch failed');

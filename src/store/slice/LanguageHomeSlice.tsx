@@ -90,11 +90,11 @@ const LanguageHomeSlice = createSlice({
             .addCase(selecetlangaugesave.pending, (state) => {
                 state.loading = true;
                 state.error = null;
-                console.log("pending")
+              
             })
             .addCase(selecetlangaugesave.fulfilled, (state,action) => {
                 state.loading = false;
-                console.log("tetxs",action.payload);
+              
                 state.texts = action.payload
             })
             .addCase(selecetlangaugesave.rejected, (state, action) => {

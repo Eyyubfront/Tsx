@@ -1,5 +1,5 @@
 
-import {  Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { RootState, useAppSelector } from '../store';
 import { useEffect } from 'react';
 
@@ -13,8 +13,12 @@ const PublicRouting = () => {
   useEffect(() => {
     if (user === true) {
       navigate(location.state || "/")
+      console.log(location.state);
+
     }
-  }, [user,location.state,navigate])
+  }, [user, location.state, navigate])
+
+
 
   if (user === false) {
     return <Outlet />;

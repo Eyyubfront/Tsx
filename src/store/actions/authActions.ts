@@ -138,12 +138,13 @@ export const addformFile = createAsyncThunk('home/addformFile', async (file: Fil
 export const sendIdToken = createAsyncThunk(
   'auth/sendIdToken',
   async (idToken: string, { rejectWithValue }) => {
+    
     try {
       const response = await axiosInstance.post(
         '/GoogleAuthWeb',
         { idToken }
       );
-      console.log("response",response.data.data);
+    
       
       return response.data.data;
     } catch (error) {

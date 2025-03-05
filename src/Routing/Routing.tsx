@@ -1,4 +1,4 @@
-import {  Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import ChangedPasswordPage from "../pages/ChangedPasswordPage/ChangedPasswordPage";
 import CheckEmailPage from "../pages/CheckEmailPage/CheckEmailPage";
 import ResetPasswordPage from "../pages/ResetPasswordPage/ResetPasswordPage";
@@ -35,19 +35,18 @@ const Routing = () => {
         <Route path="/verifyemailpage" element={<VerifyEmailPage />} />
         <Route path="/resetpasswordpage" element={<ResetPasswordPage />} />
         <Route path="/changedpasswordpage" element={<ChangedPasswordPage />} />
-        <Route element={<VerifyRouting />}>
+      </Route>
+      <Route element={<VerifyRouting />}>
           <Route path="/languageselector" element={<LanguageSelector />} />
           <Route path="/chooselearnlanguage" element={<ChooseLearnLanguage />} />
           <Route path="/learntime" element={<LearnTime />} />
         </Route>
 
-      </Route>
-    
 
       <Route element={<ProtectedRouting />}>
         <Route path="/" element={<Home />} />
 
-        <Route path="/lexioncards" element={<LexiconCards />} />  
+        <Route path="/lexioncards" element={<LexiconCards />} />
         <Route path="/lexioncards/:id" element={<LexionLayout />} />
         <Route path="settingspage" element={<SettingsLayout />}>
           <Route path="languagesettings" element={<Languagesettings />} />
@@ -56,8 +55,8 @@ const Routing = () => {
           <Route path="configurate" element={<Configurate />} />
           <Route path="terms-and-conditions" element={<Conditions />} />
         </Route>
-          <Route path="/learingnow" element={<LearningNow />} />
-          <Route path="/vocablarypage" element={<LatestWords />} />
+        <Route path="/learingnow" element={<LearningNow />} />
+        <Route path="/vocablarypage" element={<LatestWords />} />
 
 
       </Route>

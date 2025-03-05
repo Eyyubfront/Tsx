@@ -13,7 +13,7 @@ interface AuthState {
   veriyuse: boolean;
   full: boolean;
   datagoogle: boolean;
-  quizHidden: boolean |null ; 
+  quizHidden: boolean | null;
   notificationDisabled: boolean;
 
 }
@@ -30,7 +30,7 @@ const initialState: AuthState = {
   full: false,
 
   datagoogle: false,
-  quizHidden: null ,
+  quizHidden: null,
   notificationDisabled: false
 };
 
@@ -92,13 +92,17 @@ const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(sendIdToken.fulfilled, (state, action: any) => {
+
+
         state.loading = false;
         state.isAuth = true;
         state.userId = action.payload.userId;
         state.veriyuse = true;
 
-    })
+      })
       .addCase(sendIdToken.rejected, (state, action) => {
+
+
         state.loading = false;
         state.veriyuse = false;
         state.error = action.payload as string;
@@ -122,14 +126,14 @@ const authSlice = createSlice({
 
         const quizHiddenFromBackend = action.payload.quizHidden;
 
-       
+
         const savedQuizHidden = localStorage.getItem("quizHidden");
 
         if (savedQuizHidden === null) {
           state.quizHidden = quizHiddenFromBackend;
           localStorage.setItem("quizHidden", JSON.stringify(quizHiddenFromBackend));
         } else {
-   
+
           state.quizHidden = JSON.parse(savedQuizHidden);
         }
 

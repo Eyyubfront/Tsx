@@ -31,7 +31,7 @@ const CheckEmailPage = () => {
     const handleResend = () => {
       setCounter(30);
       setCanResend(false);
-      console.log("Code resent!");
+     
     };
 
     return (
