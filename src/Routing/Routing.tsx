@@ -22,6 +22,7 @@ import LexiconCards from "../pages/Home/Homesections/LexiconCards/LexiconCards";
 import LexionLayout from "../layout/LexionLayout/LexionLayout";
 import Configurate from "../pages/Configurate/Configurate";
 import Conditions from "../pages/Conditions/Conditions";
+import StatisticaPage from "../pages/StatisticaPage/StatisticaPage";
 
 
 const Routing = () => {
@@ -37,10 +38,10 @@ const Routing = () => {
         <Route path="/changedpasswordpage" element={<ChangedPasswordPage />} />
       </Route>
       <Route element={<VerifyRouting />}>
-          <Route path="/languageselector" element={<LanguageSelector />} />
-          <Route path="/chooselearnlanguage" element={<ChooseLearnLanguage />} />
-          <Route path="/learntime" element={<LearnTime />} />
-        </Route>
+        <Route path="/languageselector" element={<LanguageSelector />} />
+        <Route path="/chooselearnlanguage" element={<ChooseLearnLanguage />} />
+        <Route path="/learntime" element={<LearnTime />} />
+      </Route>
 
 
       <Route element={<ProtectedRouting />}>
@@ -53,6 +54,7 @@ const Routing = () => {
           <Route path="timesettings" element={<TimeSettings />} />
           <Route path="passwordchecksettings" element={<ChangedPasswordSettings />} />
           <Route path="configurate" element={<Configurate />} />
+          <Route path="statistica" element={<StatisticaPage />} />
           <Route path="terms-and-conditions" element={<Conditions />} />
         </Route>
         <Route path="/learingnow" element={<LearningNow />} />

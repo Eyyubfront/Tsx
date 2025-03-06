@@ -1,26 +1,29 @@
-.configurate {
-    display: flex;
-    gap: 10px;
-    height: max-content;
-    align-items: center;
-    .configurate__tittle {
-        font-family: Inter;
-        font-weight: 500;
-        font-size: 18px;
-        line-height: 22.5px;
-        letter-spacing: 0%;
-
-    }
-    .signs_toggle {
-        cursor: pointer;
-        .togle_icons{
-          color: #8b6de8;
-          font-size: 45px;
-        }
-        .togle_iconsof {
-          color: #c0aee4;
-          font-size: 45px;
-     
-        }
+.configurate{
+  .configurate_container {
+      display: flex;
+      gap: 10px;
+      height: max-content;
+      align-items: center;
+      .configurate__tittle {
+          font-family: Inter;
+          font-weight: 500;
+          font-size: 18px;
+          line-height: 22.5px;
+          letter-spacing: 0%;
+  
       }
+      .signs_toggle {
+          cursor: pointer;
+          .togle_icons{
+            color: #8b6de8;
+            font-size: 45px;
+          }
+          .togle_iconsof {
+            color: #c0aee4;
+            font-size: 45px;
+       
+          }
+        }
+  }
+
 }

@@ -172,7 +172,7 @@ const QuizModal = () => {
             }
         }
 
-
+        setIsCorrect(false);
         setSelectedAnswer(null);
         setIsAnswered(false);
 

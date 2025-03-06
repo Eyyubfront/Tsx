@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchQuizData, notificationallsdata, quizcountReport, quizSaveData, QuizSession } from "../actions/quizActions/quizActions";
+import { fetchQuizData, notificationallsdata, quizcountReport, QuizRaportFetch, quizSaveData, QuizSession } from "../actions/quizActions/quizActions";
 
 
 
@@ -35,8 +35,44 @@ export interface ReportProps {
 
 
 
+
+interface DailyReport {
+  dayStart: string;
+  questions: number;
+  correctAnswers: number;
+  accuracy: number;
+}
+
+interface WeeklyReport {
+  weekStart: string;
+  questions: number;
+  correctAnswers: number;
+  accuracy: number;
+}
+
+interface MonthlyReport {
+  monthStart: string;
+  questions: number;
+  correctAnswers: number;
+  accuracy: number;
+}
+
+export interface QuizRaport {
+  totalQuestions: number;
+  totalCorrectAnswers: number;
+  overallAccuracy: number;
+  daily: DailyReport[];
+  weekly: WeeklyReport[];
+  monthly: MonthlyReport[];
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  error: string | null;
+}
+
+
+
 interface HomeState {
   quizData: QuizData | null;
+  quizRaports: QuizRaport | null;
   loading: boolean;
   reportData: ReportProps | null;
   error: string | null;
@@ -52,6 +88,7 @@ const initialState: HomeState = {
     remainingHealth: 0,
     quizDate: ""
   },
+  quizRaports: null,
   loading: false,
   error: null,
   notifications: []
@@ -75,6 +112,19 @@ const homeSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
+      .addCase(QuizRaportFetch.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(QuizRaportFetch.fulfilled, (state, action: PayloadAction<QuizRaport>) => {
+        state.loading = false;
+        state.quizRaports = action.payload;
+      })
+      .addCase(QuizRaportFetch.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+
       .addCase(QuizSession.pending, (state) => {
         state.loading = true;
         state.error = null;

@@ -87,8 +87,6 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
 
         }));
 
-
-
         setSelectedItems([]);
     }
 
@@ -103,7 +101,7 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
         }
     };
     const handlestory = async () => {
-        if (mastereds.length < 25) {
+        if (mastereds.length < 30) {
             settextShow(true)
             return;
         }

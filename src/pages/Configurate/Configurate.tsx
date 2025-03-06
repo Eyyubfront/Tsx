@@ -19,7 +19,9 @@ const Configurate = () => {
     
 
     return (
-        <div className="configurate">
+       <div className="configurate">
+        <h2>Question visibility setting</h2>
+         <div className="configurate_container">
          <p className="configurate__tittle">Hide answers on quiz </p>
             <div className="signs_toggle" onClick={handleToggle}>
                 {quizHidden ? (
@@ -29,6 +31,7 @@ const Configurate = () => {
                 )}
             </div>
         </div>
+       </div>
     )
 }
 

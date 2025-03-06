@@ -14,6 +14,7 @@ const cards = [
     { name: "Password", link: "passwordchecksettings" },
     { name: "Terms and Conditions", link: "terms-and-conditions" },
     { name: "Configurate", link: "configurate" },
+    { name: "Statistica", link: "statistica" },
 ];
 
 const accountManagement = [

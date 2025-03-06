@@ -138,14 +138,14 @@ export const addformFile = createAsyncThunk('home/addformFile', async (file: Fil
 export const sendIdToken = createAsyncThunk(
   'auth/sendIdToken',
   async (idToken: string, { rejectWithValue }) => {
-    
+
     try {
       const response = await axiosInstance.post(
         '/GoogleAuthWeb',
         { idToken }
       );
-    
-      
+
+
       return response.data.data;
     } catch (error) {
       return rejectWithValue('Bir hata oluştu');
@@ -185,37 +185,34 @@ export const getuserSettings = createAsyncThunk('home/getuserSettings', async (_
 
 
 
-const OPENROUTER_API_KEY = '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';
-const YOUR_SITE_URL = 'https://openrouter.ai/api/v1/chat/completions';
-const YOUR_SITE_NAME = 'Language Project';
+
+
+const Apikey = "AIzaSyDNDW9ujrE3CYWvN1kEyd6Wgaf3l9fTuEM";
 
 export const storycreatgptcreat = createAsyncThunk(
   'storycreatgpt/storycreatgpt',
-  async ({  translation }: {  translation: string }) => {
+  async ({ translation }: { translation: string }) => {
     const response = await axios.post(
-      'https://openrouter.ai/api/v1/chat/completions',
+      ` https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${Apikey}`,
       {
-        model: 'gpt-3.5-turbo',
-        messages: [
+        contents: [
           {
-            role: 'user',
-           content: `Please write a short, 10-sentence story based on this source text: translation: "${translation} `
+            role: "user",
+            parts: [
+              {
+                text: `Please write a short, 10-sentence story based on the following translation: "${translation}"`
+              }
+            ]
           }
         ]
       },
       {
         headers: {
-          Authorization: `Bearer ${OPENROUTER_API_KEY}`,
-          'HTTP-Referer':`${YOUR_SITE_URL}`,
-          'X-Title': `${YOUR_SITE_NAME}`,
           'Content-Type': 'application/json'
         }
       }
     );
 
-    return response.data.choices[0].message.content;
-
+    return response.data.candidates[0]?.content.parts[0]?.text || "No";
   }
 );
-
-

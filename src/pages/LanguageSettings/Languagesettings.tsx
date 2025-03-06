@@ -52,6 +52,7 @@ const Languagesettings = () => {
         <Skeleton style={{ height: "200px", width: "450px" }} />
       ) : (
         <div className="language_settings">
+          <h2>Choosen language for learning</h2>
           <div className="languagesetings__top">
             {texts?.map((language: LanguageHomes) => (
               <div className="language_setingsboxed" key={language.id} style={{ display: "flex", alignItems: "center", marginBottom: "5px", justifyContent: "space-between" }}>

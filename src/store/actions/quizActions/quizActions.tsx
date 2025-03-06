@@ -88,3 +88,17 @@ export const QuizSession = createAsyncThunk(
     }
   }
 );
+
+
+
+export const QuizRaportFetch = createAsyncThunk('Quiz/QuizRaportFetch', async (_, thunkAPI) => {
+  try {
+
+    const response = await axiosInstance.get(`/QuizSession/GetQuizAccuracy`);
+    console.log(response);
+
+    return response.data.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
