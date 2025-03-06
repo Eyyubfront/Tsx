@@ -89,108 +89,106 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
     const title = location.pathname === '/lexioncards/vocablary' ? 'Vocablary' : 'Latest added words';
 
     return (
-        <div>
-            <TableComponent title={title}>
-                <FileInput />
-             
-                <div onClick={handleDeleteAll}>
-                    <Button variant="outlined" color="error">
-                        Delete All
-                    </Button>
-                </div>
-                <TableBody>
-                    {filteredItems?.length ? filteredItems.map(({ id, source, translation, isMastered, isLearningNow }) => (
-                        <TableRow className='table_aligns' key={id}>
-                            <TableCell sx={{ borderBottom: "none" }}>
-                                {defaultText?.isSwapped
-                                    ? <Typography>{`${translation} - ${source}`}</Typography>
-                                    : <Typography>{`${source} - ${translation}`}</Typography>
-                                }
-                            </TableCell>
-                            <TableCell className='table_cards'>
-                                <Button
-                                    className='table_button'
-                                    variant="outlined"
-                                    onClick={() => handleSaveText({ id, source, translation, isLearningNow: true })}
-                                >
-                                    <img
-                                        src={
-                                            isLearningNow ? e : isMastered
-                                                ? Savedicon
-                                                : NotSavedicon
-                                        }
-                                    />
-                                </Button>
-                                <Button
-                                    className='table_button'
-                                    variant="outlined"
-                                    onClick={() => handleEdit(id, source || '', translation || '')}
-                                >
-                                    <MdEdit style={{ fontSize: "20px" }} />
-                                </Button>
-                                <Button
-                                    className='table_button'
-                                    variant="outlined"
-                                    onClick={() => handleRemoveText(id)}
-                                >
-                                    <img src={Trash} alt="" />
-                                </Button>
-                                <Button
-                                    className='table_button'
-                                    variant="outlined"
-                                    onClick={() => speak(translation || '')}
-                                >
-                                    <Typography><KeyboardVoiceIcon /></Typography>
-                                </Button>
-                            </TableCell>
-                        </TableRow>
-                    ))
-                        :
-                        <div className='data_undifendsbox'>NO DATA FOUND</div>
-                    }
-                </TableBody>
-                {
-                    open &&
-                    <AlertDialog
-                        open={open}
-                        onClose={handleEditDialogClose}
-                        title='Update Word'
-                    >
-                        <DialogContent>
-                            {editText && (
-                                <div style={{ width: "100%", padding: '10px', gap: "10px", display: "flex", justifyContent: 'center', flexDirection: 'column' }}>
-                                    <div>
-                                        <div>
-                                            <p>Source word</p>
-                                        </div>
-                                        <TextField
-                                            className='edit_input'
-                                            value={defaultText?.isSwapped ? editText.translation : editText.source}
-                                            onChange={(e) => setEditText({ ...editText, source: e.target.value })}
-                                            style={{ marginRight: '10px', border: "1px solid black", borderRadius: "16px" }}
-                                        />
-                                    </div>
-                                    <div>
-                                        <p>Translation word</p>
-                                        <TextField
-                                            variant="outlined"
-                                            className='edit_input'
-                                            value={defaultText?.isSwapped ? editText.source : editText.translation}
-                                            onChange={(e) => setEditText({ ...editText, translation: e.target.value })}
-                                            style={{ marginRight: '10px', border: "1px solid black", borderRadius: "16px" }}
-                                        />
-                                    </div>
-                                </div>
-                            )}
-                            <div className='editdialog_buttom'>
-                                <Button className='buton_edithandle' onClick={handleEditDialogClose}>Cancel</Button>
-                                <Button className='buton_edithandle' onClick={handleUpdate}>Update</Button>
-                            </div>
-                        </DialogContent>
-                    </AlertDialog>
+        <TableComponent title={title}>
+            <FileInput />
+
+            <TableRow onClick={handleDeleteAll}>
+                <Button variant="outlined" color="error">
+                    Delete All
+                </Button>
+            </TableRow>
+            <TableBody>
+                {filteredItems?.length ? filteredItems.map(({ id, source, translation, isMastered, isLearningNow }) => (
+                    <TableRow className='table_aligns' key={id}>
+                        <TableCell sx={{ borderBottom: "none" }}>
+                            {defaultText?.isSwapped
+                                ? <Typography>{`${translation} - ${source}`}</Typography>
+                                : <Typography>{`${source} - ${translation}`}</Typography>
+                            }
+                        </TableCell>
+                        <TableCell className='table_cards'>
+                            <Button
+                                className='table_button'
+                                variant="outlined"
+                                onClick={() => handleSaveText({ id, source, translation, isLearningNow: true })}
+                            >
+                                <img
+                                    src={
+                                        isLearningNow ? e : isMastered
+                                            ? Savedicon
+                                            : NotSavedicon
+                                    }
+                                />
+                            </Button>
+                            <Button
+                                className='table_button'
+                                variant="outlined"
+                                onClick={() => handleEdit(id, source || '', translation || '')}
+                            >
+                                <MdEdit style={{ fontSize: "20px" }} />
+                            </Button>
+                            <Button
+                                className='table_button'
+                                variant="outlined"
+                                onClick={() => handleRemoveText(id)}
+                            >
+                                <img src={Trash} alt="" />
+                            </Button>
+                            <Button
+                                className='table_button'
+                                variant="outlined"
+                                onClick={() => speak(translation || '')}
+                            >
+                                <Typography><KeyboardVoiceIcon /></Typography>
+                            </Button>
+                        </TableCell>
+                    </TableRow>
+                ))
+                    :
+                    <div className='data_undifendsbox'>NO DATA FOUND</div>
                 }
-            </TableComponent>
-        </div>
+            </TableBody>
+            {
+                open &&
+                <AlertDialog
+                    open={open}
+                    onClose={handleEditDialogClose}
+                    title='Update Word'
+                >
+                    <DialogContent>
+                        {editText && (
+                            <div style={{ width: "100%", padding: '10px', gap: "10px", display: "flex", justifyContent: 'center', flexDirection: 'column' }}>
+                                <TableRow>
+                                    <TableRow>
+                                        <p>Source word</p>
+                                    </TableRow>
+                                    <TextField
+                                        className='edit_input'
+                                        value={defaultText?.isSwapped ? editText.translation : editText.source}
+                                        onChange={(e) => setEditText({ ...editText, source: e.target.value })}
+                                        style={{ marginRight: '10px', border: "1px solid black", borderRadius: "16px" }}
+                                    />
+                                </TableRow>
+                                <TableRow>
+                                    <p>Translation word</p>
+                                    <TextField
+                                        variant="outlined"
+                                        className='edit_input'
+                                        value={defaultText?.isSwapped ? editText.source : editText.translation}
+                                        onChange={(e) => setEditText({ ...editText, translation: e.target.value })}
+                                        style={{ marginRight: '10px', border: "1px solid black", borderRadius: "16px" }}
+                                    />
+                                </TableRow>
+                            </div>
+                        )}
+                        <TableRow className='editdialog_buttom'>
+                            <Button className='buton_edithandle' onClick={handleEditDialogClose}>Cancel</Button>
+                            <Button className='buton_edithandle' onClick={handleUpdate}>Update</Button>
+                        </TableRow>
+                    </DialogContent>
+                </AlertDialog>
+            }
+        </TableComponent>
     );
 };
 
