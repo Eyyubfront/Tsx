@@ -72,8 +72,10 @@
         }
 
         .statistica__one {
-            width: min-content;
+            width: 100%;
+            flex-direction: column;
             padding: 3px 5px;
+
             .list {
                 width: 100%;
             }
@@ -98,9 +100,11 @@
         }
 
         .statistica__one {
+            gap: 13px;
 
             .list_topname {
                 width: 100%;
+                text-align: center;
             }
         }
     }
