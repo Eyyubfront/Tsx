@@ -1,4 +1,4 @@
-import {Outlet, useNavigate } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 import BackButton from "../../components/BackButton/BackButton"
 import Header from "../../components/Header/Header"
 import Paragrafy from "../../components/Paragrafy/Paragrafy"
@@ -13,7 +13,7 @@ const SettingsLayout = () => {
         <div className="settings__sidebar">
           <div className="settingssidebar__top">
             <BackButton className="settingsbackicon" onClick={() => navigate("/")} />
-            <BackButton className="settingsbackiconmobilversion" onClick={() => navigate("")} />
+            <BackButton className="settingsbackiconmobilversion" onClick={() => navigate(-1)} />
             <Paragrafy className="Settignsbackname" text="Settings" />
           </div>
           <div className="settingssidebar__bottom">
@@ -22,7 +22,7 @@ const SettingsLayout = () => {
           </div>
         </div>
       </div>
- 
+
     </div>
   )
 }

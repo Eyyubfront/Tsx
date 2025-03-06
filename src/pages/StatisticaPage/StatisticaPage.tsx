@@ -27,7 +27,7 @@ const StatisticaPage = () => {
     return (
         <div className='statistica_page'>
 
-            <h1 className='statistica_tittle'>Statistica</h1>
+            <h1 className='statistica_tittle'>Statistics</h1>
             <div className="statistica__one">
 
                 <div className="statistica_daily">
