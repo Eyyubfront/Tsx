@@ -31,7 +31,7 @@
 
         .quiz_center {
             text-align: center;
-      
+
 
         }
     }
@@ -40,6 +40,19 @@
         display: flex;
         align-items: center;
         gap: 16px;
+
+        .statiscs_header {
+            width: 56px;
+            height: 52px;
+            padding: 10px;
+            gap: 10px;
+            border-radius: 48px;
+            background-color: #F9F8FD;
+            display: flex;
+            justify-content: center;
+            cursor: pointer;
+            align-items: center;
+        }
 
         .excel_box {
             cursor: pointer;
@@ -210,18 +223,20 @@
 }
 
 @media (min-width:601px) and (max-width:690px) {
-.header{
- 
-    .header_right{
-        gap: 2px;
-        .header_words{
-            width: 120px;
+    .header {
+
+        .header_right {
+            gap: 2px;
+
+            .header_words {
+                width: 120px;
+            }
+
+            .excel_box {
+                width: 117px;
+                padding: 17px;
+            }
         }
-        .excel_box{
-            width: 117px;
-            padding: 17px;
-        }
+
     }
-   
-}
 }

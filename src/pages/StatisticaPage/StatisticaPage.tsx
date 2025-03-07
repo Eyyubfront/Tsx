@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
+import { PieChart } from '@mui/x-charts/PieChart';
 import { QuizRaportFetch } from '../../store/actions/quizActions/quizActions';
 import { useAppDispatch, useAppSelector } from '../../store';
-import "./StatisticaPage.scss";
+import './StatisticaPage.scss';
 
 const StatisticaPage = () => {
     const dispatch = useAppDispatch();
@@ -24,63 +25,55 @@ const StatisticaPage = () => {
         { label: 'Monthly', data: monthly.map(report => report.correctAnswers || 0) },
     ];
 
+    const totalAnswers = quizraports.totalQuestions;
+    const totalCorrectAnswers = quizraports.totalCorrectAnswers;
+    const totalIncorrectAnswers = totalAnswers - totalCorrectAnswers;
+
+    const correctPercentage = ((totalCorrectAnswers / totalAnswers) * 100).toFixed(1);
+    const incorrectPercentage = ((totalIncorrectAnswers / totalAnswers) * 100).toFixed(1);
+
+    const pieChartData = [
+        { label: 'Correct', value: totalCorrectAnswers, percentage: correctPercentage },
+        { label: 'Incorrect', value: totalIncorrectAnswers, percentage: incorrectPercentage },
+    ];
+
+    const renderLabel = (params:any) => {
+        const { label, percentage } = params;
+        return `${label}: ${percentage}%`;
+    };
+
     return (
         <div className='statistica_page'>
+            <h1 className='statistica_tittle'>Statistics</h1>
 
-            <h1 className='statistica_tittle'>Statistica</h1>
-            <div className="statistica__one">
-
-                <div className="statistica_daily">
-                    <h2 className='list_topname'>Daily Reports</h2>
-                    <ul >
-                        {daily?.map((report, index) => (
-                            <li className='list' key={index}>
-                                <strong>Date:</strong> {report.dayStart}<br />
-                                <strong>Questions Answers:</strong> {report.questions}<br />
-                                <strong>Correct Answers:</strong> {report.correctAnswers}<br />
-                                <strong>Accuracy Questions:</strong> {report.accuracy}<br />
-
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-
-                <div className="statistica_weekly">
-                    <h2 className='list_topname'>Weekly Reports</h2>
-                    <ul>
-                        {weekly?.map((report, index) => (
-                            <li className='list' key={index}>
-                                <strong>Week:</strong> {report.weekStart}<br />
-                                <strong>Questions Answers:</strong> {report.questions}<br />
-                                <strong>CorrectAnswers Questions:</strong> {report.correctAnswers}<br />
-                                <strong>Accuracy Questions:</strong> {report.accuracy}<br />
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-
-
-                <div className="statistica_montly">
-
-                    <h2 className='list_topname'>Monthly Reports</h2>
-                    <ul>
-                        {monthly?.map((report, index) => (
-                            <li className='list' key={index}>
-                                <strong>Month:</strong> {report.monthStart}<br />
-                                <strong>Questions Answers:</strong> {report.questions}<br />
-                                <strong>CorrectAnswers Questions:</strong> {report.correctAnswers}<br />
-                                <strong>Accuracy Questions:</strong> {report.accuracy}<br />
-
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+            <div className="OverAll_Acuraybox">
+                <h2 className='overAll_top'>Overall Accuracy</h2>
+                <p className='overaccuray'>{quizraports.overallAccuracy} %</p>
+                <div className="line"></div>
+                <p>Total Questions Answered: {quizraports.totalQuestions}</p>
+                <p>Total Correct Answers: {quizraports.totalCorrectAnswers}</p>
             </div>
 
-
-
+            <div className='piechart_section'>
+                <h2 className='piechart_top'>Correct vs Incorrect</h2>
+                <PieChart
+                    series={[
+                        {
+                            data: pieChartData,
+                            arcLabel: renderLabel, 
+                        },
+                    ]}
+                    colors={['#8B6DE8', '#c5c0c0']} 
+                  
+                    height={300}
+                    slotProps={{
+                        legend: { hidden: false },
+                    }}
+                    className="custom-piechart"
+                />
+            </div>
             <div className='hiperbola'>
-                <h2>Performance Overview</h2>
+                <h2 className='hiperbola_top'>Performance Overview</h2>
                 <BarChart
                     series={barChartData.map(({ label, data }) => ({ label, data }))}
                     height={290}
@@ -88,6 +81,7 @@ const StatisticaPage = () => {
                     margin={{ top: 10, bottom: 30, left: 40, right: 40 }}
                 />
             </div>
+
         </div>
     );
 };

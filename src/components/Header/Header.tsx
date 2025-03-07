@@ -7,7 +7,6 @@ import Paragrafy from '../../components/Paragrafy/Paragrafy';
 import "./Header.scss";
 import BurgerMenu from './HeaderBurger/Burgermenu/Burgermenu';
 import SelecetLanguage from '../SelecetLanguage/SelecetLanguage';
-import NotifactionComponents from '../NotifactionComponents/NotifactionComponents';
 import Add from '../../assets/images/header/Add.svg';
 import exceldowland from '../../assets/images/header/exceldowland.svg';
 import NewWordModal from './NewWordModal/NewWordModal';
@@ -15,7 +14,7 @@ import { Link } from 'react-router-dom';
 import AlertDialog from '../AlertDialog/AlertDialog';
 import { excelfilefetch } from '../../store/actions/authActions';
 import Smile from "../../assets/images/home/Smile.svg"
-
+import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
 
 const Header = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -60,20 +59,20 @@ const Header = () => {
     const resultAction = await dispatch(excelfilefetch());
 
     if (excelfilefetch.fulfilled.match(resultAction)) {
-        const blob = resultAction.payload;
-        const url = window.URL.createObjectURL(new Blob([blob]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'download-template.xlsx');
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
+      const blob = resultAction.payload;
+      const url = window.URL.createObjectURL(new Blob([blob]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'download-template.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
     }
 
     setTimeout(() => {
-        setShowModalExcel(true);
+      setShowModalExcel(true);
     }, 1000);
-};
+  };
 
 
   return (
@@ -101,8 +100,9 @@ const Header = () => {
             </svg>
           </div>
         </Link>
-
-        <NotifactionComponents />
+        <Link className='statiscs_header' style={{textDecoration:"none",color:"#8B6DE8"}} to="/settingspage/statistica">
+          <SignalCellularAltIcon />
+        </Link>
         <button className='excel_box' onClick={handleDownload} disabled={loading}>
           <div>
             <img src={exceldowland} alt="" />
