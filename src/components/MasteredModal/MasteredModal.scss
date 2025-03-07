@@ -1,14 +1,11 @@
-.css-1588512-MuiButtonBase-root-MuiButton-root {
+.voicedquiz {
+    color: rgb(56, 56, 244);
     cursor: pointer;
     pointer-events: auto !important;
 
 
     &[disabled] {
         pointer-events: auto;
-        opacity: 1;
-    }
-}
 
-.voicedquiz {
-    color: rgb(56, 56, 244);
+    }
 }

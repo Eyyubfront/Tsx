@@ -101,7 +101,7 @@ const Login = () => {
           navigate('/learntime');
 
         } else {
-          console.log("3");
+
 
           navigate('/languageselector');
 
