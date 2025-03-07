@@ -60,7 +60,7 @@
     background-color: #ede8ff;
     border: 1px solid #ede8ff;
     border-radius: 10px;
-    width: 120px;
+    width: max-content;
     height: 60px;
     padding: 10px;
 
@@ -86,7 +86,8 @@
     font-size: 1rem;
     line-height: 1.5;
     letter-spacing: 0.00938em;
-    &:hover{
+
+    &:hover {
         color: #8B6DE8;
     }
 }
@@ -97,6 +98,12 @@
 
 .check_box {
     margin-top: 6px;
+}
+
+.voice_generatestroy {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
 }
 
 
@@ -112,10 +119,11 @@
         justify-content: center;
         cursor: pointer;
         align-items: center;
+
         .words_tittle {
             display: none;
         }
     }
 
-    
+
 }

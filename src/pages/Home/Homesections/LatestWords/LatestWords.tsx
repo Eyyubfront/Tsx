@@ -26,16 +26,17 @@ interface LearnSearchProps {
     showAll?: boolean;
 }
 
-const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => {
+const LatestWords = ({ searchTerm = "", showAll  }: LearnSearchProps) => {
     const dispatch = useAppDispatch();
     const items = useAppSelector((state: RootState) => state.latestWords.items.items);
     const { defaultText } = useAppSelector((state) => state.LanguagetextData);
     const [editText, setEditText] = useState<{ id: number; source: string; translation: string; } | null>(null);
     const [open, setOpen] = useState<boolean>(false);
+    const [deletopen, seDelettOpen] = useState<boolean>(false);
     const location = useLocation();
-
+  
     useEffect(() => {
-        dispatch(wordfetchTexts({ page: 1, pageSize: showAll ? 1000 : 10 }));
+        dispatch(wordfetchTexts({ page: 1, pageSize: showAll ? 1000 :   10 }));
     }, [dispatch, showAll]);
 
     const handleEditDialogClose = () => {
@@ -73,8 +74,13 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
             handleUpdateText(editText);
             setEditText(null);
         }
+
     };
 
+
+    const handleDeletAllsAlert = () => {
+        seDelettOpen(false)
+    };
 
     const handleDeleteAll = () => {
         items.forEach(item => {
@@ -92,11 +98,33 @@ const LatestWords = ({ searchTerm = "", showAll = false }: LearnSearchProps) => 
         <TableComponent title={title}>
             <FileInput />
 
-            <TableRow onClick={handleDeleteAll}>
+            <AlertDialog
+                open={deletopen}
+                onClose={handleDeletAllsAlert}
+                title='Are you sure you want to delete them??' >
+                <DialogContent >
+                 <div style={{padding:"5px 10px",marginTop:"20px",display:"flex",justifyContent:"center",gap:"6px"}}>
+                 <Button className='alert_buton' onClick={handleDeletAllsAlert} variant="outlined" >
+                        Cansel
+                    </Button>
+
+                    <Button onClick={()=>{
+                        handleDeleteAll()
+                        seDelettOpen(false)
+                    }} variant="outlined" className='alert_buton'>
+                        Delete
+                    </Button>
+                 </div>
+                </DialogContent>
+            </AlertDialog>
+
+
+            <TableRow onClick={()=>seDelettOpen(true)}>
                 <Button variant="outlined" color="error">
                     Delete All
                 </Button>
             </TableRow>
+
             <TableBody>
                 {filteredItems?.length ? filteredItems.map(({ id, source, translation, isMastered, isLearningNow }) => (
                     <TableRow className='table_aligns' key={id}>

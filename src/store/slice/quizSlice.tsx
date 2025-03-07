@@ -4,13 +4,16 @@ import { fetchQuizData, notificationallsdata, quizcountReport, QuizRaportFetch, 
 
 
 interface Answer {
-  [key: string]: boolean;
+
+  source: string;
+  answer: string
+
 }
 
 interface QuizData {
   id: number;
   question: string;
-  answers: Answer;
+  answers: Answer[];
   success: boolean;
   data: any;
 

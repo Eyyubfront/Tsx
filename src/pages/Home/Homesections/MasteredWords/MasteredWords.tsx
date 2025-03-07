@@ -100,21 +100,26 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
             setSelectedItems([]);
         }
     };
+
+
     const handlestory = async () => {
-        if (mastereds.length < 30) {
-            settextShow(true)
+        if (selectedItems.length < 30) {
+            settextShow(true);
             return;
         }
 
-        const translation = mastereds.map(item => item.translation).join("");
+        const selectedTranslations = mastereds
+            .filter(item => selectedItems.includes(item.id))
+            .map(item => item.translation)
+            .join("");
 
         try {
-            const story = await dispatch(storycreatgptcreat({ translation })).unwrap();
+            const story = await dispatch(storycreatgptcreat({ translation: selectedTranslations })).unwrap();
             setGeneratestory(story);
         } catch (error) {
             console.error("Error creating story:", error);
         }
-    }
+    };
 
 
     return (
@@ -173,7 +178,7 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
                                     />
                                 </Button>
                                 <Button
-                   
+
                                     className='table_button'
                                     variant="outlined"
                                     onClick={() => speak(item.translation || '')}
@@ -194,7 +199,17 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
             {
                 generatestory && (
                     <div>
-                        <h2>Story Words</h2>
+                        <div className="voice_generatestroy">
+                            <h2>Story Words</h2>
+                            <Button
+                                style={{ width: '40px' }}
+                                className='table_button'
+                                variant="outlined"
+                                onClick={() => speak(generatestory || '')}
+                            >
+                                <Typography><KeyboardVoiceIcon /></Typography>
+                            </Button>
+                        </div>
                         <p>{generatestory}</p>
                     </div>
                 )

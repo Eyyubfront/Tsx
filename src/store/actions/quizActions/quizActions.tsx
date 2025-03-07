@@ -15,6 +15,8 @@ export const fetchQuizData = createAsyncThunk(
       const response = await axiosInstance.get(
         `/Quiz/GetQuestion?${idsGenerate}&isMastered=${isMastered}`
       );
+      console.log(response);
+      
       return response.data.data;
     } catch (error) {
       return rejectWithValue("Failed to fetch category data");

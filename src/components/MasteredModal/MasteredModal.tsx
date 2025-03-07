@@ -172,6 +172,7 @@ const MasteredModal = () => {
                         </div>
 
                         <div className="quizmodal_inputbox">
+                            <p>{correctAnsewrscount}/10</p>
                             <div className="inputbox_label">
                                 <Paragrafy className="input_label" text="Tap the right answer:" />
                             </div>
@@ -199,14 +200,14 @@ const MasteredModal = () => {
                             ${isAnswered && key === selectedAnswer && isCorrect ? 'correct-answer' : ''} 
                             ${isAnswered && key !== selectedAnswer && quizData.answers[key] ? 'correct-answer' : ''}`}
                                             onClick={() => handleAnswerClick(key, quizData.answers[key])}
-                                            style={{ pointerEvents: isAnswersOpen && !isAnswered ? 'auto' : 'none', display: "flex", alignItems: "center", justifyContent: "center",gap:"6px" }}
+                                            style={{ pointerEvents: isAnswersOpen && !isAnswered ? 'auto' : 'none', display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}
                                         >
                                             {key}
                                             {isAnswered && (
                                                 (key === selectedAnswer && isCorrect) || (quizData.answers[key] && key !== selectedAnswer)
                                             ) && (
                                                     <div
-                                                    style={{cursor:"pointer"}}
+                                                        style={{ cursor: "pointer" }}
                                                         className="voicedquiz"
                                                         onClick={(e) => {
                                                             e.stopPropagation();

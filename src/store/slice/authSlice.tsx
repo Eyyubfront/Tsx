@@ -28,9 +28,9 @@ const initialState: AuthState = {
   isAuth: null,
   veriyuse: false,
   full: false,
-
   datagoogle: false,
   quizHidden: null,
+
   notificationDisabled: false
 };
 
@@ -55,6 +55,10 @@ const authSlice = createSlice({
     toggleQuizHidden(state) {
       state.quizHidden = !state.quizHidden
       localStorage.setItem("quizHidden", JSON.stringify(state.quizHidden))
+    },
+    toogleNotfication(state) {
+      state.notificationDisabled = !state.notificationDisabled
+      localStorage.setItem("notificationDisabled", JSON.stringify(state.notificationDisabled))
     }
   },
   extraReducers: (builder) => {
@@ -125,19 +129,21 @@ const authSlice = createSlice({
         state.loading = false;
 
         const quizHiddenFromBackend = action.payload.quizHidden;
-
-
         const savedQuizHidden = localStorage.getItem("quizHidden");
 
         if (savedQuizHidden === null) {
           state.quizHidden = quizHiddenFromBackend;
           localStorage.setItem("quizHidden", JSON.stringify(quizHiddenFromBackend));
         } else {
-
           state.quizHidden = JSON.parse(savedQuizHidden);
         }
-
-        state.notificationDisabled = action.payload.notificationDisabled;
+        const savedNotificationDisabled = localStorage.getItem("notificationDisabled");
+        if (savedNotificationDisabled === null) {
+          state.notificationDisabled = action.payload.notificationDisabled;
+          localStorage.setItem("notificationDisabled", JSON.stringify(action.payload.notificationDisabled));
+        } else {
+          state.notificationDisabled = JSON.parse(savedNotificationDisabled);
+        }
       })
       .addCase(getuserSettings.rejected, (state, action) => {
         state.loading = false;
@@ -223,5 +229,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, toggleQuizHidden, setVeryuse, setisAuth } = authSlice.actions;
+export const { logout, toggleQuizHidden, toogleNotfication, setVeryuse, setisAuth } = authSlice.actions;
 export default authSlice.reducer;

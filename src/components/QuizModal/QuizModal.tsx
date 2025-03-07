@@ -20,6 +20,10 @@ const QuizModal = () => {
     const dispatch = useAppDispatch();
     const isQuizModalOpen = useAppSelector((state) => state.LanguagetextData.isOpen);
     const { quizData } = useAppSelector((state) => state.quizslice);
+    console.log("quizdata", quizData?.answers);
+
+    const learingnow = useAppSelector((state) => state.learningNow.items.nowitems);
+
     const methods = useForm();
     const { quizHidden } = useAppSelector((state) => state.Auth);
     const learingnowdata = useAppSelector((state) => state.learningNow.items.nowitems);
@@ -203,6 +207,7 @@ const QuizModal = () => {
                         </div>
 
                         <div className="quizmodal_inputbox">
+                            <p>{correctAnsewrscount}/{learingnow.length}</p>
                             <div className="inputbox_label">
                                 <Paragrafy className="input_label" text="Tap the right answer:" />
                             </div>
@@ -223,35 +228,35 @@ const QuizModal = () => {
                             </div>
                             <div className={`ansewrs__alls ${!isAnswersOpen ? "answers-closed" : ""}`}>
                                 {quizData?.answers &&
-                                    Object.keys(quizData.answers).map((key) => (
+                                    quizData.answers.map((answer, index) => (
                                         <div
-                                            key={key}
+                                            key={index}
                                             className={`answers_box ${isAnswersOpen ? "active" : ""} 
-                            ${isAnswered && key === selectedAnswer && !isCorrect ? 'wrong-answer' : ''} 
-                            ${isAnswered && key === selectedAnswer && isCorrect ? 'correct-answer' : ''} 
-                            ${isAnswered && key !== selectedAnswer && quizData.answers[key] ? 'correct-answer' : ''}`}
-                                            onClick={() => handleAnswerClick(key, quizData.answers[key])}
+                            ${isAnswered && answer.answer === selectedAnswer && !isCorrect ? 'wrong-answer' : ''} 
+                            ${isAnswered && answer.answer === selectedAnswer && isCorrect ? 'correct-answer' : ''} 
+                            ${isAnswered && answer.answer !== selectedAnswer && quizData.answers[index] ? 'correct-answer' : ''}`}
+                                            onClick={() => handleAnswerClick(answer.answer, quizData.answers[index])}
                                             style={{ pointerEvents: isAnswersOpen && !isAnswered ? 'auto' : 'none', display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}
                                         >
 
-                                            {key}
+                                            {answer.answer}
                                             {isAnswered && (
-                                                (key === selectedAnswer && isCorrect) || (quizData.answers[key] && key !== selectedAnswer)
+                                                (index === isCorrect) || (answer.isCorrect)
                                             ) && (
                                                     <div
                                                         className="voicedquiz"
                                                         onClick={(e) => {
                                                             e.stopPropagation();
-                                                            speak(key);
+                                                            speak(index);
                                                         }}
-
-
                                                     >
                                                         <KeyboardVoiceIcon />
                                                     </div>
                                                 )}
                                         </div>
-                                    ))}
+                                    ))
+
+                                }
                             </div>
 
                         </div>

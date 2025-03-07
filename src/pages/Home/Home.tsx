@@ -37,7 +37,7 @@ const Home = () => {
 
                     </div>
                     <div className="homepage_right">
-                        <LatestWords showAll={true} />
+                        <LatestWords showAll={false} />
                     </div>
                 </div>
                 <div className="homepage_quiz">

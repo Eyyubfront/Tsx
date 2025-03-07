@@ -1,8 +1,9 @@
 .top_file {
     display: flex;
     align-items: center;
-justify-content: space-between;
-gap: 6px;
+    justify-content: space-between;
+    gap: 6px;
+
     .file__input {
         display: flex;
         align-items: center;
@@ -16,6 +17,24 @@ gap: 6px;
         padding: 3px;
     }
 
+    input[type="file"] {
+        background-color: #6c5ce7;
+        border: 1px solid#6c5ce7;
+        cursor: pointer;
+        color: white;
+   
+    }
+
+    input[type="file"]::file-selector-button {
+        border: 2px solid #6c5ce7;
+        padding: 0.2em 0.4em;
+        border-radius: 0.2em;
+        background-color: #6c5ce7;
+        transition: 1s;
+        cursor: pointer;
+        color: white;
+    }
+
     .submit_inputdata {
         display: flex;
         align-items: center;
@@ -27,15 +46,16 @@ gap: 6px;
         padding: 17px;
         gap: 10px;
         border-radius: 10px;
-        background-color: #8B6DE8;
-        border: 1px solid #8B6DE8;
+        background-color: #6c5ce7;
+        border: 1px solid #6c5ce7;
         cursor: pointer;
+
     }
 }
 
 @media (max-width:600px) {
-    .top_file{
+    .top_file {
         justify-content: flex-start;
-        gap:10px;
+        gap: 10px;
     }
 }
