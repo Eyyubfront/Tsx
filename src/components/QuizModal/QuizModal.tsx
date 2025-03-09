@@ -40,6 +40,7 @@ const QuizModal = () => {
     const [isAnswered, setIsAnswered] = useState(false)
 
 
+
     useEffect(() => {
         if (isQuizModalOpen) {
             dispatch(fetchQuizData({ excludeIds: answeredQuestions, isMastered: false }));
@@ -68,28 +69,35 @@ const QuizModal = () => {
     }, [lives]);
 
 
-    const handleAnswerClick = (answer: string, isCorrect: boolean) => {
+    const handleAnswerClick = (answer: string) => {
+     
         if (!quizData) return;
 
         setSelectedAnswer(answer);
+
+        const answersdataa = quizData.answers.map(item => item.answer);
+       
+        const correctAnswer = quizData.answers?.find(a => a.answer === answersdataa[0])?.answer;
+
+        const isCorrect = correctAnswer !== undefined && correctAnswer === answer;
+
         setIsCorrect(isCorrect);
         setAnswerMessage(isCorrect ? "Correct!" : "Wrong!");
         setIsAnswered(true);
 
         if (isCorrect) {
+            console.log("gelll");
+
             setCorrectAnsewrsCount((prevCount) => prevCount + 1);
             speak(answer);
         } else {
             setLives(prevLives => prevLives - 1);
-            const correctAnswer = quizData?.answers
-                ? Object.entries(quizData.answers).find(([, value]) => value)?.[0]
-                : undefined;
-
             if (correctAnswer) {
                 speak(correctAnswer);
             }
         }
     };
+
 
     const handleSubmit = async () => {
         if (selectedAnswer === null) {
@@ -232,32 +240,28 @@ const QuizModal = () => {
                                         <div
                                             key={index}
                                             className={`answers_box ${isAnswersOpen ? "active" : ""} 
-                            ${isAnswered && answer.answer === selectedAnswer && !isCorrect ? 'wrong-answer' : ''} 
-                            ${isAnswered && answer.answer === selectedAnswer && isCorrect ? 'correct-answer' : ''} 
-                            ${isAnswered && answer.answer !== selectedAnswer && quizData.answers[index] ? 'correct-answer' : ''}`}
-                                            onClick={() => handleAnswerClick(answer.answer, quizData.answers[index])}
+                        ${isAnswered && selectedAnswer === answer.answer && answer.answer !== quizData?.data.answer ? 'wrong-answer' : ''} 
+                        ${isAnswered && selectedAnswer === answer.answer && answer.answer === quizData?.data.answer ? 'correct-answer' : ''} 
+                        ${isAnswered && selectedAnswer !== answer.answer && answer.answer === quizData?.data.answer ? 'correct-answer' : ''}`}
+                                            onClick={() => handleAnswerClick(answer.answer)}
                                             style={{ pointerEvents: isAnswersOpen && !isAnswered ? 'auto' : 'none', display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}
                                         >
-
                                             {answer.answer}
-                                            {isAnswered && (
-                                                (index === isCorrect) || (answer.isCorrect)
-                                            ) && (
-                                                    <div
-                                                        className="voicedquiz"
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            speak(index);
-                                                        }}
-                                                    >
-                                                        <KeyboardVoiceIcon />
-                                                    </div>
-                                                )}
+                                            {isAnswered && answer.answer === quizData?.data.answer && (
+                                                <div
+                                                    className="voicedquiz"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation()
+                                                        speak(index);
+                                                    }}
+                                                >
+                                                    <KeyboardVoiceIcon />
+                                                </div>
+                                            )}
                                         </div>
-                                    ))
-
-                                }
+                                    ))}
                             </div>
+
 
                         </div>
 

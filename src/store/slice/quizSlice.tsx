@@ -110,6 +110,7 @@ const homeSlice = createSlice({
       .addCase(fetchQuizData.fulfilled, (state, action: PayloadAction<QuizData>) => {
         state.loading = false;
         state.quizData = action.payload;
+        
       })
       .addCase(fetchQuizData.rejected, (state, action) => {
         state.loading = false;
@@ -159,6 +160,8 @@ const homeSlice = createSlice({
       .addCase(quizSaveData.fulfilled, (state, action) => {
         state.loading = false;
         state.quizData = action.payload;
+       
+        
       })
       .addCase(quizSaveData.rejected, (state, action) => {
         state.loading = false;
