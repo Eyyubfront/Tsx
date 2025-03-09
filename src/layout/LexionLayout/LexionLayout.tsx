@@ -4,7 +4,7 @@ import LexiconCards from "../../pages/Home/Homesections/LexiconCards/LexiconCard
 import "./LexionLayout.scss"
 import LearningNow from "../../pages/Home/Homesections/LearingNow/LearingNow"
 import LatestWords from "../../pages/Home/Homesections/LatestWords/LatestWords"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { TextField } from "@mui/material"
 import Search from '../../assets/images/home/Search_Magnifying_Glass.svg';
 import MasteredWords from "../../pages/Home/Homesections/MasteredWords/MasteredWords"
@@ -13,12 +13,14 @@ import BackButton from "../../components/BackButton/BackButton"
 import { useAppDispatch, useAppSelector } from "../../store"
 import { openDialog, openQuizModal } from "../../store/slice/LanguageHomeSlice"
 import QuizModal from "../../components/QuizModal/QuizModal"
+import { fetchSearchResults } from "../../store/actions/learingActions/learingwordsActions"
 const LexionLayout = () => {
     const { id } = useParams()
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const items = useAppSelector((state) => state.learningNow.items.nowitems);
+
     const handleHomeQuizClick = () => {
         if (!items || items.length === 0) {
             dispatch(openDialog());
@@ -26,6 +28,27 @@ const LexionLayout = () => {
             dispatch(openQuizModal());
         }
     };
+
+    const handleSearch = () => {
+        if (searchTerm.trim()) {
+            dispatch(fetchSearchResults({
+                searchText: searchTerm  || "",
+                page: 1,
+                pageSize: 10
+            }));
+           
+        } else {
+            console.log("Search term is empty, skipping search request.");
+        }
+    };
+    useEffect(() => {
+        if (searchTerm) {
+            handleSearch();
+        }
+    }, [searchTerm, dispatch]);
+    
+
+
 
     return (
         <div className="lexion_layout">

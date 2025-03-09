@@ -4,10 +4,11 @@ import { fetchTexts } from './learingnowActions';
 import { lexioncountfetch } from '../lexioncountActions/lexioncountActions';
 
 export interface WordsItem {
-    id: number|null;
+    id: number | null;
     source?: string;
     translation?: string;
     isLearningNow?: boolean;
+
 }
 export interface IWordsitem extends WordsItem {
     isMastered?: boolean
@@ -69,6 +70,21 @@ export const updateText = createAsyncThunk('learingWords/updateText', async ({ i
         });
         thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
         return response.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error);
+    }
+});
+
+
+
+
+
+
+
+export const fetchSearchResults = createAsyncThunk('languageHome/fetchSearchResults', async ({ page, pageSize,searchText }: { page: number; pageSize: number,searchText:string }, thunkAPI) => {
+    try {
+        const response = await axiosInstance.get(`/UserVocabulary/Search?searchText=${searchText}&page=${page}&pageSize=${pageSize}`);
+        return response.data.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(error);
     }

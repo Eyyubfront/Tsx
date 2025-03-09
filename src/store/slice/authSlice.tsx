@@ -32,7 +32,7 @@ const initialState: AuthState = {
   datagoogle: false,
   quizHidden: null,
   quizListenable: null,
-  notificationDisabled: false
+  notificationDisabled: false,
 };
 
 const authSlice = createSlice({

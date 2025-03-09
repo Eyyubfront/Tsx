@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { wordfetchTexts, saveText, removeText, updateText, selecetwordText } from '../actions/learingActions/learingwordsActions';
-
+import { wordfetchTexts, saveText, removeText, updateText, selecetwordText, fetchSearchResults } from '../actions/learingActions/learingwordsActions';
 
 interface wordsitems {
     id: number;
@@ -11,8 +10,9 @@ interface wordsitems {
 }
 
 export interface LearingWords {
-    items: wordsitems[],
-    count: number,
+    items: wordsitems[];
+    pageCount: number;
+    
 }
 
 interface LearningWordState {
@@ -24,16 +24,19 @@ interface LearningWordState {
 const initialState: LearningWordState = {
     items: {
         items: [],
-        count: 0
+        pageCount: 0
     },
+  
     status: 'idle',
     error: null,
 };
+
 
 const LatestWordsSlice = createSlice({
     name: 'latestWords',
     initialState,
     reducers: {
+       
         resetState: () => initialState,
     },
     extraReducers: (builder) => {
@@ -44,35 +47,47 @@ const LatestWordsSlice = createSlice({
             })
             .addCase(wordfetchTexts.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.items = action.payload; 
+                state.items = action.payload;
             })
             .addCase(wordfetchTexts.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message || 'Failed to fetch texts';
             })
-   
+
             .addCase(saveText.fulfilled, (state) => {
                 state.status = 'succeeded';
             })
-          
+
             .addCase(selecetwordText.fulfilled, (state) => {
                 state.status = 'succeeded';
-     
             })
             .addCase(selecetwordText.rejected, (state) => {
                 state.status = 'failed';
             })
+
             .addCase(removeText.fulfilled, (state) => {
-                state.status = 'succeeded';    
-                
+                state.status = 'succeeded';
             })
 
             .addCase(updateText.fulfilled, (state) => {
                 state.status = 'succeeded';
+            })
+
+
+            .addCase(fetchSearchResults.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(fetchSearchResults.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.items = action.payload;        
+            })
+            .addCase(fetchSearchResults.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message || 'Failed to fetch search results';
             });
     },
 });
 
 export const { resetState } = LatestWordsSlice.actions;
 export default LatestWordsSlice.reducer;
-
