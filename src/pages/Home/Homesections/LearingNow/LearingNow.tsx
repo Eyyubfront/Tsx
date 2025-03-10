@@ -1,23 +1,23 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchTexts, TextItem, ITextItem } from '../../../../store/actions/learingActions/learingnowActions';
 import { useAppDispatch, useAppSelector } from '../../../../store/index';
 import TableComponent from '../../../../components/TableComponents/TableComponents';
-import { Button, TableBody, TableRow, TableCell, Typography } from '@mui/material';
+import { Button, TableBody, TableRow, TableCell, Typography, Pagination } from '@mui/material';
 import "./LearingNow.scss"
 import { selecetwordText } from '../../../../store/actions/learingActions/learingwordsActions';
 import NotSavedicon from "../../../../assets/images/home/nosaved.svg";
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import e from "../../../../assets/images/home/Savedmastered.svg";
-interface LearnSearchProps {
-    searchTerm?: string;
-}
 
-const LearningNow = ({ searchTerm = "", showAll = false }: LearnSearchProps & { showAll?: boolean }) => {
+
+const LearningNow = ({ showAll = false }: { showAll?: boolean }) => {
     const dispatch = useAppDispatch();
     const items = useAppSelector((state) => state.learningNow.items.nowitems);
+    const pageitems = useAppSelector((state) => state.learningNow.items);
     const { defaultText } = useAppSelector((state) => state.LanguagetextData);
+    const [page, setPage] = useState(1);
     useEffect(() => {
-        dispatch(fetchTexts({ page: 1, pageSize: showAll ? 1000 : 10 }));
+        dispatch(fetchTexts({ page, pageSize: showAll ? 1000 : 10 }));
     }, [dispatch]);
 
     const handleSaveText = (item: TextItem) => {
@@ -25,20 +25,22 @@ const LearningNow = ({ searchTerm = "", showAll = false }: LearnSearchProps & { 
             dispatch(selecetwordText(item.id));
         }
     };
+    const handleChange = (e: React.ChangeEvent<unknown>, value: number) => {
+        setPage(value);
 
-     const speak = (text: string) => {
-        
+    }; 
+
+
+    const speak = (text: string) => {
+
         const utterance = new SpeechSynthesisUtterance(text);
         window.speechSynthesis.speak(utterance);
     };
 
 
-
     const filteredItems = items.filter((item: ITextItem) =>
-        item.source?.toLowerCase().includes(searchTerm?.toLowerCase()) || item.translation?.toLowerCase().includes(searchTerm?.toLowerCase())
-
+        item.source?.toLowerCase().includes('') || item.translation?.toLowerCase().includes('')
     );
-
 
     return (
         <div>
@@ -65,7 +67,7 @@ const LearningNow = ({ searchTerm = "", showAll = false }: LearnSearchProps & { 
                                     <Button
                                         className='table_button'
                                         variant="outlined"
-                                        onClick={() => speak(translation || '')} 
+                                        onClick={() => speak(translation || '')}
                                     >
                                         <Typography><KeyboardVoiceIcon /></Typography>
                                     </Button>
@@ -75,6 +77,11 @@ const LearningNow = ({ searchTerm = "", showAll = false }: LearnSearchProps & { 
                         :
                         <div className='data_undifendsbox'>NO DATA FOUND</div>
                     }
+                    <Pagination
+                        count={pageitems.pageCount}
+                        page={page}
+                        onChange={handleChange}
+                    />
                 </TableBody>
 
             </TableComponent>

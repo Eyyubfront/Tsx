@@ -1,5 +1,5 @@
 import { useForm, FormProvider } from "react-hook-form";
-import { Box, Typography, TextField, Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
+import { Box, Typography, TextField, Dialog, DialogTitle, DialogContent, IconButton, Tooltip } from "@mui/material";
 import Favorite from "../../assets/images/home/Heart_01.svg";
 import FavroiteBorder from "../../assets/images/home/UnHeart.svg";
 import Savedicon from "../../assets/images/home/Bookmark.svg";
@@ -20,7 +20,7 @@ const QuizModal = () => {
     const dispatch = useAppDispatch();
     const isQuizModalOpen = useAppSelector((state) => state.LanguagetextData.isOpen);
     const { quizData } = useAppSelector((state) => state.quizslice);
-    console.log("quizdata", quizData?.answers);
+    console.log("quizdata", quizData);
 
     const learingnow = useAppSelector((state) => state.learningNow.items.nowitems);
 
@@ -36,9 +36,7 @@ const QuizModal = () => {
     const [showGameOver, setShowGameOver] = useState(false);
     const [correctAnsewrscount, setCorrectAnsewrsCount] = useState(0);
     const [isNodata, setDatadialog] = useState(false);
-
     const [isAnswered, setIsAnswered] = useState(false)
-
 
 
     useEffect(() => {
@@ -69,32 +67,29 @@ const QuizModal = () => {
     }, [lives]);
 
 
-    const handleAnswerClick = (answer: string) => {
-     
+    const handleAnswerClick = (answer: string, source: string) => {
+
         if (!quizData) return;
 
         setSelectedAnswer(answer);
 
-        const answersdataa = quizData.answers.map(item => item.answer);
-       
-        const correctAnswer = quizData.answers?.find(a => a.answer === answersdataa[0])?.answer;
+        const correctsource = quizData.question;
 
-        const isCorrect = correctAnswer !== undefined && correctAnswer === answer;
+        const condition = correctsource == source;
 
-        setIsCorrect(isCorrect);
-        setAnswerMessage(isCorrect ? "Correct!" : "Wrong!");
+        setIsCorrect(condition);
+        setAnswerMessage(condition ? "Correct!" : "Wrong!");
         setIsAnswered(true);
-
-        if (isCorrect) {
-            console.log("gelll");
-
+        if (condition) {
             setCorrectAnsewrsCount((prevCount) => prevCount + 1);
             speak(answer);
+
         } else {
+
             setLives(prevLives => prevLives - 1);
-            if (correctAnswer) {
-                speak(correctAnswer);
-            }
+
+
+
         }
     };
 
@@ -234,40 +229,61 @@ const QuizModal = () => {
                             <div style={{ cursor: "pointer" }} onClick={handleAnswersToggle}>
                                 {isAnswersOpen ? <RxEyeOpen style={{ color: "rgba(157, 10, 187, 0.685)" }} /> : <FaRegEyeSlash style={{ color: "rgba(157, 10, 187, 0.685)" }} />}
                             </div>
+
+
+
+
                             <div className={`ansewrs__alls ${!isAnswersOpen ? "answers-closed" : ""}`}>
                                 {quizData?.answers &&
-                                    quizData.answers.map((answer, index) => (
-                                        <div
-                                            key={index}
-                                            className={`answers_box ${isAnswersOpen ? "active" : ""} 
-                        ${isAnswered && selectedAnswer === answer.answer && answer.answer !== quizData?.data.answer ? 'wrong-answer' : ''} 
-                        ${isAnswered && selectedAnswer === answer.answer && answer.answer === quizData?.data.answer ? 'correct-answer' : ''} 
-                        ${isAnswered && selectedAnswer !== answer.answer && answer.answer === quizData?.data.answer ? 'correct-answer' : ''}`}
-                                            onClick={() => handleAnswerClick(answer.answer)}
-                                            style={{ pointerEvents: isAnswersOpen && !isAnswered ? 'auto' : 'none', display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}
-                                        >
-                                            {answer.answer}
-                                            {isAnswered && answer.answer === quizData?.data.answer && (
-                                                <div
-                                                    className="voicedquiz"
-                                                    onClick={(e) => {
-                                                        e.stopPropagation()
-                                                        speak(index);
-                                                    }}
-                                                >
-                                                    <KeyboardVoiceIcon />
-                                                </div>
-                                            )}
-                                        </div>
-                                    ))}
-                            </div>
+                                    quizData.answers.map((item, index) => {
 
+                                        const isSelected = selectedAnswer === item.answer;
+                                        const isCorrectAnswer = isAnswered && isSelected && isCorrect;
+                                        const isWrongAnswer = isAnswered && isSelected && !isCorrect;
+
+
+                                        return (
+                                            <Tooltip title={selectedAnswer ? item.source : ""} arrow
+                                            // disableInteractive={false} 
+                                               >
+                                                <div
+                                                    key={index}
+                                                    className={`answers_box ${isAnswersOpen ? "actives" : ""} 
+                        ${isCorrectAnswer ? "correct-answer" : ""}
+                        ${isWrongAnswer ? "wrong-answer" : ""}
+                         ${isAnswered ? "answered" : ""} 
+                    `}
+                                                    onClick={() => handleAnswerClick(item.answer, item.source)}
+                                                    style={{
+                                                        pointerEvents: isAnswersOpen && !isAnswered ? "auto" : "none",
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        justifyContent: "center",
+                                                        gap: "6px"
+                                                    }}
+                                                > 
+                                                    {item.answer}
+                                                    {isAnswered && isCorrectAnswer && (
+                                                        <div
+                                                            className="voicedquiz"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                speak(item.answer);
+                                                            }}
+                                                        >
+                                                            <KeyboardVoiceIcon />
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </Tooltip>
+                                        );
+                                    })}
+                            </div>
 
                         </div>
 
 
                     </div>
-
 
                     <Typography variant="body2" sx={{ mt: 2, textAlign: "center" }}>
                         {answerMessage && isCorrect && quizData?.id ? (
@@ -331,7 +347,7 @@ const QuizModal = () => {
                     </Dialog>}
                 </FormProvider>
             </DialogContent>
-        </Dialog>
+        </Dialog >
     );
 };
 

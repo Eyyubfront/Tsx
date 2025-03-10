@@ -3,7 +3,7 @@ import { logout } from "../slice/authSlice";
 import store from "../index";
 
 const axiosInstance = axios.create({
-  baseURL: "https://learn-language-api.azurewebsites.net/api",
+  baseURL: "https://learn-language-app.azurewebsites.net/api",
 });
 
 axiosInstance.interceptors.request.use((config) => {

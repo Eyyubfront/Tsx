@@ -52,7 +52,7 @@ export const register = createAsyncThunk(
   async (request: RegisterRequest, { rejectWithValue }) => {
     try {
       const response = await axios.post<AuthResponse>(
-        'https://learn-language-api.azurewebsites.net/api/Register',
+        'https://learn-language-app.azurewebsites.net/api/Register',
         request
       );
 
@@ -127,7 +127,7 @@ export const addformFile = createAsyncThunk('home/addformFile', async (file: Fil
     const formData = new FormData();
     formData.append("file", file)
     const response = await axiosInstance.post('/UserVocabulary/AddFromFile', formData);
-    thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
+    thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10, isGrouped: false  }));
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue("User vocabulary already exists")

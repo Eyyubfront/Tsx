@@ -15,7 +15,7 @@ export const resetPassword = createAsyncThunk<
   'auth/resetPassword',
   async ({ userId, newPassword }, { rejectWithValue }) => {
     try {
-      const response = await axios.post('https://learn-language-api.azurewebsites.net/api/ResetPassword', {
+      const response = await axios.post('https://learn-language-app.azurewebsites.net/api/ResetPassword', {
         userId,
         newPassword,
       });

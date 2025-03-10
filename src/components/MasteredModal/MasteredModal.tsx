@@ -1,5 +1,5 @@
 import { useForm, FormProvider } from "react-hook-form";
-import { Box, Typography, TextField, Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
+import { Box, Typography, TextField, Dialog, DialogTitle, DialogContent, IconButton, Tooltip } from "@mui/material";
 import Favorite from "../../assets/images/home/Heart_01.svg";
 import FavroiteBorder from "../../assets/images/home/UnHeart.svg";
 import { useAppDispatch, useAppSelector } from "../../store";
@@ -62,30 +62,29 @@ const MasteredModal = () => {
         window.speechSynthesis.speak(utterance);
     };
 
-    const handleAnswerClick = (answer: string, isCorrect: boolean) => {
-        if (isAnswered) return;
+    const handleAnswerClick = (answer: string, source: string) => {
+
+        if (!quizData) return;
 
         setSelectedAnswer(answer);
-        setIsCorrect(isCorrect);
 
+        const correctsource = quizData.question;
 
+        const condition = correctsource == source;
+
+        setIsCorrect(condition);
         setIsAnswered(true);
-
-        if (isCorrect) {
+        if (condition) {
             setCorrectAnsewrsCount((prevCount) => prevCount + 1);
             speak(answer);
+
         } else {
+
             setLives(prevLives => prevLives - 1);
-            const correctAnswer = quizData?.answers
-                ? Object.entries(quizData.answers).find(([, value]) => value)?.[0]
-                : undefined;
 
 
-            if (correctAnswer) {
-                speak(correctAnswer);
-            }
+
         }
-
     };
 
     const handleSubmit = async () => {
@@ -190,39 +189,57 @@ const MasteredModal = () => {
                             <div style={{ cursor: "pointer" }} onClick={handleAnswersToggle}>
                                 {isAnswersOpen ? <RxEyeOpen style={{ color: "rgba(157, 10, 187, 0.685)" }} /> : <FaRegEyeSlash style={{ color: "rgba(157, 10, 187, 0.685)" }} />}
                             </div>
+
                             <div className={`ansewrs__alls ${!isAnswersOpen ? "answers-closed" : ""}`}>
                                 {quizData?.answers &&
-                                    Object.keys(quizData.answers).map((key) => (
-                                        <div
-                                            key={key}
-                                            className={`answers_box ${isAnswersOpen ? "active" : ""} 
-                            ${isAnswered && key === selectedAnswer && !isCorrect ? 'wrong-answer' : ''} 
-                            ${isAnswered && key === selectedAnswer && isCorrect ? 'correct-answer' : ''} 
-                            ${isAnswered && key !== selectedAnswer && quizData.answers[key] ? 'correct-answer' : ''}`}
-                                            onClick={() => handleAnswerClick(key, quizData.answers[key])}
-                                            style={{ pointerEvents: isAnswersOpen && !isAnswered ? 'auto' : 'none', display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}
-                                        >
-                                            {key}
-                                            {isAnswered && (
-                                                (key === selectedAnswer && isCorrect) || (quizData.answers[key] && key !== selectedAnswer)
-                                            ) && (
-                                                    <div
-                                                        style={{ cursor: "pointer" }}
-                                                        className="voicedquiz"
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            speak(key);
-                                                        }}
+                                    quizData.answers.map((item, index) => {
+
+                                        const isSelected = selectedAnswer === item.answer;
+                                        const isCorrectAnswer = isAnswered && isSelected && isCorrect;
+                                        const isWrongAnswer = isAnswered && isSelected && !isCorrect;
 
 
-                                                    >
-                                                        <KeyboardVoiceIcon />
-                                                    </div>
-                                                )}
+                                        return (
+                                            <Tooltip title={isSelected ? item.source : ""} arrow>
+                                                <div
+                                                    key={index}
+                                                    className={`answers_box ${isAnswersOpen ? "actives" : ""} 
+                                                 ${isCorrectAnswer ? "correct-answer" : ""}
+                                                 ${isWrongAnswer ? "wrong-answer" : ""}
+                                                  ${isAnswered ? "answered" : ""} 
+                                             `}
+                                                    onClick={() => handleAnswerClick(item.answer, item.source)}
+                                                    style={{
+                                                        pointerEvents: isAnswersOpen && !isAnswered ? "auto" : "none",
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        justifyContent: "center",
+                                                        gap: "6px"
+                                                    }}
+                                                >
 
-                                        </div>
-                                    ))}
+
+                                                    {item.answer}  <span className="shadow_source">{item.source}</span>
+
+                                                    {isAnswered && isCorrectAnswer && (
+                                                        <div
+                                                            className="voicedquiz"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                speak(item.answer);
+                                                            }}
+                                                        >
+                                                            <KeyboardVoiceIcon />
+                                                        </div>
+                                                    )}
+
+                                                </div>
+                                            </Tooltip>
+                                        );
+                                    })}
                             </div>
+
+
 
                         </div>
 

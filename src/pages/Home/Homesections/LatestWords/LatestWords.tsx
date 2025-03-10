@@ -42,7 +42,7 @@ const LatestWords = ({ searchTerm = "", showAll }: LearnSearchProps) => {
 
 
     useEffect(() => {
-        dispatch(wordfetchTexts({ page, pageSize: showAll ? 20 : 10 }));
+        dispatch(wordfetchTexts({ page, pageSize: showAll ? 20 : 10, isGrouped: true  }));
     }, [ showAll, page])
 
 

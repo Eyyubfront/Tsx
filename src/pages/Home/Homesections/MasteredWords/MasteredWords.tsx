@@ -15,11 +15,8 @@ import AlertDialog from "../../../../components/AlertDialog/AlertDialog";
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import { storycreatgptcreat } from "../../../../store/actions/authActions";
 import exceldowland from '../../../../assets/images/header/exceldowland.svg';
-interface LearnSearchProps {
-    searchTerm: string;
-}
 
-const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
+const MasteredWords = () => {
     const dispatch = useAppDispatch();
     const { mastereds, loading } = useAppSelector((state) => state.mastered);
 
@@ -46,9 +43,10 @@ const MasteredWords = ({ searchTerm = "" }: LearnSearchProps) => {
     };
 
     const filteredItems = mastereds.filter((item: MasteredPropsUse) =>
-        item.source?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.translation?.toLowerCase().includes(searchTerm.toLowerCase())
+        item.source?.toLowerCase().includes('') || item.translation?.toLowerCase().includes('')
     );
+
+
 
     const handleQuizClick = () => {
 

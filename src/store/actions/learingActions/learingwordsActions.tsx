@@ -14,9 +14,9 @@ export interface IWordsitem extends WordsItem {
     isMastered?: boolean
 }
 
-export const wordfetchTexts = createAsyncThunk('learingWords/wordfetchTexts', async ({ page, pageSize }: { page: number; pageSize: number }, thunkAPI) => {
+export const wordfetchTexts = createAsyncThunk('learingWords/wordfetchTexts', async ({ page, pageSize, isGrouped }: { page: number; pageSize: number, isGrouped: boolean }, thunkAPI) => {
     try {
-        const response = await axiosInstance.get(`/UserVocabulary/GetPaginatedByUserId?page=${page}&pageSize=${pageSize}`);
+        const response = await axiosInstance.get(`/UserVocabulary/GetPaginatedByUserId?page=${page}&pageSize=${pageSize}&isGrouped=${isGrouped}`);
         return response.data.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(error);
@@ -26,7 +26,7 @@ export const wordfetchTexts = createAsyncThunk('learingWords/wordfetchTexts', as
 export const saveText = createAsyncThunk('learningWords/saveText', async (item: WordsItem, thunkAPI) => {
     try {
         const response = await axiosInstance.post('/UserVocabulary/Create', item);
-        thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
+        thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10, isGrouped: false }));
         thunkAPI.dispatch(lexioncountfetch());
         return response.data;
     } catch (error) {
@@ -39,7 +39,7 @@ export const selecetwordText = createAsyncThunk(
     async (id: number, { rejectWithValue, dispatch }) => {
         try {
             const response = await axiosInstance.post(`/UserVocabulary/SetLearning/${id}`);
-            dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
+            dispatch(wordfetchTexts({ page: 1, pageSize: 10, isGrouped: false }));
             dispatch(fetchTexts({ page: 1, pageSize: 10 }));
             dispatch(lexioncountfetch());
             return response.data.data;
@@ -53,7 +53,7 @@ export const selecetwordText = createAsyncThunk(
 export const removeText = createAsyncThunk('learingWords/removeText', async ({ id }: { id: number }, thunkAPI) => {
     try {
         await axiosInstance.delete(`/UserVocabulary/Delete/${id}`);
-        thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
+        thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10, isGrouped: false }));
         thunkAPI.dispatch(fetchTexts({ page: 1, pageSize: 10 }));
         thunkAPI.dispatch(lexioncountfetch());
     } catch (error) {
@@ -68,7 +68,7 @@ export const updateText = createAsyncThunk('learingWords/updateText', async ({ i
             source,
             translation
         });
-        thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
+        thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10, isGrouped: false }));
         return response.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(error);
@@ -81,9 +81,9 @@ export const updateText = createAsyncThunk('learingWords/updateText', async ({ i
 
 
 
-export const fetchSearchResults = createAsyncThunk('languageHome/fetchSearchResults', async ({ page, pageSize,searchText }: { page: number; pageSize: number,searchText:string }, thunkAPI) => {
+export const fetchSearchResults = createAsyncThunk('languageHome/fetchSearchResults', async ({ page, pageSize, searchText, isGrouped }: { page: number; pageSize: number, searchText: string, isGrouped: boolean }, thunkAPI) => {
     try {
-        const response = await axiosInstance.get(`/UserVocabulary/Search?searchText=${searchText}&page=${page}&pageSize=${pageSize}`);
+        const response = await axiosInstance.get(`/UserVocabulary/Search?searchText=${searchText}&page=${page}&pageSize=${pageSize}&isGrouped=${isGrouped}`);
         return response.data.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(error);

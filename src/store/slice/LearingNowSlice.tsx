@@ -10,7 +10,7 @@ interface items {
 
 export interface LearingNow {
     nowitems: items[],
-    count: number,
+    pageCount: number,
 }
 
 interface LearningNowState {
@@ -23,11 +23,11 @@ interface LearningNowState {
 const initialState: LearningNowState = {
     items: {
         nowitems: [],
-        count: 0
+        pageCount: 0
     },
     status: 'idle',
     error: null,
-    isOpenNow: false, 
+    isOpenNow: false,
 };
 
 const learningNowSlice = createSlice({
@@ -36,8 +36,8 @@ const learningNowSlice = createSlice({
     reducers: {
         resetState: () => initialState,
         CloseModalNow: (state) => {
-            state.isOpenNow=!state.isOpenNow
-            }
+            state.isOpenNow = !state.isOpenNow
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -47,9 +47,9 @@ const learningNowSlice = createSlice({
             })
             .addCase(fetchTexts.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.items.nowitems = action.payload.items,
-                state.items.count = action.payload.count
-             
+                state.items.nowitems = action.payload.items
+
+
             })
             .addCase(fetchTexts.rejected, (state, action) => {
                 state.status = 'failed';
@@ -59,23 +59,23 @@ const learningNowSlice = createSlice({
             .addCase(learingnowsaveText.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.error = action.payload as string
-   
+
             })
             .addCase(learingnowsaveText.rejected, (state, action) => {
                 state.error = action.payload as string
-                state.isOpenNow = true; 
+                state.isOpenNow = true;
             })
             .addCase(removeText.fulfilled, (state) => {
                 state.status = 'succeeded';
-            
+
             })
 
             .addCase(updateText.fulfilled, (state) => {
                 state.status = 'succeeded';
-   
+
             });
     },
 });
 
-export const { resetState,CloseModalNow } = learningNowSlice.actions;
+export const { resetState, CloseModalNow } = learningNowSlice.actions;
 export default learningNowSlice.reducer;

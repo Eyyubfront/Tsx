@@ -32,11 +32,12 @@ const LexionLayout = () => {
     const handleSearch = () => {
         if (searchTerm.trim()) {
             dispatch(fetchSearchResults({
-                searchText: searchTerm  || "",
+                searchText: searchTerm || "",
                 page: 1,
-                pageSize: 10
+                pageSize: 10,
+                isGrouped: true
             }));
-           
+
         } else {
             console.log("Search term is empty, skipping search request.");
         }
@@ -46,7 +47,7 @@ const LexionLayout = () => {
             handleSearch();
         }
     }, [searchTerm, dispatch]);
-    
+
 
 
 
@@ -60,24 +61,29 @@ const LexionLayout = () => {
                 <LexiconCards className="layout_lexionprops" />
                 <div className="lexionslayout_cards">
                     <div className="lexionslayout_search">
-                        <div className="search_icons">
-                            <img className='search_img' src={Search} alt="Search" />
-                        </div>
-                        <TextField
-                            className='inputs_category'
-                            variant="outlined"
-                            placeholder="Search for word"
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            value={searchTerm}
-                            fullWidth
-                            style={{ padding: "16px 11px" }}
-                            margin="normal"
-                        />
+                        {id === "vocablary" && (
+                            <>
+
+                                <div className="search_icons">
+                                    <img className='search_img' src={Search} alt="Search" />
+                                </div>
+                                <TextField
+                                    className='inputs_category'
+                                    variant="outlined"
+                                    placeholder="Search for word"
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    value={searchTerm}
+                                    fullWidth
+                                    style={{ padding: "16px 11px" }}
+                                    margin="normal"
+                                />
+                            </>
+                        )}
                     </div>
                     <div className="lexionlayout_secioncomponnet">
-                        {id === "learning" && <LearningNow searchTerm={searchTerm} showAll={true} />}
+                        {id === "learning" && <LearningNow showAll={true} />}
                         {id === "vocablary" && <LatestWords searchTerm={searchTerm} showAll={true} />}
-                        {id === "mastered" && <MasteredWords searchTerm={searchTerm} />}
+                        {id === "mastered" && <MasteredWords />}
                     </div>
                 </div>
             </div>

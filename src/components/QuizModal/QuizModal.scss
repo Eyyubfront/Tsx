@@ -66,7 +66,6 @@
 
 
         .answers_box {
-
             cursor: pointer;
             border: 1px solid #F3F0FD;
             background-color: #F3F0FD;
@@ -78,12 +77,31 @@
             font-size: 16px;
             font-weight: 500;
             font-family: Inter, "sans-serif";
+      
+
+            &:active {
+                background-color: #7D62D1;
+                color: white;
+
+            }
+
+            &[disabled]:hover {
+                .shadow_source {
+                    display: block;
+                }
+            }
+
+            .shadow_source {
+                display: none;
+            }
         }
 
         .correct-answer {
             background-color: white;
             color: black;
             border: 1px solid green;
+
+
         }
 
         .wrong-answer {
@@ -91,12 +109,18 @@
             transform: 1s;
             color: white;
             border: 1px solid red;
+
+
         }
+
+
+
 
 
     }
 
-  
+
+
 
     .answers-closed {
         filter: blur(3px);
@@ -125,15 +149,11 @@
     }
 }
 
-.ansewrs__alls {
-    .answers_box {
 
-        &:active {
-            background-color: #7D62D1;
-            color: white;
-        }
-    }
-}
+
+
+
+
 
 .feeadback_bottom {
 
