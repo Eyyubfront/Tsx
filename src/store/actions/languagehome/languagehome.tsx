@@ -36,7 +36,7 @@ export const selecetlangaugesave = createAsyncThunk(
 
         dispatch(lexioncountfetch()); 
         dispatch(fetchTexts({ page: 1, pageSize: 10 })); 
-        dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
+        dispatch(wordfetchTexts({ page: 1, pageSize: 10 , isGrouped: false }));
         await   dispatch(getInitialLanguage()); 
         return response.data?.data;
       } catch (error) {
