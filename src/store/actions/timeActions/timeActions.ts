@@ -10,7 +10,7 @@ import axiosInstance from "../axiosInstance";
 }
 export const getTime = createAsyncThunk('learningNow/getTime', async (_, thunkAPI) => {
   try {
-    const response = await axiosInstance.get(`/NotificationSetting/GetByUserId`);
+    const response = await axiosInstance.get(`/Notification/GetByUserId`);
 
     return response.data.data;
 
@@ -28,7 +28,7 @@ export const submitTimePreferences = createAsyncThunk(
     { rejectWithValue, dispatch }
   ) => {
     try {
-      const response = await axiosInstance.post("/NotificationSetting/Create", {
+      const response = await axiosInstance.post("/Notification/Create", {
         intervalId,
         startTime,
         endTime,
@@ -48,7 +48,7 @@ export const updateTime = createAsyncThunk(
     { rejectWithValue, dispatch }
   ) => {
     try {
-      const response = await axiosInstance.put("/NotificationSetting/Update", {
+      const response = await axiosInstance.put("/Notification/Update", {
         intervalId,
         startTime,
         endTime,

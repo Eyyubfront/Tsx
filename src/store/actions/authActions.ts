@@ -165,8 +165,9 @@ export const changeVisibility = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axiosInstance.post(
-        '/ChangeQuizVisibility'
+        'UserSetting/ChangeQuizVisibility'
       );
+      thunkAPI.dispatch(getuserSettings());
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -175,9 +176,42 @@ export const changeVisibility = createAsyncThunk(
 );
 
 
+export const changelisting = createAsyncThunk(
+  'auth/changelisting',
+  async (_, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post(
+        'UserSetting/ChangeQuizListenable'
+      );
+      thunkAPI.dispatch(getuserSettings());
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const notficationdisabled = createAsyncThunk(
+  'auth/notficationdisabled',
+  async (_, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post(
+        'UserSetting/ChangeNotificationStatus'
+      );
+      thunkAPI.dispatch(getuserSettings());
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+
+
+
 export const getuserSettings = createAsyncThunk('home/getuserSettings', async (_, thunkAPI) => {
   try {
-    const response = await axiosInstance.get(`/GetUserSettings`);
+    const response = await axiosInstance.get(`UserSetting/GetUserSetting`);
 
     return response.data.data;
 

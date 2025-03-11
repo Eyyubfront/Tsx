@@ -26,9 +26,8 @@ const LearningNow = ({ showAll }: { showAll?: boolean }) => {
             dispatch(selecetwordText({ id: item.id, page: page }));
         }
     };
-    const handleChange = (e: React.ChangeEvent<unknown>, value: number) => {
+    const handleChange = (_: unknown, value: number) => {
         setPage(value);
-
     };
 
 

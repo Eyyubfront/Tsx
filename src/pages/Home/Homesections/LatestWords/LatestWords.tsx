@@ -44,7 +44,7 @@ const LatestWords = ({ searchTerm = "", showAll }: LearnSearchProps) => {
 
 
     useEffect(() => {
-       
+
         dispatch(wordfetchTexts({ page, pageSize: showAll ? 20 : 10, isGrouped: true }));
     }, [showAll, page])
 
@@ -54,9 +54,8 @@ const LatestWords = ({ searchTerm = "", showAll }: LearnSearchProps) => {
     };
 
 
-    const handleChange = (e: React.ChangeEvent<unknown>, value: number) => {
+    const handleChange = (_: unknown, value: number) => {
         setPage(value);
-
     };
 
     const speak = (text: string) => {

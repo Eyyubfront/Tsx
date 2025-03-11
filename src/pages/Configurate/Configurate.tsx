@@ -1,9 +1,8 @@
 
 import { MdToggleOn, MdToggleOff } from "react-icons/md";
 import { useAppSelector, useAppDispatch } from '../../store';
-import { toggleQuizHidden, toogleListen, toogleNotfication } from "../../store/slice/authSlice";
 import "./Configurate.scss"
-import { getuserSettings } from "../../store/actions/authActions";
+import { changelisting, changeVisibility, getuserSettings, notficationdisabled } from "../../store/actions/authActions";
 import { useEffect } from "react";
 
 const Configurate = () => {
@@ -12,15 +11,15 @@ const Configurate = () => {
 
 
     const handleToggle = () => {
-        dispatch(toggleQuizHidden());
+        dispatch(changeVisibility());
     }
 
     const handleToggleNotfication = () => {
-        dispatch(toogleNotfication());
+        dispatch(notficationdisabled());
     }
 
     const handleToggleListen = () => {
-        dispatch(toogleListen());
+        dispatch(changelisting());
     }
     useEffect(() => {
         dispatch(getuserSettings())

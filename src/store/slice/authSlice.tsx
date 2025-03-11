@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login, register, refreshToken, deleteUser, excelfilefetch, addformFile, sendIdToken, changeVisibility, getuserSettings } from '../actions/authActions';
+import { login, register, refreshToken, deleteUser, excelfilefetch, addformFile, sendIdToken, changeVisibility, getuserSettings, changelisting, notficationdisabled } from '../actions/authActions';
 import { sendForgotPasswordEmail } from '../actions/forgotPasswordActions/forgotPasswordActions';
 
 interface AuthState {
@@ -14,8 +14,8 @@ interface AuthState {
   full: boolean;
   datagoogle: boolean;
   quizHidden: boolean | null;
-  notificationDisabled: boolean|null;
-  quizListenable: boolean|null;
+  notificationDisabled: boolean | null;
+  quizListenable: boolean | null;
 
 }
 
@@ -30,9 +30,9 @@ const initialState: AuthState = {
   veriyuse: false,
   full: false,
   datagoogle: false,
-  quizHidden: null,
-  quizListenable: null,
-  notificationDisabled: false,
+  quizHidden: true,
+  quizListenable: true,
+  notificationDisabled: true,
 };
 
 const authSlice = createSlice({
@@ -52,19 +52,6 @@ const authSlice = createSlice({
     },
     setisAuth(state) {
       state.isAuth = true
-    },
-    toggleQuizHidden(state) {
-      state.quizHidden = !state.quizHidden
-      localStorage.setItem("quizHidden", JSON.stringify(state.quizHidden))
-    },
-    toogleNotfication(state) {
-      state.notificationDisabled = !state.notificationDisabled
-      localStorage.setItem("notificationDisabled", JSON.stringify(state.notificationDisabled))
-    },
-
-    toogleListen(state) {
-      state.quizListenable = !state.quizListenable
-      localStorage.setItem("quizListenable", JSON.stringify(state.quizListenable))
     }
   },
   extraReducers: (builder) => {
@@ -102,8 +89,6 @@ const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(sendIdToken.fulfilled, (state, action: any) => {
-
-
         state.loading = false;
         state.isAuth = true;
         state.userId = action.payload.userId;
@@ -134,32 +119,12 @@ const authSlice = createSlice({
       .addCase(getuserSettings.fulfilled, (state, action) => {
         state.loading = false;
 
-        const quizHiddenFromBackend = action.payload.quizHidden;
-        const savedQuizHidden = localStorage.getItem("quizHidden");
+        state.quizHidden = action.payload.quizHidden;
+        state.quizListenable = action.payload.quizListenable;
+        state.notificationDisabled = action.payload.notificationDisabled;
 
-        if (savedQuizHidden === null) {
-          state.quizHidden = quizHiddenFromBackend;
-          localStorage.setItem("quizHidden", JSON.stringify(quizHiddenFromBackend));
-        } else {
-          state.quizHidden = JSON.parse(savedQuizHidden);
-        }
-        const savedNotificationDisabled = localStorage.getItem("notificationDisabled");
-        if (savedNotificationDisabled === null) {
-          state.notificationDisabled = action.payload.notificationDisabled;
-          localStorage.setItem("notificationDisabled", JSON.stringify(action.payload.notificationDisabled));
-        } else {
-          state.notificationDisabled = JSON.parse(savedNotificationDisabled);
-        }
-
-
-        const savedListen = localStorage.getItem("quizListenable");
-        if (savedListen === null) {
-          state.notificationDisabled = action.payload.quizListenable;
-          localStorage.setItem("quizListenable", JSON.stringify(action.payload.quizListenable));
-        } else {
-          state.quizListenable = JSON.parse(savedListen);
-        }
       })
+
       .addCase(getuserSettings.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
@@ -170,12 +135,39 @@ const authSlice = createSlice({
       .addCase(changeVisibility.fulfilled, (state) => {
         state.loading = false;
         state.success = true
-
       })
       .addCase(changeVisibility.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })
+
+      .addCase(notficationdisabled.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(notficationdisabled.fulfilled, (state) => {
+        state.loading = false;
+        state.success = true
+     
+
+      })
+      .addCase(notficationdisabled.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(changelisting.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(changelisting.fulfilled, (state) => {
+        state.loading = false;
+        state.success = true
+      
+
+      })
+      .addCase(changelisting.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+
       .addCase(deleteUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -244,5 +236,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, toogleListen, toggleQuizHidden, toogleNotfication, setVeryuse, setisAuth } = authSlice.actions;
+export const { logout, setVeryuse, setisAuth } = authSlice.actions;
 export default authSlice.reducer;
