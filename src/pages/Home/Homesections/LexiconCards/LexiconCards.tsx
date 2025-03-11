@@ -29,13 +29,13 @@ const LexiconCards: React.FC<LexionProps> = ({ className }) => {
 
   return (
     <>
-      {loading ? (
-        <Skeleton style={{ height: "200px" }} />
-      ) : (
-        <div className={`lexicon_cardsall ${className}`}>
-          <div className={`lexicon_card`}>
-            {linkData.slice(0, 3).map((data, index) => (
-              <div className={`lexion${index + 1}`} key={data.id}>
+      <div className={`lexicon_cardsall ${className}`}>
+        <div className={`lexicon_card`}>
+          {linkData.slice(0, 3).map((data, index) => (
+            <div className={`lexion${index + 1}`} key={data.id}>
+              {loading ? (
+                <Skeleton style={{ height: "165px" }} />
+              ) : (
                 <Link className="links_lexion" to={`/lexioncards/${data.id}`}>
                   <div className="lexioncard_about">
                     <p className="about_toplexion">
@@ -44,11 +44,11 @@ const LexiconCards: React.FC<LexionProps> = ({ className }) => {
                     <p className="about_bottomlexion">{data.label}</p>
                   </div>
                 </Link>
-              </div>
-            ))}
-          </div>
+              )}
+            </div>
+          ))}
         </div>
-      )}
+      </div>
     </>
   );
 };

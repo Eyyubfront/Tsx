@@ -48,7 +48,7 @@ const learningNowSlice = createSlice({
             .addCase(fetchTexts.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.items.nowitems = action.payload.items
-
+                state.items.pageCount = action.payload.pageCount;
 
             })
             .addCase(fetchTexts.rejected, (state, action) => {

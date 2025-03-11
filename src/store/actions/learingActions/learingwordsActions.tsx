@@ -26,7 +26,7 @@ export const wordfetchTexts = createAsyncThunk('learingWords/wordfetchTexts', as
 export const saveText = createAsyncThunk('learningWords/saveText', async (item: WordsItem, thunkAPI) => {
     try {
         const response = await axiosInstance.post('/UserVocabulary/Create', item);
-        thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10, isGrouped: false }));
+        thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10, isGrouped: true }));
         thunkAPI.dispatch(lexioncountfetch());
         return response.data;
     } catch (error) {
@@ -36,15 +36,15 @@ export const saveText = createAsyncThunk('learningWords/saveText', async (item: 
 
 export const selecetwordText = createAsyncThunk(
     "learningWords/selecetwordText",
-    async (id: number, { rejectWithValue, dispatch }) => {
+    async ({ id, page }: { id: number, page: number }, thunkAPI) => {
         try {
             const response = await axiosInstance.post(`/UserVocabulary/SetLearning/${id}`);
-            dispatch(wordfetchTexts({ page: 1, pageSize: 10, isGrouped: false }));
-            dispatch(fetchTexts({ page: 1, pageSize: 10 }));
-            dispatch(lexioncountfetch());
+            thunkAPI. dispatch(wordfetchTexts({ page: page, pageSize: 10, isGrouped: false }));
+            thunkAPI. dispatch(fetchTexts({ page: 1, pageSize: 10 }));
+            thunkAPI. dispatch(lexioncountfetch());
             return response.data.data;
         } catch (error) {
-            return rejectWithValue(error);
+            return thunkAPI.rejectWithValue(error);
         }
     }
 );
@@ -84,6 +84,19 @@ export const updateText = createAsyncThunk('learingWords/updateText', async ({ i
 export const fetchSearchResults = createAsyncThunk('languageHome/fetchSearchResults', async ({ page, pageSize, searchText, isGrouped }: { page: number; pageSize: number, searchText: string, isGrouped: boolean }, thunkAPI) => {
     try {
         const response = await axiosInstance.get(`/UserVocabulary/Search?searchText=${searchText}&page=${page}&pageSize=${pageSize}&isGrouped=${isGrouped}`);
+        return response.data.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error);
+    }
+});
+
+
+
+export const deletAll = createAsyncThunk('learingWords/deletAll', async (_, thunkAPI) => {
+    try {
+        const response = await axiosInstance.delete(`/UserVocabulary/DeleteAll`);
+        thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10, isGrouped: false }));
+        thunkAPI.dispatch(lexioncountfetch());
         return response.data.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(error);

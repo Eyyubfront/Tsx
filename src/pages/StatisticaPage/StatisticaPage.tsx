@@ -37,10 +37,15 @@ const StatisticaPage = () => {
         { label: 'Incorrect', value: totalIncorrectAnswers, percentage: incorrectPercentage },
     ];
 
-    const renderLabel = (params:any) => {
-        const { label, percentage } = params;
-        return `${label}: ${percentage}%`;
+    const renderLabel = (params: any) => {
+        const { label, value } = params;
+
+        if (value === 0) {
+            return '';
+        }
+        return `${label}: ${params.percentage}%`;
     };
+
 
     return (
         <div className='statistica_page'>
@@ -60,11 +65,11 @@ const StatisticaPage = () => {
                     series={[
                         {
                             data: pieChartData,
-                            arcLabel: renderLabel, 
+                            arcLabel: renderLabel,
                         },
                     ]}
-                    colors={['#8B6DE8', '#c5c0c0']} 
-                  
+                    colors={['#8B6DE8', '#c5c0c0']}
+
                     height={300}
                     slotProps={{
                         legend: { hidden: false },

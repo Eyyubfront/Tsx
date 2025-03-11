@@ -12,7 +12,7 @@ interface wordsitems {
 export interface LearingWords {
     items: wordsitems[];
     pageCount: number;
-    
+
 }
 
 interface LearningWordState {
@@ -26,7 +26,7 @@ const initialState: LearningWordState = {
         items: [],
         pageCount: 0
     },
-  
+
     status: 'idle',
     error: null,
 };
@@ -36,7 +36,7 @@ const LatestWordsSlice = createSlice({
     name: 'latestWords',
     initialState,
     reducers: {
-       
+
         resetState: () => initialState,
     },
     extraReducers: (builder) => {
@@ -80,7 +80,7 @@ const LatestWordsSlice = createSlice({
             })
             .addCase(fetchSearchResults.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.items = action.payload;        
+                state.items = action.payload;
             })
             .addCase(fetchSearchResults.rejected, (state, action) => {
                 state.status = 'failed';

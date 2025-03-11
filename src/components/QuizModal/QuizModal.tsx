@@ -271,9 +271,8 @@ const QuizModal = () => {
               </div>
 
               <div
-                className={`ansewrs__alls ${
-                  !isAnswersOpen ? "answers-closed" : ""
-                }`}
+                className={`ansewrs__alls ${!isAnswersOpen ? "answers-closed" : ""
+                  }`}
               >
                 {quizData?.answers &&
                   quizData.answers.map((item, index) => {
@@ -283,31 +282,27 @@ const QuizModal = () => {
                     const isWrongAnswer =
                       isAnswered && isSelected && !isCorrect;
 
-                    const eyub =
+                    const QuizDataAnsewrs =
                       isAnswered && quizData.question === item.source;
 
-                    console.log("eyub", eyub);
-                    console.log("isCorrectAnswer", isCorrectAnswer);
+
 
                     return (
                       <Tooltip title={selectedAnswer ? item.source : ""} arrow>
-                        <span style={{ display: "inline-block" }}>
+                        <span style={{ display: "inline-block", width: "100%" }}>
                           <div
                             key={index}
-                            className={`answers_box ${
-                              isAnswersOpen ? "actives" : ""
-                            } 
-                                                   ${
-                                                     isCorrectAnswer
-                                                       ? "correct-answer"
-                                                       : ""
-                                                   }
-                                                   ${
-                                                     isWrongAnswer
-                                                       ? "wrong-answer"
-                                                       : ""
-                                                   }
-                                                   ${eyub ? "ee" : ""} 
+                            className={`answers_box ${isAnswersOpen ? "actives" : ""
+                              } 
+                                                   ${isCorrectAnswer
+                                ? "correct-answer"
+                                : ""
+                              }
+                                                   ${isWrongAnswer
+                                ? "wrong-answer"
+                                : ""
+                              }
+                                                   ${QuizDataAnsewrs ? "ee" : ""} 
                                                    `}
                             onClick={() =>
                               handleAnswerClick(item.answer, item.source)
@@ -322,7 +317,7 @@ const QuizModal = () => {
                             }}
                           >
                             {item.answer}
-                            {isAnswered && eyub && (
+                            {isAnswered && QuizDataAnsewrs && (
                               <div
                                 className="voicedquiz"
                                 onClick={(e) => {

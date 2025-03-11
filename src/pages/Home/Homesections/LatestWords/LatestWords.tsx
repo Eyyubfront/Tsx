@@ -6,6 +6,7 @@ import {
     WordsItem,
     IWordsitem,
     selecetwordText,
+    deletAll,
 } from '../../../../store/actions/learingActions/learingwordsActions';
 import { RootState, useAppDispatch, useAppSelector } from '../../../../store/index';
 import TableComponent from '../../../../components/TableComponents/TableComponents';
@@ -31,6 +32,7 @@ const LatestWords = ({ searchTerm = "", showAll }: LearnSearchProps) => {
     const items = useAppSelector((state: RootState) => state.latestWords.items.items);
     const pagitems = useAppSelector((state: RootState) => state.latestWords.items);
 
+
     const { defaultText } = useAppSelector((state) => state.LanguagetextData);
     const [editText, setEditText] = useState<{ id: number; source: string; translation: string; } | null>(null);
     const [open, setOpen] = useState<boolean>(false);
@@ -42,8 +44,9 @@ const LatestWords = ({ searchTerm = "", showAll }: LearnSearchProps) => {
 
 
     useEffect(() => {
-        dispatch(wordfetchTexts({ page, pageSize: showAll ? 20 : 10, isGrouped: true  }));
-    }, [ showAll, page])
+       
+        dispatch(wordfetchTexts({ page, pageSize: showAll ? 20 : 10, isGrouped: true }));
+    }, [showAll, page])
 
 
     const handleEditDialogClose = () => {
@@ -63,10 +66,9 @@ const LatestWords = ({ searchTerm = "", showAll }: LearnSearchProps) => {
 
     const handleSaveText = (item: WordsItem) => {
         if (item.id !== null) {
-            dispatch(selecetwordText(item.id));
+            dispatch(selecetwordText({ id: item.id, page: page }));
         }
     };
-
     const handleRemoveText = (id: number) => {
         dispatch(removeText({ id }));
     };
@@ -96,9 +98,9 @@ const LatestWords = ({ searchTerm = "", showAll }: LearnSearchProps) => {
     };
 
     const handleDeleteAll = () => {
-        items.forEach(item => {
-            dispatch(removeText({ id: item.id }));
-        });
+
+        dispatch(deletAll());
+
     };
 
     const filteredItems = items.filter((item: IWordsitem) =>

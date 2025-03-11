@@ -3,6 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from './axiosInstance';
 import axios from 'axios';
 import { wordfetchTexts } from './learingActions/learingwordsActions';
+import { lexioncountfetch } from './lexioncountActions/lexioncountActions';
 
 
 interface LoginRequest {
@@ -127,7 +128,9 @@ export const addformFile = createAsyncThunk('home/addformFile', async (file: Fil
     const formData = new FormData();
     formData.append("file", file)
     const response = await axiosInstance.post('/UserVocabulary/AddFromFile', formData);
-    thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10, isGrouped: false  }));
+    thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10, isGrouped: true }));
+    thunkAPI.dispatch(lexioncountfetch());
+
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue("User vocabulary already exists")

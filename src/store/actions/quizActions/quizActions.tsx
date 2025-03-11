@@ -36,7 +36,7 @@ export const quizSaveData = createAsyncThunk(
       dispatch(lexioncountfetch());
       dispatch(getAllMastered());
       dispatch(fetchTexts({ page: 1, pageSize: 10 }));
-      dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
+      dispatch(wordfetchTexts({ page: 1, pageSize: 10,isGrouped:true }));
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error);

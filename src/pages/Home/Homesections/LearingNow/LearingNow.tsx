@@ -10,25 +10,26 @@ import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import e from "../../../../assets/images/home/Savedmastered.svg";
 
 
-const LearningNow = ({ showAll = false }: { showAll?: boolean }) => {
+const LearningNow = ({ showAll }: { showAll?: boolean }) => {
     const dispatch = useAppDispatch();
     const items = useAppSelector((state) => state.learningNow.items.nowitems);
     const pageitems = useAppSelector((state) => state.learningNow.items);
+
     const { defaultText } = useAppSelector((state) => state.LanguagetextData);
     const [page, setPage] = useState(1);
     useEffect(() => {
-        dispatch(fetchTexts({ page, pageSize: showAll ? 1000 : 10 }));
-    }, [dispatch]);
+        dispatch(fetchTexts({ page, pageSize: showAll ? 20 : 10 }));
+    }, [showAll, page]);
 
     const handleSaveText = (item: TextItem) => {
         if (item.id !== null) {
-            dispatch(selecetwordText(item.id));
+            dispatch(selecetwordText({ id: item.id, page: page }));
         }
     };
     const handleChange = (e: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);
 
-    }; 
+    };
 
 
     const speak = (text: string) => {

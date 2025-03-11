@@ -33,7 +33,7 @@ const Home = () => {
 
                 <div className="homepage_bottom">
                     <div className="homepage_left">
-                        <LearningNow />
+                        <LearningNow showAll={false} />
 
                     </div>
                     <div className="homepage_right">

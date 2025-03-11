@@ -190,50 +190,65 @@ const MasteredModal = () => {
                                 {isAnswersOpen ? <RxEyeOpen style={{ color: "rgba(157, 10, 187, 0.685)" }} /> : <FaRegEyeSlash style={{ color: "rgba(157, 10, 187, 0.685)" }} />}
                             </div>
 
-                            <div className={`ansewrs__alls ${!isAnswersOpen ? "answers-closed" : ""}`}>
+                            <div
+                                className={`ansewrs__alls ${!isAnswersOpen ? "answers-closed" : ""
+                                    }`}
+                            >
                                 {quizData?.answers &&
                                     quizData.answers.map((item, index) => {
-
                                         const isSelected = selectedAnswer === item.answer;
-                                        const isCorrectAnswer = isAnswered && isSelected && isCorrect;
-                                        const isWrongAnswer = isAnswered && isSelected && !isCorrect;
+                                        const isCorrectAnswer =
+                                            isAnswered && isSelected && isCorrect;
+                                        const isWrongAnswer =
+                                            isAnswered && isSelected && !isCorrect;
+
+                                        const AnsewrsData =
+                                            isAnswered && quizData.question === item.source;
 
 
                                         return (
-                                            <Tooltip title={isSelected ? item.source : ""} arrow>
-                                                <div
-                                                    key={index}
-                                                    className={`answers_box ${isAnswersOpen ? "actives" : ""} 
-                                                 ${isCorrectAnswer ? "correct-answer" : ""}
-                                                 ${isWrongAnswer ? "wrong-answer" : ""}
-                                                  ${isAnswered ? "answered" : ""} 
-                                             `}
-                                                    onClick={() => handleAnswerClick(item.answer, item.source)}
-                                                    style={{
-                                                        pointerEvents: isAnswersOpen && !isAnswered ? "auto" : "none",
-                                                        display: "flex",
-                                                        alignItems: "center",
-                                                        justifyContent: "center",
-                                                        gap: "6px"
-                                                    }}
-                                                >
-
-
-                                                    {item.answer}  <span className="shadow_source">{item.source}</span>
-
-                                                    {isAnswered && isCorrectAnswer && (
-                                                        <div
-                                                            className="voicedquiz"
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
-                                                                speak(item.answer);
-                                                            }}
-                                                        >
-                                                            <KeyboardVoiceIcon />
-                                                        </div>
-                                                    )}
-
-                                                </div>
+                                            <Tooltip title={selectedAnswer ? item.source : ""} arrow>
+                                                <span style={{ display: "inline-block",width:"100%" }}>
+                                                    <div
+                                                        key={index}
+                                                        className={`answers_box ${isAnswersOpen ? "actives" : ""
+                                                            } 
+                                                   ${isCorrectAnswer
+                                                                ? "correct-answer"
+                                                                : ""
+                                                            }
+                                                   ${isWrongAnswer
+                                                                ? "wrong-answer"
+                                                                : ""
+                                                            }
+                                                   ${AnsewrsData ? "ee" : ""} 
+                                                   `}
+                                                        onClick={() =>
+                                                            handleAnswerClick(item.answer, item.source)
+                                                        }
+                                                        style={{
+                                                            pointerEvents:
+                                                                isAnswersOpen && !isAnswered ? "auto" : "none",
+                                                            display: "flex",
+                                                            alignItems: "center",
+                                                            justifyContent: "center",
+                                                            gap: "6px",
+                                                        }}
+                                                    >
+                                                        {item.answer}
+                                                        {isAnswered && AnsewrsData && (
+                                                            <div
+                                                                className="voicedquiz"
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    speak(item.answer);
+                                                                }}
+                                                            >
+                                                                <KeyboardVoiceIcon />
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </span>
                                             </Tooltip>
                                         );
                                     })}

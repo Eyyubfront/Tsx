@@ -32,7 +32,7 @@ export const learingnowsaveText = createAsyncThunk('learningNow/saveText', async
         thunkAPI.dispatch(fetchTexts({ page: 1, pageSize: 10 })); 
         thunkAPI.dispatch(lexioncountfetch()); 
     
-        thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10 }));
+        thunkAPI.dispatch(wordfetchTexts({ page: 1, pageSize: 10 ,isGrouped:true}));
         
         return response.data;
     } catch (error) {
