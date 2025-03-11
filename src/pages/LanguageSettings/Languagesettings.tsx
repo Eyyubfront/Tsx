@@ -6,19 +6,36 @@ import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 import LanguageSettingsModal from "./LanguageSettingsModal/LanguageSettingsModal";
 import { removeLanguage } from "../../store/actions/languageActions/languageActions";
 import AlertDialog from "../../components/AlertDialog/AlertDialog";
-import { LanguageClose, LanguageToogleClose } from "../../store/slice/languageSlice";
+import {
+  LanguageClose,
+  LanguageToogleClose,
+} from "../../store/slice/languageSlice";
 import { useEffect } from "react";
-import { getInitialLanguage, getTexts, selecetlangaugesave } from "../../store/actions/languagehome/languagehome";
-import Trash from "../../assets/images/home/Trash_Full.svg"
+import {
+  getInitialLanguage,
+  getTexts,
+  selecetlangaugesave,
+} from "../../store/actions/languagehome/languagehome";
+import Trash from "../../assets/images/home/Trash_Full.svg";
 
 const Languagesettings = () => {
   const dispatch = useAppDispatch();
-  const { texts, loading, defaultText } = useAppSelector((state) => state.LanguagetextData);
-  const { languageOpen, error } = useAppSelector((state) => state.language);
+  const { texts, loading, defaultText } = useAppSelector(
+    (state) => state.LanguagetextData
+  );
+  console.log(texts);
+
+  useEffect(() => {
+    dispatch(getTexts());
+  }, []);
+
+  const { languageOpen, error } = useAppSelector(
+    (state) => state.language
+  );
+
 
   const handleCloseModal = () => {
     dispatch(LanguageClose());
-
   };
 
   const handleCloseSettingsModal = () => {
@@ -26,25 +43,20 @@ const Languagesettings = () => {
   };
 
   const handleSelectLanguage = async (id: number) => {
-    localStorage.setItem('selectedLanguageId', id.toString());
+    localStorage.setItem("selectedLanguageId", id.toString());
 
     try {
       await dispatch(selecetlangaugesave(id)).unwrap();
       await dispatch(getInitialLanguage()).unwrap();
       await dispatch(getTexts()).unwrap();
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
   const handleRemoveText = (id: number) => {
     dispatch(removeLanguage(id));
-
   };
-
-  useEffect(() => {
-    dispatch(getTexts());
-  }, [dispatch]);
 
   return (
     <>
@@ -55,8 +67,21 @@ const Languagesettings = () => {
           <h2>Choosen language for learning</h2>
           <div className="languagesetings__top">
             {texts?.map((language: LanguageHomes) => (
-              <div className="language_setingsboxed" key={language.id} style={{ display: "flex", alignItems: "center", marginBottom: "5px", justifyContent: "space-between" }}>
-                <MenuItem value={language.id} onClick={() => handleSelectLanguage(Number(language.id))} style={{ marginRight: "10px" }}>
+              <div
+                className="language_setingsboxed"
+                key={language.id}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: "5px",
+                  justifyContent: "space-between",
+                }}
+              >
+                <MenuItem
+                  value={language.id}
+                  onClick={() => handleSelectLanguage(Number(language.id))}
+                  style={{ marginRight: "10px" }}
+                >
                   {defaultText?.isSwapped
                     ? `${language.translationLanguage} - ${language.sourceLanguage}`
                     : `${language.sourceLanguage} - ${language.translationLanguage}`}
@@ -67,10 +92,14 @@ const Languagesettings = () => {
               </div>
             ))}
           </div>
-          <div onClick={handleCloseSettingsModal} className="languagesetings__bottom">
+          <div
+            onClick={handleCloseSettingsModal}
+            className="languagesetings__bottom"
+          >
             <PrimaryButton disabled={loading} label="+ New Languages" />
           </div>
-          {!error && <LanguageSettingsModal onClose={handleCloseSettingsModal} />}
+
+          <LanguageSettingsModal onClose={handleCloseSettingsModal} />
         </div>
       )}
       {error && (

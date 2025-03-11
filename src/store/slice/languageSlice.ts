@@ -81,12 +81,13 @@ const languageSlice = createSlice({
       })
       .addCase(removeLanguage.fulfilled, (state, action) => {
         state.loading = true;
+     
         state.languages = state.languages.filter((item) => item.id !== action.payload)
       })
       .addCase(removeLanguage.rejected, (state, action) => {
         state.loading = false;
         state.languageOpen = true;
-        state.languagetooglOpen = true;
+        state.languagetooglOpen = false;
         state.error = action?.payload as string;
 
       });
