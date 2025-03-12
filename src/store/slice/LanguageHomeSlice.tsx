@@ -41,8 +41,7 @@ const LanguageHomeSlice = createSlice({
     reducers: {
         setSelectedLanguage(state, action) {
             state.selectedLanguageId = action.payload;
-            
-            // localStorage.setItem('selectedLanguageId', action.payload.toString());
+
         },
         setDataselec(state, action) {
             state.datasetselected = action.payload;

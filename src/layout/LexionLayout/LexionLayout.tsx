@@ -46,7 +46,7 @@ const LexionLayout = () => {
         if (searchTerm) {
             handleSearch();
         }
-    }, [searchTerm, dispatch]);
+    }, [searchTerm]);
 
 
 

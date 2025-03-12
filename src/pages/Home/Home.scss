@@ -11,12 +11,13 @@
   }
     .homepage_bottom {
       margin-top: 32px;
+      gap: 5px;
       display: flex;
       overflow: hidden;
       justify-content: space-between;
   
       .homepage_left {
-        width: 66%;
+        width: 63%;
         overflow: hidden;
         display: flex;
         gap: 20px;;
@@ -28,7 +29,11 @@
       }
   
       .homepage_right {
-        width: 32%;
+        width: 38%;
+     
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
   
       }
     }

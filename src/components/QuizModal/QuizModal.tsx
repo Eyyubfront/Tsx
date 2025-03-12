@@ -41,7 +41,8 @@ const QuizModal = () => {
   );
 
   const methods = useForm();
-  const { quizHidden } = useAppSelector((state) => state.Auth);
+  const { quizHidden, quizListenable } = useAppSelector((state) => state.Auth);
+
   const learingnowdata = useAppSelector(
     (state) => state.learningNow.items.nowitems
   );
@@ -97,7 +98,9 @@ const QuizModal = () => {
     setIsAnswered(true);
     if (condition) {
       setCorrectAnsewrsCount((prevCount) => prevCount + 1);
-      speak(answer);
+      if (quizListenable) {
+        speak(answer);
+      }
     } else {
       setLives((prevLives) => prevLives - 1);
     }
@@ -130,7 +133,7 @@ const QuizModal = () => {
     setIsSaved(false);
     if (quizHidden == false) {
       setIsAnswersOpen(true);
-    }else{
+    } else {
       setIsAnswersOpen(false);
     }
   };
@@ -208,6 +211,8 @@ const QuizModal = () => {
 
     if (quizHidden == false) {
       setIsAnswersOpen(true);
+    } else {
+      setIsAnswersOpen(false);
     }
   };
 
@@ -273,8 +278,9 @@ const QuizModal = () => {
               </div>
 
               <div
-                className={`ansewrs__alls ${!isAnswersOpen ? "answers-closed" : ""
-                  }`}
+                className={`ansewrs__alls ${
+                  !isAnswersOpen ? "answers-closed" : ""
+                }`}
               >
                 {quizData?.answers &&
                   quizData.answers.map((item, index) => {
@@ -287,24 +293,31 @@ const QuizModal = () => {
                     const QuizDataAnsewrs =
                       isAnswered && quizData.question === item.source;
 
-
-
                     return (
                       <Tooltip title={selectedAnswer ? item.source : ""} arrow>
-                        <span style={{ display: "inline-block", width: "100%" }}>
+                        <span
+                          style={{ display: "inline-block", width: "100%" }}
+                        >
                           <div
                             key={index}
-                            className={`answers_box ${isAnswersOpen ? "actives" : ""
-                              } 
-                                                   ${isCorrectAnswer
-                                ? "correct-answer"
-                                : ""
-                              }
-                                                   ${isWrongAnswer
-                                ? "wrong-answer"
-                                : ""
-                              }
-                                                   ${QuizDataAnsewrs ? "bothcorectin" : ""} 
+                            className={`answers_box ${
+                              isAnswersOpen ? "actives" : ""
+                            } 
+                                                   ${
+                                                     isCorrectAnswer
+                                                       ? "correct-answer"
+                                                       : ""
+                                                   }
+                                                   ${
+                                                     isWrongAnswer
+                                                       ? "wrong-answer"
+                                                       : ""
+                                                   }
+                                                   ${
+                                                     QuizDataAnsewrs
+                                                       ? "bothcorectin"
+                                                       : ""
+                                                   } 
                                                    `}
                             onClick={() =>
                               handleAnswerClick(item.answer, item.source)
