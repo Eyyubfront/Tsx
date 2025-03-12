@@ -2,6 +2,10 @@
     width: 100%;
     z-index: 9999;
 
+    .MuiPaper-root {
+        width: 100%;
+    }
+
     .alert_content {
         padding: 0px 2px;
     }

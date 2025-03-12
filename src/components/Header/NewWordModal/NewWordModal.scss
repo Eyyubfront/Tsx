@@ -1,8 +1,10 @@
 .newwordmodal_alert {
-    width: 100%;
+    .MuiPaper-root {
+        width: 100%;
+    }
 
     .dialogcontent {
-       
+
 
         .text__input {
             display: flex;
