@@ -89,7 +89,7 @@ const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
 
     return (
         <>
-            <AlertDialog open={show} onClose={onClose} title='New Word '>
+            <AlertDialog className='newwordmodal_alert' open={show} onClose={onClose} title='New Word '>
                 <DialogContent className='dialogcontent'>
                     <FormProvider  {...methods}>
                         <form>
