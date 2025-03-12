@@ -11,6 +11,7 @@
         background-color: #F9F8FD;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0);
         border: none;
+
         .table_aligns {
             display: flex;
             align-items: center;
@@ -30,12 +31,19 @@
 
             .table_button {
                 border: none;
+                width: 20px;
+                height: 20px;
             }
         }
     }
 }
 
 
+.css-1t595qo-MuiTableCell-root {
+    display: flex !important;
+    align-items: center;
+    gap: 5px;
+}
 
 @media (min-width: 601px) and (max-width: 1200px) {
     .table_alls {

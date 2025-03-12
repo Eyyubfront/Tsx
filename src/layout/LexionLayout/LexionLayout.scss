@@ -1,6 +1,6 @@
 .lexion_layout {
     height: 100vh;
-    padding: 10px;
+
 
     .back_components {
         .settingsbackicon {
@@ -12,6 +12,7 @@
         display: flex;
         align-items: flex-start;
         gap: 32px;
+        padding: 13px;
 
         .layout_lexionprops {
             width: 20%;
@@ -149,11 +150,11 @@
 @media (min-width:600px) and (max-width:1200px) {
     .lexion_layout {
         height: 100vh;
-       
+
 
         .lexion_container {
             display: flex;
-        
+
             gap: 32px;
 
             .layout_lexionprops {

@@ -38,12 +38,12 @@ export const getAllMastered = createAsyncThunk('alltext/getAllMastered', async (
 
 export const masteredisfetch = createAsyncThunk(
   "home/masteredisfetch",
-  async (params: { masteredIds: number[] }, { rejectWithValue }) => {
-    const { masteredIds } = params;
-    const idsGenerate = masteredIds.map(id => `masteredIds=${id}`).join("&");
+  async (params: { ids: number[] }, { rejectWithValue }) => {
+    const { ids } = params;
+    const idsGenerate = ids.map(id => `ids=${id}`).join("&");
     try {
       const response = await axiosInstance.get(
-        `/UserVocabulary/GetMasteredExcel?${idsGenerate}`, {
+        `/UserVocabulary/ExportToExcel?${idsGenerate}`, {
           responseType: "arraybuffer",
           headers: {
             Accept: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"

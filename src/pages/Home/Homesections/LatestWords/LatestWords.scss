@@ -30,3 +30,17 @@
     color: #8B6DE8 !important;
 }
 
+.alls_checkbutton{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: flex-end;
+    margin-top: 5px;
+}
+
+
+@media (max-width:600px) {
+    .alls_checkbutton{
+        justify-content: center;
+    }
+}

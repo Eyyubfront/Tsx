@@ -81,7 +81,7 @@ const MasteredWords = () => {
         }
 
         await dispatch(masteredisfetch({
-            masteredIds: selectedItems,
+            ids: selectedItems,
 
         }));
 
