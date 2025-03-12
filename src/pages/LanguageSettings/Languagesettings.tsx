@@ -86,7 +86,7 @@ const Languagesettings = () => {
                     ? `${language.translationLanguage} - ${language.sourceLanguage}`
                     : `${language.sourceLanguage} - ${language.translationLanguage}`}
                 </MenuItem>
-                <Button onClick={() => handleRemoveText(language.id ?? 0)}>F
+                <Button onClick={() => handleRemoveText(language.id ?? 0)}>
                   <img className="delet_language" src={Trash} alt="" />
                 </Button>
               </div>
