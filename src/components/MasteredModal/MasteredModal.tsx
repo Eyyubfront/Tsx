@@ -156,7 +156,7 @@ const MasteredModal = () => {
                     <Close />
                 </IconButton>
             </DialogTitle>
-            <DialogContent>
+            <DialogContent className="mastered_modal">
                 <FormProvider {...methods}>
                     <div className="quiz__form">
                         <div className="quizmodal_top">

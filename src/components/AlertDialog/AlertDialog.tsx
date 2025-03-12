@@ -5,6 +5,7 @@ import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import Close from '@mui/icons-material/Close';
 import DialogContentText from '@mui/material/DialogContentText';
+import "./Alertdailog.scss"
 interface ErrorAlertDialogProps {
   open: boolean;
   onClose: () => void; 
@@ -17,7 +18,7 @@ interface ErrorAlertDialogProps {
 function AlertDialog({ open, onClose, error, title ,children,className }: ErrorAlertDialogProps) { 
   return (
     <Dialog
-    className={`${className}`}
+    className={`${className} alertalls`}
       open={open}
       onClose={onClose}
       aria-labelledby="alert-dialog-title"
@@ -31,7 +32,7 @@ function AlertDialog({ open, onClose, error, title ,children,className }: ErrorA
           <Close />
         </IconButton>
       </div>
-      <DialogContent >
+      <DialogContent className='alert_content' >
       <div>
         {children}
       </div>

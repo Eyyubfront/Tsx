@@ -222,7 +222,7 @@ const QuizModal = () => {
           <Close />
         </IconButton>
       </DialogTitle>
-      <DialogContent>
+      <DialogContent className="quizmodal_content">
         <FormProvider {...methods}>
           <div className="quiz__form">
             <div className="quizmodal_top">
