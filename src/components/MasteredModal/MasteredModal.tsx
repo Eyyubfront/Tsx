@@ -22,8 +22,6 @@ const MasteredModal = () => {
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
     const [lives, setLives] = useState(3);
-
-
     const [answeredQuestions, setAnsweredQuestions] = useState<number[]>([0]);
     const [showGameOver, setShowGameOver] = useState(false);
     const [correctAnsewrscount, setCorrectAnsewrsCount] = useState(0);
