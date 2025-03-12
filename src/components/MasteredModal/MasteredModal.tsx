@@ -219,7 +219,7 @@ const MasteredModal = () => {
                                                                 ? "wrong-answer"
                                                                 : ""
                                                             }
-                                                   ${AnsewrsData ? "ee" : ""} 
+                                                   ${AnsewrsData ? "bothcorectin" : ""} 
                                                    `}
                                                         onClick={() =>
                                                             handleAnswerClick(item.answer, item.source)

@@ -302,7 +302,7 @@ const QuizModal = () => {
                                 ? "wrong-answer"
                                 : ""
                               }
-                                                   ${QuizDataAnsewrs ? "ee" : ""} 
+                                                   ${QuizDataAnsewrs ? "bothcorectin" : ""} 
                                                    `}
                             onClick={() =>
                               handleAnswerClick(item.answer, item.source)
