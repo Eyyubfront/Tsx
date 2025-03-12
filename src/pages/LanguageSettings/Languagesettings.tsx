@@ -23,7 +23,7 @@ const Languagesettings = () => {
   const { texts, loading, defaultText } = useAppSelector(
     (state) => state.LanguagetextData
   );
-  console.log(texts);
+  console.log(defaultText?.isSwapped);
 
   useEffect(() => {
     dispatch(getTexts());
@@ -82,11 +82,11 @@ const Languagesettings = () => {
                   onClick={() => handleSelectLanguage(Number(language.id))}
                   style={{ marginRight: "10px" }}
                 >
-                  {defaultText?.isSwapped
+                  {language.id === defaultText?.id && defaultText?.isSwapped
                     ? `${language.translationLanguage} - ${language.sourceLanguage}`
                     : `${language.sourceLanguage} - ${language.translationLanguage}`}
                 </MenuItem>
-                <Button onClick={() => handleRemoveText(language.id ?? 0)}>
+                <Button onClick={() => handleRemoveText(language.id ?? 0)}>F
                   <img className="delet_language" src={Trash} alt="" />
                 </Button>
               </div>

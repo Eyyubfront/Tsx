@@ -36,16 +36,22 @@
 
                 .search_icons {
                     position: absolute;
-                    top: 50px;
-                    left: 25px;
+                    top: 51px;
+                    left: 38px;
                     z-index: 999999;
                 }
 
-                .css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input {
+                .MuiInputBase-input {
                     padding: 16.5px 52px;
                     border: 1px solid #D8DADC;
                     background-color: #F9F8FD;
                     border-radius: 10px;
+                }
+
+                .inputs_category {
+                    .MuiInputBase-root {
+                        padding: 3px 20px;
+                    }
                 }
             }
 
@@ -115,9 +121,7 @@
                         left: 25px;
                     }
 
-                    .css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input {
-                        padding: 16.5px 52px;
-                    }
+                  
                 }
 
                 .lexionlayout_secioncomponnet {
@@ -183,9 +187,7 @@
                         left: 25px;
                     }
 
-                    .css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input {
-                        padding: 16.5px 52px;
-                    }
+                   
                 }
 
                 .lexionlayout_secioncomponnet {
