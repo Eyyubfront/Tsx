@@ -13,8 +13,8 @@ const cards = [
     { name: "Timing", link: "timesettings" },
     { name: "Password", link: "passwordchecksettings" },
     { name: "Terms and Conditions", link: "terms-and-conditions" },
-    { name: "Configurate", link: "configurate" },
-    { name: "Statistica", link: "statistica" },
+    { name: "Configuration", link: "configurate" },
+    { name: "Statistics", link: "statistica" },
 ];
 
 const accountManagement = [
@@ -33,7 +33,7 @@ const Sidebar = () => {
     const dispatch = useAppDispatch();
     const [isSidebarVisible, setIsSidebarVisible] = useState(true);
     const [openDialog, setOpenDialog] = useState(false);
-    const [modalType, setModalType] = useState<"delete" | "logout" | null>(null); 
+    const [modalType, setModalType] = useState<"delete" | "logout" | null>(null);
 
     const handleLogout = () => {
         dispatch(logout());
@@ -77,35 +77,35 @@ const Sidebar = () => {
     return (
         <>
 
-{
-                loading ? <Skeleton style={{height:"400px",width:"400px"}} /> : 
-                <div className="sidebar_box desktop-bar"   style={{ display: isSidebarVisible ? "block" : "none" }}>
-                    <div className="sidebar_topcontainer">
-                        {cards.map((card, index) => (
-                            <NavLink className="sidebar_toplinks" to={card.link} style={{ textDecoration: "none" }} key={index}>
-                                <Paragrafy className="sidebar_topnames" text={card.name} />
-                            </NavLink>
-                        ))}
-                        {accountManagement.map((card, index) => (
-                            <div onClick={() => handleAccountAction(card.name)} className="sidebar_bottom" key={index}>
-                                <Paragrafy className="sidebar_botomnames" text={card.name} />
-                            </div>
-                        ))}
+            {
+                loading ? <Skeleton style={{ height: "400px", width: "400px" }} /> :
+                    <div className="sidebar_box desktop-bar" style={{ display: isSidebarVisible ? "block" : "none" }}>
+                        <div className="sidebar_topcontainer">
+                            {cards.map((card, index) => (
+                                <NavLink className="sidebar_toplinks" to={card.link} style={{ textDecoration: "none" }} key={index}>
+                                    <Paragrafy className="sidebar_topnames" text={card.name} />
+                                </NavLink>
+                            ))}
+                            {accountManagement.map((card, index) => (
+                                <div onClick={() => handleAccountAction(card.name)} className="sidebar_bottom" key={index}>
+                                    <Paragrafy className="sidebar_botomnames" text={card.name} />
+                                </div>
+                            ))}
+                        </div>
+                        <SideBarDeletModal
+                            open={openDialog}
+                            onClose={handleCloseDialog}
+                            onConfirm={modalType === "delete" ? handleDeleteAccount : handleLogout}
+                            title={modalType === "delete" ? "Delete Account" : "Log Out"}
+                            about={modalType === "delete" ? "We're sad to see you go" : "See you soon!"}
+                            description={
+                                modalType === "delete" ? "Are you sure you want to delete your account? This action cannot be undone." : "Once you log out, you'll need to sign in again to access your account?"
+                            }
+                            confirmText={modalType === "delete" ? "Delete" : "Log Out"}
+                            cancelText="Cancel"
+                        />
                     </div>
-                    <SideBarDeletModal
-                        open={openDialog}
-                        onClose={handleCloseDialog}
-                        onConfirm={modalType === "delete" ? handleDeleteAccount : handleLogout}
-                        title={modalType === "delete" ? "Delete Account" : "Log Out"}
-                        about={modalType === "delete" ? "We're sad to see you go" : "See you soon!"}
-                        description={
-                            modalType === "delete"? "Are you sure you want to delete your account? This action cannot be undone.": "Once you log out, you'll need to sign in again to access your account?"
-                        }
-                        confirmText={modalType === "delete" ? "Delete" : "Log Out"}
-                        cancelText="Cancel"
-                    />
-                </div>
-    
+
             }
         </>
     );

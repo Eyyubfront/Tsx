@@ -36,24 +36,14 @@
         }
     }
 
+
     .header_right {
         display: flex;
         align-items: center;
         gap: 16px;
 
-        .done_message {
-            background-color: #E6FDED;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 7px;
-            height: 50px;
-            border-radius: 20px;
-            width: 236px;
-            overflow: hidden;
-            color: white;
-        }
-
+    
+       
         .statiscs_header {
             width: 56px;
             height: 52px;
@@ -137,7 +127,18 @@
 }
 
 
-
+.done_message {
+    background-color: #E6FDED;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    height: 50px;
+    border-radius: 20px;
+    width: 236px;
+    overflow: hidden !important;
+    color: white;
+}
 .sucsess_excel {
     font-family: Inter;
     font-weight: 600;

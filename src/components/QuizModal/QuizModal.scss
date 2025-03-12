@@ -317,3 +317,10 @@
     font-weight: bold !important;
     font-family: Inter, "sans-serif";
 }
+
+
+@media (max-width:600px) {
+    .ansewrs__alls{
+        flex-wrap: wrap;
+    }
+}

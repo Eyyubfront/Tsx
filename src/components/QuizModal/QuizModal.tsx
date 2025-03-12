@@ -130,6 +130,8 @@ const QuizModal = () => {
     setIsSaved(false);
     if (quizHidden == false) {
       setIsAnswersOpen(true);
+    }else{
+      setIsAnswersOpen(false);
     }
   };
 

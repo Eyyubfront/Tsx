@@ -110,6 +110,8 @@ const MasteredModal = () => {
         setIsAnswered(false);
         if (quizHidden == false) {
             setIsAnswersOpen(true);
+        } else {
+            setIsAnswersOpen(false);
         }
     };
 
@@ -206,7 +208,7 @@ const MasteredModal = () => {
 
                                         return (
                                             <Tooltip title={selectedAnswer ? item.source : ""} arrow>
-                                                <span style={{ display: "inline-block",width:"100%" }}>
+                                                <span style={{ display: "inline-block", width: "100%" }}>
                                                     <div
                                                         key={index}
                                                         className={`answers_box ${isAnswersOpen ? "actives" : ""
