@@ -43,9 +43,9 @@ const LexionLayout = () => {
         }
     };
     useEffect(() => {
-        if (searchTerm) {
+        
             handleSearch();
-        }
+      
     }, [searchTerm]);
 
 

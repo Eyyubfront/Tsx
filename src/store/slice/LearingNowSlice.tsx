@@ -11,6 +11,7 @@ interface items {
 export interface LearingNow {
     nowitems: items[],
     pageCount: number,
+    totalCount: number,
 }
 
 interface LearningNowState {
@@ -23,7 +24,8 @@ interface LearningNowState {
 const initialState: LearningNowState = {
     items: {
         nowitems: [],
-        pageCount: 0
+        pageCount: 0,
+        totalCount: 0,
     },
     status: 'idle',
     error: null,
@@ -49,6 +51,7 @@ const learningNowSlice = createSlice({
                 state.status = 'succeeded';
                 state.items.nowitems = action.payload.items
                 state.items.pageCount = action.payload.pageCount;
+                state.items.totalCount = action.payload.totalCount;
 
             })
             .addCase(fetchTexts.rejected, (state, action) => {

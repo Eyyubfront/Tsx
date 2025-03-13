@@ -35,6 +35,8 @@ const MasteredModal = () => {
   );
   const { quizHidden, quizListenable } = useAppSelector((state) => state.Auth);
   const { quizData } = useAppSelector((state) => state.quizslice);
+
+
   const methods = useForm();
   const [isSaved, setIsSaved] = useState(true);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -224,7 +226,6 @@ const MasteredModal = () => {
             </div>
 
             <div className="quizmodal_inputbox">
-              <p>{correctAnsewrscount}/10</p>
               <div className="inputbox_label">
                 <Paragrafy
                   className="input_label"
@@ -253,9 +254,8 @@ const MasteredModal = () => {
               </div>
 
               <div
-                className={`ansewrs__alls ${
-                  !isAnswersOpen ? "answers-closed" : ""
-                }`}
+                className={`ansewrs__alls ${!isAnswersOpen ? "answers-closed" : ""
+                  }`}
               >
                 {quizData?.answers &&
                   quizData.answers.map((item, index) => {
@@ -275,24 +275,20 @@ const MasteredModal = () => {
                         >
                           <div
                             key={index}
-                            className={`answers_box ${
-                              isAnswersOpen ? "actives" : ""
-                            } 
-                                                   ${
-                                                     isCorrectAnswer
-                                                       ? "correct-answer"
-                                                       : ""
-                                                   }
-                                                   ${
-                                                     isWrongAnswer
-                                                       ? "wrong-answer"
-                                                       : ""
-                                                   }
-                                                   ${
-                                                     AnsewrsData
-                                                       ? "bothcorectin"
-                                                       : ""
-                                                   } 
+                            className={`answers_box ${isAnswersOpen ? "actives" : ""
+                              } 
+                                                   ${isCorrectAnswer
+                                ? "correct-answer"
+                                : ""
+                              }
+                                                   ${isWrongAnswer
+                                ? "wrong-answer"
+                                : ""
+                              }
+                                                   ${AnsewrsData
+                                ? "bothcorectin"
+                                : ""
+                              } 
                                                    `}
                             onClick={() =>
                               handleAnswerClick(item.answer, item.source)

@@ -36,16 +36,17 @@ const QuizModal = () => {
   );
   const { quizData } = useAppSelector((state) => state.quizslice);
 
-  const learingnow = useAppSelector(
-    (state) => state.learningNow.items.nowitems
-  );
+
 
   const methods = useForm();
   const { quizHidden, quizListenable } = useAppSelector((state) => state.Auth);
 
   const learingnowdata = useAppSelector(
-    (state) => state.learningNow.items.nowitems
+    (state) => state.learningNow.items
   );
+ 
+
+
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [lives, setLives] = useState(3);
@@ -159,7 +160,7 @@ const QuizModal = () => {
 
   const totalQuestions = Math.max(
     1,
-    learingnowdata?.length ?? answeredQuestions.length
+    learingnowdata?.totalCount
   );
 
   const handleCloseDialog = () => {
@@ -247,7 +248,7 @@ const QuizModal = () => {
 
             <div className="quizmodal_inputbox">
               <p>
-                {correctAnsewrscount}/{learingnow.length}
+                {correctAnsewrscount}/{learingnowdata.totalCount}
               </p>
               <div className="inputbox_label">
                 <Paragrafy
@@ -278,9 +279,8 @@ const QuizModal = () => {
               </div>
 
               <div
-                className={`ansewrs__alls ${
-                  !isAnswersOpen ? "answers-closed" : ""
-                }`}
+                className={`ansewrs__alls ${!isAnswersOpen ? "answers-closed" : ""
+                  }`}
               >
                 {quizData?.answers &&
                   quizData.answers.map((item, index) => {
@@ -300,24 +300,20 @@ const QuizModal = () => {
                         >
                           <div
                             key={index}
-                            className={`answers_box ${
-                              isAnswersOpen ? "actives" : ""
-                            } 
-                                                   ${
-                                                     isCorrectAnswer
-                                                       ? "correct-answer"
-                                                       : ""
-                                                   }
-                                                   ${
-                                                     isWrongAnswer
-                                                       ? "wrong-answer"
-                                                       : ""
-                                                   }
-                                                   ${
-                                                     QuizDataAnsewrs
-                                                       ? "bothcorectin"
-                                                       : ""
-                                                   } 
+                            className={`answers_box ${isAnswersOpen ? "actives" : ""
+                              } 
+                                                   ${isCorrectAnswer
+                                ? "correct-answer"
+                                : ""
+                              }
+                                                   ${isWrongAnswer
+                                ? "wrong-answer"
+                                : ""
+                              }
+                                                   ${QuizDataAnsewrs
+                                ? "bothcorectin"
+                                : ""
+                              } 
                                                    `}
                             onClick={() =>
                               handleAnswerClick(item.answer, item.source)
