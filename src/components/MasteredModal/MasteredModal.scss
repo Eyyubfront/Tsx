@@ -48,6 +48,10 @@
             line-height: 20px;
             letter-spacing: 0%;
 
+            .MuiInputBase-input {
+                margin-top: 10px;
+            }
+
             .MuiOutlinedInput-notchedOutline {
                 border: none;
             }
