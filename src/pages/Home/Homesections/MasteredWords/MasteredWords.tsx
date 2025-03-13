@@ -136,12 +136,12 @@ const MasteredWords = () => {
 
                         onClick={() => handlestory()}
                     >
-                        <Typography> Creat Story </Typography>
+                        <Typography> Create Story </Typography>
                     </div>
                 </div>
                 <Button variant="outlined" className="selecet_alls" onClick={handleSelectAllChange}>
                     <div >
-                        Select Alls
+                        Select All
                     </div>
                 </Button>
                 <TableBody>
