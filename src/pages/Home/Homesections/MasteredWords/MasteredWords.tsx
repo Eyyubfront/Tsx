@@ -139,11 +139,11 @@ const MasteredWords = () => {
                         <Typography> Creat Story </Typography>
                     </div>
                 </div>
-                <div className="selecet_alls" onClick={handleSelectAllChange}>
+                <Button variant="outlined" className="selecet_alls" onClick={handleSelectAllChange}>
                     <div >
                         Select Alls
                     </div>
-                </div>
+                </Button>
                 <TableBody>
                     {filteredItems?.length ? filteredItems.map((item) => (
                         <TableRow className='table_aligns' key={item.id}>

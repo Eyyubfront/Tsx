@@ -142,7 +142,7 @@ const LatestWords = ({ searchTerm = "", showAll }: LearnSearchProps) => {
     );
 
 
-    const title = location.pathname === '/lexioncards/vocablary' ? 'Vocablary' : 'Latest added words';
+    const title = location.pathname === '/lexioncards/vocablary' ? 'Vocabulary' : 'Latest added words';
 
 
     return (
@@ -187,7 +187,7 @@ const LatestWords = ({ searchTerm = "", showAll }: LearnSearchProps) => {
 
                         <TableRow onClick={handleSelectAllChange}>
                             <Button variant="outlined" >
-                                Select Alls
+                                Select All
                             </Button>
                         </TableRow>
                     </div>

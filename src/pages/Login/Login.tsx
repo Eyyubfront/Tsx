@@ -5,7 +5,6 @@ import Paragrafy from '../../components/Paragrafy/Paragrafy';
 import Check from '../../components/Check/Check';
 import PrimaryButton from '../../components/PrimaryButton/PrimaryButton';
 import CustomLink from '../../components/CustomLink/CustomLink';
-import Toogle from './Toogle/Toogle';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -33,7 +32,7 @@ const Login = () => {
   const { loading } = useAppSelector((state) => state.Auth);
   const [signUp, setSignUp] = useState(false);
   const [iseye, setIseye] = useState(false);
-  const [isOn, setIsOn] = useState(false);
+
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
   const methods = useForm({
@@ -52,9 +51,7 @@ const Login = () => {
     setIseye(prevState => !prevState);
   };
 
-  const handleToggle = () => {
-    setIsOn(prevState => !prevState);
-  };
+
 
   const onSubmit = (data: { email: string, password: string }) => {
     if (signUp) {
@@ -171,7 +168,6 @@ const Login = () => {
                   label={"Sign in"}
                   type="submit"
                 />
-                <Toogle isOn={isOn} handleToggle={handleToggle} />
               </>
             )}
 
@@ -185,8 +181,6 @@ const Login = () => {
             Google Account
           </div>
         </FormProvider>
-
-
       </div>
     </div>
   );

@@ -28,7 +28,7 @@ const Configurate = () => {
 
     return (
         <div className="configurate">
-            <h2>Question visibility setting</h2>
+            <h2>Change visibility on quiz </h2>
             <div className="configurate_container">
                 <p className="configurate__tittle">Hide answers on quiz </p>
                 <div className="signs_toggle" onClick={handleToggle}>
@@ -44,7 +44,7 @@ const Configurate = () => {
             </div>
 
             <div className="configurate_container">
-                <p className="configurate__tittle">Hide answers on notification </p>
+                <p className="configurate__tittle">Change notification status </p>
                 <div className="signs_toggle" onClick={handleToggleNotfication}>
                     {notificationDisabled ? (
 
@@ -57,7 +57,7 @@ const Configurate = () => {
             </div>
 
             <div className="configurate_container">
-                <p className="configurate__tittle">Hide answers on listen </p>
+                <p className="configurate__tittle">Change quiz voice </p>
                 <div className="signs_toggle" onClick={handleToggleListen}>
                     {quizListenable ? (
                         <MdToggleOn className="togle_icons" />
