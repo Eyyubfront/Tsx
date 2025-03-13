@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from "../../store";
-import { LanguageHomes } from "../../types/Types";
 import { Button, MenuItem, Skeleton } from "@mui/material";
 import "./Languagesettings.scss";
 import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
@@ -20,10 +19,11 @@ import Trash from "../../assets/images/home/Trash_Full.svg";
 
 const Languagesettings = () => {
   const dispatch = useAppDispatch();
-  const { texts, loading, defaultText } = useAppSelector(
+  const { texts, loading } = useAppSelector(
     (state) => state.LanguagetextData
   );
-  console.log(defaultText?.isSwapped);
+ 
+
 
   useEffect(() => {
     dispatch(getTexts());
@@ -47,7 +47,9 @@ const Languagesettings = () => {
 
     try {
       await dispatch(selecetlangaugesave(id)).unwrap();
-      await dispatch(getInitialLanguage()).unwrap();
+    await dispatch(getInitialLanguage()).unwrap();
+     
+
       await dispatch(getTexts()).unwrap();
     } catch (error) {
       console.error("Error:", error);
@@ -66,7 +68,7 @@ const Languagesettings = () => {
         <div className="language_settings">
           <h2>Choosen language for learning</h2>
           <div className="languagesetings__top">
-            {texts?.map((language: LanguageHomes) => (
+            {texts?.map((language) => (
               <div
                 className="language_setingsboxed"
                 key={language.id}
@@ -82,7 +84,7 @@ const Languagesettings = () => {
                   onClick={() => handleSelectLanguage(Number(language.id))}
                   style={{ marginRight: "10px" }}
                 >
-                  {language.id === defaultText?.id && defaultText?.isSwapped
+                  {language?.isSwapped
                     ? `${language.translationLanguage} - ${language.sourceLanguage}`
                     : `${language.sourceLanguage} - ${language.translationLanguage}`}
                 </MenuItem>

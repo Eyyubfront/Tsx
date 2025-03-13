@@ -18,7 +18,7 @@ const LearningNow = ({ showAll }: { showAll?: boolean }) => {
     const { defaultText } = useAppSelector((state) => state.LanguagetextData);
     const [page, setPage] = useState(1);
     useEffect(() => {
-        dispatch(fetchTexts({ page, pageSize: showAll ? 20 : 10 }));
+        dispatch(fetchTexts({ page, pageSize: showAll ? 10 : 10 }));
     }, [showAll, page]);
 
     const handleSaveText = (item: TextItem) => {

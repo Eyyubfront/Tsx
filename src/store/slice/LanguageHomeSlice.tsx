@@ -79,8 +79,7 @@ const LanguageHomeSlice = createSlice({
             })
             .addCase(getTexts.fulfilled, (state, action) => {
                 state.loading = false;
-                console.log("action",action.payload);
-                
+             
                 state.texts = action.payload;
                 state.defaultText = action.payload.find((t: { isSelected: boolean }) => t.isSelected);
             })
