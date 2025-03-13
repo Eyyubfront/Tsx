@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 const Configurate = () => {
     const dispatch = useAppDispatch();
-    const { quizHidden, notificationDisabled,quizListenable } = useAppSelector((state) => state.Auth);
+    const { quizHidden, notificationDisabled, quizListenable } = useAppSelector((state) => state.Auth);
 
 
     const handleToggle = () => {
@@ -47,11 +47,11 @@ const Configurate = () => {
                 <p className="configurate__tittle">Hide answers on notification </p>
                 <div className="signs_toggle" onClick={handleToggleNotfication}>
                     {notificationDisabled ? (
-                        <MdToggleOn className="togle_icons" />
-
-                    ) : (
 
                         <MdToggleOff className="togle_iconsof" />
+                    ) : (
+                        <MdToggleOn className="togle_icons" />
+
                     )}
                 </div>
             </div>
