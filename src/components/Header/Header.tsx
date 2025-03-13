@@ -15,6 +15,7 @@ import AlertDialog from '../AlertDialog/AlertDialog';
 import { excelfilefetch } from '../../store/actions/authActions';
 import Smile from "../../assets/images/home/Smile.svg"
 import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
+import QuizModal from '../QuizModal/QuizModal';
 
 const Header = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -29,7 +30,6 @@ const Header = () => {
 
       dispatch(openDialog());
     } else {
-
       dispatch(openQuizModal());
     }
   };
@@ -143,6 +143,7 @@ const Header = () => {
           </Typography>
         </DialogContent>
       </AlertDialog>
+      <QuizModal />
     </div>
   );
 };

@@ -20,7 +20,6 @@ const LexionLayout = () => {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const items = useAppSelector((state) => state.learningNow.items.nowitems);
-
     const handleHomeQuizClick = () => {
         if (!items || items.length === 0) {
             dispatch(openDialog());
@@ -30,17 +29,12 @@ const LexionLayout = () => {
     };
 
     const handleSearch = () => {
-        // if (searchTerm.trim()) {
             dispatch(fetchSearchResults({
                 searchText: searchTerm || "",
                 page: 1,
                 pageSize: 10,
                 isGrouped: true
             }));
-
-        // } else {
-        //     console.log("Search term is empty, skipping search request.");
-        // }
     };
     useEffect(() => {
         
