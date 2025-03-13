@@ -30,7 +30,7 @@ const LexionLayout = () => {
     };
 
     const handleSearch = () => {
-        if (searchTerm.trim()) {
+        // if (searchTerm.trim()) {
             dispatch(fetchSearchResults({
                 searchText: searchTerm || "",
                 page: 1,
@@ -38,9 +38,9 @@ const LexionLayout = () => {
                 isGrouped: true
             }));
 
-        } else {
-            console.log("Search term is empty, skipping search request.");
-        }
+        // } else {
+        //     console.log("Search term is empty, skipping search request.");
+        // }
     };
     useEffect(() => {
         
