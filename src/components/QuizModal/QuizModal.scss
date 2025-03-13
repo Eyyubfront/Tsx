@@ -100,6 +100,17 @@
                 }
             }
 
+            .voicedquiz {
+                color: rgb(56, 56, 244);
+                cursor: pointer;
+                pointer-events: auto !important;
+            
+            
+                &[disabled] {
+                    pointer-events: auto;
+            
+                }
+            }
             .shadow_source {
                 display: none;
             }
@@ -153,17 +164,7 @@
 
 }
 
-.voicedquiz {
-    color: rgb(56, 56, 244);
-    cursor: pointer;
-    pointer-events: auto !important;
 
-
-    &[disabled] {
-        pointer-events: auto;
-
-    }
-}
 
 
 

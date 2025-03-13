@@ -19,7 +19,7 @@ const FileInput: React.FC = () => {
 
         const reader = new FileReader();
 
-     
+        console.log(data);
 
         reader.onload = (event) => {
             const arrayBuffer = event.target?.result;
