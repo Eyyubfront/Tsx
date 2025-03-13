@@ -13,8 +13,7 @@ const PublicRouting = () => {
   useEffect(() => {
     if (user === true) {
       navigate(location.state || "/")
-      console.log(location.state);
-
+  
     }
   }, [user, location.state, navigate])
 

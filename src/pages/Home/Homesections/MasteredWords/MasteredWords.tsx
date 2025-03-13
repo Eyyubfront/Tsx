@@ -101,7 +101,7 @@ const MasteredWords = () => {
 
 
     const handlestory = async () => {
-        if (selectedItems.length < 30) {
+        if (selectedItems.length < 3) {
             settextShow(true);
             return;
         }
@@ -200,7 +200,7 @@ const MasteredWords = () => {
                         <div className="voice_generatestroy">
                             <h2>Story Words</h2>
                             <Button
-                                style={{ width: '40px' }}
+                                style={{ width: '40px',height:"33px",border:"none" }}
                                 className='table_button'
                                 variant="outlined"
                                 onClick={() => speak(generatestory || '')}

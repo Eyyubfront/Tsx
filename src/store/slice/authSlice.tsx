@@ -1,6 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { login, register, refreshToken, deleteUser, excelfilefetch, addformFile, sendIdToken, changeVisibility, getuserSettings, changelisting, notficationdisabled } from '../actions/authActions';
-import { sendForgotPasswordEmail } from '../actions/forgotPasswordActions/forgotPasswordActions';
+import { createSlice } from "@reduxjs/toolkit";
+import {
+  login,
+  register,
+  refreshToken,
+  deleteUser,
+  excelfilefetch,
+  addformFile,
+  sendIdToken,
+  changeVisibility,
+  getuserSettings,
+  changelisting,
+  notficationdisabled,
+} from "../actions/authActions";
+import { sendForgotPasswordEmail } from "../actions/forgotPasswordActions/forgotPasswordActions";
 
 interface AuthState {
   refreshToken: string | null;
@@ -16,7 +28,6 @@ interface AuthState {
   quizHidden: boolean | null;
   notificationDisabled: boolean | null;
   quizListenable: boolean | null;
-
 }
 
 const initialState: AuthState = {
@@ -36,7 +47,7 @@ const initialState: AuthState = {
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     logout(state) {
@@ -44,15 +55,15 @@ const authSlice = createSlice({
       state.refreshToken = null;
       state.isAuth = false;
       state.userId = null;
-      localStorage.removeItem('token');
-      localStorage.removeItem('refreshToken');
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
     },
     setVeryuse(state, action) {
-      state.veriyuse = action.payload
+      state.veriyuse = action.payload;
     },
     setisAuth(state) {
-      state.isAuth = true
-    }
+      state.isAuth = true;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -75,11 +86,10 @@ const authSlice = createSlice({
       })
       .addCase(excelfilefetch.pending, (state, action: any) => {
         state.loading = true;
-        state.full = action.payload
+        state.full = action.payload;
       })
       .addCase(excelfilefetch.fulfilled, (state) => {
         state.loading = false;
-
       })
       .addCase(excelfilefetch.rejected, (state, action) => {
         state.loading = false;
@@ -93,11 +103,8 @@ const authSlice = createSlice({
         state.isAuth = true;
         state.userId = action.payload.userId;
         state.veriyuse = true;
-
       })
       .addCase(sendIdToken.rejected, (state, action) => {
-
-
         state.loading = false;
         state.veriyuse = false;
         state.error = action.payload as string;
@@ -107,7 +114,6 @@ const authSlice = createSlice({
       })
       .addCase(addformFile.fulfilled, (state) => {
         state.loading = false;
-
       })
       .addCase(addformFile.rejected, (state, action) => {
         state.loading = false;
@@ -122,7 +128,6 @@ const authSlice = createSlice({
         state.quizHidden = action.payload.quizHidden;
         state.quizListenable = action.payload.quizListenable;
         state.notificationDisabled = action.payload.notificationDisabled;
-
       })
 
       .addCase(getuserSettings.rejected, (state, action) => {
@@ -134,7 +139,7 @@ const authSlice = createSlice({
       })
       .addCase(changeVisibility.fulfilled, (state) => {
         state.loading = false;
-        state.success = true
+        state.success = true;
       })
       .addCase(changeVisibility.rejected, (state, action) => {
         state.loading = false;
@@ -146,9 +151,7 @@ const authSlice = createSlice({
       })
       .addCase(notficationdisabled.fulfilled, (state) => {
         state.loading = false;
-        state.success = true
-     
-
+        state.success = true;
       })
       .addCase(notficationdisabled.rejected, (state, action) => {
         state.loading = false;
@@ -159,9 +162,7 @@ const authSlice = createSlice({
       })
       .addCase(changelisting.fulfilled, (state) => {
         state.loading = false;
-        state.success = true
-      
-
+        state.success = true;
       })
       .addCase(changelisting.rejected, (state, action) => {
         state.loading = false;
@@ -174,13 +175,11 @@ const authSlice = createSlice({
       })
       .addCase(deleteUser.fulfilled, (state) => {
         state.loading = false;
-        state.isAuth = false;
-        state.accessToken = null;
-        state.refreshToken = null;
-        state.userId = null;
-        localStorage.removeItem('token');
-        localStorage.removeItem('refreshToken');
-        localStorage.removeItem('userId');
+       state=initialState
+        localStorage.removeItem("token");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("userId");
       })
       .addCase(deleteUser.rejected, (state, action) => {
         state.loading = false;
@@ -207,7 +206,7 @@ const authSlice = createSlice({
       .addCase(refreshToken.fulfilled, (state, action) => {
         state.loading = false;
         state.isAuth = true;
-        state.userId = action.payload.data.userId
+        state.userId = action.payload.data.userId;
       })
       .addCase(refreshToken.rejected, (state, action) => {
         state.loading = false;
@@ -222,17 +221,13 @@ const authSlice = createSlice({
       .addCase(sendForgotPasswordEmail.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        const userId = action.payload.userId
+        const userId = action.payload.userId;
         state.userId = userId;
-
       })
-      .addCase(
-        sendForgotPasswordEmail.rejected,
-        (state, action) => {
-          state.loading = false;
-          state.error = action.payload as string;
-        }
-      );
+      .addCase(sendForgotPasswordEmail.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
   },
 });
 

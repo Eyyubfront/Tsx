@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/index";
-import { SubmitTimePreferencesPayload, submitTimePreferences } from "../../store/actions/timeActions/timeActions";
+import {
+  SubmitTimePreferencesPayload,
+  submitTimePreferences,
+} from "../../store/actions/timeActions/timeActions";
 import Paragrafy from "../../components/Paragrafy/Paragrafy";
 import TimeOptions from "../../components/TimeOptions/TimeOptions";
 import "./LearnTime.scss";
@@ -36,15 +39,22 @@ const LearnTime = () => {
 
   const { loading } = useAppSelector((state) => state.time);
   const { intervals } = useAppSelector((state) => state.passwordchecksettings);
-  const { handleSubmit, formState: { errors }, watch } = methods;
+  const {
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = methods;
 
   useEffect(() => {
     dispatch(intervalfetch());
   }, [dispatch]);
 
-
-  const selectedSourceLanguage = useAppSelector((state) => state.language.selectedSourceLanguageId);
-  const selectedTranslationLanguage = useAppSelector((state) => state.language.selectedTranslationId);
+  const selectedSourceLanguage = useAppSelector(
+    (state) => state.language.selectedSourceLanguageId
+  );
+  const selectedTranslationLanguage = useAppSelector(
+    (state) => state.language.selectedTranslationId
+  );
 
   useEffect(() => {
     if (!selectedTranslationLanguage || !selectedSourceLanguage) {
@@ -53,22 +63,27 @@ const LearnTime = () => {
   }, [selectedSourceLanguage, selectedTranslationLanguage]);
 
   const onSubmit = async (data: SubmitTimePreferencesPayload) => {
-
-
     try {
       const targetDate = moment().format("YYYY-MM-DD");
-      const utcStartTime = moment(`${targetDate} ${data.startTime}`).add(4, "hours").toISOString();
-      const utcEndTime = moment(`${targetDate} ${data.endTime}`).add(4, "hours").toISOString();
-     
+      const utcStartTime = moment(`${targetDate} ${data.startTime}`)
+        .add(4, "hours")
+        .toISOString();
+      const utcEndTime = moment(`${targetDate} ${data.endTime}`)
+        .add(4, "hours")
+        .toISOString();
 
-      await dispatch(submitTimePreferences({
-        intervalId: data.intervalId,
-        startTime: utcStartTime,
-        endTime: utcEndTime,
-      })).unwrap().then(() => {
-        dispatch(setisAuth())
-        navigate("/");
-      });
+      await dispatch(
+        submitTimePreferences({
+          intervalId: data.intervalId,
+          startTime: utcStartTime,
+          endTime: utcEndTime,
+        })
+      )
+        .unwrap()
+        .then(() => {
+          dispatch(setisAuth());
+          navigate("/");
+        });
     } catch (error) {
       console.error(error);
     }
@@ -88,7 +103,7 @@ const LearnTime = () => {
         <BackButton className="learnback" onClick={() => navigate("/login")} />
       </div>
       <div className="learntime_right">
-        <FormProvider {...methods} >
+        <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)} className="formslearntime">
             <div className="box">
               <div className="left-box">
@@ -97,7 +112,10 @@ const LearnTime = () => {
                   <UseFormTimeInput label="Start Time" name="startTime" />
                   <UseFormTimeInput label="End Time" name="endTime" />
                 </div>
-                <Paragrafy text="Select Time Interval" className="timeparagraf" />
+                <Paragrafy
+                  text="Select Time Interval"
+                  className="timeparagraf"
+                />
                 <TimeOptions
                   timeOptions={intervals}
                   selectedOption={watch("intervalId")}
@@ -107,7 +125,11 @@ const LearnTime = () => {
               </div>
               <div className="right-box">
                 {loading && <p>Submitting...</p>}
-                <PrimaryButton type="submit" disabled={loading} label="Continue" />
+                <PrimaryButton
+                  type="submit"
+                  disabled={loading}
+                  label="Continue"
+                />
               </div>
             </div>
           </form>

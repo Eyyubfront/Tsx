@@ -10,8 +10,9 @@ const ProtectedRouting = () => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    if (user === false) {
+    if (user === false || user===null) {
       navigate("/login", { state: location.pathname })
+      navigate(0)
     }
   }, [user])
 

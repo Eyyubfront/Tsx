@@ -42,6 +42,7 @@ const Sidebar = () => {
 
     const handleDeleteAccount = () => {
         dispatch(deleteUser());
+     
         setOpenDialog(false);
     };
 
