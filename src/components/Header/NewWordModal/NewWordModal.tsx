@@ -24,12 +24,10 @@ interface NewWordModalProps {
 const schema = Yup.object().shape({
     wordone: Yup.string()
         .required("Source word is required")
-        .max(50, 'Maximum 50 characters allowed')
         .matches(/^[a-zA-Z]+$/, "Source word cannot contain numbers"),  
     wordtwo: Yup.string()
         .required("Translation word is required")
         .notOneOf([Yup.ref('wordone')], 'Source and Translation words must be different')
-        .max(50, 'Maximum 50 characters allowed')
         .matches(/^[a-zA-Z]+$/, "Translation word cannot contain numbers")  
 });
 const NewWordModal: React.FC<NewWordModalProps> = ({ show, onClose }) => {
