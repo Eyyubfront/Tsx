@@ -19,7 +19,14 @@
         width: 50%;
     }
 }
+.table_aligns {
 
+    .MuiTableCell-root{
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+}
 .alert_buton{
     color: #8B6DE8 !important;
 }
