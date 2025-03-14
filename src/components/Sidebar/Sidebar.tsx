@@ -32,6 +32,8 @@ const Sidebar = () => {
     let location = useLocation();
     const dispatch = useAppDispatch();
     const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+  console.log("isSidebarVisible",isSidebarVisible);
+  
     const [openDialog, setOpenDialog] = useState(false);
     const [modalType, setModalType] = useState<"delete" | "logout" | null>(null);
 
@@ -61,8 +63,11 @@ const Sidebar = () => {
     };
 
     useEffect(() => {
+        console.log("location.pathname",window.innerWidth);
+
         const handleResize = () => {
-            if (location.pathname === "/settingspage" || window.innerWidth > 600) {
+            if (location.pathname === "/settingspage" || window.innerWidth > 700) {
+              
                 setIsSidebarVisible(true);
             } else {
                 setIsSidebarVisible(false);

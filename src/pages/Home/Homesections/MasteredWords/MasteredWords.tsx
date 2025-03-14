@@ -101,7 +101,7 @@ const MasteredWords = () => {
 
 
     const handlestory = async () => {
-        if (selectedItems.length < 3) {
+        if (selectedItems.length < 30) {
             settextShow(true);
             return;
         }
